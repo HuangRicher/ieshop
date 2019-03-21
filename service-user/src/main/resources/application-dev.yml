@@ -1,0 +1,136 @@
+server:
+    port: 10005
+spring:
+  ##数据库连接信息
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/cloud-parent?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        maxLifetime: 1800000
+        idleTimeout: 600000
+  application:
+      name: user-service
+  redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      password: 123456
+      lettuce:
+        shutdown-timeout: 30000ms
+        pool:
+          max-active: 10
+          max-wait: -1ms
+          max-idle: 0
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+  type-aliases-package: com.seamwhole.serviceuser.model
+  mapper-locations: classpath:mapping/**/*Mapper.xml
+
+#pagehelper分页工具
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+#logging:
+#  level:
+#    com.tongzhu.user.mapper : debug
+
+## tx-manager 配置
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
+
+user:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+friend:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+user-goods:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+tree-house:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+message:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+fishing:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+welfare:
+  ribbon:
+    ReadTimeout: 60000
+    ConnectTimeout: 60000
+    SocketTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+  user:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  friend:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  user-goods:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  tree-house:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  message:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  fishing:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000
+  welfare:
+    execution:
+      isolation:
+        thread:
+          timeoutInMilliseconds: 60000

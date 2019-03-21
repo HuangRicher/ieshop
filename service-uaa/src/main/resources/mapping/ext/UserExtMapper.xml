@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.serviceuaa.mapper.ext.UserExtMapper" >
+  <resultMap id="UserRoleAuthorityMap" type="com.seamwhole.serviceuaa.domain.UserDetail">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="domain_id" property="domainId" jdbcType="VARCHAR" />
+    <result column="user_serial" property="userSerial" jdbcType="INTEGER" />
+    <result column="password_" property="password" jdbcType="VARCHAR" />
+    <result column="level_" property="level" jdbcType="INTEGER" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="we_chat" property="weChat" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="header" property="header" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <collection property="roles" column="id" javaType="java.util.HashSet" select="selectAllRoles"></collection>
+  </resultMap>
+
+  <!--权限-->
+  <resultMap id="AuthorityMap" type="com.seamwhole.serviceuaa.model.Authority" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!--角色-->
+  <resultMap id="RolesMap" type="com.seamwhole.serviceuaa.domain.RoleDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <!--权限集合-->
+    <collection property="authorities" column="id" javaType="java.util.HashSet" select="selectAllAuthority"></collection>
+  </resultMap>
+
+  <!--根据角色id查询权限(先从角色权限关联表查询角色id相等，在查询权限id，根据权限id在权限表里查询权限)-->
+  <select id="selectAllAuthority" resultMap="AuthorityMap" parameterType="java.lang.Integer">
+    SELECT * FROM `authority` WHERE id IN(SELECT authorities_id FROM `role_authorities` WHERE role_id=#{id})
+  </select>
+  <!--根据用户中的角色查询角色-->
+  <select id="selectAllRoles" resultMap="RolesMap" parameterType="java.lang.String">
+    SELECT * FROM `role` WHERE id IN(SELECT roles_id FROM `user_roles` WHERE user_id=#{id})
+  </select>
+  <select id="getByUserSerial" resultMap="UserRoleAuthorityMap" parameterType="java.lang.Integer" >
+    SELECT * FROM t_user WHERE user_serial=#{userSerial}
+  </select>
+</mapper>

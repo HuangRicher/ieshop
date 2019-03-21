@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.servicetradecore.mapper.ShopCartMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopCartModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="session_id" property="sessionId" jdbcType="CHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+    <result column="retail_product_price" property="retailProductPrice" jdbcType="DECIMAL"/>
+    <result column="number" property="number" jdbcType="SMALLINT" />
+    <result column="goods_specifition_ids" property="goodsSpecifitionIds" jdbcType="VARCHAR" />
+    <result column="checked" property="checked" jdbcType="BIT" />
+    <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.ShopCart" extends="BaseResultMap" >
+    <result column="goods_specifition_name_value" property="goodsSpecifitionNameValue" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <select id="queryList" resultMap="ResultMapWithBLOBs" parameterType="map">
+    select a.*,
+    b.list_pic_url as list_pic_url,
+    c.retail_price as retail_product_price
+    from nideshop_cart a
+    left join nideshop_goods b on a.goods_id = b.id
+    left join nideshop_product c on c.goods_id = a.goods_id and c.id = a.product_id
+    where 1 = 1
+    <if test="userId != null">
+      AND a.user_id = #{userId}
+    </if>
+    <if test="goodsId != null">
+      AND a.goods_id = #{goodsId}
+    </if>
+    <if test="productId != null">
+      AND a.product_id = #{productId}
+    </if>
+    <if test="checked != null">
+      AND a.checked = #{checked}
+    </if>
+    <choose>
+      <when test="order != null and order.trim() != ''">
+        order by ${order}
+      </when>
+      <otherwise>
+        order by a.id desc
+      </otherwise>
+    </choose>
+  </select>
+</mapper>

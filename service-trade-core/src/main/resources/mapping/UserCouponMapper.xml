@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.servicetradecore.mapper.UserCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.UserCoupon" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="coupon_id" property="couponId" jdbcType="TINYINT" />
+    <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="used_time" property="usedTime" jdbcType="TIMESTAMP" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="source_key" property="sourceKey" jdbcType="VARCHAR" />
+    <result column="referrer" property="referrer" jdbcType="INTEGER" />
+    <result column="coupon_status" property="couponStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, coupon_id, coupon_number, user_id, used_time, add_time, order_id, source_key, 
+    referrer, coupon_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.UserCouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ishop_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ishop_user_coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ishop_user_coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.servicetradecore.model.UserCouponExample" >
+    delete from ishop_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
+    insert into ishop_user_coupon (id, coupon_id, coupon_number, 
+      user_id, used_time, add_time, 
+      order_id, source_key, referrer, 
+      coupon_status)
+    values (#{id,jdbcType=INTEGER}, #{couponId,jdbcType=TINYINT}, #{couponNumber,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{usedTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{orderId,jdbcType=INTEGER}, #{sourceKey,jdbcType=VARCHAR}, #{referrer,jdbcType=INTEGER}, 
+      #{couponStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
+    insert into ishop_user_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="couponNumber != null" >
+        coupon_number,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="usedTime != null" >
+        used_time,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="sourceKey != null" >
+        source_key,
+      </if>
+      <if test="referrer != null" >
+        referrer,
+      </if>
+      <if test="couponStatus != null" >
+        coupon_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=TINYINT},
+      </if>
+      <if test="couponNumber != null" >
+        #{couponNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="usedTime != null" >
+        #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceKey != null" >
+        #{sourceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null" >
+        #{referrer,jdbcType=INTEGER},
+      </if>
+      <if test="couponStatus != null" >
+        #{couponStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.servicetradecore.model.UserCouponExample" resultType="java.lang.Integer" >
+    select count(*) from ishop_user_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ishop_user_coupon
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=TINYINT},
+      </if>
+      <if test="record.couponNumber != null" >
+        coupon_number = #{record.couponNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usedTime != null" >
+        used_time = #{record.usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sourceKey != null" >
+        source_key = #{record.sourceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrer != null" >
+        referrer = #{record.referrer,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponStatus != null" >
+        coupon_status = #{record.couponStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ishop_user_coupon
+    set id = #{record.id,jdbcType=INTEGER},
+      coupon_id = #{record.couponId,jdbcType=TINYINT},
+      coupon_number = #{record.couponNumber,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      used_time = #{record.usedTime,jdbcType=TIMESTAMP},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      source_key = #{record.sourceKey,jdbcType=VARCHAR},
+      referrer = #{record.referrer,jdbcType=INTEGER},
+      coupon_status = #{record.couponStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
+    update ishop_user_coupon
+    <set >
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=TINYINT},
+      </if>
+      <if test="couponNumber != null" >
+        coupon_number = #{couponNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="usedTime != null" >
+        used_time = #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceKey != null" >
+        source_key = #{sourceKey,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null" >
+        referrer = #{referrer,jdbcType=INTEGER},
+      </if>
+      <if test="couponStatus != null" >
+        coupon_status = #{couponStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
+    update ishop_user_coupon
+    set coupon_id = #{couponId,jdbcType=TINYINT},
+      coupon_number = #{couponNumber,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      used_time = #{usedTime,jdbcType=TIMESTAMP},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=INTEGER},
+      source_key = #{sourceKey,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=INTEGER},
+      coupon_status = #{couponStatus,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

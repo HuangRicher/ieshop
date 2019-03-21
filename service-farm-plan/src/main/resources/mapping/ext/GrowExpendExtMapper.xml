@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.servicefarmplan.mapper.ext.GrowExpendExtMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.servicefarmplan.model.GrowExpend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="day_count" property="dayCount" jdbcType="INTEGER" />
+    <result column="expend_detail" property="expendDetail" jdbcType="VARCHAR" />
+    <result column="weight_" property="weight" jdbcType="REAL" />
+    <result column="add_weight" property="addWeight" jdbcType="REAL" />
+  </resultMap>
+
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into at_grow_expend (product_id, day_count,
+      expend_detail, weight_, add_weight
+      )
+    values
+    <foreach collection="list" separator="," index="index" item="item">
+      (
+      #{item.productId,jdbcType=INTEGER},
+      #{item.dayCount,jdbcType=INTEGER},
+      #{item.expendDetail,jdbcType=VARCHAR},
+      #{item.weight,jdbcType=REAL},
+      #{item.addWeight,jdbcType=REAL}
+      )
+    </foreach>
+  </insert>
+</mapper>
