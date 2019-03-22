@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ShopTopicMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopTopic" >
-    <result column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="item_pic_url" property="itemPicUrl" jdbcType="VARCHAR" />
@@ -112,6 +112,18 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ishop_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ishop_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.seamwhole.servicetradecore.model.ShopTopicExample" >
     delete from ishop_topic
     <if test="_parameter != null" >
@@ -293,5 +305,73 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.servicetradecore.model.ShopTopic" >
+    update ishop_topic
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="itemPicUrl != null" >
+        item_pic_url = #{itemPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="topicCategoryId != null" >
+        topic_category_id = #{topicCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="priceInfo != null" >
+        price_info = #{priceInfo,jdbcType=DECIMAL},
+      </if>
+      <if test="readCount != null" >
+        read_count = #{readCount,jdbcType=VARCHAR},
+      </if>
+      <if test="scenePicUrl != null" >
+        scene_pic_url = #{scenePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="topicTemplateId != null" >
+        topic_template_id = #{topicTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="topicTagId != null" >
+        topic_tag_id = #{topicTagId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seamwhole.servicetradecore.model.ShopTopic" >
+    update ishop_topic
+    set title = #{title,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      item_pic_url = #{itemPicUrl,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      topic_category_id = #{topicCategoryId,jdbcType=INTEGER},
+      price_info = #{priceInfo,jdbcType=DECIMAL},
+      read_count = #{readCount,jdbcType=VARCHAR},
+      scene_pic_url = #{scenePicUrl,jdbcType=VARCHAR},
+      topic_template_id = #{topicTemplateId,jdbcType=INTEGER},
+      topic_tag_id = #{topicTagId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.ShopTopic" >
+    update ishop_topic
+    set title = #{title,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      item_pic_url = #{itemPicUrl,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      topic_category_id = #{topicCategoryId,jdbcType=INTEGER},
+      price_info = #{priceInfo,jdbcType=DECIMAL},
+      read_count = #{readCount,jdbcType=VARCHAR},
+      scene_pic_url = #{scenePicUrl,jdbcType=VARCHAR},
+      topic_template_id = #{topicTemplateId,jdbcType=INTEGER},
+      topic_tag_id = #{topicTagId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

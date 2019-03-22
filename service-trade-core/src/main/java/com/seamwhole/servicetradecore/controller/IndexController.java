@@ -5,8 +5,13 @@ import com.platform.annotation.IgnoreAuth;
 import com.platform.entity.*;
 import com.platform.service.*;
 import com.platform.util.ApiBaseAction;
+import com.seamwhole.servicetradecore.model.Category;
 import com.seamwhole.servicetradecore.model.ShopAd;
+import com.seamwhole.servicetradecore.model.ShopTopic;
 import com.seamwhole.servicetradecore.service.AdService;
+import com.seamwhole.servicetradecore.service.CartService;
+import com.seamwhole.servicetradecore.service.CategoryService;
+import com.seamwhole.servicetradecore.service.TopicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +42,11 @@ public class IndexController extends BaseController {
     @Autowired
     private ApiBrandService brandService;
     @Autowired
-    private ApiTopicService topicService;
+    private TopicService topicService;
     @Autowired
-    private ApiCategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    private ApiCartService cartService;
+    private CartService cartService;
 
     /**
      * 测试
@@ -114,21 +119,21 @@ public class IndexController extends BaseController {
         param = new HashMap<String, Object>();
         param.put("offset", 0);
         param.put("limit", 3);
-        List<TopicVo> topicList = topicService.queryList(param);
+        List<ShopTopic> topicList = topicService.queryList(param);
         resultObj.put("topicList", topicList);
 
         param = new HashMap<String, Object>();
         param.put("parent_id", 0);
         param.put("notName", "推荐");//<>
-        List<CategoryVo> categoryList = categoryService.queryList(param);
+        List<Category> categoryList = categoryService.queryList(param);
         List<Map<String, Object>> newCategoryList = new ArrayList<>();
 
-        for (CategoryVo categoryItem : categoryList) {
+        for (Category categoryItem : categoryList) {
             param.remove("fields");
             param.put("parent_id", categoryItem.getId());
-            List<CategoryVo> categoryEntityList = categoryService.queryList(param);
+            List<Category> categoryEntityList = categoryService.queryList(param);
             List<Integer> childCategoryIds = new ArrayList<>();
-            for (CategoryVo categoryEntity : categoryEntityList) {
+            for (Category categoryEntity : categoryEntityList) {
                 childCategoryIds.add(categoryEntity.getId());
             }
             //
@@ -192,7 +197,7 @@ public class IndexController extends BaseController {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("offset", 0);
         param.put("limit", 3);
-        List<TopicVo> topicList = topicService.queryList(param);
+        List<ShopTopic> topicList = topicService.queryList(param);
         resultObj.put("topicList", topicList);
         //
 
@@ -226,17 +231,17 @@ public class IndexController extends BaseController {
         param = new HashMap<String, Object>();
         param.put("parent_id", 0);
         param.put("notName", "推荐");//<>
-        List<CategoryVo> categoryList = categoryService.queryList(param);
+        List<Category> categoryList = categoryService.queryList(param);
         List<Map<String, Object>> newCategoryList = new ArrayList<>();
 
-        for (CategoryVo categoryItem : categoryList) {
+        for (Category categoryItem : categoryList) {
             param.remove("fields");
             param.put("parent_id", categoryItem.getId());
-            List<CategoryVo> categoryEntityList = categoryService.queryList(param);
+            List<Category> categoryEntityList = categoryService.queryList(param);
             List<Integer> childCategoryIds = null;
             if (categoryEntityList != null && categoryEntityList.size() > 0) {
                 childCategoryIds = new ArrayList<>();
-                for (CategoryVo categoryEntity : categoryEntityList) {
+                for (Category categoryEntity : categoryEntityList) {
                     childCategoryIds.add(categoryEntity.getId());
                 }
             }

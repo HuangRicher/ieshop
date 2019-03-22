@@ -10,6 +10,8 @@ public interface ShopTopicMapper {
 
     int deleteByExample(ShopTopicExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(ShopTopic record);
 
     int insertSelective(ShopTopic record);
@@ -18,9 +20,17 @@ public interface ShopTopicMapper {
 
     List<ShopTopic> selectByExample(ShopTopicExample example);
 
+    ShopTopic selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") ShopTopic record, @Param("example") ShopTopicExample example);
 
     int updateByExampleWithBLOBs(@Param("record") ShopTopic record, @Param("example") ShopTopicExample example);
 
     int updateByExample(@Param("record") ShopTopic record, @Param("example") ShopTopicExample example);
+
+    int updateByPrimaryKeySelective(ShopTopic record);
+
+    int updateByPrimaryKeyWithBLOBs(ShopTopic record);
+
+    int updateByPrimaryKey(ShopTopic record);
 }

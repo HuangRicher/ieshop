@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.model.ShopTopic;
 
 import java.util.List;
@@ -12,13 +13,5 @@ public interface TopicService {
 
     List<ShopTopic> queryList(Map<String, Object> map);
 
-    int queryTotal(Map<String, Object> map);
-
-    void save(ShopTopic topic);
-
-    void update(ShopTopic topic);
-
-    void delete(Integer id);
-
-    void deleteBatch(Integer[] ids);
+    PageInfo<ShopTopic> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
 }

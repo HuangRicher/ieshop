@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seamwhole.servicetradecore.mapper.ext.ShopCommentExtMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopComment" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="value_id" property="valueId" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <select id="queryList" resultMap="commentMap">
+        select distinct c.* from ishop_comment c
+        <if test="hasPic != null and hasPic == 1">
+            left join ishop_comment_picture cp on cp.comment_id = c.id
+        </if>
+        where 1 = 1
+        <if test="type_id != null and type_id != ''">
+            and c.type_id = #{typeId}
+        </if>
+        <if test="value_id != null and value_id != ''">
+            and c.value_id = #{valueId}
+        </if>
+        <if test="goods_id != null and goods_id != ''">
+            and c.value_id = #{goodsId}
+        </if>
+        <if test="user_id != null and user_id != ''">
+            and c.user_id = #{userId}
+        </if>
+        <if test="hasPic != null and hasPic == 1">
+            and cp.id is not null
+        </if>
+        <choose>
+            <when test="order != null and order.trim() != ''">
+                order by ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(c.id) from ishop_comment c
+        where 1= 1
+        <if test="typeId != null and typeId != ''">
+            and c.type_id = #{typeId}
+        </if>
+        <if test="valueId != null and valueId != ''">
+            and c.value_id = #{valueId}
+        </if>
+        <if test="goodsId != null and goodsId != ''">
+            and c.value_id = #{goodsId}
+        </if>
+    </select>
+
+    <select id="queryHasPicTotal" resultType="int">
+        select count(distinct c.id) from ishop_comment c
+        left join ishop_comment_picture cp on cp.comment_id = c.id
+        where 1= 1 and cp.id > 0
+        <if test="typeId != null and typeId != ''">
+            and c.type_id = #{typeId}
+        </if>
+        <if test="valueId != null and valueId != ''">
+            and c.value_id = #{valueId}
+        </if>
+    </select>
+
+
+</mapper>

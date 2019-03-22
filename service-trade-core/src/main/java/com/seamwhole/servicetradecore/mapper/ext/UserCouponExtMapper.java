@@ -1,16 +1,11 @@
-package com.seamwhole.servicetradecore.service;
+package com.seamwhole.servicetradecore.mapper.ext;
 
 import com.seamwhole.servicetradecore.model.UserCoupon;
 
 import java.util.List;
 import java.util.Map;
 
-
-public interface UserCouponService {
+public interface UserCouponExtMapper {
 
     List<UserCoupon> queryList(Map<String, Object> map);
-
-    void save(UserCoupon goods);
-
-    void update(UserCoupon goods);
 }

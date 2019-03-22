@@ -64,7 +64,7 @@
         <!--<table tableName="ishop_related_goods" domainObjectName="RelatedGoods"></table>-->
         <!--<table tableName="ishop_search_history" domainObjectName="SearchHistory"></table>-->
         <!--<table tableName="ishop_specification" domainObjectName="Specification"></table>-->
-        <!--<table tableName="ishop_topic" domainObjectName="ShopTopic"></table>-->
+        <table tableName="ishop_topic" domainObjectName="ShopTopic"></table>
         <!--<table tableName="ishop_topic_category" domainObjectName="TopicCategory"></table>-->
         <!--<table tableName="ishop_token" domainObjectName="ShopToken"></table>-->
         <!--<table tableName="ishop_user_coupon" domainObjectName="UserCoupon"></table>-->
