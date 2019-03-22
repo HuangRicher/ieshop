@@ -7,9 +7,9 @@ public class ShopAttribute {
 
     private String name;
 
-    private Boolean inputType;
+    private Integer inputType;
 
-    private Byte sortOrder;
+    private Integer sortOrder;
 
     private String value;
 
@@ -37,19 +37,19 @@ public class ShopAttribute {
         this.name = name == null ? null : name.trim();
     }
 
-    public Boolean getInputType() {
+    public Integer getInputType() {
         return inputType;
     }
 
-    public void setInputType(Boolean inputType) {
+    public void setInputType(Integer inputType) {
         this.inputType = inputType;
     }
 
-    public Byte getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Byte sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 

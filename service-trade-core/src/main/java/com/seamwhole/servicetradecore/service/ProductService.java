@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.seamwhole.servicetradecore.mapper.model.ProductDO;
 import com.seamwhole.servicetradecore.model.Product;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public interface ProductService {
 
-    Product queryObject(Integer id);
+    ProductDO queryObject(Integer id);
 
     List<Product> queryList(Map<String, Object> map);
 

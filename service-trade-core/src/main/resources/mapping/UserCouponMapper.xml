@@ -3,7 +3,7 @@
 <mapper namespace="com.seamwhole.servicetradecore.mapper.UserCouponMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.UserCoupon" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="coupon_id" property="couponId" jdbcType="TINYINT" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
     <result column="coupon_number" property="couponNumber" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="used_time" property="usedTime" jdbcType="TIMESTAMP" />
@@ -11,7 +11,7 @@
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="source_key" property="sourceKey" jdbcType="VARCHAR" />
     <result column="referrer" property="referrer" jdbcType="INTEGER" />
-    <result column="coupon_status" property="couponStatus" jdbcType="TINYINT" />
+    <result column="coupon_status" property="couponStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -110,10 +110,10 @@
       user_id, used_time, add_time, 
       order_id, source_key, referrer, 
       coupon_status)
-    values (#{id,jdbcType=INTEGER}, #{couponId,jdbcType=TINYINT}, #{couponNumber,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, #{couponNumber,jdbcType=VARCHAR}, 
       #{userId,jdbcType=INTEGER}, #{usedTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
       #{orderId,jdbcType=INTEGER}, #{sourceKey,jdbcType=VARCHAR}, #{referrer,jdbcType=INTEGER}, 
-      #{couponStatus,jdbcType=TINYINT})
+      #{couponStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
     insert into ishop_user_coupon
@@ -154,7 +154,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="couponId != null" >
-        #{couponId,jdbcType=TINYINT},
+        #{couponId,jdbcType=INTEGER},
       </if>
       <if test="couponNumber != null" >
         #{couponNumber,jdbcType=VARCHAR},
@@ -178,7 +178,7 @@
         #{referrer,jdbcType=INTEGER},
       </if>
       <if test="couponStatus != null" >
-        #{couponStatus,jdbcType=TINYINT},
+        #{couponStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -195,7 +195,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.couponId != null" >
-        coupon_id = #{record.couponId,jdbcType=TINYINT},
+        coupon_id = #{record.couponId,jdbcType=INTEGER},
       </if>
       <if test="record.couponNumber != null" >
         coupon_number = #{record.couponNumber,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
         referrer = #{record.referrer,jdbcType=INTEGER},
       </if>
       <if test="record.couponStatus != null" >
-        coupon_status = #{record.couponStatus,jdbcType=TINYINT},
+        coupon_status = #{record.couponStatus,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -229,7 +229,7 @@
   <update id="updateByExample" parameterType="map" >
     update ishop_user_coupon
     set id = #{record.id,jdbcType=INTEGER},
-      coupon_id = #{record.couponId,jdbcType=TINYINT},
+      coupon_id = #{record.couponId,jdbcType=INTEGER},
       coupon_number = #{record.couponNumber,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
       used_time = #{record.usedTime,jdbcType=TIMESTAMP},
@@ -237,7 +237,7 @@
       order_id = #{record.orderId,jdbcType=INTEGER},
       source_key = #{record.sourceKey,jdbcType=VARCHAR},
       referrer = #{record.referrer,jdbcType=INTEGER},
-      coupon_status = #{record.couponStatus,jdbcType=TINYINT}
+      coupon_status = #{record.couponStatus,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -246,7 +246,7 @@
     update ishop_user_coupon
     <set >
       <if test="couponId != null" >
-        coupon_id = #{couponId,jdbcType=TINYINT},
+        coupon_id = #{couponId,jdbcType=INTEGER},
       </if>
       <if test="couponNumber != null" >
         coupon_number = #{couponNumber,jdbcType=VARCHAR},
@@ -270,14 +270,14 @@
         referrer = #{referrer,jdbcType=INTEGER},
       </if>
       <if test="couponStatus != null" >
-        coupon_status = #{couponStatus,jdbcType=TINYINT},
+        coupon_status = #{couponStatus,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.UserCoupon" >
     update ishop_user_coupon
-    set coupon_id = #{couponId,jdbcType=TINYINT},
+    set coupon_id = #{couponId,jdbcType=INTEGER},
       coupon_number = #{couponNumber,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       used_time = #{usedTime,jdbcType=TIMESTAMP},
@@ -285,7 +285,7 @@
       order_id = #{orderId,jdbcType=INTEGER},
       source_key = #{sourceKey,jdbcType=VARCHAR},
       referrer = #{referrer,jdbcType=INTEGER},
-      coupon_status = #{couponStatus,jdbcType=TINYINT}
+      coupon_status = #{couponStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

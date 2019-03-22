@@ -5,8 +5,8 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="attribute_category_id" property="attributeCategoryId" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="input_type" property="inputType" jdbcType="BIT" />
-    <result column="sort_order" property="sortOrder" jdbcType="TINYINT" />
+    <result column="input_type" property="inputType" jdbcType="INTEGER" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.ShopAttribute" extends="BaseResultMap" >
     <result column="value" property="value" jdbcType="LONGVARCHAR" />
@@ -128,7 +128,7 @@
       input_type, sort_order, value
       )
     values (#{id,jdbcType=INTEGER}, #{attributeCategoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{inputType,jdbcType=BIT}, #{sortOrder,jdbcType=TINYINT}, #{value,jdbcType=LONGVARCHAR}
+      #{inputType,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{value,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.ShopAttribute" >
@@ -164,10 +164,10 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="inputType != null" >
-        #{inputType,jdbcType=BIT},
+        #{inputType,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
-        #{sortOrder,jdbcType=TINYINT},
+        #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="value != null" >
         #{value,jdbcType=LONGVARCHAR},
@@ -193,10 +193,10 @@
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.inputType != null" >
-        input_type = #{record.inputType,jdbcType=BIT},
+        input_type = #{record.inputType,jdbcType=INTEGER},
       </if>
       <if test="record.sortOrder != null" >
-        sort_order = #{record.sortOrder,jdbcType=TINYINT},
+        sort_order = #{record.sortOrder,jdbcType=INTEGER},
       </if>
       <if test="record.value != null" >
         value = #{record.value,jdbcType=LONGVARCHAR},
@@ -211,8 +211,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       attribute_category_id = #{record.attributeCategoryId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      input_type = #{record.inputType,jdbcType=BIT},
-      sort_order = #{record.sortOrder,jdbcType=TINYINT},
+      input_type = #{record.inputType,jdbcType=INTEGER},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER},
       value = #{record.value,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -223,8 +223,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       attribute_category_id = #{record.attributeCategoryId,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      input_type = #{record.inputType,jdbcType=BIT},
-      sort_order = #{record.sortOrder,jdbcType=TINYINT}
+      input_type = #{record.inputType,jdbcType=INTEGER},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -239,10 +239,10 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="inputType != null" >
-        input_type = #{inputType,jdbcType=BIT},
+        input_type = #{inputType,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
-        sort_order = #{sortOrder,jdbcType=TINYINT},
+        sort_order = #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="value != null" >
         value = #{value,jdbcType=LONGVARCHAR},
@@ -254,8 +254,8 @@
     update ishop_attribute
     set attribute_category_id = #{attributeCategoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
-      input_type = #{inputType,jdbcType=BIT},
-      sort_order = #{sortOrder,jdbcType=TINYINT},
+      input_type = #{inputType,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
       value = #{value,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -263,8 +263,8 @@
     update ishop_attribute
     set attribute_category_id = #{attributeCategoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
-      input_type = #{inputType,jdbcType=BIT},
-      sort_order = #{sortOrder,jdbcType=TINYINT}
+      input_type = #{inputType,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

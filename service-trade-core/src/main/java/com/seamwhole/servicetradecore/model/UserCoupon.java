@@ -5,7 +5,7 @@ import java.util.Date;
 public class UserCoupon {
     private Integer id;
 
-    private Byte couponId;
+    private Integer couponId;
 
     private String couponNumber;
 
@@ -21,7 +21,7 @@ public class UserCoupon {
 
     private Integer referrer;
 
-    private Byte couponStatus;
+    private Integer couponStatus;
 
     public Integer getId() {
         return id;
@@ -31,11 +31,11 @@ public class UserCoupon {
         this.id = id;
     }
 
-    public Byte getCouponId() {
+    public Integer getCouponId() {
         return couponId;
     }
 
-    public void setCouponId(Byte couponId) {
+    public void setCouponId(Integer couponId) {
         this.couponId = couponId;
     }
 
@@ -95,11 +95,11 @@ public class UserCoupon {
         this.referrer = referrer;
     }
 
-    public Byte getCouponStatus() {
+    public Integer getCouponStatus() {
         return couponStatus;
     }
 
-    public void setCouponStatus(Byte couponStatus) {
+    public void setCouponStatus(Integer couponStatus) {
         this.couponStatus = couponStatus;
     }
 }

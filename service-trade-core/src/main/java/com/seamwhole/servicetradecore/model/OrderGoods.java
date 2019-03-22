@@ -15,13 +15,13 @@ public class OrderGoods {
 
     private Integer productId;
 
-    private Short number;
+    private Integer number;
 
     private BigDecimal marketPrice;
 
     private BigDecimal retailPrice;
 
-    private Boolean isReal;
+    private Integer isReal;
 
     private String goodsSpecifitionIds;
 
@@ -77,11 +77,11 @@ public class OrderGoods {
         this.productId = productId;
     }
 
-    public Short getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Short number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -101,11 +101,11 @@ public class OrderGoods {
         this.retailPrice = retailPrice;
     }
 
-    public Boolean getIsReal() {
+    public Integer getIsReal() {
         return isReal;
     }
 
-    public void setIsReal(Boolean isReal) {
+    public void setIsReal(Integer isReal) {
         this.isReal = isReal;
     }
 

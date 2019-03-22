@@ -3,13 +3,13 @@ package com.seamwhole.servicetradecore.model;
 public class ShopCollect {
     private Integer id;
 
-    private Integer userId;
+    private Float userId;
 
     private Integer valueId;
 
     private Integer addTime;
 
-    private Boolean isAttention;
+    private Integer isAttention;
 
     private Integer typeId;
 
@@ -21,11 +21,11 @@ public class ShopCollect {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Float getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Float userId) {
         this.userId = userId;
     }
 
@@ -45,11 +45,11 @@ public class ShopCollect {
         this.addTime = addTime;
     }
 
-    public Boolean getIsAttention() {
+    public Integer getIsAttention() {
         return isAttention;
     }
 
-    public void setIsAttention(Boolean isAttention) {
+    public void setIsAttention(Integer isAttention) {
         this.isAttention = isAttention;
     }
 

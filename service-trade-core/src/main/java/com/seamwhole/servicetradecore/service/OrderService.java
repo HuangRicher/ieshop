@@ -1,6 +1,8 @@
 package com.seamwhole.servicetradecore.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.model.Order;
 import com.seamwhole.servicetradecore.model.ShopUser;
 
@@ -9,11 +11,9 @@ import java.util.Map;
 
 public interface OrderService {
 
-    Order queryObject(Integer id);
+    OrderDO queryObject(Integer id);
 
-    List<Order> queryList(Map<String, Object> map);
-
-    int queryTotal(Map<String, Object> map);
+    PageInfo<Order> findByPage(Integer userId,Integer pageNum,Integer pageSize,String order);
 
     void save(Order order);
 

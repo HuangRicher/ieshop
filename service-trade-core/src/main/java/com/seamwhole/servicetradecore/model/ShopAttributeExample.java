@@ -304,52 +304,52 @@ public class ShopAttributeExample {
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeEqualTo(Boolean value) {
+        public Criteria andInputTypeEqualTo(Integer value) {
             addCriterion("input_type =", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeNotEqualTo(Boolean value) {
+        public Criteria andInputTypeNotEqualTo(Integer value) {
             addCriterion("input_type <>", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeGreaterThan(Boolean value) {
+        public Criteria andInputTypeGreaterThan(Integer value) {
             addCriterion("input_type >", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andInputTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("input_type >=", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeLessThan(Boolean value) {
+        public Criteria andInputTypeLessThan(Integer value) {
             addCriterion("input_type <", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeLessThanOrEqualTo(Boolean value) {
+        public Criteria andInputTypeLessThanOrEqualTo(Integer value) {
             addCriterion("input_type <=", value, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeIn(List<Boolean> values) {
+        public Criteria andInputTypeIn(List<Integer> values) {
             addCriterion("input_type in", values, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeNotIn(List<Boolean> values) {
+        public Criteria andInputTypeNotIn(List<Integer> values) {
             addCriterion("input_type not in", values, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeBetween(Boolean value1, Boolean value2) {
+        public Criteria andInputTypeBetween(Integer value1, Integer value2) {
             addCriterion("input_type between", value1, value2, "inputType");
             return (Criteria) this;
         }
 
-        public Criteria andInputTypeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andInputTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("input_type not between", value1, value2, "inputType");
             return (Criteria) this;
         }
@@ -364,52 +364,52 @@ public class ShopAttributeExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Byte value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Byte value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Byte value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Byte value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Byte> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Byte> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }

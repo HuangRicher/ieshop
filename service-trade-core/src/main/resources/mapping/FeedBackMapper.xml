@@ -6,8 +6,8 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="feed_Type" property="feedType" jdbcType="BIT" />
-    <result column="status" property="status" jdbcType="BIT" />
+    <result column="feed_Type" property="feedType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.FeedBack" extends="BaseResultMap" >
@@ -127,11 +127,11 @@
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.FeedBack" >
     insert into ishop_feedback (msg_id, user_id, user_name, 
-      mobile, feed_Type, status, add_time, 
-      content)
+      mobile, feed_Type, status, 
+      add_time, content)
     values (#{msgId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=BIT}, #{status,jdbcType=BIT}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.FeedBack" >
     insert into ishop_feedback
@@ -175,10 +175,10 @@
         #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="feedType != null" >
-        #{feedType,jdbcType=BIT},
+        #{feedType,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
@@ -210,10 +210,10 @@
         mobile = #{record.mobile,jdbcType=VARCHAR},
       </if>
       <if test="record.feedType != null" >
-        feed_Type = #{record.feedType,jdbcType=BIT},
+        feed_Type = #{record.feedType,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -232,8 +232,8 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       user_name = #{record.userName,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
-      feed_Type = #{record.feedType,jdbcType=BIT},
-      status = #{record.status,jdbcType=BIT},
+      feed_Type = #{record.feedType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -246,8 +246,8 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       user_name = #{record.userName,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
-      feed_Type = #{record.feedType,jdbcType=BIT},
-      status = #{record.status,jdbcType=BIT},
+      feed_Type = #{record.feedType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -266,10 +266,10 @@
         mobile = #{mobile,jdbcType=VARCHAR},
       </if>
       <if test="feedType != null" >
-        feed_Type = #{feedType,jdbcType=BIT},
+        feed_Type = #{feedType,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -285,8 +285,8 @@
     set user_id = #{userId,jdbcType=INTEGER},
       user_name = #{userName,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      feed_Type = #{feedType,jdbcType=BIT},
-      status = #{status,jdbcType=BIT},
+      feed_Type = #{feedType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
     where msg_id = #{msgId,jdbcType=INTEGER}
@@ -296,8 +296,8 @@
     set user_id = #{userId,jdbcType=INTEGER},
       user_name = #{userName,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      feed_Type = #{feedType,jdbcType=BIT},
-      status = #{status,jdbcType=BIT},
+      feed_Type = #{feedType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP}
     where msg_id = #{msgId,jdbcType=INTEGER}
   </update>

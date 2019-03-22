@@ -10,7 +10,7 @@ public interface ShopAdMapper {
 
     int deleteByExample(ShopAdExample example);
 
-    int deleteByPrimaryKey(Short id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(ShopAd record);
 
@@ -20,7 +20,7 @@ public interface ShopAdMapper {
 
     List<ShopAd> selectByExample(ShopAdExample example);
 
-    ShopAd selectByPrimaryKey(Short id);
+    ShopAd selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") ShopAd record, @Param("example") ShopAdExample example);
 

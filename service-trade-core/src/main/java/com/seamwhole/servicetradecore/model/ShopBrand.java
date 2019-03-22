@@ -13,19 +13,19 @@ public class ShopBrand {
 
     private String picUrl;
 
-    private Byte sortOrder;
+    private Integer sortOrder;
 
-    private Boolean isShow;
+    private Integer isShow;
 
     private BigDecimal floorPrice;
 
     private String appListPicUrl;
 
-    private Boolean isNew;
+    private Integer isNew;
 
     private String newPicUrl;
 
-    private Byte newSortOrder;
+    private Integer newSortOrder;
 
     public Integer getId() {
         return id;
@@ -67,19 +67,19 @@ public class ShopBrand {
         this.picUrl = picUrl == null ? null : picUrl.trim();
     }
 
-    public Byte getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Byte sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 
-    public Boolean getIsShow() {
+    public Integer getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Integer isShow) {
         this.isShow = isShow;
     }
 
@@ -99,11 +99,11 @@ public class ShopBrand {
         this.appListPicUrl = appListPicUrl == null ? null : appListPicUrl.trim();
     }
 
-    public Boolean getIsNew() {
+    public Integer getIsNew() {
         return isNew;
     }
 
-    public void setIsNew(Boolean isNew) {
+    public void setIsNew(Integer isNew) {
         this.isNew = isNew;
     }
 
@@ -115,11 +115,11 @@ public class ShopBrand {
         this.newPicUrl = newPicUrl == null ? null : newPicUrl.trim();
     }
 
-    public Byte getNewSortOrder() {
+    public Integer getNewSortOrder() {
         return newSortOrder;
     }
 
-    public void setNewSortOrder(Byte newSortOrder) {
+    public void setNewSortOrder(Integer newSortOrder) {
         this.newSortOrder = newSortOrder;
     }
 }

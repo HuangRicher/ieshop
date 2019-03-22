@@ -1,17 +1,17 @@
 package com.seamwhole.servicetradecore.model;
 
 public class UserLevel {
-    private Byte id;
+    private Integer id;
 
     private String name;
 
     private String description;
 
-    public Byte getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Byte id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

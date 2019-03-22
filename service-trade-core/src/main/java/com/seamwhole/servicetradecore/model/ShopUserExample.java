@@ -315,52 +315,52 @@ public class ShopUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andGenderEqualTo(Boolean value) {
+        public Criteria andGenderEqualTo(Integer value) {
             addCriterion("gender =", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotEqualTo(Boolean value) {
+        public Criteria andGenderNotEqualTo(Integer value) {
             addCriterion("gender <>", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThan(Boolean value) {
+        public Criteria andGenderGreaterThan(Integer value) {
             addCriterion("gender >", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andGenderGreaterThanOrEqualTo(Integer value) {
             addCriterion("gender >=", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThan(Boolean value) {
+        public Criteria andGenderLessThan(Integer value) {
             addCriterion("gender <", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderLessThanOrEqualTo(Boolean value) {
+        public Criteria andGenderLessThanOrEqualTo(Integer value) {
             addCriterion("gender <=", value, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderIn(List<Boolean> values) {
+        public Criteria andGenderIn(List<Integer> values) {
             addCriterion("gender in", values, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotIn(List<Boolean> values) {
+        public Criteria andGenderNotIn(List<Integer> values) {
             addCriterion("gender not in", values, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderBetween(Boolean value1, Boolean value2) {
+        public Criteria andGenderBetween(Integer value1, Integer value2) {
             addCriterion("gender between", value1, value2, "gender");
             return (Criteria) this;
         }
 
-        public Criteria andGenderNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andGenderNotBetween(Integer value1, Integer value2) {
             addCriterion("gender not between", value1, value2, "gender");
             return (Criteria) this;
         }
@@ -625,52 +625,52 @@ public class ShopUserExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdEqualTo(Byte value) {
+        public Criteria andUserLevelIdEqualTo(Integer value) {
             addCriterion("user_level_id =", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdNotEqualTo(Byte value) {
+        public Criteria andUserLevelIdNotEqualTo(Integer value) {
             addCriterion("user_level_id <>", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdGreaterThan(Byte value) {
+        public Criteria andUserLevelIdGreaterThan(Integer value) {
             addCriterion("user_level_id >", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdGreaterThanOrEqualTo(Byte value) {
+        public Criteria andUserLevelIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("user_level_id >=", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdLessThan(Byte value) {
+        public Criteria andUserLevelIdLessThan(Integer value) {
             addCriterion("user_level_id <", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdLessThanOrEqualTo(Byte value) {
+        public Criteria andUserLevelIdLessThanOrEqualTo(Integer value) {
             addCriterion("user_level_id <=", value, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdIn(List<Byte> values) {
+        public Criteria andUserLevelIdIn(List<Integer> values) {
             addCriterion("user_level_id in", values, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdNotIn(List<Byte> values) {
+        public Criteria andUserLevelIdNotIn(List<Integer> values) {
             addCriterion("user_level_id not in", values, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdBetween(Byte value1, Byte value2) {
+        public Criteria andUserLevelIdBetween(Integer value1, Integer value2) {
             addCriterion("user_level_id between", value1, value2, "userLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andUserLevelIdNotBetween(Byte value1, Byte value2) {
+        public Criteria andUserLevelIdNotBetween(Integer value1, Integer value2) {
             addCriterion("user_level_id not between", value1, value2, "userLevelId");
             return (Criteria) this;
         }

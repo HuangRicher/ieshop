@@ -11,9 +11,9 @@ public class FeedBack {
 
     private String mobile;
 
-    private Boolean feedType;
+    private Integer feedType;
 
-    private Boolean status;
+    private Integer status;
 
     private Date addTime;
 
@@ -51,19 +51,19 @@ public class FeedBack {
         this.mobile = mobile == null ? null : mobile.trim();
     }
 
-    public Boolean getFeedType() {
+    public Integer getFeedType() {
         return feedType;
     }
 
-    public void setFeedType(Boolean feedType) {
+    public void setFeedType(Integer feedType) {
         this.feedType = feedType;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -12,9 +12,9 @@ public class Order {
 
     private Integer orderStatus;
 
-    private Boolean shippingStatus;
+    private Integer shippingStatus;
 
-    private Boolean payStatus;
+    private Integer payStatus;
 
     private String consignee;
 
@@ -32,7 +32,7 @@ public class Order {
 
     private String postscript;
 
-    private Byte shippingId;
+    private Integer shippingId;
 
     private String shippingName;
 
@@ -106,19 +106,19 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Boolean getShippingStatus() {
+    public Integer getShippingStatus() {
         return shippingStatus;
     }
 
-    public void setShippingStatus(Boolean shippingStatus) {
+    public void setShippingStatus(Integer shippingStatus) {
         this.shippingStatus = shippingStatus;
     }
 
-    public Boolean getPayStatus() {
+    public Integer getPayStatus() {
         return payStatus;
     }
 
-    public void setPayStatus(Boolean payStatus) {
+    public void setPayStatus(Integer payStatus) {
         this.payStatus = payStatus;
     }
 
@@ -186,11 +186,11 @@ public class Order {
         this.postscript = postscript == null ? null : postscript.trim();
     }
 
-    public Byte getShippingId() {
+    public Integer getShippingId() {
         return shippingId;
     }
 
-    public void setShippingId(Byte shippingId) {
+    public void setShippingId(Integer shippingId) {
         this.shippingId = shippingId;
     }
 

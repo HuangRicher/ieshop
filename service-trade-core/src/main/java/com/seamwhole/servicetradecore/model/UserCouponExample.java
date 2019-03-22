@@ -175,52 +175,52 @@ public class UserCouponExample {
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdEqualTo(Byte value) {
+        public Criteria andCouponIdEqualTo(Integer value) {
             addCriterion("coupon_id =", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdNotEqualTo(Byte value) {
+        public Criteria andCouponIdNotEqualTo(Integer value) {
             addCriterion("coupon_id <>", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdGreaterThan(Byte value) {
+        public Criteria andCouponIdGreaterThan(Integer value) {
             addCriterion("coupon_id >", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdGreaterThanOrEqualTo(Byte value) {
+        public Criteria andCouponIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("coupon_id >=", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdLessThan(Byte value) {
+        public Criteria andCouponIdLessThan(Integer value) {
             addCriterion("coupon_id <", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdLessThanOrEqualTo(Byte value) {
+        public Criteria andCouponIdLessThanOrEqualTo(Integer value) {
             addCriterion("coupon_id <=", value, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdIn(List<Byte> values) {
+        public Criteria andCouponIdIn(List<Integer> values) {
             addCriterion("coupon_id in", values, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdNotIn(List<Byte> values) {
+        public Criteria andCouponIdNotIn(List<Integer> values) {
             addCriterion("coupon_id not in", values, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdBetween(Byte value1, Byte value2) {
+        public Criteria andCouponIdBetween(Integer value1, Integer value2) {
             addCriterion("coupon_id between", value1, value2, "couponId");
             return (Criteria) this;
         }
 
-        public Criteria andCouponIdNotBetween(Byte value1, Byte value2) {
+        public Criteria andCouponIdNotBetween(Integer value1, Integer value2) {
             addCriterion("coupon_id not between", value1, value2, "couponId");
             return (Criteria) this;
         }
@@ -675,52 +675,52 @@ public class UserCouponExample {
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusEqualTo(Byte value) {
+        public Criteria andCouponStatusEqualTo(Integer value) {
             addCriterion("coupon_status =", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusNotEqualTo(Byte value) {
+        public Criteria andCouponStatusNotEqualTo(Integer value) {
             addCriterion("coupon_status <>", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusGreaterThan(Byte value) {
+        public Criteria andCouponStatusGreaterThan(Integer value) {
             addCriterion("coupon_status >", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andCouponStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("coupon_status >=", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusLessThan(Byte value) {
+        public Criteria andCouponStatusLessThan(Integer value) {
             addCriterion("coupon_status <", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusLessThanOrEqualTo(Byte value) {
+        public Criteria andCouponStatusLessThanOrEqualTo(Integer value) {
             addCriterion("coupon_status <=", value, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusIn(List<Byte> values) {
+        public Criteria andCouponStatusIn(List<Integer> values) {
             addCriterion("coupon_status in", values, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusNotIn(List<Byte> values) {
+        public Criteria andCouponStatusNotIn(List<Integer> values) {
             addCriterion("coupon_status not in", values, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusBetween(Byte value1, Byte value2) {
+        public Criteria andCouponStatusBetween(Integer value1, Integer value2) {
             addCriterion("coupon_status between", value1, value2, "couponStatus");
             return (Criteria) this;
         }
 
-        public Criteria andCouponStatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andCouponStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("coupon_status not between", value1, value2, "couponStatus");
             return (Criteria) this;
         }

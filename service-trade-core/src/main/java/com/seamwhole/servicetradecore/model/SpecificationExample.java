@@ -244,52 +244,52 @@ public class SpecificationExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Byte value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Byte value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Byte value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Byte value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Byte> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Byte> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }

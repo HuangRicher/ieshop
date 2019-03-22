@@ -304,52 +304,52 @@ public class CommentPictureExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Boolean value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Boolean value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Boolean value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Boolean value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Boolean value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Boolean> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Boolean> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }

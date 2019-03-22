@@ -495,52 +495,52 @@ public class OrderGoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andNumberEqualTo(Short value) {
+        public Criteria andNumberEqualTo(Integer value) {
             addCriterion("number =", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotEqualTo(Short value) {
+        public Criteria andNumberNotEqualTo(Integer value) {
             addCriterion("number <>", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThan(Short value) {
+        public Criteria andNumberGreaterThan(Integer value) {
             addCriterion("number >", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThanOrEqualTo(Short value) {
+        public Criteria andNumberGreaterThanOrEqualTo(Integer value) {
             addCriterion("number >=", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThan(Short value) {
+        public Criteria andNumberLessThan(Integer value) {
             addCriterion("number <", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThanOrEqualTo(Short value) {
+        public Criteria andNumberLessThanOrEqualTo(Integer value) {
             addCriterion("number <=", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberIn(List<Short> values) {
+        public Criteria andNumberIn(List<Integer> values) {
             addCriterion("number in", values, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotIn(List<Short> values) {
+        public Criteria andNumberNotIn(List<Integer> values) {
             addCriterion("number not in", values, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberBetween(Short value1, Short value2) {
+        public Criteria andNumberBetween(Integer value1, Integer value2) {
             addCriterion("number between", value1, value2, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotBetween(Short value1, Short value2) {
+        public Criteria andNumberNotBetween(Integer value1, Integer value2) {
             addCriterion("number not between", value1, value2, "number");
             return (Criteria) this;
         }
@@ -675,52 +675,52 @@ public class OrderGoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsRealEqualTo(Boolean value) {
+        public Criteria andIsRealEqualTo(Integer value) {
             addCriterion("is_real =", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealNotEqualTo(Boolean value) {
+        public Criteria andIsRealNotEqualTo(Integer value) {
             addCriterion("is_real <>", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealGreaterThan(Boolean value) {
+        public Criteria andIsRealGreaterThan(Integer value) {
             addCriterion("is_real >", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsRealGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_real >=", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealLessThan(Boolean value) {
+        public Criteria andIsRealLessThan(Integer value) {
             addCriterion("is_real <", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsRealLessThanOrEqualTo(Integer value) {
             addCriterion("is_real <=", value, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealIn(List<Boolean> values) {
+        public Criteria andIsRealIn(List<Integer> values) {
             addCriterion("is_real in", values, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealNotIn(List<Boolean> values) {
+        public Criteria andIsRealNotIn(List<Integer> values) {
             addCriterion("is_real not in", values, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsRealBetween(Integer value1, Integer value2) {
             addCriterion("is_real between", value1, value2, "isReal");
             return (Criteria) this;
         }
 
-        public Criteria andIsRealNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsRealNotBetween(Integer value1, Integer value2) {
             addCriterion("is_real not between", value1, value2, "isReal");
             return (Criteria) this;
         }

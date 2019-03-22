@@ -11,11 +11,11 @@ public class Category {
 
     private Integer parentId;
 
-    private Boolean sortOrder;
+    private Integer sortOrder;
 
-    private Boolean showIndex;
+    private Integer showIndex;
 
-    private Boolean isShow;
+    private Integer isShow;
 
     private String bannerUrl;
 
@@ -71,27 +71,27 @@ public class Category {
         this.parentId = parentId;
     }
 
-    public Boolean getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Boolean sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 
-    public Boolean getShowIndex() {
+    public Integer getShowIndex() {
         return showIndex;
     }
 
-    public void setShowIndex(Boolean showIndex) {
+    public void setShowIndex(Integer showIndex) {
         this.showIndex = showIndex;
     }
 
-    public Boolean getIsShow() {
+    public Integer getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Integer isShow) {
         this.isShow = isShow;
     }
 

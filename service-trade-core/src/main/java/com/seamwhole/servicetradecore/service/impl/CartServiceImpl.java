@@ -2,7 +2,7 @@ package com.seamwhole.servicetradecore.service.impl;
 
 import com.seamwhole.servicetradecore.mapper.ShopCartMapper;
 import com.seamwhole.servicetradecore.mapper.ext.ShopCartExtMapper;
-import com.seamwhole.servicetradecore.mapper.model.ShopCartModel;
+import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.ShopCart;
 import com.seamwhole.servicetradecore.model.ShopCartExample;
 import com.seamwhole.servicetradecore.service.CartService;
@@ -29,9 +29,9 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    public List<ShopCartModel> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order) {
+    public List<ShopCartDO> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order) {
 
-        List<ShopCartModel> cartInfoList = shopCartExtMapper.queryList(userId,goodsId,productId,checked,order);
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,goodsId,productId,checked,order);
         return cartInfoList;
     }
 
@@ -46,10 +46,10 @@ public class CartServiceImpl implements CartService {
         shopCartMapper.insertSelective(cart);
         // 更新购物车搭配减价
         // 判断购物车中是否存在此规格商品
-        List<ShopCartModel> cartInfoList = shopCartExtMapper.queryList(cart.getUserId(),null,null,null,"");
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(cart.getUserId(),null,null,null,"");
         List<Integer> goodsIds = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();
-        for (ShopCartModel cartItem : cartInfoList) {
+        for (ShopCartDO cartItem : cartInfoList) {
             if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
                 goodsIds.add(cartItem.getGoodsId());
             }
@@ -101,11 +101,11 @@ public class CartServiceImpl implements CartService {
 
         // 判断购物车中是否存在此规格商品
         //List<ShopCart> cartInfoList = cartDao.queryList(cartParam);
-        List<ShopCartModel> cartInfoList = shopCartExtMapper.queryList(userId,null,null,null,"");
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,null,null,null,"");
         //Map crashParam = new HashMap();
         List<Integer> goods_ids = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();
-        for (ShopCartModel cartItem : cartInfoList) {
+        for (ShopCartDO cartItem : cartInfoList) {
             if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
                 goods_ids.add(cartItem.getGoodsId());
             }

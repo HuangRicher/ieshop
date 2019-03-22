@@ -685,52 +685,52 @@ public class ShopCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andNumberEqualTo(Short value) {
+        public Criteria andNumberEqualTo(Integer value) {
             addCriterion("number =", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotEqualTo(Short value) {
+        public Criteria andNumberNotEqualTo(Integer value) {
             addCriterion("number <>", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThan(Short value) {
+        public Criteria andNumberGreaterThan(Integer value) {
             addCriterion("number >", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThanOrEqualTo(Short value) {
+        public Criteria andNumberGreaterThanOrEqualTo(Integer value) {
             addCriterion("number >=", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThan(Short value) {
+        public Criteria andNumberLessThan(Integer value) {
             addCriterion("number <", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThanOrEqualTo(Short value) {
+        public Criteria andNumberLessThanOrEqualTo(Integer value) {
             addCriterion("number <=", value, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberIn(List<Short> values) {
+        public Criteria andNumberIn(List<Integer> values) {
             addCriterion("number in", values, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotIn(List<Short> values) {
+        public Criteria andNumberNotIn(List<Integer> values) {
             addCriterion("number not in", values, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberBetween(Short value1, Short value2) {
+        public Criteria andNumberBetween(Integer value1, Integer value2) {
             addCriterion("number between", value1, value2, "number");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotBetween(Short value1, Short value2) {
+        public Criteria andNumberNotBetween(Integer value1, Integer value2) {
             addCriterion("number not between", value1, value2, "number");
             return (Criteria) this;
         }
@@ -815,52 +815,52 @@ public class ShopCartExample {
             return (Criteria) this;
         }
 
-        public Criteria andCheckedEqualTo(Boolean value) {
+        public Criteria andCheckedEqualTo(Integer value) {
             addCriterion("checked =", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedNotEqualTo(Boolean value) {
+        public Criteria andCheckedNotEqualTo(Integer value) {
             addCriterion("checked <>", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedGreaterThan(Boolean value) {
+        public Criteria andCheckedGreaterThan(Integer value) {
             addCriterion("checked >", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andCheckedGreaterThanOrEqualTo(Integer value) {
             addCriterion("checked >=", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedLessThan(Boolean value) {
+        public Criteria andCheckedLessThan(Integer value) {
             addCriterion("checked <", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedLessThanOrEqualTo(Boolean value) {
+        public Criteria andCheckedLessThanOrEqualTo(Integer value) {
             addCriterion("checked <=", value, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedIn(List<Boolean> values) {
+        public Criteria andCheckedIn(List<Integer> values) {
             addCriterion("checked in", values, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedNotIn(List<Boolean> values) {
+        public Criteria andCheckedNotIn(List<Integer> values) {
             addCriterion("checked not in", values, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedBetween(Boolean value1, Boolean value2) {
+        public Criteria andCheckedBetween(Integer value1, Integer value2) {
             addCriterion("checked between", value1, value2, "checked");
             return (Criteria) this;
         }
 
-        public Criteria andCheckedNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andCheckedNotBetween(Integer value1, Integer value2) {
             addCriterion("checked not between", value1, value2, "checked");
             return (Criteria) this;
         }

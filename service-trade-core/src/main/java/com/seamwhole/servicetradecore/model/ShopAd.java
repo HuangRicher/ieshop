@@ -3,11 +3,11 @@ package com.seamwhole.servicetradecore.model;
 import java.util.Date;
 
 public class ShopAd {
-    private Short id;
+    private Integer id;
 
-    private Short adPositionId;
+    private Integer adPositionId;
 
-    private Byte mediaType;
+    private Integer mediaType;
 
     private String name;
 
@@ -17,31 +17,31 @@ public class ShopAd {
 
     private Date endTime;
 
-    private Byte enabled;
+    private Integer enabled;
 
     private String imageUrl;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Short getAdPositionId() {
+    public Integer getAdPositionId() {
         return adPositionId;
     }
 
-    public void setAdPositionId(Short adPositionId) {
+    public void setAdPositionId(Integer adPositionId) {
         this.adPositionId = adPositionId;
     }
 
-    public Byte getMediaType() {
+    public Integer getMediaType() {
         return mediaType;
     }
 
-    public void setMediaType(Byte mediaType) {
+    public void setMediaType(Integer mediaType) {
         this.mediaType = mediaType;
     }
 
@@ -77,11 +77,11 @@ public class ShopAd {
         this.endTime = endTime;
     }
 
-    public Byte getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Byte enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 

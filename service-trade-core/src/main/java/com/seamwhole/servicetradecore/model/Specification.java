@@ -5,7 +5,7 @@ public class Specification {
 
     private String name;
 
-    private Byte sortOrder;
+    private Integer sortOrder;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Specification {
         this.name = name == null ? null : name.trim();
     }
 
-    public Byte getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Byte sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 }

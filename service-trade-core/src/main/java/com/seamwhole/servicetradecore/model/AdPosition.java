@@ -1,21 +1,21 @@
 package com.seamwhole.servicetradecore.model;
 
 public class AdPosition {
-    private Byte id;
+    private Integer id;
 
     private String name;
 
-    private Short width;
+    private Integer width;
 
-    private Short height;
+    private Integer height;
 
     private String desc;
 
-    public Byte getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Byte id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -27,19 +27,19 @@ public class AdPosition {
         this.name = name == null ? null : name.trim();
     }
 
-    public Short getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(Short width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public Short getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(Short height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 

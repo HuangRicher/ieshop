@@ -455,52 +455,52 @@ public class ShopBrandExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Byte value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Byte value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Byte value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Byte value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Byte value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Byte> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Byte> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Byte value1, Byte value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
@@ -515,52 +515,52 @@ public class ShopBrandExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsShowEqualTo(Boolean value) {
+        public Criteria andIsShowEqualTo(Integer value) {
             addCriterion("is_show =", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotEqualTo(Boolean value) {
+        public Criteria andIsShowNotEqualTo(Integer value) {
             addCriterion("is_show <>", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThan(Boolean value) {
+        public Criteria andIsShowGreaterThan(Integer value) {
             addCriterion("is_show >", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_show >=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThan(Boolean value) {
+        public Criteria andIsShowLessThan(Integer value) {
             addCriterion("is_show <", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowLessThanOrEqualTo(Integer value) {
             addCriterion("is_show <=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowIn(List<Boolean> values) {
+        public Criteria andIsShowIn(List<Integer> values) {
             addCriterion("is_show in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotIn(List<Boolean> values) {
+        public Criteria andIsShowNotIn(List<Integer> values) {
             addCriterion("is_show not in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowBetween(Integer value1, Integer value2) {
             addCriterion("is_show between", value1, value2, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowNotBetween(Integer value1, Integer value2) {
             addCriterion("is_show not between", value1, value2, "isShow");
             return (Criteria) this;
         }
@@ -705,52 +705,52 @@ public class ShopBrandExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsNewEqualTo(Boolean value) {
+        public Criteria andIsNewEqualTo(Integer value) {
             addCriterion("is_new =", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotEqualTo(Boolean value) {
+        public Criteria andIsNewNotEqualTo(Integer value) {
             addCriterion("is_new <>", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewGreaterThan(Boolean value) {
+        public Criteria andIsNewGreaterThan(Integer value) {
             addCriterion("is_new >", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsNewGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_new >=", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewLessThan(Boolean value) {
+        public Criteria andIsNewLessThan(Integer value) {
             addCriterion("is_new <", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsNewLessThanOrEqualTo(Integer value) {
             addCriterion("is_new <=", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewIn(List<Boolean> values) {
+        public Criteria andIsNewIn(List<Integer> values) {
             addCriterion("is_new in", values, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotIn(List<Boolean> values) {
+        public Criteria andIsNewNotIn(List<Integer> values) {
             addCriterion("is_new not in", values, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsNewBetween(Integer value1, Integer value2) {
             addCriterion("is_new between", value1, value2, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsNewNotBetween(Integer value1, Integer value2) {
             addCriterion("is_new not between", value1, value2, "isNew");
             return (Criteria) this;
         }
@@ -835,52 +835,52 @@ public class ShopBrandExample {
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderEqualTo(Byte value) {
+        public Criteria andNewSortOrderEqualTo(Integer value) {
             addCriterion("new_sort_order =", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderNotEqualTo(Byte value) {
+        public Criteria andNewSortOrderNotEqualTo(Integer value) {
             addCriterion("new_sort_order <>", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderGreaterThan(Byte value) {
+        public Criteria andNewSortOrderGreaterThan(Integer value) {
             addCriterion("new_sort_order >", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderGreaterThanOrEqualTo(Byte value) {
+        public Criteria andNewSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("new_sort_order >=", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderLessThan(Byte value) {
+        public Criteria andNewSortOrderLessThan(Integer value) {
             addCriterion("new_sort_order <", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderLessThanOrEqualTo(Byte value) {
+        public Criteria andNewSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("new_sort_order <=", value, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderIn(List<Byte> values) {
+        public Criteria andNewSortOrderIn(List<Integer> values) {
             addCriterion("new_sort_order in", values, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderNotIn(List<Byte> values) {
+        public Criteria andNewSortOrderNotIn(List<Integer> values) {
             addCriterion("new_sort_order not in", values, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderBetween(Byte value1, Byte value2) {
+        public Criteria andNewSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("new_sort_order between", value1, value2, "newSortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andNewSortOrderNotBetween(Byte value1, Byte value2) {
+        public Criteria andNewSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("new_sort_order not between", value1, value2, "newSortOrder");
             return (Criteria) this;
         }

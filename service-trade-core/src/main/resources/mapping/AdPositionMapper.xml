@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seamwhole.servicetradecore.mapper.AdPositionMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.AdPosition" >
-    <id column="id" property="id" jdbcType="TINYINT" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="width" property="width" jdbcType="SMALLINT" />
-    <result column="height" property="height" jdbcType="SMALLINT" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
     <result column="desc" property="desc" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -83,15 +83,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from ishop_ad_position
-    where id = #{id,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ishop_ad_position
-    where id = #{id,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.seamwhole.servicetradecore.model.AdPositionExample" >
     delete from ishop_ad_position
@@ -102,8 +102,8 @@
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.AdPosition" >
     insert into ishop_ad_position (id, name, width, 
       height, desc)
-    values (#{id,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{width,jdbcType=SMALLINT}, 
-      #{height,jdbcType=SMALLINT}, #{desc,jdbcType=VARCHAR})
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER}, 
+      #{height,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.AdPosition" >
     insert into ishop_ad_position
@@ -126,16 +126,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=TINYINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="width != null" >
-        #{width,jdbcType=SMALLINT},
+        #{width,jdbcType=INTEGER},
       </if>
       <if test="height != null" >
-        #{height,jdbcType=SMALLINT},
+        #{height,jdbcType=INTEGER},
       </if>
       <if test="desc != null" >
         #{desc,jdbcType=VARCHAR},
@@ -152,16 +152,16 @@
     update ishop_ad_position
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=TINYINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.width != null" >
-        width = #{record.width,jdbcType=SMALLINT},
+        width = #{record.width,jdbcType=INTEGER},
       </if>
       <if test="record.height != null" >
-        height = #{record.height,jdbcType=SMALLINT},
+        height = #{record.height,jdbcType=INTEGER},
       </if>
       <if test="record.desc != null" >
         desc = #{record.desc,jdbcType=VARCHAR},
@@ -173,10 +173,10 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update ishop_ad_position
-    set id = #{record.id,jdbcType=TINYINT},
+    set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      width = #{record.width,jdbcType=SMALLINT},
-      height = #{record.height,jdbcType=SMALLINT},
+      width = #{record.width,jdbcType=INTEGER},
+      height = #{record.height,jdbcType=INTEGER},
       desc = #{record.desc,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -189,23 +189,23 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="width != null" >
-        width = #{width,jdbcType=SMALLINT},
+        width = #{width,jdbcType=INTEGER},
       </if>
       <if test="height != null" >
-        height = #{height,jdbcType=SMALLINT},
+        height = #{height,jdbcType=INTEGER},
       </if>
       <if test="desc != null" >
         desc = #{desc,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.AdPosition" >
     update ishop_ad_position
     set name = #{name,jdbcType=VARCHAR},
-      width = #{width,jdbcType=SMALLINT},
-      height = #{height,jdbcType=SMALLINT},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
       desc = #{desc,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

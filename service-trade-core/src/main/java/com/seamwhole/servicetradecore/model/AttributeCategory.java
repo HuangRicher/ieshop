@@ -5,7 +5,7 @@ public class AttributeCategory {
 
     private String name;
 
-    private Boolean enabled;
+    private Integer enabled;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class AttributeCategory {
         this.name = name == null ? null : name.trim();
     }
 
-    public Boolean getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 }

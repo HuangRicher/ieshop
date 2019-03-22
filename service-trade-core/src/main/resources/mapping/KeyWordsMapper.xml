@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.KeyWords" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
-    <result column="is_hot" property="isHot" jdbcType="BIT" />
-    <result column="is_default" property="isDefault" jdbcType="BIT" />
-    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="is_hot" property="isHot" jdbcType="INTEGER" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
     <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
     <result column="scheme_url" property="schemeUrl" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
@@ -106,8 +106,8 @@
     insert into ishop_keywords (id, keyword, is_hot, 
       is_default, is_show, sort_order, 
       scheme_url, type)
-    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{isHot,jdbcType=BIT}, 
-      #{isDefault,jdbcType=BIT}, #{isShow,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{isHot,jdbcType=INTEGER}, 
+      #{isDefault,jdbcType=INTEGER}, #{isShow,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, 
       #{schemeUrl,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.KeyWords" >
@@ -146,13 +146,13 @@
         #{keyword,jdbcType=VARCHAR},
       </if>
       <if test="isHot != null" >
-        #{isHot,jdbcType=BIT},
+        #{isHot,jdbcType=INTEGER},
       </if>
       <if test="isDefault != null" >
-        #{isDefault,jdbcType=BIT},
+        #{isDefault,jdbcType=INTEGER},
       </if>
       <if test="isShow != null" >
-        #{isShow,jdbcType=BIT},
+        #{isShow,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
         #{sortOrder,jdbcType=INTEGER},
@@ -181,13 +181,13 @@
         keyword = #{record.keyword,jdbcType=VARCHAR},
       </if>
       <if test="record.isHot != null" >
-        is_hot = #{record.isHot,jdbcType=BIT},
+        is_hot = #{record.isHot,jdbcType=INTEGER},
       </if>
       <if test="record.isDefault != null" >
-        is_default = #{record.isDefault,jdbcType=BIT},
+        is_default = #{record.isDefault,jdbcType=INTEGER},
       </if>
       <if test="record.isShow != null" >
-        is_show = #{record.isShow,jdbcType=BIT},
+        is_show = #{record.isShow,jdbcType=INTEGER},
       </if>
       <if test="record.sortOrder != null" >
         sort_order = #{record.sortOrder,jdbcType=INTEGER},
@@ -207,9 +207,9 @@
     update ishop_keywords
     set id = #{record.id,jdbcType=INTEGER},
       keyword = #{record.keyword,jdbcType=VARCHAR},
-      is_hot = #{record.isHot,jdbcType=BIT},
-      is_default = #{record.isDefault,jdbcType=BIT},
-      is_show = #{record.isShow,jdbcType=BIT},
+      is_hot = #{record.isHot,jdbcType=INTEGER},
+      is_default = #{record.isDefault,jdbcType=INTEGER},
+      is_show = #{record.isShow,jdbcType=INTEGER},
       sort_order = #{record.sortOrder,jdbcType=INTEGER},
       scheme_url = #{record.schemeUrl,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER}
@@ -224,13 +224,13 @@
         keyword = #{keyword,jdbcType=VARCHAR},
       </if>
       <if test="isHot != null" >
-        is_hot = #{isHot,jdbcType=BIT},
+        is_hot = #{isHot,jdbcType=INTEGER},
       </if>
       <if test="isDefault != null" >
-        is_default = #{isDefault,jdbcType=BIT},
+        is_default = #{isDefault,jdbcType=INTEGER},
       </if>
       <if test="isShow != null" >
-        is_show = #{isShow,jdbcType=BIT},
+        is_show = #{isShow,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
         sort_order = #{sortOrder,jdbcType=INTEGER},
@@ -247,9 +247,9 @@
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.KeyWords" >
     update ishop_keywords
     set keyword = #{keyword,jdbcType=VARCHAR},
-      is_hot = #{isHot,jdbcType=BIT},
-      is_default = #{isDefault,jdbcType=BIT},
-      is_show = #{isShow,jdbcType=BIT},
+      is_hot = #{isHot,jdbcType=INTEGER},
+      is_default = #{isDefault,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=INTEGER},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       scheme_url = #{schemeUrl,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER}

@@ -3,7 +3,7 @@ package com.seamwhole.servicetradecore.model;
 public class ShopComment {
     private Integer id;
 
-    private Byte typeId;
+    private Integer typeId;
 
     private Integer valueId;
 
@@ -11,7 +11,7 @@ public class ShopComment {
 
     private Long addTime;
 
-    private Byte status;
+    private Integer status;
 
     private Integer userId;
 
@@ -23,11 +23,11 @@ public class ShopComment {
         this.id = id;
     }
 
-    public Byte getTypeId() {
+    public Integer getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(Byte typeId) {
+    public void setTypeId(Integer typeId) {
         this.typeId = typeId;
     }
 
@@ -55,11 +55,11 @@ public class ShopComment {
         this.addTime = addTime;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

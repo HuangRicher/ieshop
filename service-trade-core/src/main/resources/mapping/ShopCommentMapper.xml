@@ -3,11 +3,11 @@
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ShopCommentMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopComment" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="type_id" property="typeId" jdbcType="TINYINT" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
     <result column="value_id" property="valueId" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="add_time" property="addTime" jdbcType="BIGINT" />
-    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -105,8 +105,8 @@
     insert into ishop_comment (id, type_id, value_id, 
       content, add_time, status, 
       user_id)
-    values (#{id,jdbcType=INTEGER}, #{typeId,jdbcType=TINYINT}, #{valueId,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{addTime,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{addTime,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
       #{userId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.ShopComment" >
@@ -139,7 +139,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="typeId != null" >
-        #{typeId,jdbcType=TINYINT},
+        #{typeId,jdbcType=INTEGER},
       </if>
       <if test="valueId != null" >
         #{valueId,jdbcType=INTEGER},
@@ -151,7 +151,7 @@
         #{addTime,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
@@ -171,7 +171,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.typeId != null" >
-        type_id = #{record.typeId,jdbcType=TINYINT},
+        type_id = #{record.typeId,jdbcType=INTEGER},
       </if>
       <if test="record.valueId != null" >
         value_id = #{record.valueId,jdbcType=INTEGER},
@@ -183,7 +183,7 @@
         add_time = #{record.addTime,jdbcType=BIGINT},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=TINYINT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
@@ -196,11 +196,11 @@
   <update id="updateByExample" parameterType="map" >
     update ishop_comment
     set id = #{record.id,jdbcType=INTEGER},
-      type_id = #{record.typeId,jdbcType=TINYINT},
+      type_id = #{record.typeId,jdbcType=INTEGER},
       value_id = #{record.valueId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=BIGINT},
-      status = #{record.status,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -210,7 +210,7 @@
     update ishop_comment
     <set >
       <if test="typeId != null" >
-        type_id = #{typeId,jdbcType=TINYINT},
+        type_id = #{typeId,jdbcType=INTEGER},
       </if>
       <if test="valueId != null" >
         value_id = #{valueId,jdbcType=INTEGER},
@@ -222,7 +222,7 @@
         add_time = #{addTime,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
@@ -232,11 +232,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.ShopComment" >
     update ishop_comment
-    set type_id = #{typeId,jdbcType=TINYINT},
+    set type_id = #{typeId,jdbcType=INTEGER},
       value_id = #{valueId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=BIGINT},
-      status = #{status,jdbcType=TINYINT},
+      status = #{status,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

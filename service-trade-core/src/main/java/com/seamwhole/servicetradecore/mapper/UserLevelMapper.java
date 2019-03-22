@@ -10,7 +10,7 @@ public interface UserLevelMapper {
 
     int deleteByExample(UserLevelExample example);
 
-    int deleteByPrimaryKey(Byte id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(UserLevel record);
 
@@ -18,7 +18,7 @@ public interface UserLevelMapper {
 
     List<UserLevel> selectByExample(UserLevelExample example);
 
-    UserLevel selectByPrimaryKey(Byte id);
+    UserLevel selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") UserLevel record, @Param("example") UserLevelExample example);
 

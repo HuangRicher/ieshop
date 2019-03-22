@@ -5,6 +5,8 @@ import com.platform.annotation.IgnoreAuth;
 import com.platform.entity.*;
 import com.platform.service.*;
 import com.platform.util.ApiBaseAction;
+import com.seamwhole.servicetradecore.model.ShopAd;
+import com.seamwhole.servicetradecore.service.AdService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ import java.util.Map;
 @RequestMapping("/api/index")
 public class IndexController extends BaseController {
     @Autowired
-    private ApiAdService adService;
+    private AdService adService;
     @Autowired
     private ApiChannelService channelService;
     @Autowired
@@ -44,7 +46,6 @@ public class IndexController extends BaseController {
     /**
      * 测试
      */
-    @IgnoreAuth
     @PostMapping(value = "test")
     public Object test() {
         return toResponsMsgSuccess("请求成功yyy");
@@ -54,14 +55,13 @@ public class IndexController extends BaseController {
      * app首页
      */
     @ApiOperation(value = "首页")
-    @IgnoreAuth
     @PostMapping(value = "index")
     public Object index() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("ad_position_id", 1);
-        List<AdVo> banner = adService.queryList(param);
+        List<ShopAd> banner = adService.queryByPositionId(1);
         resultObj.put("banner", banner);
         //
         param = new HashMap<String, Object>();
@@ -152,7 +152,6 @@ public class IndexController extends BaseController {
      * app首页
      */
     @ApiOperation(value = "新商品信息")
-    @IgnoreAuth
     @PostMapping(value = "newGoods")
     public Object newGoods() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
@@ -170,7 +169,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "新热门商品信息")
-    @IgnoreAuth
     @PostMapping(value = "hotGoods")
     public Object hotGoods() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
@@ -187,7 +185,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "topic")
-    @IgnoreAuth
     @PostMapping(value = "topic")
     public Object topic() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
@@ -203,7 +200,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "brand")
-    @IgnoreAuth
     @PostMapping(value = "brand")
     public Object brand() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
@@ -222,7 +218,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "category")
-    @IgnoreAuth
     @PostMapping(value = "category")
     public Object category() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
@@ -265,14 +260,13 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "banner")
-    @IgnoreAuth
     @PostMapping(value = "banner")
     public Object banner() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("ad_position_id", 1);
-        List<AdVo> banner = adService.queryList(param);
+        List<ShopAd> banner = adService.queryByPositionId(1);
         resultObj.put("banner", banner);
         //
 
@@ -280,7 +274,6 @@ public class IndexController extends BaseController {
     }
 
     @ApiOperation(value = "channel")
-    @IgnoreAuth
     @PostMapping(value = "channel")
     public Object channel() {
         Map<String, Object> resultObj = new HashMap<String, Object>();

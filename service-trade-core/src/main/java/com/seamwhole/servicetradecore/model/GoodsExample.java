@@ -636,52 +636,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleEqualTo(Boolean value) {
+        public Criteria andIsOnSaleEqualTo(Integer value) {
             addCriterion("is_on_sale =", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleNotEqualTo(Boolean value) {
+        public Criteria andIsOnSaleNotEqualTo(Integer value) {
             addCriterion("is_on_sale <>", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleGreaterThan(Boolean value) {
+        public Criteria andIsOnSaleGreaterThan(Integer value) {
             addCriterion("is_on_sale >", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsOnSaleGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_on_sale >=", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleLessThan(Boolean value) {
+        public Criteria andIsOnSaleLessThan(Integer value) {
             addCriterion("is_on_sale <", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsOnSaleLessThanOrEqualTo(Integer value) {
             addCriterion("is_on_sale <=", value, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleIn(List<Boolean> values) {
+        public Criteria andIsOnSaleIn(List<Integer> values) {
             addCriterion("is_on_sale in", values, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleNotIn(List<Boolean> values) {
+        public Criteria andIsOnSaleNotIn(List<Integer> values) {
             addCriterion("is_on_sale not in", values, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsOnSaleBetween(Integer value1, Integer value2) {
             addCriterion("is_on_sale between", value1, value2, "isOnSale");
             return (Criteria) this;
         }
 
-        public Criteria andIsOnSaleNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsOnSaleNotBetween(Integer value1, Integer value2) {
             addCriterion("is_on_sale not between", value1, value2, "isOnSale");
             return (Criteria) this;
         }
@@ -756,52 +756,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Short value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Short value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Short value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Short value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Short value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Short value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Short> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Short> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Short value1, Short value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Short value1, Short value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
@@ -816,52 +816,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteEqualTo(Boolean value) {
+        public Criteria andIsDeleteEqualTo(Integer value) {
             addCriterion("is_delete =", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotEqualTo(Boolean value) {
+        public Criteria andIsDeleteNotEqualTo(Integer value) {
             addCriterion("is_delete <>", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThan(Boolean value) {
+        public Criteria andIsDeleteGreaterThan(Integer value) {
             addCriterion("is_delete >", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsDeleteGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_delete >=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThan(Boolean value) {
+        public Criteria andIsDeleteLessThan(Integer value) {
             addCriterion("is_delete <", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsDeleteLessThanOrEqualTo(Integer value) {
             addCriterion("is_delete <=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteIn(List<Boolean> values) {
+        public Criteria andIsDeleteIn(List<Integer> values) {
             addCriterion("is_delete in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotIn(List<Boolean> values) {
+        public Criteria andIsDeleteNotIn(List<Integer> values) {
             addCriterion("is_delete not in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsDeleteBetween(Integer value1, Integer value2) {
             addCriterion("is_delete between", value1, value2, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsDeleteNotBetween(Integer value1, Integer value2) {
             addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }
@@ -1056,52 +1056,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsNewEqualTo(Boolean value) {
+        public Criteria andIsNewEqualTo(Integer value) {
             addCriterion("is_new =", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotEqualTo(Boolean value) {
+        public Criteria andIsNewNotEqualTo(Integer value) {
             addCriterion("is_new <>", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewGreaterThan(Boolean value) {
+        public Criteria andIsNewGreaterThan(Integer value) {
             addCriterion("is_new >", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsNewGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_new >=", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewLessThan(Boolean value) {
+        public Criteria andIsNewLessThan(Integer value) {
             addCriterion("is_new <", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsNewLessThanOrEqualTo(Integer value) {
             addCriterion("is_new <=", value, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewIn(List<Boolean> values) {
+        public Criteria andIsNewIn(List<Integer> values) {
             addCriterion("is_new in", values, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotIn(List<Boolean> values) {
+        public Criteria andIsNewNotIn(List<Integer> values) {
             addCriterion("is_new not in", values, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsNewBetween(Integer value1, Integer value2) {
             addCriterion("is_new between", value1, value2, "isNew");
             return (Criteria) this;
         }
 
-        public Criteria andIsNewNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsNewNotBetween(Integer value1, Integer value2) {
             addCriterion("is_new not between", value1, value2, "isNew");
             return (Criteria) this;
         }
@@ -1766,52 +1766,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveEqualTo(Boolean value) {
+        public Criteria andIsAppExclusiveEqualTo(Integer value) {
             addCriterion("is_app_exclusive =", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveNotEqualTo(Boolean value) {
+        public Criteria andIsAppExclusiveNotEqualTo(Integer value) {
             addCriterion("is_app_exclusive <>", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveGreaterThan(Boolean value) {
+        public Criteria andIsAppExclusiveGreaterThan(Integer value) {
             addCriterion("is_app_exclusive >", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsAppExclusiveGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_app_exclusive >=", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveLessThan(Boolean value) {
+        public Criteria andIsAppExclusiveLessThan(Integer value) {
             addCriterion("is_app_exclusive <", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsAppExclusiveLessThanOrEqualTo(Integer value) {
             addCriterion("is_app_exclusive <=", value, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveIn(List<Boolean> values) {
+        public Criteria andIsAppExclusiveIn(List<Integer> values) {
             addCriterion("is_app_exclusive in", values, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveNotIn(List<Boolean> values) {
+        public Criteria andIsAppExclusiveNotIn(List<Integer> values) {
             addCriterion("is_app_exclusive not in", values, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsAppExclusiveBetween(Integer value1, Integer value2) {
             addCriterion("is_app_exclusive between", value1, value2, "isAppExclusive");
             return (Criteria) this;
         }
 
-        public Criteria andIsAppExclusiveNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsAppExclusiveNotBetween(Integer value1, Integer value2) {
             addCriterion("is_app_exclusive not between", value1, value2, "isAppExclusive");
             return (Criteria) this;
         }
@@ -1826,52 +1826,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedEqualTo(Boolean value) {
+        public Criteria andIsLimitedEqualTo(Integer value) {
             addCriterion("is_limited =", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedNotEqualTo(Boolean value) {
+        public Criteria andIsLimitedNotEqualTo(Integer value) {
             addCriterion("is_limited <>", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedGreaterThan(Boolean value) {
+        public Criteria andIsLimitedGreaterThan(Integer value) {
             addCriterion("is_limited >", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsLimitedGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_limited >=", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedLessThan(Boolean value) {
+        public Criteria andIsLimitedLessThan(Integer value) {
             addCriterion("is_limited <", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsLimitedLessThanOrEqualTo(Integer value) {
             addCriterion("is_limited <=", value, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedIn(List<Boolean> values) {
+        public Criteria andIsLimitedIn(List<Integer> values) {
             addCriterion("is_limited in", values, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedNotIn(List<Boolean> values) {
+        public Criteria andIsLimitedNotIn(List<Integer> values) {
             addCriterion("is_limited not in", values, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsLimitedBetween(Integer value1, Integer value2) {
             addCriterion("is_limited between", value1, value2, "isLimited");
             return (Criteria) this;
         }
 
-        public Criteria andIsLimitedNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsLimitedNotBetween(Integer value1, Integer value2) {
             addCriterion("is_limited not between", value1, value2, "isLimited");
             return (Criteria) this;
         }
@@ -1886,52 +1886,52 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsHotEqualTo(Boolean value) {
+        public Criteria andIsHotEqualTo(Integer value) {
             addCriterion("is_hot =", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotNotEqualTo(Boolean value) {
+        public Criteria andIsHotNotEqualTo(Integer value) {
             addCriterion("is_hot <>", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotGreaterThan(Boolean value) {
+        public Criteria andIsHotGreaterThan(Integer value) {
             addCriterion("is_hot >", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsHotGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_hot >=", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotLessThan(Boolean value) {
+        public Criteria andIsHotLessThan(Integer value) {
             addCriterion("is_hot <", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsHotLessThanOrEqualTo(Integer value) {
             addCriterion("is_hot <=", value, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotIn(List<Boolean> values) {
+        public Criteria andIsHotIn(List<Integer> values) {
             addCriterion("is_hot in", values, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotNotIn(List<Boolean> values) {
+        public Criteria andIsHotNotIn(List<Integer> values) {
             addCriterion("is_hot not in", values, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsHotBetween(Integer value1, Integer value2) {
             addCriterion("is_hot between", value1, value2, "isHot");
             return (Criteria) this;
         }
 
-        public Criteria andIsHotNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsHotNotBetween(Integer value1, Integer value2) {
             addCriterion("is_hot not between", value1, value2, "isHot");
             return (Criteria) this;
         }

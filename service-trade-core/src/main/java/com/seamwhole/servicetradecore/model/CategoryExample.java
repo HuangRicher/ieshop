@@ -444,52 +444,52 @@ public class CategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderEqualTo(Boolean value) {
+        public Criteria andSortOrderEqualTo(Integer value) {
             addCriterion("sort_order =", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotEqualTo(Boolean value) {
+        public Criteria andSortOrderNotEqualTo(Integer value) {
             addCriterion("sort_order <>", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThan(Boolean value) {
+        public Criteria andSortOrderGreaterThan(Integer value) {
             addCriterion("sort_order >", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andSortOrderGreaterThanOrEqualTo(Integer value) {
             addCriterion("sort_order >=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThan(Boolean value) {
+        public Criteria andSortOrderLessThan(Integer value) {
             addCriterion("sort_order <", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderLessThanOrEqualTo(Boolean value) {
+        public Criteria andSortOrderLessThanOrEqualTo(Integer value) {
             addCriterion("sort_order <=", value, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderIn(List<Boolean> values) {
+        public Criteria andSortOrderIn(List<Integer> values) {
             addCriterion("sort_order in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotIn(List<Boolean> values) {
+        public Criteria andSortOrderNotIn(List<Integer> values) {
             addCriterion("sort_order not in", values, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortOrderBetween(Integer value1, Integer value2) {
             addCriterion("sort_order between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
 
-        public Criteria andSortOrderNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andSortOrderNotBetween(Integer value1, Integer value2) {
             addCriterion("sort_order not between", value1, value2, "sortOrder");
             return (Criteria) this;
         }
@@ -504,52 +504,52 @@ public class CategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexEqualTo(Boolean value) {
+        public Criteria andShowIndexEqualTo(Integer value) {
             addCriterion("show_index =", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexNotEqualTo(Boolean value) {
+        public Criteria andShowIndexNotEqualTo(Integer value) {
             addCriterion("show_index <>", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexGreaterThan(Boolean value) {
+        public Criteria andShowIndexGreaterThan(Integer value) {
             addCriterion("show_index >", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andShowIndexGreaterThanOrEqualTo(Integer value) {
             addCriterion("show_index >=", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexLessThan(Boolean value) {
+        public Criteria andShowIndexLessThan(Integer value) {
             addCriterion("show_index <", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexLessThanOrEqualTo(Boolean value) {
+        public Criteria andShowIndexLessThanOrEqualTo(Integer value) {
             addCriterion("show_index <=", value, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexIn(List<Boolean> values) {
+        public Criteria andShowIndexIn(List<Integer> values) {
             addCriterion("show_index in", values, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexNotIn(List<Boolean> values) {
+        public Criteria andShowIndexNotIn(List<Integer> values) {
             addCriterion("show_index not in", values, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexBetween(Boolean value1, Boolean value2) {
+        public Criteria andShowIndexBetween(Integer value1, Integer value2) {
             addCriterion("show_index between", value1, value2, "showIndex");
             return (Criteria) this;
         }
 
-        public Criteria andShowIndexNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andShowIndexNotBetween(Integer value1, Integer value2) {
             addCriterion("show_index not between", value1, value2, "showIndex");
             return (Criteria) this;
         }
@@ -564,52 +564,52 @@ public class CategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsShowEqualTo(Boolean value) {
+        public Criteria andIsShowEqualTo(Integer value) {
             addCriterion("is_show =", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotEqualTo(Boolean value) {
+        public Criteria andIsShowNotEqualTo(Integer value) {
             addCriterion("is_show <>", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThan(Boolean value) {
+        public Criteria andIsShowGreaterThan(Integer value) {
             addCriterion("is_show >", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_show >=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThan(Boolean value) {
+        public Criteria andIsShowLessThan(Integer value) {
             addCriterion("is_show <", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsShowLessThanOrEqualTo(Integer value) {
             addCriterion("is_show <=", value, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowIn(List<Boolean> values) {
+        public Criteria andIsShowIn(List<Integer> values) {
             addCriterion("is_show in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotIn(List<Boolean> values) {
+        public Criteria andIsShowNotIn(List<Integer> values) {
             addCriterion("is_show not in", values, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowBetween(Integer value1, Integer value2) {
             addCriterion("is_show between", value1, value2, "isShow");
             return (Criteria) this;
         }
 
-        public Criteria andIsShowNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsShowNotBetween(Integer value1, Integer value2) {
             addCriterion("is_show not between", value1, value2, "isShow");
             return (Criteria) this;
         }

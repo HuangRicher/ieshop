@@ -10,7 +10,7 @@ public interface AdPositionMapper {
 
     int deleteByExample(AdPositionExample example);
 
-    int deleteByPrimaryKey(Byte id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(AdPosition record);
 
@@ -18,7 +18,7 @@ public interface AdPositionMapper {
 
     List<AdPosition> selectByExample(AdPositionExample example);
 
-    AdPosition selectByPrimaryKey(Byte id);
+    AdPosition selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") AdPosition record, @Param("example") AdPositionExample example);
 

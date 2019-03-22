@@ -7,7 +7,7 @@ public class CommentPicture {
 
     private String picUrl;
 
-    private Boolean sortOrder;
+    private Integer sortOrder;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class CommentPicture {
         this.picUrl = picUrl == null ? null : picUrl.trim();
     }
 
-    public Boolean getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(Boolean sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 }

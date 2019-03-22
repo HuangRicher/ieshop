@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 @Service
-public class ApiAddressService implements AddressService {
+public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private ShopAddressMapper shopAddressMapper;

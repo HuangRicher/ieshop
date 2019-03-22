@@ -1,15 +1,14 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.CollectVo;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiCollectService;
-import com.platform.util.ApiBaseAction;
+import com.seamwhole.servicetradecore.controller.model.CollectModel;
+import com.seamwhole.servicetradecore.mapper.model.CollectDO;
+import com.seamwhole.servicetradecore.model.ShopCollect;
+import com.seamwhole.servicetradecore.service.CollectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,20 +25,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/collect")
 public class CollectController extends BaseController {
+
     @Autowired
-    private ApiCollectService collectService;
+    private CollectService collectService;
 
     /**
      * 获取用户收藏
      */
     @ApiOperation(value = "获取用户收藏")
     @PostMapping("list")
-    public Object list(@LoginUser UserVo loginUser, Integer typeId) {
+    public Object list(@RequestBody CollectModel collectModel) {
 
         Map param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
-        param.put("type_id", typeId);
-        List<CollectVo> collectEntities = collectService.queryList(param);
+        param.put("user_id", collectModel.getUserId());
+        param.put("type_id", collectModel.getValueId());
+        List<CollectDO> collectEntities = collectService.queryList(param);
 
 //        Query query = new Query(param);
 //        int total = collectService.queryTotal(query);
@@ -52,26 +52,25 @@ public class CollectController extends BaseController {
      */
     @ApiOperation(value = "添加取消收藏")
     @PostMapping("addordelete")
-    public Object addordelete(@LoginUser UserVo loginUser) {
-        JSONObject jsonParam = getJsonRequest();
-        Integer typeId = jsonParam.getInteger("typeId");
-        Integer valueId = jsonParam.getInteger("valueId");
+    public Object addordelete(@RequestBody CollectModel collectModel) {
+        Integer typeId = collectModel.getTypeId();
+        Integer valueId = collectModel.getValueId();
 
         Map param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
+        param.put("user_id", collectModel.getUserId());
         param.put("type_id", typeId);
         param.put("value_id", valueId);
-        List<CollectVo> collectEntities = collectService.queryList(param);
+        List<CollectDO> collectEntities = collectService.queryList(param);
         //
         Integer collectRes = null;
         String handleType = "add";
         if (null == collectEntities || collectEntities.size() < 1) {
-            CollectVo collectEntity = new CollectVo();
-            collectEntity.setAdd_time(System.currentTimeMillis() / 1000);
-            collectEntity.setType_id(typeId);
-            collectEntity.setValue_id(valueId);
-            collectEntity.setIs_attention(0);
-            collectEntity.setUser_id(loginUser.getUserId());
+            ShopCollect collectEntity = new ShopCollect();
+            collectEntity.setAddTime((int)(System.currentTimeMillis() / 1000));
+            collectEntity.setTypeId(typeId);
+            collectEntity.setValueId(valueId);
+            collectEntity.setIsAttention(false);
+            collectEntity.setUserId(collectModel.getUserId());
             //添加收藏
             collectRes = collectService.save(collectEntity);
         } else {

@@ -114,52 +114,52 @@ public class AdPositionExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Byte value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Byte value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Byte value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Byte value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Byte value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Byte> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Byte> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Byte value1, Byte value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Byte value1, Byte value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -244,52 +244,52 @@ public class AdPositionExample {
             return (Criteria) this;
         }
 
-        public Criteria andWidthEqualTo(Short value) {
+        public Criteria andWidthEqualTo(Integer value) {
             addCriterion("width =", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthNotEqualTo(Short value) {
+        public Criteria andWidthNotEqualTo(Integer value) {
             addCriterion("width <>", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthGreaterThan(Short value) {
+        public Criteria andWidthGreaterThan(Integer value) {
             addCriterion("width >", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthGreaterThanOrEqualTo(Short value) {
+        public Criteria andWidthGreaterThanOrEqualTo(Integer value) {
             addCriterion("width >=", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthLessThan(Short value) {
+        public Criteria andWidthLessThan(Integer value) {
             addCriterion("width <", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthLessThanOrEqualTo(Short value) {
+        public Criteria andWidthLessThanOrEqualTo(Integer value) {
             addCriterion("width <=", value, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthIn(List<Short> values) {
+        public Criteria andWidthIn(List<Integer> values) {
             addCriterion("width in", values, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthNotIn(List<Short> values) {
+        public Criteria andWidthNotIn(List<Integer> values) {
             addCriterion("width not in", values, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthBetween(Short value1, Short value2) {
+        public Criteria andWidthBetween(Integer value1, Integer value2) {
             addCriterion("width between", value1, value2, "width");
             return (Criteria) this;
         }
 
-        public Criteria andWidthNotBetween(Short value1, Short value2) {
+        public Criteria andWidthNotBetween(Integer value1, Integer value2) {
             addCriterion("width not between", value1, value2, "width");
             return (Criteria) this;
         }
@@ -304,52 +304,52 @@ public class AdPositionExample {
             return (Criteria) this;
         }
 
-        public Criteria andHeightEqualTo(Short value) {
+        public Criteria andHeightEqualTo(Integer value) {
             addCriterion("height =", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightNotEqualTo(Short value) {
+        public Criteria andHeightNotEqualTo(Integer value) {
             addCriterion("height <>", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightGreaterThan(Short value) {
+        public Criteria andHeightGreaterThan(Integer value) {
             addCriterion("height >", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightGreaterThanOrEqualTo(Short value) {
+        public Criteria andHeightGreaterThanOrEqualTo(Integer value) {
             addCriterion("height >=", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightLessThan(Short value) {
+        public Criteria andHeightLessThan(Integer value) {
             addCriterion("height <", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightLessThanOrEqualTo(Short value) {
+        public Criteria andHeightLessThanOrEqualTo(Integer value) {
             addCriterion("height <=", value, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightIn(List<Short> values) {
+        public Criteria andHeightIn(List<Integer> values) {
             addCriterion("height in", values, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightNotIn(List<Short> values) {
+        public Criteria andHeightNotIn(List<Integer> values) {
             addCriterion("height not in", values, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightBetween(Short value1, Short value2) {
+        public Criteria andHeightBetween(Integer value1, Integer value2) {
             addCriterion("height between", value1, value2, "height");
             return (Criteria) this;
         }
 
-        public Criteria andHeightNotBetween(Short value1, Short value2) {
+        public Criteria andHeightNotBetween(Integer value1, Integer value2) {
             addCriterion("height not between", value1, value2, "height");
             return (Criteria) this;
         }

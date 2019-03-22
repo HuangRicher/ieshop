@@ -174,52 +174,52 @@ public class ShopCollectExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(Integer value) {
+        public Criteria andUserIdEqualTo(Float value) {
             addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(Integer value) {
+        public Criteria andUserIdNotEqualTo(Float value) {
             addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(Integer value) {
+        public Criteria andUserIdGreaterThan(Float value) {
             addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andUserIdGreaterThanOrEqualTo(Float value) {
             addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(Integer value) {
+        public Criteria andUserIdLessThan(Float value) {
             addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+        public Criteria andUserIdLessThanOrEqualTo(Float value) {
             addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<Integer> values) {
+        public Criteria andUserIdIn(List<Float> values) {
             addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<Integer> values) {
+        public Criteria andUserIdNotIn(List<Float> values) {
             addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdBetween(Float value1, Float value2) {
             addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdNotBetween(Float value1, Float value2) {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
@@ -354,52 +354,52 @@ public class ShopCollectExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionEqualTo(Boolean value) {
+        public Criteria andIsAttentionEqualTo(Integer value) {
             addCriterion("is_attention =", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionNotEqualTo(Boolean value) {
+        public Criteria andIsAttentionNotEqualTo(Integer value) {
             addCriterion("is_attention <>", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionGreaterThan(Boolean value) {
+        public Criteria andIsAttentionGreaterThan(Integer value) {
             addCriterion("is_attention >", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andIsAttentionGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_attention >=", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionLessThan(Boolean value) {
+        public Criteria andIsAttentionLessThan(Integer value) {
             addCriterion("is_attention <", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionLessThanOrEqualTo(Boolean value) {
+        public Criteria andIsAttentionLessThanOrEqualTo(Integer value) {
             addCriterion("is_attention <=", value, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionIn(List<Boolean> values) {
+        public Criteria andIsAttentionIn(List<Integer> values) {
             addCriterion("is_attention in", values, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionNotIn(List<Boolean> values) {
+        public Criteria andIsAttentionNotIn(List<Integer> values) {
             addCriterion("is_attention not in", values, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsAttentionBetween(Integer value1, Integer value2) {
             addCriterion("is_attention between", value1, value2, "isAttention");
             return (Criteria) this;
         }
 
-        public Criteria andIsAttentionNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andIsAttentionNotBetween(Integer value1, Integer value2) {
             addCriterion("is_attention not between", value1, value2, "isAttention");
             return (Criteria) this;
         }

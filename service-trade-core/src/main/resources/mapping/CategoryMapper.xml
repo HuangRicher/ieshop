@@ -7,9 +7,9 @@
     <result column="keywords" property="keywords" jdbcType="VARCHAR" />
     <result column="front_desc" property="frontDesc" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-    <result column="sort_order" property="sortOrder" jdbcType="BIT" />
-    <result column="show_index" property="showIndex" jdbcType="BIT" />
-    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="show_index" property="showIndex" jdbcType="INTEGER" />
+    <result column="is_show" property="isShow" jdbcType="INTEGER" />
     <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
     <result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
     <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
@@ -118,8 +118,8 @@
       level, type, front_name
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
-      #{frontDesc,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{sortOrder,jdbcType=BIT}, 
-      #{showIndex,jdbcType=BIT}, #{isShow,jdbcType=BIT}, #{bannerUrl,jdbcType=VARCHAR}, 
+      #{frontDesc,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, 
+      #{showIndex,jdbcType=INTEGER}, #{isShow,jdbcType=INTEGER}, #{bannerUrl,jdbcType=VARCHAR}, 
       #{iconUrl,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{wapBannerUrl,jdbcType=VARCHAR}, 
       #{level,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{frontName,jdbcType=VARCHAR}
       )
@@ -190,13 +190,13 @@
         #{parentId,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
-        #{sortOrder,jdbcType=BIT},
+        #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="showIndex != null" >
-        #{showIndex,jdbcType=BIT},
+        #{showIndex,jdbcType=INTEGER},
       </if>
       <if test="isShow != null" >
-        #{isShow,jdbcType=BIT},
+        #{isShow,jdbcType=INTEGER},
       </if>
       <if test="bannerUrl != null" >
         #{bannerUrl,jdbcType=VARCHAR},
@@ -246,13 +246,13 @@
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.sortOrder != null" >
-        sort_order = #{record.sortOrder,jdbcType=BIT},
+        sort_order = #{record.sortOrder,jdbcType=INTEGER},
       </if>
       <if test="record.showIndex != null" >
-        show_index = #{record.showIndex,jdbcType=BIT},
+        show_index = #{record.showIndex,jdbcType=INTEGER},
       </if>
       <if test="record.isShow != null" >
-        is_show = #{record.isShow,jdbcType=BIT},
+        is_show = #{record.isShow,jdbcType=INTEGER},
       </if>
       <if test="record.bannerUrl != null" >
         banner_url = #{record.bannerUrl,jdbcType=VARCHAR},
@@ -287,9 +287,9 @@
       keywords = #{record.keywords,jdbcType=VARCHAR},
       front_desc = #{record.frontDesc,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=INTEGER},
-      sort_order = #{record.sortOrder,jdbcType=BIT},
-      show_index = #{record.showIndex,jdbcType=BIT},
-      is_show = #{record.isShow,jdbcType=BIT},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      show_index = #{record.showIndex,jdbcType=INTEGER},
+      is_show = #{record.isShow,jdbcType=INTEGER},
       banner_url = #{record.bannerUrl,jdbcType=VARCHAR},
       icon_url = #{record.iconUrl,jdbcType=VARCHAR},
       img_url = #{record.imgUrl,jdbcType=VARCHAR},
@@ -317,13 +317,13 @@
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null" >
-        sort_order = #{sortOrder,jdbcType=BIT},
+        sort_order = #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="showIndex != null" >
-        show_index = #{showIndex,jdbcType=BIT},
+        show_index = #{showIndex,jdbcType=INTEGER},
       </if>
       <if test="isShow != null" >
-        is_show = #{isShow,jdbcType=BIT},
+        is_show = #{isShow,jdbcType=INTEGER},
       </if>
       <if test="bannerUrl != null" >
         banner_url = #{bannerUrl,jdbcType=VARCHAR},
@@ -355,9 +355,9 @@
       keywords = #{keywords,jdbcType=VARCHAR},
       front_desc = #{frontDesc,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
-      sort_order = #{sortOrder,jdbcType=BIT},
-      show_index = #{showIndex,jdbcType=BIT},
-      is_show = #{isShow,jdbcType=BIT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      show_index = #{showIndex,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=INTEGER},
       banner_url = #{bannerUrl,jdbcType=VARCHAR},
       icon_url = #{iconUrl,jdbcType=VARCHAR},
       img_url = #{imgUrl,jdbcType=VARCHAR},

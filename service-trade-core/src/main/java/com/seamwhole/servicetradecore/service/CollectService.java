@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.seamwhole.servicetradecore.mapper.model.CollectDO;
 import com.seamwhole.servicetradecore.model.ShopCollect;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface CollectService {
 
     ShopCollect queryObject(Integer id);
 
-    List<ShopCollect> queryList(Map<String, Object> map);
+    List<CollectDO> queryList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 

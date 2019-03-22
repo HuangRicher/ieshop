@@ -6,8 +6,8 @@
     <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
-    <result column="shipping_status" property="shippingStatus" jdbcType="BIT" />
-    <result column="pay_status" property="payStatus" jdbcType="BIT" />
+    <result column="shipping_status" property="shippingStatus" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
     <result column="consignee" property="consignee" jdbcType="VARCHAR" />
     <result column="country" property="country" jdbcType="VARCHAR" />
     <result column="province" property="province" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="postscript" property="postscript" jdbcType="VARCHAR" />
-    <result column="shipping_id" property="shippingId" jdbcType="TINYINT" />
+    <result column="shipping_id" property="shippingId" jdbcType="INTEGER" />
     <result column="shipping_name" property="shippingName" jdbcType="VARCHAR" />
     <result column="pay_id" property="payId" jdbcType="VARCHAR" />
     <result column="pay_name" property="payName" jdbcType="VARCHAR" />
@@ -147,10 +147,10 @@
       coupon_price, callback_status, shipping_no, 
       full_cut_price, order_type)
     values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{orderStatus,jdbcType=INTEGER}, #{shippingStatus,jdbcType=BIT}, #{payStatus,jdbcType=BIT}, 
+      #{orderStatus,jdbcType=INTEGER}, #{shippingStatus,jdbcType=INTEGER}, #{payStatus,jdbcType=INTEGER}, 
       #{consignee,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
       #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{postscript,jdbcType=VARCHAR}, #{shippingId,jdbcType=TINYINT}, 
+      #{mobile,jdbcType=VARCHAR}, #{postscript,jdbcType=VARCHAR}, #{shippingId,jdbcType=INTEGER}, 
       #{shippingName,jdbcType=VARCHAR}, #{payId,jdbcType=VARCHAR}, #{payName,jdbcType=VARCHAR}, 
       #{shippingFee,jdbcType=DECIMAL}, #{actualPrice,jdbcType=DECIMAL}, #{integral,jdbcType=INTEGER}, 
       #{integralMoney,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, #{goodsPrice,jdbcType=DECIMAL}, 
@@ -282,10 +282,10 @@
         #{orderStatus,jdbcType=INTEGER},
       </if>
       <if test="shippingStatus != null" >
-        #{shippingStatus,jdbcType=BIT},
+        #{shippingStatus,jdbcType=INTEGER},
       </if>
       <if test="payStatus != null" >
-        #{payStatus,jdbcType=BIT},
+        #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="consignee != null" >
         #{consignee,jdbcType=VARCHAR},
@@ -312,7 +312,7 @@
         #{postscript,jdbcType=VARCHAR},
       </if>
       <if test="shippingId != null" >
-        #{shippingId,jdbcType=TINYINT},
+        #{shippingId,jdbcType=INTEGER},
       </if>
       <if test="shippingName != null" >
         #{shippingName,jdbcType=VARCHAR},
@@ -398,10 +398,10 @@
         order_status = #{record.orderStatus,jdbcType=INTEGER},
       </if>
       <if test="record.shippingStatus != null" >
-        shipping_status = #{record.shippingStatus,jdbcType=BIT},
+        shipping_status = #{record.shippingStatus,jdbcType=INTEGER},
       </if>
       <if test="record.payStatus != null" >
-        pay_status = #{record.payStatus,jdbcType=BIT},
+        pay_status = #{record.payStatus,jdbcType=INTEGER},
       </if>
       <if test="record.consignee != null" >
         consignee = #{record.consignee,jdbcType=VARCHAR},
@@ -428,7 +428,7 @@
         postscript = #{record.postscript,jdbcType=VARCHAR},
       </if>
       <if test="record.shippingId != null" >
-        shipping_id = #{record.shippingId,jdbcType=TINYINT},
+        shipping_id = #{record.shippingId,jdbcType=INTEGER},
       </if>
       <if test="record.shippingName != null" >
         shipping_name = #{record.shippingName,jdbcType=VARCHAR},
@@ -501,8 +501,8 @@
       order_sn = #{record.orderSn,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
       order_status = #{record.orderStatus,jdbcType=INTEGER},
-      shipping_status = #{record.shippingStatus,jdbcType=BIT},
-      pay_status = #{record.payStatus,jdbcType=BIT},
+      shipping_status = #{record.shippingStatus,jdbcType=INTEGER},
+      pay_status = #{record.payStatus,jdbcType=INTEGER},
       consignee = #{record.consignee,jdbcType=VARCHAR},
       country = #{record.country,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=VARCHAR},
@@ -511,7 +511,7 @@
       address = #{record.address,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
       postscript = #{record.postscript,jdbcType=VARCHAR},
-      shipping_id = #{record.shippingId,jdbcType=TINYINT},
+      shipping_id = #{record.shippingId,jdbcType=INTEGER},
       shipping_name = #{record.shippingName,jdbcType=VARCHAR},
       pay_id = #{record.payId,jdbcType=VARCHAR},
       pay_name = #{record.payName,jdbcType=VARCHAR},
@@ -549,10 +549,10 @@
         order_status = #{orderStatus,jdbcType=INTEGER},
       </if>
       <if test="shippingStatus != null" >
-        shipping_status = #{shippingStatus,jdbcType=BIT},
+        shipping_status = #{shippingStatus,jdbcType=INTEGER},
       </if>
       <if test="payStatus != null" >
-        pay_status = #{payStatus,jdbcType=BIT},
+        pay_status = #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="consignee != null" >
         consignee = #{consignee,jdbcType=VARCHAR},
@@ -579,7 +579,7 @@
         postscript = #{postscript,jdbcType=VARCHAR},
       </if>
       <if test="shippingId != null" >
-        shipping_id = #{shippingId,jdbcType=TINYINT},
+        shipping_id = #{shippingId,jdbcType=INTEGER},
       </if>
       <if test="shippingName != null" >
         shipping_name = #{shippingName,jdbcType=VARCHAR},
@@ -649,8 +649,8 @@
     set order_sn = #{orderSn,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       order_status = #{orderStatus,jdbcType=INTEGER},
-      shipping_status = #{shippingStatus,jdbcType=BIT},
-      pay_status = #{payStatus,jdbcType=BIT},
+      shipping_status = #{shippingStatus,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=INTEGER},
       consignee = #{consignee,jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
@@ -659,7 +659,7 @@
       address = #{address,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       postscript = #{postscript,jdbcType=VARCHAR},
-      shipping_id = #{shippingId,jdbcType=TINYINT},
+      shipping_id = #{shippingId,jdbcType=INTEGER},
       shipping_name = #{shippingName,jdbcType=VARCHAR},
       pay_id = #{payId,jdbcType=VARCHAR},
       pay_name = #{payName,jdbcType=VARCHAR},

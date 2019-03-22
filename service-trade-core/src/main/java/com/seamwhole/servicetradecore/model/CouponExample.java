@@ -116,52 +116,52 @@ public class CouponExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Short value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Short value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Short value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Short value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Short value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Short> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Short> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Short value1, Short value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Short value1, Short value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -306,52 +306,52 @@ public class CouponExample {
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeEqualTo(Byte value) {
+        public Criteria andSendTypeEqualTo(Integer value) {
             addCriterion("send_type =", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeNotEqualTo(Byte value) {
+        public Criteria andSendTypeNotEqualTo(Integer value) {
             addCriterion("send_type <>", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeGreaterThan(Byte value) {
+        public Criteria andSendTypeGreaterThan(Integer value) {
             addCriterion("send_type >", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeGreaterThanOrEqualTo(Byte value) {
+        public Criteria andSendTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("send_type >=", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeLessThan(Byte value) {
+        public Criteria andSendTypeLessThan(Integer value) {
             addCriterion("send_type <", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeLessThanOrEqualTo(Byte value) {
+        public Criteria andSendTypeLessThanOrEqualTo(Integer value) {
             addCriterion("send_type <=", value, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeIn(List<Byte> values) {
+        public Criteria andSendTypeIn(List<Integer> values) {
             addCriterion("send_type in", values, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeNotIn(List<Byte> values) {
+        public Criteria andSendTypeNotIn(List<Integer> values) {
             addCriterion("send_type not in", values, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeBetween(Byte value1, Byte value2) {
+        public Criteria andSendTypeBetween(Integer value1, Integer value2) {
             addCriterion("send_type between", value1, value2, "sendType");
             return (Criteria) this;
         }
 
-        public Criteria andSendTypeNotBetween(Byte value1, Byte value2) {
+        public Criteria andSendTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("send_type not between", value1, value2, "sendType");
             return (Criteria) this;
         }

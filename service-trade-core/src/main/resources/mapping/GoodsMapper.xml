@@ -10,14 +10,14 @@
     <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
     <result column="keywords" property="keywords" jdbcType="VARCHAR" />
     <result column="goods_brief" property="goodsBrief" jdbcType="VARCHAR" />
-    <result column="is_on_sale" property="isOnSale" jdbcType="BIT" />
+    <result column="is_on_sale" property="isOnSale" jdbcType="INTEGER" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
-    <result column="sort_order" property="sortOrder" jdbcType="SMALLINT" />
-    <result column="is_delete" property="isDelete" jdbcType="BIT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="attribute_category" property="attributeCategory" jdbcType="INTEGER" />
     <result column="counter_price" property="counterPrice" jdbcType="DECIMAL" />
     <result column="extra_price" property="extraPrice" jdbcType="DECIMAL" />
-    <result column="is_new" property="isNew" jdbcType="BIT" />
+    <result column="is_new" property="isNew" jdbcType="INTEGER" />
     <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
     <result column="primary_pic_url" property="primaryPicUrl" jdbcType="VARCHAR" />
     <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
@@ -28,9 +28,9 @@
     <result column="promotion_desc" property="promotionDesc" jdbcType="VARCHAR" />
     <result column="promotion_tag" property="promotionTag" jdbcType="VARCHAR" />
     <result column="app_exclusive_price" property="appExclusivePrice" jdbcType="DECIMAL" />
-    <result column="is_app_exclusive" property="isAppExclusive" jdbcType="BIT" />
-    <result column="is_limited" property="isLimited" jdbcType="BIT" />
-    <result column="is_hot" property="isHot" jdbcType="BIT" />
+    <result column="is_app_exclusive" property="isAppExclusive" jdbcType="INTEGER" />
+    <result column="is_limited" property="isLimited" jdbcType="INTEGER" />
+    <result column="is_hot" property="isHot" jdbcType="INTEGER" />
     <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
     <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
     <result column="update_user_id" property="updateUserId" jdbcType="BIGINT" />
@@ -171,14 +171,14 @@
       create_user_dept_id, goods_desc)
     values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{goodsSn,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, #{goodsNumber,jdbcType=INTEGER}, 
-      #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{sortOrder,jdbcType=SMALLINT}, #{isDelete,jdbcType=BIT}, 
+      #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{sortOrder,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, 
       #{attributeCategory,jdbcType=INTEGER}, #{counterPrice,jdbcType=DECIMAL}, #{extraPrice,jdbcType=DECIMAL}, 
-      #{isNew,jdbcType=BIT}, #{goodsUnit,jdbcType=VARCHAR}, #{primaryPicUrl,jdbcType=VARCHAR}, 
+      #{isNew,jdbcType=INTEGER}, #{goodsUnit,jdbcType=VARCHAR}, #{primaryPicUrl,jdbcType=VARCHAR}, 
       #{listPicUrl,jdbcType=VARCHAR}, #{retailPrice,jdbcType=DECIMAL}, #{sellVolume,jdbcType=INTEGER}, 
       #{primaryProductId,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL}, #{promotionDesc,jdbcType=VARCHAR}, 
-      #{promotionTag,jdbcType=VARCHAR}, #{appExclusivePrice,jdbcType=DECIMAL}, #{isAppExclusive,jdbcType=BIT}, 
-      #{isLimited,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{marketPrice,jdbcType=DECIMAL}, 
+      #{promotionTag,jdbcType=VARCHAR}, #{appExclusivePrice,jdbcType=DECIMAL}, #{isAppExclusive,jdbcType=INTEGER}, 
+      #{isLimited,jdbcType=INTEGER}, #{isHot,jdbcType=INTEGER}, #{marketPrice,jdbcType=DECIMAL}, 
       #{createUserId,jdbcType=BIGINT}, #{updateUserId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{createUserDeptId,jdbcType=BIGINT}, #{goodsDesc,jdbcType=LONGVARCHAR})
   </insert>
@@ -317,16 +317,16 @@
         #{goodsBrief,jdbcType=VARCHAR},
       </if>
       <if test="isOnSale != null" >
-        #{isOnSale,jdbcType=BIT},
+        #{isOnSale,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
       </if>
       <if test="sortOrder != null" >
-        #{sortOrder,jdbcType=SMALLINT},
+        #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="isDelete != null" >
-        #{isDelete,jdbcType=BIT},
+        #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="attributeCategory != null" >
         #{attributeCategory,jdbcType=INTEGER},
@@ -338,7 +338,7 @@
         #{extraPrice,jdbcType=DECIMAL},
       </if>
       <if test="isNew != null" >
-        #{isNew,jdbcType=BIT},
+        #{isNew,jdbcType=INTEGER},
       </if>
       <if test="goodsUnit != null" >
         #{goodsUnit,jdbcType=VARCHAR},
@@ -371,13 +371,13 @@
         #{appExclusivePrice,jdbcType=DECIMAL},
       </if>
       <if test="isAppExclusive != null" >
-        #{isAppExclusive,jdbcType=BIT},
+        #{isAppExclusive,jdbcType=INTEGER},
       </if>
       <if test="isLimited != null" >
-        #{isLimited,jdbcType=BIT},
+        #{isLimited,jdbcType=INTEGER},
       </if>
       <if test="isHot != null" >
-        #{isHot,jdbcType=BIT},
+        #{isHot,jdbcType=INTEGER},
       </if>
       <if test="marketPrice != null" >
         #{marketPrice,jdbcType=DECIMAL},
@@ -433,16 +433,16 @@
         goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
       </if>
       <if test="record.isOnSale != null" >
-        is_on_sale = #{record.isOnSale,jdbcType=BIT},
+        is_on_sale = #{record.isOnSale,jdbcType=INTEGER},
       </if>
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.sortOrder != null" >
-        sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+        sort_order = #{record.sortOrder,jdbcType=INTEGER},
       </if>
       <if test="record.isDelete != null" >
-        is_delete = #{record.isDelete,jdbcType=BIT},
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
       </if>
       <if test="record.attributeCategory != null" >
         attribute_category = #{record.attributeCategory,jdbcType=INTEGER},
@@ -454,7 +454,7 @@
         extra_price = #{record.extraPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.isNew != null" >
-        is_new = #{record.isNew,jdbcType=BIT},
+        is_new = #{record.isNew,jdbcType=INTEGER},
       </if>
       <if test="record.goodsUnit != null" >
         goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
@@ -487,13 +487,13 @@
         app_exclusive_price = #{record.appExclusivePrice,jdbcType=DECIMAL},
       </if>
       <if test="record.isAppExclusive != null" >
-        is_app_exclusive = #{record.isAppExclusive,jdbcType=BIT},
+        is_app_exclusive = #{record.isAppExclusive,jdbcType=INTEGER},
       </if>
       <if test="record.isLimited != null" >
-        is_limited = #{record.isLimited,jdbcType=BIT},
+        is_limited = #{record.isLimited,jdbcType=INTEGER},
       </if>
       <if test="record.isHot != null" >
-        is_hot = #{record.isHot,jdbcType=BIT},
+        is_hot = #{record.isHot,jdbcType=INTEGER},
       </if>
       <if test="record.marketPrice != null" >
         market_price = #{record.marketPrice,jdbcType=DECIMAL},
@@ -528,14 +528,14 @@
       goods_number = #{record.goodsNumber,jdbcType=INTEGER},
       keywords = #{record.keywords,jdbcType=VARCHAR},
       goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
-      is_on_sale = #{record.isOnSale,jdbcType=BIT},
+      is_on_sale = #{record.isOnSale,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      sort_order = #{record.sortOrder,jdbcType=SMALLINT},
-      is_delete = #{record.isDelete,jdbcType=BIT},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
       attribute_category = #{record.attributeCategory,jdbcType=INTEGER},
       counter_price = #{record.counterPrice,jdbcType=DECIMAL},
       extra_price = #{record.extraPrice,jdbcType=DECIMAL},
-      is_new = #{record.isNew,jdbcType=BIT},
+      is_new = #{record.isNew,jdbcType=INTEGER},
       goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
       primary_pic_url = #{record.primaryPicUrl,jdbcType=VARCHAR},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
@@ -546,9 +546,9 @@
       promotion_desc = #{record.promotionDesc,jdbcType=VARCHAR},
       promotion_tag = #{record.promotionTag,jdbcType=VARCHAR},
       app_exclusive_price = #{record.appExclusivePrice,jdbcType=DECIMAL},
-      is_app_exclusive = #{record.isAppExclusive,jdbcType=BIT},
-      is_limited = #{record.isLimited,jdbcType=BIT},
-      is_hot = #{record.isHot,jdbcType=BIT},
+      is_app_exclusive = #{record.isAppExclusive,jdbcType=INTEGER},
+      is_limited = #{record.isLimited,jdbcType=INTEGER},
+      is_hot = #{record.isHot,jdbcType=INTEGER},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       create_user_id = #{record.createUserId,jdbcType=BIGINT},
       update_user_id = #{record.updateUserId,jdbcType=BIGINT},
@@ -569,14 +569,14 @@
       goods_number = #{record.goodsNumber,jdbcType=INTEGER},
       keywords = #{record.keywords,jdbcType=VARCHAR},
       goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
-      is_on_sale = #{record.isOnSale,jdbcType=BIT},
+      is_on_sale = #{record.isOnSale,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      sort_order = #{record.sortOrder,jdbcType=SMALLINT},
-      is_delete = #{record.isDelete,jdbcType=BIT},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=INTEGER},
       attribute_category = #{record.attributeCategory,jdbcType=INTEGER},
       counter_price = #{record.counterPrice,jdbcType=DECIMAL},
       extra_price = #{record.extraPrice,jdbcType=DECIMAL},
-      is_new = #{record.isNew,jdbcType=BIT},
+      is_new = #{record.isNew,jdbcType=INTEGER},
       goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
       primary_pic_url = #{record.primaryPicUrl,jdbcType=VARCHAR},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
@@ -587,9 +587,9 @@
       promotion_desc = #{record.promotionDesc,jdbcType=VARCHAR},
       promotion_tag = #{record.promotionTag,jdbcType=VARCHAR},
       app_exclusive_price = #{record.appExclusivePrice,jdbcType=DECIMAL},
-      is_app_exclusive = #{record.isAppExclusive,jdbcType=BIT},
-      is_limited = #{record.isLimited,jdbcType=BIT},
-      is_hot = #{record.isHot,jdbcType=BIT},
+      is_app_exclusive = #{record.isAppExclusive,jdbcType=INTEGER},
+      is_limited = #{record.isLimited,jdbcType=INTEGER},
+      is_hot = #{record.isHot,jdbcType=INTEGER},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       create_user_id = #{record.createUserId,jdbcType=BIGINT},
       update_user_id = #{record.updateUserId,jdbcType=BIGINT},
@@ -624,16 +624,16 @@
         goods_brief = #{goodsBrief,jdbcType=VARCHAR},
       </if>
       <if test="isOnSale != null" >
-        is_on_sale = #{isOnSale,jdbcType=BIT},
+        is_on_sale = #{isOnSale,jdbcType=INTEGER},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=TIMESTAMP},
       </if>
       <if test="sortOrder != null" >
-        sort_order = #{sortOrder,jdbcType=SMALLINT},
+        sort_order = #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=BIT},
+        is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="attributeCategory != null" >
         attribute_category = #{attributeCategory,jdbcType=INTEGER},
@@ -645,7 +645,7 @@
         extra_price = #{extraPrice,jdbcType=DECIMAL},
       </if>
       <if test="isNew != null" >
-        is_new = #{isNew,jdbcType=BIT},
+        is_new = #{isNew,jdbcType=INTEGER},
       </if>
       <if test="goodsUnit != null" >
         goods_unit = #{goodsUnit,jdbcType=VARCHAR},
@@ -678,13 +678,13 @@
         app_exclusive_price = #{appExclusivePrice,jdbcType=DECIMAL},
       </if>
       <if test="isAppExclusive != null" >
-        is_app_exclusive = #{isAppExclusive,jdbcType=BIT},
+        is_app_exclusive = #{isAppExclusive,jdbcType=INTEGER},
       </if>
       <if test="isLimited != null" >
-        is_limited = #{isLimited,jdbcType=BIT},
+        is_limited = #{isLimited,jdbcType=INTEGER},
       </if>
       <if test="isHot != null" >
-        is_hot = #{isHot,jdbcType=BIT},
+        is_hot = #{isHot,jdbcType=INTEGER},
       </if>
       <if test="marketPrice != null" >
         market_price = #{marketPrice,jdbcType=DECIMAL},
@@ -716,14 +716,14 @@
       goods_number = #{goodsNumber,jdbcType=INTEGER},
       keywords = #{keywords,jdbcType=VARCHAR},
       goods_brief = #{goodsBrief,jdbcType=VARCHAR},
-      is_on_sale = #{isOnSale,jdbcType=BIT},
+      is_on_sale = #{isOnSale,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      sort_order = #{sortOrder,jdbcType=SMALLINT},
-      is_delete = #{isDelete,jdbcType=BIT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
       attribute_category = #{attributeCategory,jdbcType=INTEGER},
       counter_price = #{counterPrice,jdbcType=DECIMAL},
       extra_price = #{extraPrice,jdbcType=DECIMAL},
-      is_new = #{isNew,jdbcType=BIT},
+      is_new = #{isNew,jdbcType=INTEGER},
       goods_unit = #{goodsUnit,jdbcType=VARCHAR},
       primary_pic_url = #{primaryPicUrl,jdbcType=VARCHAR},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
@@ -734,9 +734,9 @@
       promotion_desc = #{promotionDesc,jdbcType=VARCHAR},
       promotion_tag = #{promotionTag,jdbcType=VARCHAR},
       app_exclusive_price = #{appExclusivePrice,jdbcType=DECIMAL},
-      is_app_exclusive = #{isAppExclusive,jdbcType=BIT},
-      is_limited = #{isLimited,jdbcType=BIT},
-      is_hot = #{isHot,jdbcType=BIT},
+      is_app_exclusive = #{isAppExclusive,jdbcType=INTEGER},
+      is_limited = #{isLimited,jdbcType=INTEGER},
+      is_hot = #{isHot,jdbcType=INTEGER},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       create_user_id = #{createUserId,jdbcType=BIGINT},
       update_user_id = #{updateUserId,jdbcType=BIGINT},
@@ -754,14 +754,14 @@
       goods_number = #{goodsNumber,jdbcType=INTEGER},
       keywords = #{keywords,jdbcType=VARCHAR},
       goods_brief = #{goodsBrief,jdbcType=VARCHAR},
-      is_on_sale = #{isOnSale,jdbcType=BIT},
+      is_on_sale = #{isOnSale,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
-      sort_order = #{sortOrder,jdbcType=SMALLINT},
-      is_delete = #{isDelete,jdbcType=BIT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
       attribute_category = #{attributeCategory,jdbcType=INTEGER},
       counter_price = #{counterPrice,jdbcType=DECIMAL},
       extra_price = #{extraPrice,jdbcType=DECIMAL},
-      is_new = #{isNew,jdbcType=BIT},
+      is_new = #{isNew,jdbcType=INTEGER},
       goods_unit = #{goodsUnit,jdbcType=VARCHAR},
       primary_pic_url = #{primaryPicUrl,jdbcType=VARCHAR},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
@@ -772,9 +772,9 @@
       promotion_desc = #{promotionDesc,jdbcType=VARCHAR},
       promotion_tag = #{promotionTag,jdbcType=VARCHAR},
       app_exclusive_price = #{appExclusivePrice,jdbcType=DECIMAL},
-      is_app_exclusive = #{isAppExclusive,jdbcType=BIT},
-      is_limited = #{isLimited,jdbcType=BIT},
-      is_hot = #{isHot,jdbcType=BIT},
+      is_app_exclusive = #{isAppExclusive,jdbcType=INTEGER},
+      is_limited = #{isLimited,jdbcType=INTEGER},
+      is_hot = #{isHot,jdbcType=INTEGER},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       create_user_id = #{createUserId,jdbcType=BIGINT},
       update_user_id = #{updateUserId,jdbcType=BIGINT},

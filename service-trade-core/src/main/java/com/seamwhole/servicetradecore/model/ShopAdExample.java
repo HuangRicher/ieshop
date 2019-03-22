@@ -115,52 +115,52 @@ public class ShopAdExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Short value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Short value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Short value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Short value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Short value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Short> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Short> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Short value1, Short value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Short value1, Short value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -175,52 +175,52 @@ public class ShopAdExample {
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdEqualTo(Short value) {
+        public Criteria andAdPositionIdEqualTo(Integer value) {
             addCriterion("ad_position_id =", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdNotEqualTo(Short value) {
+        public Criteria andAdPositionIdNotEqualTo(Integer value) {
             addCriterion("ad_position_id <>", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdGreaterThan(Short value) {
+        public Criteria andAdPositionIdGreaterThan(Integer value) {
             addCriterion("ad_position_id >", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andAdPositionIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("ad_position_id >=", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdLessThan(Short value) {
+        public Criteria andAdPositionIdLessThan(Integer value) {
             addCriterion("ad_position_id <", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdLessThanOrEqualTo(Short value) {
+        public Criteria andAdPositionIdLessThanOrEqualTo(Integer value) {
             addCriterion("ad_position_id <=", value, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdIn(List<Short> values) {
+        public Criteria andAdPositionIdIn(List<Integer> values) {
             addCriterion("ad_position_id in", values, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdNotIn(List<Short> values) {
+        public Criteria andAdPositionIdNotIn(List<Integer> values) {
             addCriterion("ad_position_id not in", values, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdBetween(Short value1, Short value2) {
+        public Criteria andAdPositionIdBetween(Integer value1, Integer value2) {
             addCriterion("ad_position_id between", value1, value2, "adPositionId");
             return (Criteria) this;
         }
 
-        public Criteria andAdPositionIdNotBetween(Short value1, Short value2) {
+        public Criteria andAdPositionIdNotBetween(Integer value1, Integer value2) {
             addCriterion("ad_position_id not between", value1, value2, "adPositionId");
             return (Criteria) this;
         }
@@ -235,52 +235,52 @@ public class ShopAdExample {
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeEqualTo(Byte value) {
+        public Criteria andMediaTypeEqualTo(Integer value) {
             addCriterion("media_type =", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeNotEqualTo(Byte value) {
+        public Criteria andMediaTypeNotEqualTo(Integer value) {
             addCriterion("media_type <>", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeGreaterThan(Byte value) {
+        public Criteria andMediaTypeGreaterThan(Integer value) {
             addCriterion("media_type >", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeGreaterThanOrEqualTo(Byte value) {
+        public Criteria andMediaTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("media_type >=", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeLessThan(Byte value) {
+        public Criteria andMediaTypeLessThan(Integer value) {
             addCriterion("media_type <", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeLessThanOrEqualTo(Byte value) {
+        public Criteria andMediaTypeLessThanOrEqualTo(Integer value) {
             addCriterion("media_type <=", value, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeIn(List<Byte> values) {
+        public Criteria andMediaTypeIn(List<Integer> values) {
             addCriterion("media_type in", values, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeNotIn(List<Byte> values) {
+        public Criteria andMediaTypeNotIn(List<Integer> values) {
             addCriterion("media_type not in", values, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeBetween(Byte value1, Byte value2) {
+        public Criteria andMediaTypeBetween(Integer value1, Integer value2) {
             addCriterion("media_type between", value1, value2, "mediaType");
             return (Criteria) this;
         }
 
-        public Criteria andMediaTypeNotBetween(Byte value1, Byte value2) {
+        public Criteria andMediaTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("media_type not between", value1, value2, "mediaType");
             return (Criteria) this;
         }
@@ -565,52 +565,52 @@ public class ShopAdExample {
             return (Criteria) this;
         }
 
-        public Criteria andEnabledEqualTo(Byte value) {
+        public Criteria andEnabledEqualTo(Integer value) {
             addCriterion("enabled =", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotEqualTo(Byte value) {
+        public Criteria andEnabledNotEqualTo(Integer value) {
             addCriterion("enabled <>", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledGreaterThan(Byte value) {
+        public Criteria andEnabledGreaterThan(Integer value) {
             addCriterion("enabled >", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledGreaterThanOrEqualTo(Byte value) {
+        public Criteria andEnabledGreaterThanOrEqualTo(Integer value) {
             addCriterion("enabled >=", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledLessThan(Byte value) {
+        public Criteria andEnabledLessThan(Integer value) {
             addCriterion("enabled <", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledLessThanOrEqualTo(Byte value) {
+        public Criteria andEnabledLessThanOrEqualTo(Integer value) {
             addCriterion("enabled <=", value, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledIn(List<Byte> values) {
+        public Criteria andEnabledIn(List<Integer> values) {
             addCriterion("enabled in", values, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotIn(List<Byte> values) {
+        public Criteria andEnabledNotIn(List<Integer> values) {
             addCriterion("enabled not in", values, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledBetween(Byte value1, Byte value2) {
+        public Criteria andEnabledBetween(Integer value1, Integer value2) {
             addCriterion("enabled between", value1, value2, "enabled");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotBetween(Byte value1, Byte value2) {
+        public Criteria andEnabledNotBetween(Integer value1, Integer value2) {
             addCriterion("enabled not between", value1, value2, "enabled");
             return (Criteria) this;
         }

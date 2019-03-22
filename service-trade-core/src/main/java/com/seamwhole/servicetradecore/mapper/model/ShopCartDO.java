@@ -4,7 +4,7 @@ import com.seamwhole.servicetradecore.model.ShopCart;
 
 import java.math.BigDecimal;
 
-public class ShopCartModel extends ShopCart {
+public class ShopCartDO extends ShopCart {
 
     private BigDecimal retailProductPrice;
 

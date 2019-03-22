@@ -8,10 +8,10 @@
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="number" property="number" jdbcType="SMALLINT" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
     <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
-    <result column="is_real" property="isReal" jdbcType="BIT" />
+    <result column="is_real" property="isReal" jdbcType="INTEGER" />
     <result column="goods_specifition_ids" property="goodsSpecifitionIds" jdbcType="VARCHAR" />
     <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
   </resultMap>
@@ -139,8 +139,8 @@
       goods_specifition_name_value)
     values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{number,jdbcType=SMALLINT}, #{marketPrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, 
-      #{isReal,jdbcType=BIT}, #{goodsSpecifitionIds,jdbcType=VARCHAR}, #{listPicUrl,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{marketPrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, 
+      #{isReal,jdbcType=INTEGER}, #{goodsSpecifitionIds,jdbcType=VARCHAR}, #{listPicUrl,jdbcType=VARCHAR}, 
       #{goodsSpecifitionNameValue,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.OrderGoods" >
@@ -206,7 +206,7 @@
         #{productId,jdbcType=INTEGER},
       </if>
       <if test="number != null" >
-        #{number,jdbcType=SMALLINT},
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="marketPrice != null" >
         #{marketPrice,jdbcType=DECIMAL},
@@ -215,7 +215,7 @@
         #{retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="isReal != null" >
-        #{isReal,jdbcType=BIT},
+        #{isReal,jdbcType=INTEGER},
       </if>
       <if test="goodsSpecifitionIds != null" >
         #{goodsSpecifitionIds,jdbcType=VARCHAR},
@@ -256,7 +256,7 @@
         product_id = #{record.productId,jdbcType=INTEGER},
       </if>
       <if test="record.number != null" >
-        number = #{record.number,jdbcType=SMALLINT},
+        number = #{record.number,jdbcType=INTEGER},
       </if>
       <if test="record.marketPrice != null" >
         market_price = #{record.marketPrice,jdbcType=DECIMAL},
@@ -265,7 +265,7 @@
         retail_price = #{record.retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.isReal != null" >
-        is_real = #{record.isReal,jdbcType=BIT},
+        is_real = #{record.isReal,jdbcType=INTEGER},
       </if>
       <if test="record.goodsSpecifitionIds != null" >
         goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
@@ -289,10 +289,10 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=INTEGER},
-      number = #{record.number,jdbcType=SMALLINT},
+      number = #{record.number,jdbcType=INTEGER},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      is_real = #{record.isReal,jdbcType=BIT},
+      is_real = #{record.isReal,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
       goods_specifition_name_value = #{record.goodsSpecifitionNameValue,jdbcType=LONGVARCHAR}
@@ -308,10 +308,10 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=INTEGER},
-      number = #{record.number,jdbcType=SMALLINT},
+      number = #{record.number,jdbcType=INTEGER},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      is_real = #{record.isReal,jdbcType=BIT},
+      is_real = #{record.isReal,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -337,7 +337,7 @@
         product_id = #{productId,jdbcType=INTEGER},
       </if>
       <if test="number != null" >
-        number = #{number,jdbcType=SMALLINT},
+        number = #{number,jdbcType=INTEGER},
       </if>
       <if test="marketPrice != null" >
         market_price = #{marketPrice,jdbcType=DECIMAL},
@@ -346,7 +346,7 @@
         retail_price = #{retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="isReal != null" >
-        is_real = #{isReal,jdbcType=BIT},
+        is_real = #{isReal,jdbcType=INTEGER},
       </if>
       <if test="goodsSpecifitionIds != null" >
         goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
@@ -367,10 +367,10 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_sn = #{goodsSn,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
-      number = #{number,jdbcType=SMALLINT},
+      number = #{number,jdbcType=INTEGER},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      is_real = #{isReal,jdbcType=BIT},
+      is_real = #{isReal,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
       goods_specifition_name_value = #{goodsSpecifitionNameValue,jdbcType=LONGVARCHAR}
@@ -383,10 +383,10 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_sn = #{goodsSn,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=INTEGER},
-      number = #{number,jdbcType=SMALLINT},
+      number = #{number,jdbcType=INTEGER},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      is_real = #{isReal,jdbcType=BIT},
+      is_real = #{isReal,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

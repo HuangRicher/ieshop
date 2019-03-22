@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.seamwhole.servicetradecore.mapper.model.GoodsSpecificationDO;
 import com.seamwhole.servicetradecore.model.GoodsSpecification;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface GoodsSpecificationService {
 
     GoodsSpecification queryObject(Integer id);
 
-    List<GoodsSpecification> queryList(Map<String, Object> map);
+    List<GoodsSpecificationDO> queryList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 

@@ -11,9 +11,9 @@
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
     <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
-    <result column="number" property="number" jdbcType="SMALLINT" />
+    <result column="number" property="number" jdbcType="INTEGER" />
     <result column="goods_specifition_ids" property="goodsSpecifitionIds" jdbcType="VARCHAR" />
-    <result column="checked" property="checked" jdbcType="BIT" />
+    <result column="checked" property="checked" jdbcType="INTEGER" />
     <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.ShopCart" extends="BaseResultMap" >
@@ -142,7 +142,7 @@
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{sessionId,jdbcType=CHAR}, 
       #{goodsId,jdbcType=INTEGER}, #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, 
-      #{number,jdbcType=SMALLINT}, #{goodsSpecifitionIds,jdbcType=VARCHAR}, #{checked,jdbcType=BIT}, 
+      #{number,jdbcType=INTEGER}, #{goodsSpecifitionIds,jdbcType=VARCHAR}, #{checked,jdbcType=INTEGER}, 
       #{listPicUrl,jdbcType=VARCHAR}, #{goodsSpecifitionNameValue,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -221,13 +221,13 @@
         #{retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="number != null" >
-        #{number,jdbcType=SMALLINT},
+        #{number,jdbcType=INTEGER},
       </if>
       <if test="goodsSpecifitionIds != null" >
         #{goodsSpecifitionIds,jdbcType=VARCHAR},
       </if>
       <if test="checked != null" >
-        #{checked,jdbcType=BIT},
+        #{checked,jdbcType=INTEGER},
       </if>
       <if test="listPicUrl != null" >
         #{listPicUrl,jdbcType=VARCHAR},
@@ -274,13 +274,13 @@
         retail_price = #{record.retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.number != null" >
-        number = #{record.number,jdbcType=SMALLINT},
+        number = #{record.number,jdbcType=INTEGER},
       </if>
       <if test="record.goodsSpecifitionIds != null" >
         goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
       </if>
       <if test="record.checked != null" >
-        checked = #{record.checked,jdbcType=BIT},
+        checked = #{record.checked,jdbcType=INTEGER},
       </if>
       <if test="record.listPicUrl != null" >
         list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
@@ -304,9 +304,9 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      number = #{record.number,jdbcType=SMALLINT},
+      number = #{record.number,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
-      checked = #{record.checked,jdbcType=BIT},
+      checked = #{record.checked,jdbcType=INTEGER},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
       goods_specifition_name_value = #{record.goodsSpecifitionNameValue,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -324,9 +324,9 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      number = #{record.number,jdbcType=SMALLINT},
+      number = #{record.number,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
-      checked = #{record.checked,jdbcType=BIT},
+      checked = #{record.checked,jdbcType=INTEGER},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -360,13 +360,13 @@
         retail_price = #{retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="number != null" >
-        number = #{number,jdbcType=SMALLINT},
+        number = #{number,jdbcType=INTEGER},
       </if>
       <if test="goodsSpecifitionIds != null" >
         goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
       </if>
       <if test="checked != null" >
-        checked = #{checked,jdbcType=BIT},
+        checked = #{checked,jdbcType=INTEGER},
       </if>
       <if test="listPicUrl != null" >
         list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
@@ -387,9 +387,9 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      number = #{number,jdbcType=SMALLINT},
+      number = #{number,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
-      checked = #{checked,jdbcType=BIT},
+      checked = #{checked,jdbcType=INTEGER},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
       goods_specifition_name_value = #{goodsSpecifitionNameValue,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -404,9 +404,9 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      number = #{number,jdbcType=SMALLINT},
+      number = #{number,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
-      checked = #{checked,jdbcType=BIT},
+      checked = #{checked,jdbcType=INTEGER},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

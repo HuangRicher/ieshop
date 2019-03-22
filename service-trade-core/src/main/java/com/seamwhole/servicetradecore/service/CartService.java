@@ -1,6 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.seamwhole.servicetradecore.mapper.model.ShopCartModel;
+import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.ShopCart;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public interface CartService {
 
     ShopCart queryObject(Integer id);
 
-    List<ShopCartModel> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order);
+    List<ShopCartDO> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order);
 
     int queryTotal(Map<String, Object> map);
 

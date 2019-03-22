@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.seamwhole.servicetradecore.mapper.model.CouponDO;
 import com.seamwhole.servicetradecore.model.Coupon;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface CouponService {
 
     Coupon queryObject(Integer couponId);
 
-    List<Coupon> queryList(Map<String, Object> map);
+    List<CouponDO> queryList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 
@@ -18,13 +19,15 @@ public interface CouponService {
 
     void update(Coupon user);
 
-    void delete(Long userId);
+    void delete(Short userId);
 
-    void deleteBatch(Long[] userIds);
+    void deleteBatch(Short[] userIds);
 
-    List<Coupon> queryUserCoupons(Map<String, Object> map);
+    List<CouponDO> queryUserCoupons(Map<String, Object> map);
 
-    Coupon queryMaxUserEnableCoupon(Map<String, Object> map);
+    CouponDO queryMaxUserEnableCoupon(Map<String, Object> map);
 
-    List<Coupon> queryUserCouponList(Map<String, Object> map);
+    List<CouponDO> queryUserCouponList(Map<String, Object> map);
+
+    CouponDO getUserCoupon(Integer id);
 }

@@ -9,7 +9,7 @@ public class ShopUser {
 
     private String password;
 
-    private Boolean gender;
+    private Integer gender;
 
     private Date birthday;
 
@@ -19,7 +19,7 @@ public class ShopUser {
 
     private String lastLoginIp;
 
-    private Byte userLevelId;
+    private Integer userLevelId;
 
     private String nickname;
 
@@ -55,11 +55,11 @@ public class ShopUser {
         this.password = password == null ? null : password.trim();
     }
 
-    public Boolean getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -95,11 +95,11 @@ public class ShopUser {
         this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
     }
 
-    public Byte getUserLevelId() {
+    public Integer getUserLevelId() {
         return userLevelId;
     }
 
-    public void setUserLevelId(Byte userLevelId) {
+    public void setUserLevelId(Integer userLevelId) {
         this.userLevelId = userLevelId;
     }
 

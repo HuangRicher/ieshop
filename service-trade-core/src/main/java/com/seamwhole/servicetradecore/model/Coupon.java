@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Coupon {
-    private Short id;
+    private Integer id;
 
     private String name;
 
     private BigDecimal typeMoney;
 
-    private Byte sendType;
+    private Integer sendType;
 
     private BigDecimal minAmount;
 
@@ -28,11 +28,11 @@ public class Coupon {
 
     private Integer minTransmitNum;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,11 +52,11 @@ public class Coupon {
         this.typeMoney = typeMoney;
     }
 
-    public Byte getSendType() {
+    public Integer getSendType() {
         return sendType;
     }
 
-    public void setSendType(Byte sendType) {
+    public void setSendType(Integer sendType) {
         this.sendType = sendType;
     }
 

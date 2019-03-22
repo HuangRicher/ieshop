@@ -5,11 +5,11 @@ public class KeyWords {
 
     private String keyword;
 
-    private Boolean isHot;
+    private Integer isHot;
 
-    private Boolean isDefault;
+    private Integer isDefault;
 
-    private Boolean isShow;
+    private Integer isShow;
 
     private Integer sortOrder;
 
@@ -33,27 +33,27 @@ public class KeyWords {
         this.keyword = keyword == null ? null : keyword.trim();
     }
 
-    public Boolean getIsHot() {
+    public Integer getIsHot() {
         return isHot;
     }
 
-    public void setIsHot(Boolean isHot) {
+    public void setIsHot(Integer isHot) {
         this.isHot = isHot;
     }
 
-    public Boolean getIsDefault() {
+    public Integer getIsDefault() {
         return isDefault;
     }
 
-    public void setIsDefault(Boolean isDefault) {
+    public void setIsDefault(Integer isDefault) {
         this.isDefault = isDefault;
     }
 
-    public Boolean getIsShow() {
+    public Integer getIsShow() {
         return isShow;
     }
 
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Integer isShow) {
         this.isShow = isShow;
     }
 

@@ -21,11 +21,11 @@ public class ShopCart {
 
     private BigDecimal retailPrice;
 
-    private Short number;
+    private Integer number;
 
     private String goodsSpecifitionIds;
 
-    private Boolean checked;
+    private Integer checked;
 
     private String listPicUrl;
 
@@ -103,11 +103,11 @@ public class ShopCart {
         this.retailPrice = retailPrice;
     }
 
-    public Short getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Short number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -119,11 +119,11 @@ public class ShopCart {
         this.goodsSpecifitionIds = goodsSpecifitionIds == null ? null : goodsSpecifitionIds.trim();
     }
 
-    public Boolean getChecked() {
+    public Integer getChecked() {
         return checked;
     }
 
-    public void setChecked(Boolean checked) {
+    public void setChecked(Integer checked) {
         this.checked = checked;
     }
 

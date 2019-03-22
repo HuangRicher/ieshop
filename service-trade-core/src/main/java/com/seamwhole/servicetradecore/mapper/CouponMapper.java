@@ -10,7 +10,7 @@ public interface CouponMapper {
 
     int deleteByExample(CouponExample example);
 
-    int deleteByPrimaryKey(Short id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Coupon record);
 
@@ -18,7 +18,7 @@ public interface CouponMapper {
 
     List<Coupon> selectByExample(CouponExample example);
 
-    Coupon selectByPrimaryKey(Short id);
+    Coupon selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Coupon record, @Param("example") CouponExample example);
 

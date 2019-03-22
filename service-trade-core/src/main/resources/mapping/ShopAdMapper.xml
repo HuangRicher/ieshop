@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ShopAdMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopAd" >
-    <id column="id" property="id" jdbcType="SMALLINT" />
-    <result column="ad_position_id" property="adPositionId" jdbcType="SMALLINT" />
-    <result column="media_type" property="mediaType" jdbcType="TINYINT" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ad_position_id" property="adPositionId" jdbcType="INTEGER" />
+    <result column="media_type" property="mediaType" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="link" property="link" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-    <result column="enabled" property="enabled" jdbcType="TINYINT" />
+    <result column="enabled" property="enabled" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.ShopAd" extends="BaseResultMap" >
     <result column="image_url" property="imageUrl" jdbcType="LONGVARCHAR" />
@@ -108,17 +108,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from ishop_ad
-    where id = #{id,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ishop_ad
-    where id = #{id,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.seamwhole.servicetradecore.model.ShopAdExample" >
     delete from ishop_ad
@@ -131,9 +131,9 @@
       name, link, content, 
       end_time, enabled, image_url
       )
-    values (#{id,jdbcType=SMALLINT}, #{adPositionId,jdbcType=SMALLINT}, #{mediaType,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{adPositionId,jdbcType=INTEGER}, #{mediaType,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=TINYINT}, #{imageUrl,jdbcType=LONGVARCHAR}
+      #{endTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=INTEGER}, #{imageUrl,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.ShopAd" >
@@ -169,13 +169,13 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=SMALLINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="adPositionId != null" >
-        #{adPositionId,jdbcType=SMALLINT},
+        #{adPositionId,jdbcType=INTEGER},
       </if>
       <if test="mediaType != null" >
-        #{mediaType,jdbcType=TINYINT},
+        #{mediaType,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -190,7 +190,7 @@
         #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="enabled != null" >
-        #{enabled,jdbcType=TINYINT},
+        #{enabled,jdbcType=INTEGER},
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=LONGVARCHAR},
@@ -207,13 +207,13 @@
     update ishop_ad
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=SMALLINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.adPositionId != null" >
-        ad_position_id = #{record.adPositionId,jdbcType=SMALLINT},
+        ad_position_id = #{record.adPositionId,jdbcType=INTEGER},
       </if>
       <if test="record.mediaType != null" >
-        media_type = #{record.mediaType,jdbcType=TINYINT},
+        media_type = #{record.mediaType,jdbcType=INTEGER},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
@@ -228,7 +228,7 @@
         end_time = #{record.endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.enabled != null" >
-        enabled = #{record.enabled,jdbcType=TINYINT},
+        enabled = #{record.enabled,jdbcType=INTEGER},
       </if>
       <if test="record.imageUrl != null" >
         image_url = #{record.imageUrl,jdbcType=LONGVARCHAR},
@@ -240,14 +240,14 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update ishop_ad
-    set id = #{record.id,jdbcType=SMALLINT},
-      ad_position_id = #{record.adPositionId,jdbcType=SMALLINT},
-      media_type = #{record.mediaType,jdbcType=TINYINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      ad_position_id = #{record.adPositionId,jdbcType=INTEGER},
+      media_type = #{record.mediaType,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       link = #{record.link,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      enabled = #{record.enabled,jdbcType=TINYINT},
+      enabled = #{record.enabled,jdbcType=INTEGER},
       image_url = #{record.imageUrl,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -255,14 +255,14 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update ishop_ad
-    set id = #{record.id,jdbcType=SMALLINT},
-      ad_position_id = #{record.adPositionId,jdbcType=SMALLINT},
-      media_type = #{record.mediaType,jdbcType=TINYINT},
+    set id = #{record.id,jdbcType=INTEGER},
+      ad_position_id = #{record.adPositionId,jdbcType=INTEGER},
+      media_type = #{record.mediaType,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       link = #{record.link,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
-      enabled = #{record.enabled,jdbcType=TINYINT}
+      enabled = #{record.enabled,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -271,10 +271,10 @@
     update ishop_ad
     <set >
       <if test="adPositionId != null" >
-        ad_position_id = #{adPositionId,jdbcType=SMALLINT},
+        ad_position_id = #{adPositionId,jdbcType=INTEGER},
       </if>
       <if test="mediaType != null" >
-        media_type = #{mediaType,jdbcType=TINYINT},
+        media_type = #{mediaType,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -289,35 +289,35 @@
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
       <if test="enabled != null" >
-        enabled = #{enabled,jdbcType=TINYINT},
+        enabled = #{enabled,jdbcType=INTEGER},
       </if>
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seamwhole.servicetradecore.model.ShopAd" >
     update ishop_ad
-    set ad_position_id = #{adPositionId,jdbcType=SMALLINT},
-      media_type = #{mediaType,jdbcType=TINYINT},
+    set ad_position_id = #{adPositionId,jdbcType=INTEGER},
+      media_type = #{mediaType,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       link = #{link,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=TINYINT},
+      enabled = #{enabled,jdbcType=INTEGER},
       image_url = #{imageUrl,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.ShopAd" >
     update ishop_ad
-    set ad_position_id = #{adPositionId,jdbcType=SMALLINT},
-      media_type = #{mediaType,jdbcType=TINYINT},
+    set ad_position_id = #{adPositionId,jdbcType=INTEGER},
+      media_type = #{mediaType,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       link = #{link,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       end_time = #{endTime,jdbcType=TIMESTAMP},
-      enabled = #{enabled,jdbcType=TINYINT}
-    where id = #{id,jdbcType=SMALLINT}
+      enabled = #{enabled,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

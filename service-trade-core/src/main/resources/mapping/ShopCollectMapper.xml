@@ -3,10 +3,10 @@
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ShopCollectMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopCollect" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="REAL" />
     <result column="value_id" property="valueId" jdbcType="INTEGER" />
     <result column="add_time" property="addTime" jdbcType="INTEGER" />
-    <result column="is_attention" property="isAttention" jdbcType="BIT" />
+    <result column="is_attention" property="isAttention" jdbcType="INTEGER" />
     <result column="type_id" property="typeId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -104,8 +104,8 @@
     insert into ishop_collect (id, user_id, value_id, 
       add_time, is_attention, type_id
       )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=INTEGER}, #{isAttention,jdbcType=BIT}, #{typeId,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=REAL}, #{valueId,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=INTEGER}, #{isAttention,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.ShopCollect" >
@@ -135,7 +135,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=REAL},
       </if>
       <if test="valueId != null" >
         #{valueId,jdbcType=INTEGER},
@@ -144,7 +144,7 @@
         #{addTime,jdbcType=INTEGER},
       </if>
       <if test="isAttention != null" >
-        #{isAttention,jdbcType=BIT},
+        #{isAttention,jdbcType=INTEGER},
       </if>
       <if test="typeId != null" >
         #{typeId,jdbcType=INTEGER},
@@ -164,7 +164,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=REAL},
       </if>
       <if test="record.valueId != null" >
         value_id = #{record.valueId,jdbcType=INTEGER},
@@ -173,7 +173,7 @@
         add_time = #{record.addTime,jdbcType=INTEGER},
       </if>
       <if test="record.isAttention != null" >
-        is_attention = #{record.isAttention,jdbcType=BIT},
+        is_attention = #{record.isAttention,jdbcType=INTEGER},
       </if>
       <if test="record.typeId != null" >
         type_id = #{record.typeId,jdbcType=INTEGER},
@@ -186,10 +186,10 @@
   <update id="updateByExample" parameterType="map" >
     update ishop_collect
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=REAL},
       value_id = #{record.valueId,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=INTEGER},
-      is_attention = #{record.isAttention,jdbcType=BIT},
+      is_attention = #{record.isAttention,jdbcType=INTEGER},
       type_id = #{record.typeId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -199,7 +199,7 @@
     update ishop_collect
     <set >
       <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=REAL},
       </if>
       <if test="valueId != null" >
         value_id = #{valueId,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
         add_time = #{addTime,jdbcType=INTEGER},
       </if>
       <if test="isAttention != null" >
-        is_attention = #{isAttention,jdbcType=BIT},
+        is_attention = #{isAttention,jdbcType=INTEGER},
       </if>
       <if test="typeId != null" >
         type_id = #{typeId,jdbcType=INTEGER},
@@ -218,10 +218,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.ShopCollect" >
     update ishop_collect
-    set user_id = #{userId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=REAL},
       value_id = #{valueId,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=INTEGER},
-      is_attention = #{isAttention,jdbcType=BIT},
+      is_attention = #{isAttention,jdbcType=INTEGER},
       type_id = #{typeId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

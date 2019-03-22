@@ -1,13 +1,15 @@
 package com.seamwhole.servicetradecore.service.impl;
 
-import com.platform.dao.ApiCouponMapper;
-import com.platform.entity.CouponVo;
 import com.seamwhole.servicetradecore.mapper.CouponMapper;
+import com.seamwhole.servicetradecore.mapper.ext.CouponExtMapper;
+import com.seamwhole.servicetradecore.mapper.model.CouponDO;
 import com.seamwhole.servicetradecore.model.Coupon;
+import com.seamwhole.servicetradecore.model.CouponExample;
 import com.seamwhole.servicetradecore.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +17,22 @@ import java.util.Map;
 
 @Service
 public class CouponServiceImpl implements CouponService {
+
     @Autowired
     private CouponMapper couponMapper;
+    @Autowired
+    private CouponExtMapper couponExtMapper;
+
+
+
 
     public Coupon queryObject(Integer couponId) {
         return couponMapper.selectByPrimaryKey(couponId.shortValue());
     }
 
-    public List<Coupon> queryList(Map<String, Object> map) {
-        //return apiCouponMapper.queryList(map);
-        return null;
+    public List<CouponDO> queryList(Map<String, Object> map) {
+        return couponExtMapper.queryList(map);
+
     }
 
     public int queryTotal(Map<String, Object> map) {
@@ -33,38 +41,40 @@ public class CouponServiceImpl implements CouponService {
     }
 
 
-    public void save(Coupon userVo) {
-        //apiCouponMapper.save(userVo);
+    public void save(Coupon coupon) {
+        couponMapper.insertSelective(coupon);
     }
 
-    public void update(Coupon user) {
-        //apiCouponMapper.updateById(user);
+    public void update(Coupon coupon) {
+        couponMapper.updateByPrimaryKeySelective(coupon);
     }
 
-    public void delete(Long userId) {
-        //apiCouponMapper.delete(userId);
+    public void delete(Short id) {
+        couponMapper.deleteByPrimaryKey(id);
     }
 
-    public void deleteBatch(Long[] userIds) {
-        //apiCouponMapper.deleteBatch(userIds);
+    public void deleteBatch(Short[] ids) {
+        CouponExample example=new CouponExample();
+        example.createCriteria().andIdIn(Arrays.asList(ids));
+        couponMapper.deleteByExample(example);
     }
 
-    public List<Coupon> queryUserCoupons(Map<String, Object> map) {
+    public List<CouponDO> queryUserCoupons(Map<String, Object> map) {
         // 检查优惠券是否过期
-        List<Coupon> couponVos = apiCouponMapper.queryUserCoupons(map);
-        for (Coupon couponVo : couponVos) {
+        List<CouponDO> couponVos = couponExtMapper.queryUserCoupons(map);
+        for (CouponDO couponVo : couponVos) {
             if (couponVo.getCoupon_status()==1) {
                 // 检查是否过期
                 if(couponVo.getUse_end_date().before(new Date())) {
                     couponVo.setCoupon_status(3);
-                    apiCouponMapper.updateUserCoupon(couponVo);
+                    couponExtMapper.updateUserCoupon(couponVo);
                 }
             }
             if (couponVo.getCoupon_status()==3) {
                 // 检查是否不过期
                 if(couponVo.getUse_end_date().after(new Date())) {
                     couponVo.setCoupon_status(1);
-                    apiCouponMapper.updateUserCoupon(couponVo);
+                    couponExtMapper.updateUserCoupon(couponVo);
                 }
             }
         }
@@ -72,11 +82,16 @@ public class CouponServiceImpl implements CouponService {
         return couponVos;
     }
 
-    public Coupon queryMaxUserEnableCoupon(Map<String, Object> map) {
-        return apiCouponMapper.queryMaxUserEnableCoupon(map);
+    public CouponDO queryMaxUserEnableCoupon(Map<String, Object> map) {
+        return couponExtMapper.queryMaxUserEnableCoupon(map);
     }
 
-    public List<Coupon> queryUserCouponList(Map<String, Object> map) {
-        return apiCouponMapper.queryUserCouponList(map);
+    public List<CouponDO> queryUserCouponList(Map<String, Object> map) {
+        return couponExtMapper.queryUserCouponList(map);
+    }
+
+    @Override
+    public CouponDO getUserCoupon(Integer id) {
+        return couponExtMapper.getUserCoupon(id);
     }
 }
