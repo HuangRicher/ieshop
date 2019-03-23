@@ -8,7 +8,7 @@ public class CartModel {
     private Integer productId;
     private String productIds;
     private Integer isChecked;
-    private Short number;
+    private Integer number;
     private Integer couponId;
     private String type= "cart";
 
@@ -37,11 +37,11 @@ public class CartModel {
         this.isChecked = isChecked;
     }
 
-    public Short getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Short number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

@@ -67,7 +67,7 @@ public class CartController extends BaseController {
         for (ShopCart cartItem : cartList) {
             goodsCount += cartItem.getNumber();
             goodsAmount = goodsAmount.add(cartItem.getRetailPrice().multiply(new BigDecimal(cartItem.getNumber())));
-            if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
+            if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
                 checkedGoodsCount += cartItem.getNumber();
                 checkedGoodsAmount = checkedGoodsAmount.add(cartItem.getRetailPrice().multiply(new BigDecimal(cartItem.getNumber())));
             }
@@ -152,10 +152,10 @@ public class CartController extends BaseController {
     public Object add(@RequestBody CartModel cartModel) {
         Integer goodsId = cartModel.getGoodsId();
         Integer productId = cartModel.getProductId();
-        Short number = cartModel.getNumber();
+        Integer number = cartModel.getNumber();
         //判断商品是否可以购买
         Goods goodsInfo = goodsService.queryObject(goodsId);
-        if (null == goodsInfo || goodsInfo.getIsDelete() == true || goodsInfo.getIsOnSale() != true) {
+        if (null == goodsInfo || goodsInfo.getIsDelete() == 1 || goodsInfo.getIsOnSale() != 1) {
             return this.toResponsObject(400, "商品已下架", "");
         }
         //取得规格的信息,判断规格库存
@@ -202,14 +202,14 @@ public class CartController extends BaseController {
                 cartInfo.setGoodsSpecifitionNameValue(StringUtils.join(goodsSepcifitionValue, ";"));
             }
             cartInfo.setGoodsSpecifitionIds(productInfo.getGoodsSpecificationIds());
-            cartInfo.setChecked(true);
+            cartInfo.setChecked(1);
             cartService.save(cartInfo);
         } else {
             //如果已经存在购物车中，则数量增加
             if (productInfo.getGoodsNumber() < (number + cartInfo.getNumber())) {
                 return this.toResponsObject(400, "库存不足", "");
             }
-            cartInfo.setNumber((short)(cartInfo.getNumber() + number));
+            cartInfo.setNumber(cartInfo.getNumber() + number);
             cartService.update(cartInfo);
         }
         return toResponsSuccess(getCart(cartModel));
@@ -223,14 +223,14 @@ public class CartController extends BaseController {
     public Object minus(@RequestBody CartModel cartModel) {
         Integer goodsId = cartModel.getGoodsId();
         Integer productId = cartModel.getProductId();
-        Short number = cartModel.getNumber();
+        Integer number = cartModel.getNumber();
         //判断购物车中是否存在此规格商品
         List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(),goodsId,productId,null,"");
         ShopCart cartInfo = null != cartInfoList && cartInfoList.size() > 0 ? cartInfoList.get(0) : null;
         int cart_num = 0;
         if (null != cartInfo) {
             if (cartInfo.getNumber() > number) {
-                cartInfo.setNumber((short)(cartInfo.getNumber() - number));
+                cartInfo.setNumber(cartInfo.getNumber() - number);
                 cartService.update(cartInfo);
                 cart_num = cartInfo.getNumber();
             } else if (cartInfo.getNumber() == 1) {
@@ -250,7 +250,7 @@ public class CartController extends BaseController {
 
         Integer goodsId = cartModel.getGoodsId();
         Integer productId = cartModel.getProductId();
-        Short number = cartModel.getNumber();
+        Integer number = cartModel.getNumber();
         Integer id = cartModel.getId();
         //取得规格的信息,判断规格库存
         ProductDO productInfo = productService.queryObject(productId);
@@ -408,7 +408,7 @@ public class CartController extends BaseController {
             Map<String, Object> cartData = (Map<String, Object>) this.getCart(cartModel);
 
             for (ShopCart cartEntity : (List<ShopCart>) cartData.get("cartList")) {
-                if (cartEntity.getChecked() == true) {
+                if (cartEntity.getChecked() == 1) {
                     checkedGoodsList.add(cartEntity);
                 }
             }
@@ -422,7 +422,7 @@ public class CartController extends BaseController {
 
             ShopCart cartVo = new ShopCart();
             cartVo.setGoodsName(productInfo.getGoodsName());
-            cartVo.setNumber(goodsVO.getNumber().shortValue());
+            cartVo.setNumber(goodsVO.getNumber());
             cartVo.setRetailPrice(productInfo.getRetailPrice());
             cartVo.setListPicUrl(productInfo.getListPicUrl());
             checkedGoodsList.add(cartVo);
@@ -470,7 +470,7 @@ public class CartController extends BaseController {
             List<ShopCart> checkedGoodsList = new ArrayList();
             List<Integer> checkedGoodsIds = new ArrayList();
             for (ShopCart cartEntity : (List<ShopCart>) cartData.get("cartList")) {
-                if (cartEntity.getChecked() == true) {
+                if (cartEntity.getChecked() == 1) {
                     checkedGoodsList.add(cartEntity);
                     checkedGoodsIds.add(cartEntity.getId());
                 }

@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService {
         List<Integer> goodsIds = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();
         for (ShopCartDO cartItem : cartInfoList) {
-            if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
+            if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
                 goodsIds.add(cartItem.getGoodsId());
             }
             if (!cartItem.getRetailPrice().equals(cartItem.getRetailProductPrice())) {
@@ -61,7 +61,7 @@ public class CartServiceImpl implements CartService {
 
         for (ShopCart cartItem : cartInfoList) {
             // 存在原始的
-            if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
+            if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
                 for (ShopCart cartCrash : cartInfoList) {
                     if (!cartCrash.getId().equals(cartItem.getId())) {
                         cartUpdateList.add(cartItem);
@@ -96,7 +96,7 @@ public class CartServiceImpl implements CartService {
         ShopCartExample example=new ShopCartExample();
         example.createCriteria().andProductIdIn(Arrays.asList(productIds)).andUserIdEqualTo(userId);
         ShopCart cart=new ShopCart();
-        cart.setChecked(isChecked.equals(1));
+        cart.setChecked(1);
         shopCartMapper.updateByExampleSelective(cart,example);
 
         // 判断购物车中是否存在此规格商品
@@ -106,7 +106,7 @@ public class CartServiceImpl implements CartService {
         List<Integer> goods_ids = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();
         for (ShopCartDO cartItem : cartInfoList) {
-            if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
+            if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
                 goods_ids.add(cartItem.getGoodsId());
             }
             if (!cartItem.getRetailPrice().equals(cartItem.getRetailProductPrice())) {
@@ -118,9 +118,9 @@ public class CartServiceImpl implements CartService {
             //crashParam.put("goods_ids", goods_ids);
             for (ShopCart cartItem : cartInfoList) {
                 // 存在原始的
-                if (null != cartItem.getChecked() && true == cartItem.getChecked()) {
+                if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
                     for (ShopCart cartCrash : cartInfoList) {
-                        if (null != cartItem.getChecked() && true == cartItem.getChecked() && !cartCrash.getId().equals(cartItem.getId())) {
+                        if (null != cartItem.getChecked() && 1 == cartItem.getChecked() && !cartCrash.getId().equals(cartItem.getId())) {
                             cartUpdateList.add(cartCrash);
                             break;
                         }
@@ -149,7 +149,7 @@ public class CartServiceImpl implements CartService {
 
     public void deleteByCart(Integer userId, String sessionId, Integer checked) {
         ShopCartExample example=new ShopCartExample();
-        example.createCriteria().andUserIdEqualTo(userId).andSessionIdEqualTo(sessionId).andCheckedEqualTo(checked.equals(1));
+        example.createCriteria().andUserIdEqualTo(userId).andSessionIdEqualTo(sessionId).andCheckedEqualTo(1);
         shopCartMapper.deleteByExample(example);
     }
 

@@ -1,6 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
 import com.seamwhole.servicetradecore.mapper.GoodsMapper;
+import com.seamwhole.servicetradecore.mapper.ext.GoodsExtMapper;
+import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
 import com.seamwhole.servicetradecore.model.Goods;
 import com.seamwhole.servicetradecore.model.GoodsExample;
 import com.seamwhole.servicetradecore.service.GoodsService;
@@ -18,21 +20,24 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private GoodsExtMapper goodsExtMapper;
+
+
+
 
     public Goods queryObject(Integer id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
 
 
-    public List<Goods> queryList(Map<String, Object> map) {
-        //return goodsMapper.queryList(map);
-        return null;
+    public List<GoodsDO> queryList(Map<String, Object> map) {
+        return goodsExtMapper.queryList(map);
     }
 
 
     public int queryTotal(Map<String, Object> map) {
-        //return goodsMapper.queryTotal(map);
-        return 0;
+        return goodsExtMapper.queryTotal(map);
     }
 
 
@@ -42,7 +47,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     public void update(Goods goods) {
-        //goodsMapper.updateById(goods);
+        goodsMapper.updateByPrimaryKeySelective(goods);
     }
 
 
@@ -57,13 +62,11 @@ public class GoodsServiceImpl implements GoodsService {
         goodsMapper.deleteByExample(example);
     }
 
-    public List<Goods> queryHotGoodsList(Map<String, Object> map) {
-        //return goodsMapper.queryHotGoodsList(map);
-        return null;
+    public List<GoodsDO> queryHotGoodsList(Map<String, Object> map) {
+        return goodsExtMapper.queryHotGoodsList(map);
     }
 
-    public List<Goods> queryCatalogProductList(Map<String, Object> map) {
-        //return goodsMapper.queryCatalogProductList(map);
-        return null;
+    public List<GoodsDO> queryCatalogProductList(Map<String, Object> map) {
+        return goodsExtMapper.queryCatalogProductList(map);
     }
 }

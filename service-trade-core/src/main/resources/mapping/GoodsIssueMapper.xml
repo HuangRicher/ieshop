@@ -3,6 +3,7 @@
 <mapper namespace="com.seamwhole.servicetradecore.mapper.GoodsIssueMapper" >
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.GoodsIssue" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
     <result column="question" property="question" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
   </resultMap>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, question, answer
+    id, goods_id, question, answer
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.GoodsIssueExample" >
     select
@@ -98,16 +99,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.GoodsIssue" >
-    insert into ishop_goods_issue (id, question, answer
-      )
-    values (#{id,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}
-      )
+    insert into ishop_goods_issue (id, goods_id, question, 
+      answer)
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.GoodsIssue" >
     insert into ishop_goods_issue
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
       </if>
       <if test="question != null" >
         question,
@@ -119,6 +123,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
       </if>
       <if test="question != null" >
         #{question,jdbcType=VARCHAR},
@@ -140,6 +147,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
       <if test="record.question != null" >
         question = #{record.question,jdbcType=VARCHAR},
       </if>
@@ -154,6 +164,7 @@
   <update id="updateByExample" parameterType="map" >
     update ishop_goods_issue
     set id = #{record.id,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
       question = #{record.question,jdbcType=VARCHAR},
       answer = #{record.answer,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -163,6 +174,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.servicetradecore.model.GoodsIssue" >
     update ishop_goods_issue
     <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
       <if test="question != null" >
         question = #{question,jdbcType=VARCHAR},
       </if>
@@ -174,7 +188,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.GoodsIssue" >
     update ishop_goods_issue
-    set question = #{question,jdbcType=VARCHAR},
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

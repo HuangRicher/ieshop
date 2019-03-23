@@ -12,6 +12,7 @@ public interface ShopCommentExtMapper {
                                 @Param("typeId") Integer typeId,
                                 @Param("valueId") Integer valueId,
                                 @Param("goodsId") Integer goodsId,
+                                @Param("hasPic") Integer hasPic,
                                 @Param("order") String order);
 
     int queryTotal(@Param("typeId") Integer typeId,

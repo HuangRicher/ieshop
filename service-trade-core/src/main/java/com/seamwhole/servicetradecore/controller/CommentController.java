@@ -1,23 +1,20 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.platform.annotation.IgnoreAuth;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.*;
-import com.platform.service.*;
-import com.platform.util.ApiBaseAction;
-import com.platform.util.ApiPageUtils;
-import com.platform.utils.CharUtil;
-import com.platform.utils.Query;
-import com.platform.utils.StringUtils;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.CommentModel;
+import com.seamwhole.servicetradecore.domain.ShopCommentInfo;
+import com.seamwhole.servicetradecore.mapper.model.CouponDO;
+import com.seamwhole.servicetradecore.model.CommentPicture;
+import com.seamwhole.servicetradecore.model.ShopComment;
+import com.seamwhole.servicetradecore.model.UserCoupon;
+import com.seamwhole.servicetradecore.service.*;
+import com.seamwhole.servicetradecore.util.CharUtil;
+import com.seamwhole.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -27,48 +24,47 @@ import java.util.*;
 @RequestMapping("/api/comment")
 public class CommentController extends BaseController {
     @Autowired
-    private ApiCommentService commentService;
+    private CommentService commentService;
     @Autowired
-    private ApiUserService userService;
+    private UserService userService;
     @Autowired
-    private ApiCommentPictureService commentPictureService;
+    private CommentPictureService commentPictureService;
     @Autowired
-    private ApiCouponService apiCouponService;
+    private CouponService apiCouponService;
     @Autowired
-    private ApiUserCouponService apiUserCouponService;
+    private UserCouponService apiUserCouponService;
 
     /**
      * 发表评论
      */
     @ApiOperation(value = "发表评论")
     @PostMapping("post")
-    public Object post(@LoginUser UserVo loginUser) {
+    public Object post(@RequestBody CommentModel commentModel) {
         Map resultObj = new HashMap();
         //
-        JSONObject jsonParam = getJsonRequest();
-        Integer typeId = jsonParam.getInteger("typeId");
-        Integer valueId = jsonParam.getInteger("valueId");
-        String content = jsonParam.getString("content");
-        JSONArray imagesList = jsonParam.getJSONArray("imagesList");
-        CommentVo commentEntity = new CommentVo();
-        commentEntity.setType_id(typeId);
-        commentEntity.setValue_id(valueId);
+        Integer typeId = commentModel.getTypeId();
+        Integer valueId = commentModel.getValueId();
+        String content = commentModel.getContent();
+        List<String> imagesList = commentModel.getImagesList();
+        ShopComment commentEntity = new ShopComment();
+        commentEntity.setTypeId(typeId);
+        commentEntity.setValueId(valueId);
         commentEntity.setContent(content);
         commentEntity.setStatus(0);
         //
-        commentEntity.setAdd_time(System.currentTimeMillis() / 1000);
-        commentEntity.setUser_id(loginUser.getUserId());
-        commentEntity.setContent(Base64.encode(commentEntity.getContent()));
+        commentEntity.setAddTime(System.currentTimeMillis() / 1000);
+        commentEntity.setUserId(commentModel.getUserId());
+        commentEntity.setContent(Base64.getEncoder().encodeToString(commentEntity.getContent().getBytes()));
         Integer insertId = commentService.save(commentEntity);
         //
         if (insertId > 0 && null != imagesList && imagesList.size() > 0) {
             int i = 0;
             for (Object imgLink : imagesList) {
                 i++;
-                CommentPictureVo pictureVo = new CommentPictureVo();
-                pictureVo.setComment_id(insertId);
-                pictureVo.setPic_url(imgLink.toString());
-                pictureVo.setSort_order(i);
+                CommentPicture pictureVo = new CommentPicture();
+                pictureVo.setCommentId(insertId);
+                pictureVo.setPicUrl(imgLink.toString());
+                pictureVo.setSortOrder(i);
                 commentPictureService.save(pictureVo);
             }
         }
@@ -77,10 +73,10 @@ public class CommentController extends BaseController {
             // 当前评价的次数
             Map param = new HashMap();
             param.put("value_id", valueId);
-            List<CommentVo> commentVos = commentService.queryList(param);
+            List<ShopComment> commentVos = commentService.queryList(param);
             boolean hasComment = false;
-            for (CommentVo commentVo : commentVos) {
-                if (commentVo.getUser_id().equals(loginUser.getUserId())
+            for (ShopComment commentVo : commentVos) {
+                if (commentVo.getUserId().equals(commentModel.getUserId())
                         && !commentVo.getId().equals(insertId)) {
                     hasComment = true;
                 }
@@ -88,14 +84,14 @@ public class CommentController extends BaseController {
             if (!hasComment) {
                 Map couponParam = new HashMap();
                 couponParam.put("send_type", 6);
-                CouponVo newCouponConfig = apiCouponService.queryMaxUserEnableCoupon(couponParam);
+                CouponDO newCouponConfig = apiCouponService.queryMaxUserEnableCoupon(couponParam);
                 if (null != newCouponConfig
                         && newCouponConfig.getMin_transmit_num() >= commentVos.size()) {
-                    UserCouponVo userCouponVo = new UserCouponVo();
-                    userCouponVo.setAdd_time(new Date());
-                    userCouponVo.setCoupon_id(newCouponConfig.getId());
-                    userCouponVo.setCoupon_number(CharUtil.getRandomString(12));
-                    userCouponVo.setUser_id(loginUser.getUserId());
+                    UserCoupon userCouponVo = new UserCoupon();
+                    userCouponVo.setAddTime(new Date());
+                    userCouponVo.setCouponId(newCouponConfig.getId());
+                    userCouponVo.setCouponNumber(CharUtil.getRandomString(12));
+                    userCouponVo.setUserId(commentModel.getUserId());
                     apiUserCouponService.save(userCouponVo);
                     resultObj.put("coupon", newCouponConfig);
                 }
@@ -112,14 +108,14 @@ public class CommentController extends BaseController {
      */
     @ApiOperation(value = "评论数量")
     @PostMapping("count")
-    public Object count(Integer typeId, Integer valueId) {
+    public Object count(@RequestBody CommentModel commentModel) {
         Map<String, Object> resultObj = new HashMap();
         //
         Map param = new HashMap();
-        param.put("type_id", typeId);
-        param.put("value_id", valueId);
+        param.put("type_id", commentModel.getTypeId());
+        param.put("value_id", commentModel.getValueId());
         Integer allCount = commentService.queryTotal(param);
-        Integer hasPicCount = commentService.queryhasPicTotal(param);
+        Integer hasPicCount = commentService.queryHasPicTotal(param);
         //
         resultObj.put("allCount", allCount);
         resultObj.put("hasPicCount", hasPicCount);
@@ -127,54 +123,46 @@ public class CommentController extends BaseController {
     }
 
     /**
-     * @param typeId
-     * @param valueId
-     * @param showType 选择评论的类型 0 全部， 1 只显示图片
-     * @param page
-     * @param size
+     * 选择评论类型
      * @return
      */
     @ApiOperation(value = "选择评论类型")
-    @IgnoreAuth
     @PostMapping("list")
-    public Object list(Integer typeId, Integer valueId, Integer showType,
-                       @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
-                       String sort, String order) {
-        Map<String, Object> resultObj = new HashMap();
-        List<CommentVo> commentList = new ArrayList();
+    public Object list(@RequestBody CommentModel commentModel) {
+        List<ShopCommentInfo> commentList = new ArrayList();
         Map param = new HashMap();
-        param.put("type_id", typeId);
-        param.put("value_id", valueId);
-        param.put("page", page);
-        param.put("limit", size);
-        if (StringUtils.isNullOrEmpty(sort)) {
-            param.put("order", "desc");
+        param.put("typeId", commentModel.getTypeId());
+        param.put("valueId", commentModel.getValueId());
+        String order="";
+        if (StringUtils.isNullOrEmpty(commentModel.getOrder())) {
+            order=" id";
         } else {
-            param.put("order", sort);
+            order=" "+commentModel.getOrder();
         }
-        if (StringUtils.isNullOrEmpty(order)) {
-            param.put("sidx", "id");
+        if (StringUtils.isNullOrEmpty(commentModel.getSort())) {
+            order+="  desc ";
         } else {
-            param.put("sidx", order);
+            order+=" "+commentModel.getSort();
         }
-        if (null != showType && showType == 1) {
+        if (null != commentModel.getShowType() && commentModel.getShowType() == 1) {
             param.put("hasPic", 1);
         }
         //查询列表数据
-        Query query = new Query(param);
-        commentList = commentService.queryList(query);
-        int total = commentService.queryTotal(query);
-        ApiPageUtils pageUtil = new ApiPageUtils(commentList, total, query.getLimit(), query.getPage());
-        //
-        for (CommentVo commentItem : commentList) {
-            commentItem.setContent(Base64.decode(commentItem.getContent()));
-            commentItem.setUser_info(userService.queryObject(commentItem.getUser_id()));
+
+        PageInfo<ShopComment> pageInfo = commentService.queryByPage(param,commentModel.getPageNum(),commentModel.getPageSize(),order);
+
+        for (ShopComment commentItem : pageInfo.getList()) {
+            ShopCommentInfo commentInfo=new ShopCommentInfo();
+            BeanUtils.copyProperties(commentItem,commentInfo);
+            commentInfo.setContent(new String(Base64.getDecoder().decode(commentItem.getContent().getBytes())));
+            commentInfo.setUserInfo(userService.queryObject(commentItem.getUserId()));
 
             Map paramPicture = new HashMap();
-            paramPicture.put("comment_id", commentItem.getId());
-            List<CommentPictureVo> commentPictureEntities = commentPictureService.queryList(paramPicture);
-            commentItem.setPic_list(commentPictureEntities);
+            paramPicture.put("commentId", commentItem.getId());
+            List<CommentPicture> commentPictureEntities = commentPictureService.queryList(paramPicture);
+            commentInfo.setPicList(commentPictureEntities);
         }
-        return toResponsSuccess(pageUtil);
+        PageInfo<ShopCommentInfo> page=new PageInfo<>(commentList);
+        return toResponsSuccess(page);
     }
 }

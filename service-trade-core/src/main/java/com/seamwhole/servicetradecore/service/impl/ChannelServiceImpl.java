@@ -20,8 +20,8 @@ public class ChannelServiceImpl implements ChannelService {
 
     public List<ShopChannel> queryList(Map<String, Object> map) {
         ShopChannelExample example=new ShopChannelExample();
-        example.createCriteria().and
-        return channelDao.queryList(map);
+        example.setOrderByClause(" sort_order asc ");
+        return shopChannelMapper.selectByExample(example);
     }
 
 

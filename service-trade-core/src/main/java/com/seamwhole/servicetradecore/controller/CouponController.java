@@ -8,6 +8,8 @@ import com.platform.service.*;
 import com.platform.util.ApiBaseAction;
 import com.platform.utils.CharUtil;
 import com.platform.utils.StringUtils;
+import com.seamwhole.servicetradecore.mapper.model.CouponDO;
+import com.seamwhole.servicetradecore.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +33,15 @@ import java.util.*;
 @RequestMapping("/api/coupon")
 public class CouponController extends BaseController {
     @Autowired
-    private ApiUserService apiUserService;
+    private UserService apiUserService;
     @Autowired
-    private ApiCouponService apiCouponService;
+    private CouponService apiCouponService;
     @Autowired
-    private ApiUserCouponService apiUserCouponService;
+    private UserCouponService apiUserCouponService;
     @Autowired
-    private ApiProductService apiProductService;
+    private ProductService apiProductService;
     @Autowired
-    private ApiCartService apiCartService;
+    private CartService apiCartService;
 
     /**
      * 获取优惠券列表
@@ -48,8 +50,8 @@ public class CouponController extends BaseController {
     @PostMapping("/list")
     public Object list(@LoginUser UserVo loginUser) {
         Map param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
-        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
+        param.put("userId", loginUser.getUserId());
+        List<CouponDO> couponVos = apiCouponService.queryUserCoupons(param);
         return toResponsSuccess(couponVos);
     }
 

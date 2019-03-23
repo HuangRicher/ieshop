@@ -69,7 +69,7 @@ public class CollectController extends BaseController {
             collectEntity.setAddTime((int)(System.currentTimeMillis() / 1000));
             collectEntity.setTypeId(typeId);
             collectEntity.setValueId(valueId);
-            collectEntity.setIsAttention(false);
+            collectEntity.setIsAttention(0);
             collectEntity.setUserId(collectModel.getUserId());
             //添加收藏
             collectRes = collectService.save(collectEntity);

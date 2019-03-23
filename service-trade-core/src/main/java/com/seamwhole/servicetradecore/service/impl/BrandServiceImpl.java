@@ -6,6 +6,7 @@ import com.seamwhole.servicetradecore.mapper.ShopBrandMapper;
 import com.seamwhole.servicetradecore.model.ShopBrand;
 import com.seamwhole.servicetradecore.model.ShopBrandExample;
 import com.seamwhole.servicetradecore.service.BrandService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,11 @@ public class BrandServiceImpl implements BrandService {
 	public PageInfo<ShopBrand> queryByPage(Integer pageSize, Integer pageNum, Map<String, Object> param, String order) {
 		PageHelper.startPage(pageNum, pageSize);
 		ShopBrandExample example = new ShopBrandExample();
-		example.setOrderByClause(order);
+		ShopBrandExample.Criteria criteria= example.createCriteria();
+		if(param.get("isNew")!=null)
+			criteria.andIsNewEqualTo((int)param.get("isNew"));
+		if(StringUtils.isNotBlank(order))
+			example.setOrderByClause(order);
 		List<ShopBrand> list = shopBrandMapper.selectByExample(example);
 		PageInfo<ShopBrand> pageInfo = new PageInfo<>(list);
 		return pageInfo;

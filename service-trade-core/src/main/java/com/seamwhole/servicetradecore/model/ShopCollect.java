@@ -3,7 +3,7 @@ package com.seamwhole.servicetradecore.model;
 public class ShopCollect {
     private Integer id;
 
-    private Float userId;
+    private Integer userId;
 
     private Integer valueId;
 
@@ -21,11 +21,11 @@ public class ShopCollect {
         this.id = id;
     }
 
-    public Float getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Float userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

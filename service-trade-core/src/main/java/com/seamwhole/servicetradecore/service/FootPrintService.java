@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
 import com.seamwhole.servicetradecore.model.FootPrint;
 
 import java.util.List;
@@ -10,22 +11,13 @@ public interface FootPrintService {
 
     FootPrint queryObject(Integer id);
 
-    List<FootPrint> queryList(Map<String, Object> map);
+    List<FootPrintDO> queryListFootprint(Integer userid);
 
-    List<FootPrint> queryListFootprint(String userid);
-
-    List<FootPrint> shareList(Map<String, Object> map);
+    List<FootPrintDO> shareList(Map<String, Object> map);
 
     int queryTotal(Map<String, Object> map);
 
     void save(FootPrint footprint);
 
-    void update(FootPrint footprint);
-
-    void delete(Integer id);
-
     void deleteByParam(Map<String, Object> map);
-
-    void deleteBatch(Integer[] ids);
-
 }

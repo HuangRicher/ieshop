@@ -7,17 +7,5 @@ import java.util.Map;
 
 public interface HelpIssueService {
 
-    HelpIssue queryObject(Integer id);
-
     List<HelpIssue> queryList(Map<String, Object> map);
-
-    int queryTotal(Map<String, Object> map);
-
-    int save(HelpIssue helpIssue);
-
-    int update(HelpIssue helpIssue);
-
-    int delete(Integer id);
-
-    int deleteBatch(Integer[] ids);
 }

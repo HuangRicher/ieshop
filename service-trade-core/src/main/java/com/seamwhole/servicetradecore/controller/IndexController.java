@@ -1,21 +1,17 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageHelper;
-import com.platform.annotation.IgnoreAuth;
-import com.platform.entity.*;
-import com.platform.service.*;
-import com.platform.util.ApiBaseAction;
-import com.seamwhole.servicetradecore.model.Category;
-import com.seamwhole.servicetradecore.model.ShopAd;
-import com.seamwhole.servicetradecore.model.ShopTopic;
-import com.seamwhole.servicetradecore.service.AdService;
-import com.seamwhole.servicetradecore.service.CartService;
-import com.seamwhole.servicetradecore.service.CategoryService;
-import com.seamwhole.servicetradecore.service.TopicService;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.IndexModel;
+import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
+import com.seamwhole.servicetradecore.model.*;
+import com.seamwhole.servicetradecore.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,11 +32,11 @@ public class IndexController extends BaseController {
     @Autowired
     private AdService adService;
     @Autowired
-    private ApiChannelService channelService;
+    private ChannelService channelService;
     @Autowired
-    private ApiGoodsService goodsService;
+    private GoodsService goodsService;
     @Autowired
-    private ApiBrandService brandService;
+    private BrandService brandService;
     @Autowired
     private TopicService topicService;
     @Autowired
@@ -61,7 +57,7 @@ public class IndexController extends BaseController {
      */
     @ApiOperation(value = "首页")
     @PostMapping(value = "index")
-    public Object index() {
+    public Object index(@RequestBody IndexModel indexModel) {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
@@ -72,49 +68,43 @@ public class IndexController extends BaseController {
         param = new HashMap<String, Object>();
         param.put("sidx", "sort_order ");
         param.put("order", "asc ");
-        List<ChannelVo> channel = channelService.queryList(param);
+        List<ShopChannel> channel = channelService.queryList(param);
         resultObj.put("channel", channel);
         //
         param = new HashMap<String, Object>();
-        param.put("is_new", 1);
-        param.put("is_delete", 0);
-        param.put("fields", "id, name, list_pic_url, retail_price");
+        param.put("isNew", 1);
+        param.put("isDelete", 0);
+        //param.put("fields", "id, name, list_pic_url, retail_price");
         PageHelper.startPage(0, 4, false);
-        List<GoodsVo> newGoods = goodsService.queryList(param);
+        List<GoodsDO> newGoods = goodsService.queryList(param);
         resultObj.put("newGoodsList", newGoods);
         //
         param = new HashMap<String, Object>();
-        param.put("is_hot", "1");
-        param.put("is_delete", 0);
+        param.put("isHot", "1");
+        param.put("isDelete", 0);
         PageHelper.startPage(0, 3, false);
-        List<GoodsVo> hotGoods = goodsService.queryHotGoodsList(param);
+        List<GoodsDO> hotGoods = goodsService.queryHotGoodsList(param);
         resultObj.put("hotGoodsList", hotGoods);
         // 当前购物车中
-        List<CartVo> cartList = new ArrayList<CartVo>();
-        if (null != getUserId()) {
+        List<ShopCartDO> cartList = new ArrayList<>();
+        if (null != indexModel.getUserId()) {
             //查询列表数据
-            Map<String, Object> cartParam = new HashMap<String, Object>();
-            cartParam.put("user_id", getUserId());
-            cartList = cartService.queryList(cartParam);
+            cartList = cartService.queryList(indexModel.getUserId(),null,null,null,"");
         }
         if (null != cartList && cartList.size() > 0 && null != hotGoods && hotGoods.size() > 0) {
-            for (GoodsVo goodsVo : hotGoods) {
-                for (CartVo cartVo : cartList) {
-                    if (goodsVo.getId().equals(cartVo.getGoods_id())) {
-                        goodsVo.setCart_num(cartVo.getNumber());
+            for (GoodsDO goodsVo : hotGoods) {
+                for (ShopCart cartVo : cartList) {
+                    if (goodsVo.getId().equals(cartVo.getGoodsId())) {
+                        goodsVo.setCartNum(cartVo.getNumber());
                     }
                 }
             }
         }
         //
         param = new HashMap<String, Object>();
-        param.put("is_new", 1);
-        param.put("sidx", "new_sort_order ");
-        param.put("order", "asc ");
-        param.put("offset", 0);
-        param.put("limit", 4);
-        List<BrandVo> brandList = brandService.queryList(param);
-        resultObj.put("brandList", brandList);
+        param.put("isNew", 1);
+        PageInfo<ShopBrand> pageInfo = brandService.queryByPage(4,1,param," new_sort_order asc ");
+        resultObj.put("brandList", pageInfo.getList());
 
         param = new HashMap<String, Object>();
         param.put("offset", 0);
@@ -123,14 +113,14 @@ public class IndexController extends BaseController {
         resultObj.put("topicList", topicList);
 
         param = new HashMap<String, Object>();
-        param.put("parent_id", 0);
+        param.put("parentId", 0);
         param.put("notName", "推荐");//<>
         List<Category> categoryList = categoryService.queryList(param);
         List<Map<String, Object>> newCategoryList = new ArrayList<>();
 
         for (Category categoryItem : categoryList) {
             param.remove("fields");
-            param.put("parent_id", categoryItem.getId());
+            param.put("parentId", categoryItem.getId());
             List<Category> categoryEntityList = categoryService.queryList(param);
             List<Integer> childCategoryIds = new ArrayList<>();
             for (Category categoryEntity : categoryEntityList) {
@@ -139,9 +129,9 @@ public class IndexController extends BaseController {
             //
             param = new HashMap<String, Object>();
             param.put("categoryIds", childCategoryIds);
-            param.put("fields", "id as id, name as name, list_pic_url as list_pic_url, retail_price as retail_price");
+            //param.put("fields", "id as id, name as name, list_pic_url as list_pic_url, retail_price as retail_price");
             PageHelper.startPage(0, 7, false);
-            List<GoodsVo> categoryGoods = goodsService.queryList(param);
+            List<GoodsDO> categoryGoods = goodsService.queryList(param);
             Map<String, Object> newCategory = new HashMap<String, Object>();
             newCategory.put("id", categoryItem.getId());
             newCategory.put("name", categoryItem.getName());
@@ -162,11 +152,11 @@ public class IndexController extends BaseController {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("is_new", 1);
-        param.put("is_delete", 0);
-        param.put("fields", "id, name, list_pic_url, retail_price");
+        param.put("isNew", 1);
+        param.put("isDelete", 0);
+        //param.put("fields", "id, name, list_pic_url, retail_price");
         PageHelper.startPage(0, 4, false);
-        List<GoodsVo> newGoods = goodsService.queryList(param);
+        List<GoodsDO> newGoods = goodsService.queryList(param);
         resultObj.put("newGoodsList", newGoods);
         //
 
@@ -179,10 +169,10 @@ public class IndexController extends BaseController {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("is_hot", "1");
-        param.put("is_delete", 0);
+        param.put("isHot", "1");
+        param.put("isDelete", 0);
         PageHelper.startPage(0, 3, false);
-        List<GoodsVo> hotGoods = goodsService.queryHotGoodsList(param);
+        List<GoodsDO> hotGoods = goodsService.queryHotGoodsList(param);
         resultObj.put("hotGoodsList", hotGoods);
         //
 
@@ -210,13 +200,9 @@ public class IndexController extends BaseController {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
         Map<String, Object> param = new HashMap<String, Object>();
-        param.put("is_new", 1);
-        param.put("sidx", "new_sort_order ");
-        param.put("order", "asc ");
-        param.put("offset", 0);
-        param.put("limit", 4);
-        List<BrandVo> brandList = brandService.queryList(param);
-        resultObj.put("brandList", brandList);
+        param.put("isNew", 1);
+        PageInfo<ShopBrand> pageInfo = brandService.queryByPage(4,1,param," new_sort_order asc ");
+        resultObj.put("brandList", pageInfo.getList());
         //
 
         return toResponsSuccess(resultObj);
@@ -229,14 +215,14 @@ public class IndexController extends BaseController {
         //
         Map<String, Object> param = new HashMap<String, Object>();
         param = new HashMap<String, Object>();
-        param.put("parent_id", 0);
+        param.put("parentId", 0);
         param.put("notName", "推荐");//<>
         List<Category> categoryList = categoryService.queryList(param);
         List<Map<String, Object>> newCategoryList = new ArrayList<>();
 
         for (Category categoryItem : categoryList) {
             param.remove("fields");
-            param.put("parent_id", categoryItem.getId());
+            param.put("parentId", categoryItem.getId());
             List<Category> categoryEntityList = categoryService.queryList(param);
             List<Integer> childCategoryIds = null;
             if (categoryEntityList != null && categoryEntityList.size() > 0) {
@@ -248,10 +234,9 @@ public class IndexController extends BaseController {
             //
             param = new HashMap<String, Object>();
             param.put("categoryIds", childCategoryIds);
-            param.put("fields", "id as id, name as name, list_pic_url as list_pic_url, retail_price as retail_price");
-            param.put("is_delete", "0");
+            param.put("isDelete", "0");
             PageHelper.startPage(0, 7, false);
-            List<GoodsVo> categoryGoods = goodsService.queryList(param);
+            List<GoodsDO> categoryGoods = goodsService.queryList(param);
             Map<String, Object> newCategory = new HashMap<String, Object>();
             newCategory.put("id", categoryItem.getId());
             newCategory.put("name", categoryItem.getName());
@@ -287,7 +272,7 @@ public class IndexController extends BaseController {
         param = new HashMap<String, Object>();
         param.put("sidx", "sort_order ");
         param.put("order", "asc ");
-        List<ChannelVo> channel = channelService.queryList(param);
+        List<ShopChannel> channel = channelService.queryList(param);
         resultObj.put("channel", channel);
         //
 
