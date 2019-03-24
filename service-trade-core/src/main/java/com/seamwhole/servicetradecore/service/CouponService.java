@@ -19,9 +19,9 @@ public interface CouponService {
 
     void update(Coupon user);
 
-    void delete(Short userId);
+    void delete(Integer userId);
 
-    void deleteBatch(Short[] userIds);
+    void deleteBatch(Integer[] userIds);
 
     List<CouponDO> queryUserCoupons(Map<String, Object> map);
 
@@ -30,4 +30,6 @@ public interface CouponService {
     List<CouponDO> queryUserCouponList(Map<String, Object> map);
 
     CouponDO getUserCoupon(Integer id);
+
+    void updateUserCoupon(CouponDO couponVo);
 }

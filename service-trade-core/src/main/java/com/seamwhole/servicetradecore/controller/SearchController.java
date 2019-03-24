@@ -1,20 +1,17 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.KeywordsVo;
-import com.platform.entity.SearchHistoryVo;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiKeywordsService;
-import com.platform.service.ApiSearchHistoryService;
-import com.platform.util.ApiBaseAction;
-import com.platform.utils.Query;
+import com.seamwhole.servicetradecore.controller.model.SearchModel;
+import com.seamwhole.servicetradecore.model.KeyWords;
+import com.seamwhole.servicetradecore.model.SearchHistory;
+import com.seamwhole.servicetradecore.service.KeyWordsService;
+import com.seamwhole.servicetradecore.service.SearchHistoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,26 +21,22 @@ import java.util.Map;
 
 /**
  * API登录授权
- *
- * @author lipengjun
- * @email 939961241@qq.com
- * @date 2017-03-23 15:31
  */
 @Api(tags = "商品搜索")
 @RestController
 @RequestMapping("/api/search")
 public class SearchController extends BaseController {
     @Autowired
-    private ApiKeywordsService keywordsService;
+    private KeyWordsService keyWordsService;
     @Autowired
-    private ApiSearchHistoryService searchHistoryService;
+    private SearchHistoryService searchHistoryService;
 
     /**
      * 　　index
      */
     @ApiOperation(value = "搜索商品列表")
     @PostMapping("index")
-    public Object index(@LoginUser UserVo loginUser) {
+    public Object index(@RequestBody SearchModel searchModel) {
         Map<String, Object> resultObj = new HashMap();
         Map param = new HashMap();
         param.put("is_default", 1);
@@ -51,9 +44,9 @@ public class SearchController extends BaseController {
         param.put("limit", 1);
         param.put("sidx", "id");
         param.put("order", "asc");
-        List<KeywordsVo> keywordsEntityList = keywordsService.queryList(param);
+        List<KeyWords> keywordsEntityList = keyWordsService.queryList(param);
         //取出输入框默认的关键词
-        KeywordsVo defaultKeyword = null != keywordsEntityList && keywordsEntityList.size() > 0 ? keywordsEntityList.get(0) : null;
+        KeyWords defaultKeyword = null != keywordsEntityList && keywordsEntityList.size() > 0 ? keywordsEntityList.get(0) : null;
         //取出热闹关键词
         param = new HashMap();
         param.put("fields", "distinct keyword,is_hot");
@@ -61,21 +54,20 @@ public class SearchController extends BaseController {
         param.put("limit", 10);
         param.put("sidx", "id");
         param.put("order", "asc");
-        Query query = new Query(param);
-        List<Map> hotKeywordList = keywordsService.hotKeywordList(query);
+        List<Map> hotKeywordList = keyWordsService.hotKeywordList(param);
         //
         param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
+        param.put("user_id", searchModel.getUserId());
         param.put("fields", "distinct keyword");
         param.put("page", 1);
         param.put("limit", 10);
         param.put("sidx", "id");
         param.put("order", "asc");
-        List<SearchHistoryVo> historyVoList = searchHistoryService.queryList(param);
+        List<SearchHistory> historyVoList = searchHistoryService.queryList(param);
         String[] historyKeywordList = new String[historyVoList.size()];
         if (null != historyVoList) {
             int i = 0;
-            for (SearchHistoryVo historyVo : historyVoList) {
+            for (SearchHistory historyVo : historyVoList) {
                 historyKeywordList[i] = historyVo.getKeyword();
                 i++;
             }
@@ -92,19 +84,18 @@ public class SearchController extends BaseController {
      */
     @ApiOperation(value = "搜索商品")
     @ApiImplicitParams({@ApiImplicitParam(name = "keyword", value = "关键字", paramType = "path", required = true)})
-    @IgnoreAuth
     @PostMapping("helper")
-    public Object helper(@LoginUser UserVo loginUser, String keyword) {
+    public Object helper(@RequestBody SearchModel searchModel) {
         Map param = new HashMap();
         param.put("fields", "distinct keyword");
-        param.put("keyword", keyword);
+        param.put("keyword", searchModel.getKeyword());
         param.put("limit", 10);
         param.put("offset", 0);
-        List<KeywordsVo> keywords = keywordsService.queryList(param);
+        List<KeyWords> keywords = keyWordsService.queryList(param);
         String[] keys = new String[keywords.size()];
         if (null != keywords) {
             int i = 0;
-            for (KeywordsVo keywordsVo : keywords) {
+            for (KeyWords keywordsVo : keywords) {
                 keys[i] = keywordsVo.getKeyword();
                 i++;
             }
@@ -117,8 +108,8 @@ public class SearchController extends BaseController {
      * 　　clearhistory
      */
     @PostMapping("clearhistory")
-    public Object clearhistory(@LoginUser UserVo loginUser) {
-        searchHistoryService.deleteByUserId(loginUser.getUserId());
+    public Object clearhistory(@RequestBody SearchModel searchModel) {
+        searchHistoryService.deleteByUserId(searchModel.getUserId());
         //
         return toResponsSuccess("");
     }

@@ -58,7 +58,7 @@ public class CartController extends BaseController {
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据
 
-        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(), null, null,null , "");
+        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(), "", null, null,null , "");
         //获取购物车统计信息
         Integer goodsCount = 0;
         BigDecimal goodsAmount = new BigDecimal(0.00);
@@ -169,7 +169,7 @@ public class CartController extends BaseController {
         cartParam.put("goods_id", goodsId);
         cartParam.put("product_id", productId);
         cartParam.put("user_id", cartModel.getUserId());
-        List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(),goodsId,productId,null,"" );
+        List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(), "", goodsId,productId,null,"");
         ShopCart cartInfo = null != cartInfoList && cartInfoList.size() > 0 ? cartInfoList.get(0) : null;
         if (null == cartInfo) {
             //添加操作
@@ -225,7 +225,7 @@ public class CartController extends BaseController {
         Integer productId = cartModel.getProductId();
         Integer number = cartModel.getNumber();
         //判断购物车中是否存在此规格商品
-        List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(),goodsId,productId,null,"");
+        List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(), "", goodsId,productId,null,"");
         ShopCart cartInfo = null != cartInfoList && cartInfoList.size() > 0 ? cartInfoList.get(0) : null;
         int cart_num = 0;
         if (null != cartInfo) {
@@ -266,7 +266,7 @@ public class CartController extends BaseController {
             return toResponsSuccess(getCart(cartModel));
         }
 
-        List<ShopCartDO> cartInfoList = cartService.queryList(null,goodsId,productId,null,"");
+        List<ShopCartDO> cartInfoList = cartService.queryList(null, "", goodsId,productId,null,"");
         ShopCart newcartInfo = null != cartInfoList && cartInfoList.size() > 0 ? cartInfoList.get(0) : null;
         if (null == newcartInfo) {
             //添加操作
@@ -368,7 +368,7 @@ public class CartController extends BaseController {
         }
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据
-        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(),null,null,null,"");
+        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(), "", null,null,null,"");
         //获取购物车统计信息
         Integer goodsCount = 0;
         for (ShopCartDO cartItem : cartList) {
@@ -414,7 +414,7 @@ public class CartController extends BaseController {
             }
             goodsTotalPrice = (BigDecimal) ((HashMap) cartData.get("cartTotal")).get("checkedGoodsAmount");
         } else { // 是直接购买的
-            BuyGoods goodsVO = (BuyGoods) redisService.get(cartModel.getUserId()+ RedisKeyConstant.BUY_GOODS_CACHE);;
+            BuyGoods goodsVO = (BuyGoods) redisService.get(cartModel.getUserId()+ RedisKeyConstant.BUY_GOODS_CACHE);
             ProductDO productInfo = productService.queryObject(goodsVO.getProductId());
             //计算订单的费用
             //商品总价

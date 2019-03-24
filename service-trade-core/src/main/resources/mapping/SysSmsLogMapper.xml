@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.servicetradecore.mapper.SysSmsLogMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.SysSmsLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="stime" property="stime" jdbcType="TIMESTAMP" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="extno" property="extno" jdbcType="VARCHAR" />
+    <result column="send_status" property="sendStatus" jdbcType="INTEGER" />
+    <result column="send_id" property="sendId" jdbcType="VARCHAR" />
+    <result column="invalid_num" property="invalidNum" jdbcType="INTEGER" />
+    <result column="success_num" property="successNum" jdbcType="INTEGER" />
+    <result column="black_num" property="blackNum" jdbcType="INTEGER" />
+    <result column="return_msg" property="returnMsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, stime, sign, type, extno, send_status, send_id, invalid_num, success_num, 
+    black_num, return_msg
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, mobile
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_sms_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_sms_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_sms_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_sms_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogExample" >
+    delete from sys_sms_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs" >
+    insert into sys_sms_log (id, user_id, stime, 
+      sign, type, extno, 
+      send_status, send_id, invalid_num, 
+      success_num, black_num, return_msg, 
+      content, mobile)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{stime,jdbcType=TIMESTAMP}, 
+      #{sign,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{extno,jdbcType=VARCHAR}, 
+      #{sendStatus,jdbcType=INTEGER}, #{sendId,jdbcType=VARCHAR}, #{invalidNum,jdbcType=INTEGER}, 
+      #{successNum,jdbcType=INTEGER}, #{blackNum,jdbcType=INTEGER}, #{returnMsg,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR}, #{mobile,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs" >
+    insert into sys_sms_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="extno != null" >
+        extno,
+      </if>
+      <if test="sendStatus != null" >
+        send_status,
+      </if>
+      <if test="sendId != null" >
+        send_id,
+      </if>
+      <if test="invalidNum != null" >
+        invalid_num,
+      </if>
+      <if test="successNum != null" >
+        success_num,
+      </if>
+      <if test="blackNum != null" >
+        black_num,
+      </if>
+      <if test="returnMsg != null" >
+        return_msg,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="extno != null" >
+        #{extno,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sendId != null" >
+        #{sendId,jdbcType=VARCHAR},
+      </if>
+      <if test="invalidNum != null" >
+        #{invalidNum,jdbcType=INTEGER},
+      </if>
+      <if test="successNum != null" >
+        #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="blackNum != null" >
+        #{blackNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnMsg != null" >
+        #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogExample" resultType="java.lang.Integer" >
+    select count(*) from sys_sms_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_sms_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.stime != null" >
+        stime = #{record.stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sign != null" >
+        sign = #{record.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extno != null" >
+        extno = #{record.extno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendStatus != null" >
+        send_status = #{record.sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendId != null" >
+        send_id = #{record.sendId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invalidNum != null" >
+        invalid_num = #{record.invalidNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.successNum != null" >
+        success_num = #{record.successNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.blackNum != null" >
+        black_num = #{record.blackNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.returnMsg != null" >
+        return_msg = #{record.returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update sys_sms_log
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      stime = #{record.stime,jdbcType=TIMESTAMP},
+      sign = #{record.sign,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      extno = #{record.extno,jdbcType=VARCHAR},
+      send_status = #{record.sendStatus,jdbcType=INTEGER},
+      send_id = #{record.sendId,jdbcType=VARCHAR},
+      invalid_num = #{record.invalidNum,jdbcType=INTEGER},
+      success_num = #{record.successNum,jdbcType=INTEGER},
+      black_num = #{record.blackNum,jdbcType=INTEGER},
+      return_msg = #{record.returnMsg,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      mobile = #{record.mobile,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_sms_log
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      stime = #{record.stime,jdbcType=TIMESTAMP},
+      sign = #{record.sign,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      extno = #{record.extno,jdbcType=VARCHAR},
+      send_status = #{record.sendStatus,jdbcType=INTEGER},
+      send_id = #{record.sendId,jdbcType=VARCHAR},
+      invalid_num = #{record.invalidNum,jdbcType=INTEGER},
+      success_num = #{record.successNum,jdbcType=INTEGER},
+      black_num = #{record.blackNum,jdbcType=INTEGER},
+      return_msg = #{record.returnMsg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs" >
+    update sys_sms_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="stime != null" >
+        stime = #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="extno != null" >
+        extno = #{extno,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        send_status = #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="sendId != null" >
+        send_id = #{sendId,jdbcType=VARCHAR},
+      </if>
+      <if test="invalidNum != null" >
+        invalid_num = #{invalidNum,jdbcType=INTEGER},
+      </if>
+      <if test="successNum != null" >
+        success_num = #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="blackNum != null" >
+        black_num = #{blackNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnMsg != null" >
+        return_msg = #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs" >
+    update sys_sms_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      stime = #{stime,jdbcType=TIMESTAMP},
+      sign = #{sign,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      extno = #{extno,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=INTEGER},
+      send_id = #{sendId,jdbcType=VARCHAR},
+      invalid_num = #{invalidNum,jdbcType=INTEGER},
+      success_num = #{successNum,jdbcType=INTEGER},
+      black_num = #{blackNum,jdbcType=INTEGER},
+      return_msg = #{returnMsg,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      mobile = #{mobile,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.SysSmsLog" >
+    update sys_sms_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      stime = #{stime,jdbcType=TIMESTAMP},
+      sign = #{sign,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      extno = #{extno,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=INTEGER},
+      send_id = #{sendId,jdbcType=VARCHAR},
+      invalid_num = #{invalidNum,jdbcType=INTEGER},
+      success_num = #{successNum,jdbcType=INTEGER},
+      black_num = #{blackNum,jdbcType=INTEGER},
+      return_msg = #{returnMsg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

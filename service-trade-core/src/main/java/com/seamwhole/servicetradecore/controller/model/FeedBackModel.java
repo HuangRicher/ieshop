@@ -7,7 +7,7 @@ public class FeedBackModel implements Serializable {
     private Integer userId;
     private String userName;
     private String mobile;
-    private Boolean index;
+    private Integer index;
     private String content;
 
     public Integer getUserId() {
@@ -34,19 +34,19 @@ public class FeedBackModel implements Serializable {
         this.mobile = mobile;
     }
 
-    public Boolean getIndex() {
-        return index;
-    }
-
-    public void setIndex(Boolean index) {
-        this.index = index;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 }

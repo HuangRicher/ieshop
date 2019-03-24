@@ -1,5 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.FootPrintMapper;
 import com.seamwhole.servicetradecore.mapper.ext.FootPrintExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
@@ -56,4 +59,10 @@ public class FootPrintServiceImpl implements FootPrintService {
         footPrintMapper.deleteByExample(example);
     }
 
+    @Override
+    public PageInfo<FootPrintDO> queryByPage(Integer userId, Integer pageNum, Integer pageSize) {
+        Page<FootPrintDO> page= PageHelper.startPage(pageNum,pageSize);
+        footPrintExtMapper.queryListFootprint(userId);
+        return page.toPageInfo();
+    }
 }

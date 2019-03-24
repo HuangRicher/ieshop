@@ -1,20 +1,18 @@
 package com.seamwhole.servicetradecore.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.platform.cache.J2CacheUtils;
-import com.platform.dao.*;
-import com.platform.entity.*;
-import com.platform.util.CommonUtil;
+import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
 import com.seamwhole.servicetradecore.domain.BuyGoods;
 import com.seamwhole.servicetradecore.mapper.*;
 import com.seamwhole.servicetradecore.mapper.ext.OrderExtMapper;
+import com.seamwhole.servicetradecore.mapper.model.CouponDO;
 import com.seamwhole.servicetradecore.mapper.model.OrderDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.*;
-import com.seamwhole.servicetradecore.service.OrderService;
-import com.seamwhole.servicetradecore.service.ProductService;
-import org.aspectj.weaver.ast.Or;
+import com.seamwhole.servicetradecore.redis.RedisService;
+import com.seamwhole.servicetradecore.service.*;
+import com.seamwhole.util.CommonUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +29,17 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderExtMapper orderExtMapper;
     @Autowired
-    private ShopAddressMapper shopAddressMapper;
+    private AddressService addressService;
     @Autowired
-    private ShopCartMapper shopCartMapper;
+    private CartService cartService;
     @Autowired
-    private CouponMapper couponMapper;
+    private CouponService couponService;
     @Autowired
     private OrderGoodsMapper orderGoodsMapper;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private RedisService redisService;
 
 
     public OrderDO queryObject(Integer id) {
@@ -77,27 +77,20 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Transactional
-    public Map<String, Object> submit(JSONObject jsonParam, UserVo loginUser) {
+    public Map<String, Object> submit(Integer couponId,String type,String postscript,Integer addressId,Integer userId) {
         Map<String, Object> resultObj = new HashMap<String, Object>();
 
-        Integer couponId = jsonParam.getInteger("couponId");
-        String type = jsonParam.getString("type");
-        String postscript = jsonParam.getString("postscript");
 //        AddressVo addressVo = jsonParam.getObject("checkedAddress",AddressVo.class);
-        ShopAddress addressVo = apiAddressMapper.queryObject(jsonParam.getInteger("addressId"));
+        ShopAddress addressVo = addressService.getById(addressId);
 
 
         Integer freightPrice = 0;
 
         // * 获取要购买的商品
-        List<ShopCart> checkedGoodsList = new ArrayList<>();
+        List<ShopCartDO> checkedGoodsList = new ArrayList<>();
         BigDecimal goodsTotalPrice;
         if (type.equals("cart")) {
-            Map<String, Object> param = new HashMap<String, Object>();
-            param.put("user_id", loginUser.getUserId());
-            param.put("session_id", 1);
-            param.put("checked", 1);
-            checkedGoodsList = apiCartMapper.queryList(param);
+            checkedGoodsList = cartService.queryList(userId, "1", null,null,1,"");
             if (null == checkedGoodsList) {
                 resultObj.put("errno", 400);
                 resultObj.put("errmsg", "请选择商品");
@@ -106,10 +99,10 @@ public class OrderServiceImpl implements OrderService {
             //统计商品总价
             goodsTotalPrice = new BigDecimal(0.00);
             for (ShopCart cartItem : checkedGoodsList) {
-                goodsTotalPrice = goodsTotalPrice.add(cartItem.getRetail_price().multiply(new BigDecimal(cartItem.getNumber())));
+                goodsTotalPrice = goodsTotalPrice.add(cartItem.getRetailPrice().multiply(new BigDecimal(cartItem.getNumber())));
             }
         } else {
-            BuyGoods goodsVo = (BuyGoods) J2CacheUtils.get(J2CacheUtils.SHOP_CACHE_NAME, "goods" + loginUser.getUserId());
+            BuyGoods goodsVo = (BuyGoods) redisService.get(userId+ RedisKeyConstant.BUY_GOODS_CACHE);
             Product productInfo = productService.queryObject(goodsVo.getProductId());
             //计算订单的费用
             //商品总价
@@ -119,17 +112,19 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(productInfo, cartVo);
             cartVo.setNumber(goodsVo.getNumber());
             cartVo.setProductId(goodsVo.getProductId());
-            checkedGoodsList.add(cartVo);
+            ShopCartDO shopCartDO=new ShopCartDO();
+            BeanUtils.copyProperties(cartVo,shopCartDO);
+            checkedGoodsList.add(shopCartDO);
         }
 
 
         //获取订单使用的优惠券
         BigDecimal couponPrice = new BigDecimal(0.00);
-        Coupon couponVo = null;
+        CouponDO couponVo = null;
         if (couponId != null && couponId != 0) {
-            couponVo = apiCouponMapper.getUserCoupon(couponId);
+            couponVo = couponService.getUserCoupon(couponId);
             if (couponVo != null && couponVo.getCoupon_status() == 1) {
-                couponPrice = couponVo.getTypeMoney();
+                couponPrice = couponVo.getType_money();
             }
         }
 
@@ -143,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
         //
         Order orderInfo = new Order();
         orderInfo.setOrderSn(CommonUtil.generateOrderNumber());
-        orderInfo.setUserId(loginUser.getUserId());
+        orderInfo.setUserId(userId);
         //收货地址和运费
         orderInfo.setConsignee(addressVo.getUserName());
         orderInfo.setMobile(addressVo.getTelNumber());
@@ -204,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //清空已购买的商品
-        apiCartMapper.deleteByCart(loginUser.getUserId(), 1, 1);
+        cartService.deleteByCart(userId, "1", 1);
         resultObj.put("errno", 0);
         resultObj.put("errmsg", "订单提交成功");
         //
@@ -215,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
         // 优惠券标记已用
         if (couponVo != null && couponVo.getCoupon_status() == 1) {
             couponVo.setCoupon_status(2);
-            apiCouponMapper.updateUserCoupon(couponVo);
+            couponService.updateUserCoupon(couponVo);
         }
 
         return resultObj;

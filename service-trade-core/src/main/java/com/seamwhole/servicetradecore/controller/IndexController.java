@@ -89,7 +89,7 @@ public class IndexController extends BaseController {
         List<ShopCartDO> cartList = new ArrayList<>();
         if (null != indexModel.getUserId()) {
             //查询列表数据
-            cartList = cartService.queryList(indexModel.getUserId(),null,null,null,"");
+            cartList = cartService.queryList(indexModel.getUserId(), "", null,null,null,"");
         }
         if (null != cartList && cartList.size() > 0 && null != hotGoods && hotGoods.size() > 0) {
             for (GoodsDO goodsVo : hotGoods) {

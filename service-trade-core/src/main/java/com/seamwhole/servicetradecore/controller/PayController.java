@@ -1,19 +1,17 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.LoginUser;
-import com.platform.cache.J2CacheUtils;
-import com.platform.entity.OrderGoodsVo;
-import com.platform.entity.OrderVo;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiOrderGoodsService;
-import com.platform.service.ApiOrderService;
-import com.platform.util.ApiBaseAction;
-import com.platform.util.wechat.WechatRefundApiResult;
-import com.platform.util.wechat.WechatUtil;
-import com.platform.utils.*;
+import com.seamwhole.servicetradecore.mapper.model.OrderDO;
+import com.seamwhole.servicetradecore.model.Order;
+import com.seamwhole.servicetradecore.model.OrderGoods;
+import com.seamwhole.servicetradecore.redis.RedisService;
+import com.seamwhole.servicetradecore.service.OrderGoodsService;
+import com.seamwhole.servicetradecore.service.OrderService;
+import com.seamwhole.servicetradecore.util.CharUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +31,14 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/pay")
 public class PayController extends BaseController {
-    private Logger logger = Logger.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
-    private ApiOrderService orderService;
+    private OrderService orderService;
     @Autowired
-    private ApiOrderGoodsService orderGoodsService;
+    private OrderGoodsService orderGoodsService;
+    @Autowired
+    private RedisService redisService;
+
 
     /**
      */
@@ -55,7 +56,7 @@ public class PayController extends BaseController {
     @PostMapping("prepay")
     public Object payPrepay(@LoginUser UserVo loginUser, Integer orderId) {
         //
-        OrderVo orderInfo = orderService.queryObject(orderId);
+        OrderDO orderInfo = orderService.queryObject(orderId);
 
         if (null == orderInfo) {
             return toResponsObject(400, "订单已取消", "");
@@ -85,11 +86,11 @@ public class PayController extends BaseController {
             // 商品描述
             parame.put("body", "超市-支付");
             //订单的商品
-            List<OrderGoodsVo> orderGoods = orderGoodsService.queryList(orderGoodsParam);
+            List<OrderGoods> orderGoods = orderGoodsService.queryList(orderGoodsParam);
             if (null != orderGoods) {
                 String body = "超市-";
-                for (OrderGoodsVo goodsVo : orderGoods) {
-                    body = body + goodsVo.getGoods_name() + "、";
+                for (OrderGoods goodsVo : orderGoods) {
+                    body = body + goodsVo.getGoodsName() + "、";
                 }
                 if (body.length() > 0) {
                     body = body.substring(0, body.length() - 1);
@@ -159,7 +160,7 @@ public class PayController extends BaseController {
             return toResponsFail("订单不存在");
         }
 
-        OrderVo orderDetail = orderService.queryObject(orderId);
+        OrderDO orderDetail = orderService.queryObject(orderId);
         Map<Object, Object> parame = new TreeMap<Object, Object>();
         parame.put("appid", ResourceUtil.getConfigByName("wx.appId"));
         // 商家账号。
@@ -195,12 +196,12 @@ public class PayController extends BaseController {
         if ("SUCCESS".equals(trade_state)) {
             // 更改订单状态
             // 业务处理
-            OrderVo orderInfo = new OrderVo();
+            Order orderInfo = new Order();
             orderInfo.setId(orderId);
-            orderInfo.setPay_status(2);
-            orderInfo.setOrder_status(201);
-            orderInfo.setShipping_status(0);
-            orderInfo.setPay_time(new Date());
+            orderInfo.setPayStatus(2);
+            orderInfo.setOrderStatus(201);
+            orderInfo.setShippingStatus(0);
+            orderInfo.setPayTime(new Date());
             orderService.update(orderInfo);
             return toResponsMsgSuccess("支付成功");
         } else if ("USERPAYING".equals(trade_state)) {
@@ -262,12 +263,14 @@ public class PayController extends BaseController {
                 String out_trade_no = result.getOut_trade_no();
                 logger.error("订单" + out_trade_no + "支付成功");
                 // 业务处理
-                OrderVo orderInfo = orderService.queryObject(Integer.valueOf(out_trade_no));
+                OrderDO orderInfo = orderService.queryObject(Integer.valueOf(out_trade_no));
                 orderInfo.setPay_status(2);
                 orderInfo.setOrder_status(201);
                 orderInfo.setShipping_status(0);
                 orderInfo.setPay_time(new Date());
-                orderService.update(orderInfo);
+                Order order=new Order();
+                BeanUtils.copyProperties(orderInfo,order);
+                orderService.update(order);
                 response.getWriter().write(setXml("SUCCESS", "OK"));
             }
         } catch (Exception e) {
@@ -283,7 +286,7 @@ public class PayController extends BaseController {
     @PostMapping("refund")
     public Object refund(Integer orderId) {
         //
-        OrderVo orderInfo = orderService.queryObject(orderId);
+        OrderDO orderInfo = orderService.queryObject(orderId);
 
         if (null == orderInfo) {
             return toResponsObject(400, "订单已取消", "");

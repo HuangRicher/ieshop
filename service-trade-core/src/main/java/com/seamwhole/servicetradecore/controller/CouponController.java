@@ -1,22 +1,23 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.platform.annotation.LoginUser;
-import com.platform.cache.J2CacheUtils;
-import com.platform.entity.*;
-import com.platform.service.*;
-import com.platform.util.ApiBaseAction;
-import com.platform.utils.CharUtil;
-import com.platform.utils.StringUtils;
+import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
+import com.seamwhole.servicetradecore.controller.model.CouponModel;
+import com.seamwhole.servicetradecore.domain.BuyGoods;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
+import com.seamwhole.servicetradecore.mapper.model.ProductDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
+import com.seamwhole.servicetradecore.model.Coupon;
+import com.seamwhole.servicetradecore.model.ShopUser;
+import com.seamwhole.servicetradecore.model.SmsLog;
+import com.seamwhole.servicetradecore.model.UserCoupon;
+import com.seamwhole.servicetradecore.redis.RedisService;
 import com.seamwhole.servicetradecore.service.*;
+import com.seamwhole.servicetradecore.util.CharUtil;
+import com.seamwhole.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -33,25 +34,29 @@ import java.util.*;
 @RequestMapping("/api/coupon")
 public class CouponController extends BaseController {
     @Autowired
-    private UserService apiUserService;
+    private UserService userService;
     @Autowired
-    private CouponService apiCouponService;
+    private CouponService couponService;
     @Autowired
-    private UserCouponService apiUserCouponService;
+    private UserCouponService userCouponService;
     @Autowired
-    private ProductService apiProductService;
+    private ProductService productService;
     @Autowired
-    private CartService apiCartService;
+    private CartService cartService;
+    @Autowired
+    private RedisService redisService;
+
+
 
     /**
      * 获取优惠券列表
      */
     @ApiOperation(value = "获取优惠券列表")
     @PostMapping("/list")
-    public Object list(@LoginUser UserVo loginUser) {
+    public Object list(@RequestBody CouponModel couponModel) {
         Map param = new HashMap();
-        param.put("userId", loginUser.getUserId());
-        List<CouponDO> couponVos = apiCouponService.queryUserCoupons(param);
+        param.put("userId", couponModel.getUserId());
+        List<CouponDO> couponVos = couponService.queryUserCoupons(param);
         return toResponsSuccess(couponVos);
     }
 
@@ -60,33 +65,33 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "根据商品获取可用优惠券列表")
     @PostMapping("/listByGoods")
-    public Object listByGoods(@RequestParam(defaultValue = "cart") String type, @LoginUser UserVo loginUser) {
+    public Object listByGoods(@RequestBody CouponModel couponModel) {
         BigDecimal goodsTotalPrice = new BigDecimal(0.00);
-        if (type.equals("cart")) {
+        if (couponModel.getType().equals("cart")) {
             Map param = new HashMap();
-            param.put("user_id", loginUser.getUserId());
-            List<CartVo> cartList = apiCartService.queryList(param);
+            param.put("userId", couponModel.getUserId());
+            List<ShopCartDO> cartList = cartService.queryList(couponModel.getUserId(), "", null,null,null,"");
             //获取购物车统计信息
-            for (CartVo cartItem : cartList) {
+            for (ShopCartDO cartItem : cartList) {
                 if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
-                    goodsTotalPrice = goodsTotalPrice.add(cartItem.getRetail_price().multiply(new BigDecimal(cartItem.getNumber())));
+                    goodsTotalPrice = goodsTotalPrice.add(cartItem.getRetailPrice().multiply(new BigDecimal(cartItem.getNumber())));
                 }
             }
         } else { // 是直接购买的
-            BuyGoodsVo goodsVo = (BuyGoodsVo) J2CacheUtils.get(J2CacheUtils.SHOP_CACHE_NAME, "goods" + loginUser.getUserId() + "");
-            ProductVo productInfo = apiProductService.queryObject(goodsVo.getProductId());
+            BuyGoods goodsVo = (BuyGoods) redisService.get(couponModel.getUserId()+RedisKeyConstant.BUY_GOODS_CACHE);
+            ProductDO productInfo = productService.queryObject(goodsVo.getProductId());
             //商品总价
-            goodsTotalPrice = productInfo.getRetail_price().multiply(new BigDecimal(goodsVo.getNumber()));
+            goodsTotalPrice = productInfo.getRetailPrice().multiply(new BigDecimal(goodsVo.getNumber()));
         }
 
         // 获取可用优惠券
         Map param = new HashMap();
-        param.put("user_id", loginUser.getUserId());
-        param.put("coupon_status", 1);
-        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(param);
-        List<CouponVo> useCoupons = new ArrayList<>();
-        List<CouponVo> notUseCoupons = new ArrayList<>();
-        for (CouponVo couponVo : couponVos) {
+        param.put("userId", couponModel.getUserId());
+        param.put("couponStatus", 1);
+        List<CouponDO> couponVos = couponService.queryUserCoupons(param);
+        List<CouponDO> useCoupons = new ArrayList<>();
+        List<CouponDO> notUseCoupons = new ArrayList<>();
+        for (CouponDO couponVo : couponVos) {
             if (goodsTotalPrice.compareTo(couponVo.getMin_goods_amount()) >= 0) { // 可用优惠券
                 couponVo.setEnabled(1);
                 useCoupons.add(couponVo);
@@ -104,31 +109,30 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "领券优惠券")
     @PostMapping("exchange")
-    public Object exchange(@LoginUser UserVo loginUser) {
-        JSONObject jsonParam = getJsonRequest();
-        String coupon_number = jsonParam.getString("coupon_number");
-        if (StringUtils.isNullOrEmpty(coupon_number)) {
+    public Object exchange(@RequestBody CouponModel couponModel) {
+        String couponNumber = couponModel.getCouponNumber();
+        if (StringUtils.isNullOrEmpty(couponNumber)) {
             return toResponsFail("当前优惠码无效");
         }
         //
         Map param = new HashMap();
-        param.put("coupon_number", coupon_number);
-        List<UserCouponVo> couponVos = apiUserCouponService.queryList(param);
-        UserCouponVo userCouponVo = null;
+        param.put("couponNumber", couponNumber);
+        List<UserCoupon> couponVos = userCouponService.queryList(param);
+        UserCoupon userCouponVo = null;
         if (null == couponVos || couponVos.size() == 0) {
             return toResponsFail("当前优惠码无效");
         }
         userCouponVo = couponVos.get(0);
-        if (null != userCouponVo.getUser_id() && !userCouponVo.getUser_id().equals(0L)) {
+        if (null != userCouponVo.getUserId() && !userCouponVo.getUserId().equals(0L)) {
             return toResponsFail("当前优惠码已经兑换");
         }
-        CouponVo couponVo = apiCouponService.queryObject(userCouponVo.getCoupon_id());
-        if (null == couponVo || null == couponVo.getUse_end_date() || couponVo.getUse_end_date().before(new Date())) {
+        Coupon couponVo = couponService.queryObject(userCouponVo.getCouponId());
+        if (null == couponVo || null == couponVo.getUseEndDate() || couponVo.getUseEndDate().before(new Date())) {
             return toResponsFail("当前优惠码已经过期");
         }
-        userCouponVo.setUser_id(loginUser.getUserId());
-        userCouponVo.setAdd_time(new Date());
-        apiUserCouponService.update(userCouponVo);
+        userCouponVo.setUserId(couponModel.getUserId());
+        userCouponVo.setAddTime(new Date());
+        userCouponService.update(userCouponVo);
         return toResponsSuccess(userCouponVo);
     }
 
@@ -137,46 +141,47 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "领券优惠券")
     @PostMapping("newuser")
-    public Object newuser(@LoginUser UserVo loginUser) {
-        JSONObject jsonParam = getJsonRequest();
+    public Object newuser(@RequestBody CouponModel couponModel) {
         //
-        String phone = jsonParam.getString("phone");
-        String smscode = jsonParam.getString("smscode");
+        String phone = couponModel.getPhone();
+        String smscode = couponModel.getSmscode();
         // 校验短信码
-        SmsLogVo smsLogVo = apiUserService.querySmsCodeByUserId(loginUser.getUserId());
-        if (null != smsLogVo && !smsLogVo.getSms_code().equals(smscode)) {
+        SmsLog smsLogVo = userService.querySmsCodeByUserId(couponModel.getUserId());
+        if (null != smsLogVo && !smsLogVo.getSmsCode().equals(smscode)) {
             return toResponsFail("短信校验失败");
         }
         // 更新手机号码
         if (!StringUtils.isNullOrEmpty(phone)) {
-            if (phone.equals(loginUser.getMobile())) {
-                loginUser.setMobile(phone);
-                apiUserService.update(loginUser);
+            if (phone.equals(couponModel.getMobile())) {
+                ShopUser user=new ShopUser();
+                user.setId(couponModel.getUserId());
+                user.setMobile(phone);
+                userService.update(user);
             }
         }
         // 判断是否是新用户
-        if (!StringUtils.isNullOrEmpty(loginUser.getMobile())) {
+        if (!StringUtils.isNullOrEmpty(couponModel.getMobile())) {
             return toResponsFail("当前优惠券只能新用户领取");
         }
         // 是否领取过了
         Map params = new HashMap();
-        params.put("user_id", loginUser.getUserId());
-        params.put("send_type", 4);
-        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(params);
+        params.put("userId", couponModel.getUserId());
+        params.put("sendType", 4);
+        List<CouponDO> couponVos = couponService.queryUserCoupons(params);
         if (null != couponVos && couponVos.size() > 0) {
             return toResponsFail("已经领取过，不能重复领取");
         }
         // 领取
         Map couponParam = new HashMap();
-        couponParam.put("send_type", 4);
-        CouponVo newCouponConfig = apiCouponService.queryMaxUserEnableCoupon(couponParam);
+        couponParam.put("sendType", 4);
+        CouponDO newCouponConfig = couponService.queryMaxUserEnableCoupon(couponParam);
         if (null != newCouponConfig) {
-            UserCouponVo userCouponVo = new UserCouponVo();
-            userCouponVo.setAdd_time(new Date());
-            userCouponVo.setCoupon_id(newCouponConfig.getId());
-            userCouponVo.setCoupon_number(CharUtil.getRandomString(12));
-            userCouponVo.setUser_id(loginUser.getUserId());
-            apiUserCouponService.save(userCouponVo);
+            UserCoupon userCouponVo = new UserCoupon();
+            userCouponVo.setAddTime(new Date());
+            userCouponVo.setCouponId(newCouponConfig.getId());
+            userCouponVo.setCouponNumber(CharUtil.getRandomString(12));
+            userCouponVo.setUserId(couponModel.getUserId());
+            userCouponService.save(userCouponVo);
             return toResponsSuccess(userCouponVo);
         } else {
             return toResponsFail("领取失败");
@@ -188,39 +193,38 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "转发领取红包")
     @PostMapping("transActivit")
-    public Object transActivit(@LoginUser UserVo loginUser, String sourceKey, Long referrer) {
-        JSONObject jsonParam = getJsonRequest();
+    public Object transActivit(@RequestBody CouponModel couponModel) {
         // 是否领取过了
         Map params = new HashMap();
-        params.put("user_id", loginUser.getUserId());
-        params.put("send_type", 2);
-        params.put("source_key", sourceKey);
-        List<CouponVo> couponVos = apiCouponService.queryUserCoupons(params);
+        params.put("userId", couponModel.getUserId());
+        params.put("sendType", 2);
+        params.put("sourceKey", couponModel.getSourceKey());
+        List<CouponDO> couponVos = couponService.queryUserCoupons(params);
         if (null != couponVos && couponVos.size() > 0) {
             return toResponsObject(2, "已经领取过", couponVos);
         }
         // 领取
         Map couponParam = new HashMap();
         couponParam.put("send_type", 2);
-        CouponVo newCouponConfig = apiCouponService.queryMaxUserEnableCoupon(couponParam);
+        CouponDO newCouponConfig = couponService.queryMaxUserEnableCoupon(couponParam);
         if (null != newCouponConfig) {
-            UserCouponVo userCouponVo = new UserCouponVo();
-            userCouponVo.setAdd_time(new Date());
-            userCouponVo.setCoupon_id(newCouponConfig.getId());
-            userCouponVo.setCoupon_number(CharUtil.getRandomString(12));
-            userCouponVo.setUser_id(loginUser.getUserId());
-            userCouponVo.setSource_key(sourceKey);
-            userCouponVo.setReferrer(referrer);
-            apiUserCouponService.save(userCouponVo);
+            UserCoupon userCouponVo = new UserCoupon();
+            userCouponVo.setAddTime(new Date());
+            userCouponVo.setCouponId(newCouponConfig.getId());
+            userCouponVo.setCouponNumber(CharUtil.getRandomString(12));
+            userCouponVo.setUserId(couponModel.getUserId());
+            userCouponVo.setSourceKey(couponModel.getSourceKey());
+            userCouponVo.setReferrer(couponModel.getReferrer());
+            userCouponService.save(userCouponVo);
             //
-            List<UserCouponVo> userCouponVos = new ArrayList();
+            List<UserCoupon> userCouponVos = new ArrayList();
             userCouponVos.add(userCouponVo);
             //
             params = new HashMap();
-            params.put("user_id", loginUser.getUserId());
-            params.put("send_type", 2);
-            params.put("source_key", sourceKey);
-            couponVos = apiCouponService.queryUserCoupons(params);
+            params.put("userId", couponModel.getUserId());
+            params.put("sendType", 2);
+            params.put("sourceKey", couponModel.getSourceKey());
+            couponVos = couponService.queryUserCoupons(params);
             return toResponsSuccess(couponVos);
         } else {
             return toResponsFail("领取失败");

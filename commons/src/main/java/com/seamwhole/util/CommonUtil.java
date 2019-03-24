@@ -75,4 +75,14 @@ public class CommonUtil {
         else
             return false;
     }
+
+    /**
+     * 生成订单的编号order_sn
+     */
+    public static String generateOrderNumber() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        String timeStr = DateUtils.format(cal.getTime(), DateUtils.DATE_TIME_PATTERN_YYYY_MM_DD_HH_MM_SS_SSS);
+        return timeStr + CharUtil.getRandomNum(6);
+    }
 }

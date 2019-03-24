@@ -1,12 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.model.Order;
-import com.seamwhole.servicetradecore.model.ShopUser;
 
-import java.util.List;
 import java.util.Map;
 
 public interface OrderService {
@@ -23,5 +20,5 @@ public interface OrderService {
 
     void deleteBatch(Integer[] ids);
 
-    Map<String, Object> submit(JSONObject jsonParam, ShopUser loginUser);
+    Map<String, Object> submit(Integer couponId,String type,String postscript,Integer addressId,Integer userId);
 }

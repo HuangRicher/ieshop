@@ -1,13 +1,12 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiUserService;
-import com.platform.utils.R;
+import com.seamwhole.servicetradecore.model.ShopUser;
+import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.util.ResponseObject;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,23 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    private ApiUserService userService;
+    private UserService userService;
 
     /**
      * 获取用户信息
      */
     @PostMapping("userInfo")
-    public R userInfo(@LoginUser UserVo user) {
-        return R.ok().put("user", user);
+    public ResponseObject userInfo(@RequestBody  ShopUser user) {
+        return ResponseObject.ok().put("user", user);
     }
 
     /**
      * 忽略Token验证测试
      */
-    @IgnoreAuth
     @PostMapping("notToken")
-    public R notToken() {
-        return R.ok().put("msg", "无需token也能访问。。。");
+    public ResponseObject notToken() {
+        return ResponseObject.ok().put("msg", "无需token也能访问。。。");
     }
 
     /**
@@ -49,10 +47,9 @@ public class TestController {
      * @param mobile
      * @return
      */
-    @IgnoreAuth
     @PostMapping("userListByMobile")
-    public R userList(String mobile) {
-        UserVo userEntity = userService.queryByMobile(mobile);
-        return R.ok().put("dto", userEntity);
+    public ResponseObject userList(String mobile) {
+        ShopUser userEntity = userService.queryByMobile(mobile);
+        return ResponseObject.ok().put("dto", userEntity);
     }
 }

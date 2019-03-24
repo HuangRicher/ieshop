@@ -29,9 +29,9 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    public List<ShopCartDO> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order) {
+    public List<ShopCartDO> queryList(Integer userId, String sessionId, Integer goodsId, Integer productId, Integer checked, String order) {
 
-        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,goodsId,productId,checked,order);
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,sessionId,goodsId,productId,checked,order);
         return cartInfoList;
     }
 
@@ -46,7 +46,7 @@ public class CartServiceImpl implements CartService {
         shopCartMapper.insertSelective(cart);
         // 更新购物车搭配减价
         // 判断购物车中是否存在此规格商品
-        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(cart.getUserId(),null,null,null,"");
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(cart.getUserId(),"",null,null,null,"");
         List<Integer> goodsIds = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();
         for (ShopCartDO cartItem : cartInfoList) {
@@ -101,7 +101,7 @@ public class CartServiceImpl implements CartService {
 
         // 判断购物车中是否存在此规格商品
         //List<ShopCart> cartInfoList = cartDao.queryList(cartParam);
-        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,null,null,null,"");
+        List<ShopCartDO> cartInfoList = shopCartExtMapper.queryList(userId,"",null,null,null,"");
         //Map crashParam = new HashMap();
         List<Integer> goods_ids = new ArrayList();
         List<ShopCart> cartUpdateList = new ArrayList();

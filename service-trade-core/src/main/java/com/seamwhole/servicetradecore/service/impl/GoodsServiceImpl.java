@@ -1,5 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.GoodsMapper;
 import com.seamwhole.servicetradecore.mapper.ext.GoodsExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
@@ -35,6 +38,12 @@ public class GoodsServiceImpl implements GoodsService {
         return goodsExtMapper.queryList(map);
     }
 
+    @Override
+    public PageInfo<GoodsDO> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize) {
+        Page<GoodsDO> page=PageHelper.startPage(pageNum,pageSize);
+        goodsExtMapper.queryList(map);
+        return page.toPageInfo();
+    }
 
     public int queryTotal(Map<String, Object> map) {
         return goodsExtMapper.queryTotal(map);
@@ -68,5 +77,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     public List<GoodsDO> queryCatalogProductList(Map<String, Object> map) {
         return goodsExtMapper.queryCatalogProductList(map);
+    }
+
+    @Override
+    public PageInfo<GoodsDO> queryCatalogProductByPage(Map<String, Object> map, Integer pageNum, Integer pageSize) {
+        Page<GoodsDO> page= PageHelper.startPage(pageNum,pageSize);
+        goodsExtMapper.queryCatalogProductList(map);
+        return page.toPageInfo();
     }
 }

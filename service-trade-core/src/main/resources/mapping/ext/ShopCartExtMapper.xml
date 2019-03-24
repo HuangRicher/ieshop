@@ -32,6 +32,9 @@
     <if test="userId != null">
       AND a.user_id = #{userId}
     </if>
+    <if test="sessionId != null and sessionId !=''">
+      AND a.session_id = #{sessionId}
+    </if>
     <if test="goodsId != null">
       AND a.goods_id = #{goodsId}
     </if>

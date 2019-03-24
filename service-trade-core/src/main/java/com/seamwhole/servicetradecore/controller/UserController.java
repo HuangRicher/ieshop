@@ -12,6 +12,7 @@ import com.platform.utils.CharUtil;
 import com.platform.utils.Constant;
 import com.platform.utils.SmsUtil;
 import com.platform.utils.StringUtils;
+import com.seamwhole.servicetradecore.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController extends BaseController {
     @Autowired
-    private ApiUserService userService;
+    private UserService userService;
     @Autowired
     private SysConfigService sysConfigService;
 

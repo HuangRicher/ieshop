@@ -34,7 +34,7 @@ public class FeedbackController extends BaseController {
             feedbackVo.setUserName(feedBackModel.getUserName());
             feedbackVo.setMobile(feedBackModel.getMobile());
             feedbackVo.setFeedType(feedBackModel.getIndex());
-            feedbackVo.setStatus(true);
+            feedbackVo.setStatus(1);
             feedbackVo.setContent(feedBackModel.getContent());
             feedbackVo.setAddTime(new Date());
             feedBackService.save(feedbackVo);

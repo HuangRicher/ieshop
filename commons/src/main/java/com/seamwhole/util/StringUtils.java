@@ -135,4 +135,21 @@ public final class StringUtils {
         return new String(data,UTF_8);
     }
 
+    /**
+     * 判断字符串是否不为空，不为空则返回true
+     *
+     * @param str 源数据
+     * @return Boolean
+     */
+    public static boolean isNotEmpty(String str) {
+        if (str != null && !"".equals(str.trim())) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isEmpty(Object str) {
+        return str == null || "".equals(str);
+    }
+
 }

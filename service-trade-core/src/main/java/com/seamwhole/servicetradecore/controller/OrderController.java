@@ -1,22 +1,25 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.controller.model.OrderModel;
+import com.seamwhole.servicetradecore.domain.OrderInfo;
+import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.model.Order;
 import com.seamwhole.servicetradecore.model.OrderGoods;
 import com.seamwhole.servicetradecore.service.ApiKdniaoService;
 import com.seamwhole.servicetradecore.service.OrderGoodsService;
 import com.seamwhole.servicetradecore.service.OrderService;
+import com.seamwhole.util.PageObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 作者: @author Harmon <br>
@@ -58,11 +61,13 @@ public class OrderController extends BaseController {
         params.put("order", "asc");
         //查询列表数据
 
-        List<Order> orderEntityList = orderService.queryList(query);
-        int total = orderService.queryTotal(query);
-        ApiPageUtils pageUtil = new ApiPageUtils(orderEntityList, total, query.getLimit(), query.getPage());
+        PageInfo<Order> pageInfo=orderService.findByPage(orderModel.getUserId(),orderModel.getPageNum(),orderModel.getPageSize()," id asc ");
+        List<Order> orderEntityList = pageInfo.getList();
+        List<OrderInfo> list=new ArrayList<>();
         //
         for (Order item : orderEntityList) {
+            OrderInfo info=new OrderInfo();
+            BeanUtils.copyProperties(item,info);
             Map orderGoodsParam = new HashMap();
             orderGoodsParam.put("order_id", item.getId());
             //订单的商品
@@ -70,10 +75,11 @@ public class OrderController extends BaseController {
             Integer goodsCount = 0;
             for (OrderGoods orderGoodsEntity : goodsList) {
                 goodsCount += orderGoodsEntity.getNumber();
-                item.setGoodsCount(goodsCount);
+                info.setGoodsCount(goodsCount);
             }
         }
-        return toResponsSuccess(pageUtil);
+        PageObject<OrderInfo> page=new PageObject<OrderInfo>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(),pageInfo.getPages(),list);
+        return toResponsSuccess(page);
     }
 
     /**
@@ -81,19 +87,19 @@ public class OrderController extends BaseController {
      */
     @ApiOperation(value = "获取订单详情")
     @PostMapping("detail")
-    public Object detail(Integer orderId) {
+    public Object detail(@RequestBody OrderModel orderModel) {
         Map resultObj = new HashMap();
         //
-        Order orderInfo = orderService.queryObject(orderId);
+        OrderDO orderInfo = orderService.queryObject(orderModel.getOrderId());
         if (null == orderInfo) {
             return toResponsObject(400, "订单不存在", "");
         }
         Map orderGoodsParam = new HashMap();
-        orderGoodsParam.put("order_id", orderId);
+        orderGoodsParam.put("orderId", orderModel.getOrderId());
         //订单的商品
         List<OrderGoods> orderGoods = orderGoodsService.queryList(orderGoodsParam);
         //订单最后支付时间
-        if (orderInfo.getOrderStatus() == 0) {
+        if (orderInfo.getOrder_status() == 0) {
             // if (moment().subtract(60, 'minutes') < moment(orderInfo.add_time)) {
 //            orderInfo.final_pay_time = moment("001234", "Hmmss").format("mm:ss")
             // } else {
@@ -107,9 +113,9 @@ public class OrderController extends BaseController {
         resultObj.put("orderInfo", orderInfo);
         resultObj.put("orderGoods", orderGoods);
         resultObj.put("handleOption", handleOption);
-        if (!StringUtils.isEmpty(orderInfo.getShipping_code()) && !StringUtils.isEmpty(orderInfo.getShippingNo())) {
+        if (!StringUtils.isEmpty(orderInfo.getShipping_code()) && !StringUtils.isEmpty(orderInfo.getShipping_no())) {
             // 快递
-            List Traces = apiKdniaoService.getOrderTracesByJson(orderInfo.getShipping_code(), orderInfo.getShippingNo());
+            List Traces = apiKdniaoService.getOrderTracesByJson(orderInfo.getShipping_code(), orderInfo.getShipping_no());
             resultObj.put("shippingList", Traces);
         }
         return toResponsSuccess(resultObj);
@@ -117,20 +123,22 @@ public class OrderController extends BaseController {
 
     @ApiOperation(value = "修改订单")
     @PostMapping("updateSuccess")
-    public Object updateSuccess(Integer orderId) {
-        Order orderInfo = orderService.queryObject(orderId);
+    public Object updateSuccess(@RequestBody OrderModel orderModel) {
+        OrderDO orderInfo = orderService.queryObject(orderModel.getOrderId());
         if (orderInfo == null) {
             return toResponsFail("订单不存在");
-        } else if (orderInfo.getOrderStatus() != 0) {
-            return toResponsFail("订单状态不正确orderStatus" + orderInfo.getOrderStatus() + "payStatus" + orderInfo.getPayStatus());
+        } else if (orderInfo.getOrder_status() != 0) {
+            return toResponsFail("订单状态不正确orderStatus" + orderInfo.getOrder_status() + "payStatus" + orderInfo.getPay_status());
         }
 
-        orderInfo.setId(orderId);
-        orderInfo.setPayStatus(2);
-        orderInfo.setOrderStatus(201);
-        orderInfo.setShippingStatus(0);
-        orderInfo.setPayTime(new Date());
-        int num = orderService.update(orderInfo);
+        Order order=new Order();
+        BeanUtils.copyProperties(orderInfo,order);
+        order.setId(orderModel.getOrderId());
+        order.setPayStatus(2);
+        order.setOrderStatus(201);
+        order.setShippingStatus(0);
+        order.setPayTime(new Date());
+        int num = orderService.update(order);
         if (num > 0) {
             return toResponsMsgSuccess("修改订单成功");
         } else {
@@ -143,10 +151,10 @@ public class OrderController extends BaseController {
      */
     @ApiOperation(value = "订单提交")
     @PostMapping("submit")
-    public Object submit(@LoginUser UserVo loginUser) {
+    public Object submit(@RequestBody OrderModel orderModel) {
         Map resultObj = null;
         try {
-            resultObj = orderService.submit(getJsonRequest(), loginUser);
+            resultObj = orderService.submit(orderModel.getCouponId(),orderModel.getType(),orderModel.getPostscript(),orderModel.getAddressId(),orderModel.getUserId());
             if (null != resultObj) {
                 return toResponsObject(MapUtils.getInteger(resultObj, "errno"), MapUtils.getString(resultObj, "errmsg"), resultObj.get("data"));
             }
@@ -163,31 +171,35 @@ public class OrderController extends BaseController {
     @PostMapping("cancelOrder")
     public Object cancelOrder(Integer orderId) {
         try {
-            Order orderVo = orderService.queryObject(orderId);
-            if (orderVo.getOrderStatus() == 300) {
+            OrderDO orderVo = orderService.queryObject(orderId);
+            if (orderVo.getOrder_status() == 300) {
                 return toResponsFail("已发货，不能取消");
-            } else if (orderVo.getOrderStatus() == 301) {
+            } else if (orderVo.getOrder_status() == 301) {
                 return toResponsFail("已收货，不能取消");
             }
             // 需要退款
-            if (orderVo.getPayStatus() == 2) {
-                WechatRefundApiResult result = WechatUtil.wxRefund(orderVo.getId().toString(),
+            if (orderVo.getPay_status() == 2) {
+                /*WechatRefundApiResult result = WechatUtil.wxRefund(orderVo.getId().toString(),
                         0.01, 0.01);
                 if (result.getResult_code().equals("SUCCESS")) {
-                    if (orderVo.getOrderStatus() == 201) {
-                        orderVo.setOrderStatus(401);
-                    } else if (orderVo.getOrderStatus() == 300) {
-                        orderVo.setOrderStatus(402);
+                    if (orderVo.getOrder_status() == 201) {
+                        orderVo.setOrder_status(401);
+                    } else if (orderVo.getOrder_status() == 300) {
+                        orderVo.setOrder_status(402);
                     }
-                    orderVo.setPayStatus(4);
-                    orderService.update(orderVo);
+                    orderVo.setPay_status(4);
+                    Order order=new Order();
+                    BeanUtils.copyProperties(orderVo,order);
+                    orderService.update(order);
                     return toResponsMsgSuccess("取消成功");
                 } else {
                     return toResponsObject(400, "取消成失败", "");
-                }
+                }*/
             } else {
-                orderVo.setOrderStatus(101);
-                orderService.update(orderVo);
+                orderVo.setOrder_status(101);
+                Order order=new Order();
+                BeanUtils.copyProperties(orderVo,order);
+                orderService.update(order);
                 return toResponsSuccess("取消成功");
             }
         } catch (Exception e) {
@@ -203,11 +215,13 @@ public class OrderController extends BaseController {
     @PostMapping("confirmOrder")
     public Object confirmOrder(Integer orderId) {
         try {
-            Order orderVo = orderService.queryObject(orderId);
-            orderVo.setOrderStatus(301);
-            orderVo.setShippingStatus(2);
-            orderVo.setConfirmTime(new Date());
-            orderService.update(orderVo);
+            OrderDO orderVo = orderService.queryObject(orderId);
+            orderVo.setOrder_status(301);
+            orderVo.setShipping_status(2);
+            orderVo.setConfirm_time(new Date());
+            Order order=new Order();
+            BeanUtils.copyProperties(orderVo,order);
+            orderService.update(order);
             return toResponsSuccess("确认收货成功");
         } catch (Exception e) {
             e.printStackTrace();

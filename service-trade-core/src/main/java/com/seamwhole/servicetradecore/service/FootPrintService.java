@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
 import com.seamwhole.servicetradecore.model.FootPrint;
 
@@ -12,6 +13,8 @@ public interface FootPrintService {
     FootPrint queryObject(Integer id);
 
     List<FootPrintDO> queryListFootprint(Integer userid);
+
+    PageInfo<FootPrintDO> queryByPage(Integer userId,Integer pageNum,Integer pageSize);
 
     List<FootPrintDO> shareList(Map<String, Object> map);
 

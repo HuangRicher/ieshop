@@ -1,17 +1,13 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.TopicVo;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiTopicService;
-import com.platform.util.ApiBaseAction;
-import com.platform.util.ApiPageUtils;
-import com.platform.utils.Query;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.TopicModel;
+import com.seamwhole.servicetradecore.model.ShopTopic;
+import com.seamwhole.servicetradecore.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -27,45 +23,36 @@ import java.util.Map;
 @RequestMapping("/api/topic")
 public class TopicController extends BaseController {
     @Autowired
-    private ApiTopicService topicService;
+    private TopicService topicService;
 
     /**
      */
-    @IgnoreAuth
     @PostMapping("list")
-    public Object list(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    public Object list(@RequestBody TopicModel topicModel) {
         Map param = new HashMap();
-        param.put("page", page);
-        param.put("limit", size);
         param.put("sidx", "id");
         param.put("order", "desc");
         param.put("fields", "id, title, price_info, scene_pic_url,subtitle");
         //查询列表数据
-        Query query = new Query(param);
-        List<TopicVo> topicEntities = topicService.queryList(query);
-        int total = topicService.queryTotal(query);
-        ApiPageUtils pageUtil = new ApiPageUtils(topicEntities, total, query.getLimit(), query.getPage());
-        return toResponsSuccess(pageUtil);
+        PageInfo<ShopTopic> pageInfo=topicService.queryByPage(param,topicModel.getPageNum(),topicModel.getPageSize());
+        return toResponsSuccess(pageInfo);
     }
 
     /**
      */
-    @IgnoreAuth
     @PostMapping("detail")
-    public Object detail(@LoginUser UserVo loginUser, Integer id) {
-        TopicVo topicEntity = topicService.queryObject(id);
+    public Object detail(@RequestBody TopicModel topicModel) {
+        ShopTopic topicEntity = topicService.queryObject(topicModel.getId());
         return toResponsSuccess(topicEntity);
     }
 
     /**
      */
-    @IgnoreAuth
     @PostMapping("related")
-    public Object related(@LoginUser UserVo loginUser, Integer id) {
+    public Object related(@RequestBody TopicModel topicModel) {
         Map param = new HashMap();
         param.put("limit", 4);
-        List<TopicVo> topicEntities = topicService.queryList(param);
+        List<ShopTopic> topicEntities = topicService.queryList(param);
         return toResponsSuccess(topicEntities);
     }
 }

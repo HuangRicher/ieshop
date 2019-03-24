@@ -1,10 +1,13 @@
 package com.seamwhole.servicetradecore.service.impl;
 
 import com.seamwhole.servicetradecore.mapper.CouponMapper;
+import com.seamwhole.servicetradecore.mapper.UserCouponMapper;
 import com.seamwhole.servicetradecore.mapper.ext.CouponExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
 import com.seamwhole.servicetradecore.model.Coupon;
 import com.seamwhole.servicetradecore.model.CouponExample;
+import com.seamwhole.servicetradecore.model.UserCoupon;
+import com.seamwhole.servicetradecore.model.UserCouponExample;
 import com.seamwhole.servicetradecore.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +25,13 @@ public class CouponServiceImpl implements CouponService {
     private CouponMapper couponMapper;
     @Autowired
     private CouponExtMapper couponExtMapper;
-
+    @Autowired
+    private UserCouponMapper userCouponMapper;
 
 
 
     public Coupon queryObject(Integer couponId) {
-        return couponMapper.selectByPrimaryKey(couponId.shortValue());
+        return couponMapper.selectByPrimaryKey(couponId);
     }
 
     public List<CouponDO> queryList(Map<String, Object> map) {
@@ -49,11 +53,11 @@ public class CouponServiceImpl implements CouponService {
         couponMapper.updateByPrimaryKeySelective(coupon);
     }
 
-    public void delete(Short id) {
+    public void delete(Integer id) {
         couponMapper.deleteByPrimaryKey(id);
     }
 
-    public void deleteBatch(Short[] ids) {
+    public void deleteBatch(Integer[] ids) {
         CouponExample example=new CouponExample();
         example.createCriteria().andIdIn(Arrays.asList(ids));
         couponMapper.deleteByExample(example);
@@ -93,5 +97,14 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public CouponDO getUserCoupon(Integer id) {
         return couponExtMapper.getUserCoupon(id);
+    }
+
+    @Override
+    public void updateUserCoupon(CouponDO couponVo) {
+        UserCouponExample example=new UserCouponExample();
+        example.createCriteria().andIdEqualTo(couponVo.getUser_coupon_id());
+        UserCoupon userCoupon=new UserCoupon();
+        userCoupon.setCouponStatus(couponVo.getCoupon_status());
+        userCouponMapper.updateByExampleSelective(userCoupon,example);
     }
 }

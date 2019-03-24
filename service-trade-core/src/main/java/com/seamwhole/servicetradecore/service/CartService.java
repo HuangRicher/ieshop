@@ -10,7 +10,7 @@ public interface CartService {
 
     ShopCart queryObject(Integer id);
 
-    List<ShopCartDO> queryList(Integer userId, Integer goodsId, Integer productId, Boolean checked, String order);
+    List<ShopCartDO> queryList(Integer userId, String sessionId, Integer goodsId, Integer productId, Integer checked, String order);
 
     int queryTotal(Map<String, Object> map);
 
