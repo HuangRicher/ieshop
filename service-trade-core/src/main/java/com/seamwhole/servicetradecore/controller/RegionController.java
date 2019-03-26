@@ -1,18 +1,14 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.cache.RegionCacheUtil;
-import com.platform.entity.RegionVo;
-import com.platform.entity.SysRegionEntity;
-import com.platform.util.ApiBaseAction;
-import com.platform.utils.StringUtils;
+import com.seamwhole.servicetradecore.cache.RegionCacheUtil;
+import com.seamwhole.servicetradecore.mapper.model.SysRegionDO;
+import com.seamwhole.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,56 +21,32 @@ public class RegionController extends BaseController {
     @ApiOperation(value = "地区列表")
     @PostMapping("list")
     public Object list(Integer parentId) {
-        List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenByParentId(parentId);
-        List<RegionVo> regionVoList = new ArrayList<RegionVo>();
-        if (null != regionEntityList && regionEntityList.size() > 0) {
-            for (SysRegionEntity sysRegionEntity : regionEntityList) {
-                regionVoList.add(new RegionVo(sysRegionEntity));
-            }
-        }
-        return toResponsSuccess(regionVoList);
+        List<SysRegionDO> regionEntityList = RegionCacheUtil.getChildrenByParentId(parentId);
+        return toResponsSuccess(regionEntityList);
     }
 
     @PostMapping("provinceList")
     public Object provinceList() {
-        List<SysRegionEntity> regionEntityList = RegionCacheUtil.getAllProvice();
-        List<RegionVo> regionVoList = new ArrayList<RegionVo>();
-        if (null != regionEntityList && regionEntityList.size() > 0) {
-            for (SysRegionEntity sysRegionEntity : regionEntityList) {
-                regionVoList.add(new RegionVo(sysRegionEntity));
-            }
-        }
-        return toResponsSuccess(regionVoList);
+        List<SysRegionDO> regionEntityList = RegionCacheUtil.getAllProvice();
+        return toResponsSuccess(regionEntityList);
     }
 
     @PostMapping("cityList")
     public Object provinceList(String proviceName) {
-        List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenCity(proviceName);
-        List<RegionVo> regionVoList = new ArrayList<RegionVo>();
-        if (null != regionEntityList && regionEntityList.size() > 0) {
-            for (SysRegionEntity sysRegionEntity : regionEntityList) {
-                regionVoList.add(new RegionVo(sysRegionEntity));
-            }
-        }
-        return toResponsSuccess(regionVoList);
+        List<SysRegionDO> regionEntityList = RegionCacheUtil.getChildrenCity(proviceName);
+        return toResponsSuccess(regionEntityList);
     }
 
     @PostMapping("distinctList")
     public Object distinctList(String proviceName, String cityName) {
-        List<SysRegionEntity> regionEntityList = RegionCacheUtil.getChildrenDistrict(proviceName, cityName);
-        List<RegionVo> regionVoList = new ArrayList<RegionVo>();
-        if (null != regionEntityList && regionEntityList.size() > 0) {
-            for (SysRegionEntity sysRegionEntity : regionEntityList) {
-                regionVoList.add(new RegionVo(sysRegionEntity));
-            }
-        }
-        return toResponsSuccess(regionVoList);
+        List<SysRegionDO> regionEntityList = RegionCacheUtil.getChildrenDistrict(proviceName, cityName);
+        return toResponsSuccess(regionEntityList);
     }
 
     @PostMapping("info")
     public Object info(Integer regionId) {
-        SysRegionEntity regionEntity = RegionCacheUtil.getAreaByAreaId(regionId);
-        return toResponsSuccess(new RegionVo(regionEntity));
+        SysRegionDO regionEntity = RegionCacheUtil.getAreaByAreaId(regionId);
+        return toResponsSuccess(regionEntity);
     }
 
     @PostMapping("regionIdsByNames")

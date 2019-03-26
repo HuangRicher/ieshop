@@ -32,11 +32,6 @@ public class GoodsSpecificationServiceImpl implements GoodsSpecificationService 
     }
 
 
-    public int queryTotal(Map<String, Object> map) {
-        return goodsDao.queryTotal(map);
-    }
-
-
     public void save(GoodsSpecification goods) {
         goodsSpecificationMapper.insertSelective(goods);
     }

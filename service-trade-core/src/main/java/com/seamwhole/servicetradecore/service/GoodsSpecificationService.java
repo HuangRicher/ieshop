@@ -13,8 +13,6 @@ public interface GoodsSpecificationService {
 
     List<GoodsSpecificationDO> queryList(Map<String, Object> map);
 
-    int queryTotal(Map<String, Object> map);
-
     void save(GoodsSpecification goods);
 
     void update(GoodsSpecification goods);

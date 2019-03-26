@@ -29,7 +29,7 @@ public class UserAddress {
 
     private String receiverPhone;
 
-    private Boolean default;
+    private boolean isDefault;
 
     public String getId() {
         return id;
@@ -143,11 +143,11 @@ public class UserAddress {
         this.receiverPhone = receiverPhone == null ? null : receiverPhone.trim();
     }
 
-    public Boolean getDefault() {
-        return default;
+    public boolean isDefault() {
+        return isDefault;
     }
 
-    public void setDefault(Boolean default) {
-        this.default = default;
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 }

@@ -3,10 +3,12 @@ package com.seamwhole.servicetradecore.controller;
 import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.model.Order;
 import com.seamwhole.servicetradecore.model.OrderGoods;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.redis.RedisService;
 import com.seamwhole.servicetradecore.service.OrderGoodsService;
 import com.seamwhole.servicetradecore.service.OrderService;
 import com.seamwhole.servicetradecore.util.CharUtil;
+import com.seamwhole.servicetradecore.util.ResourceUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -22,16 +24,12 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.*;
 
-/**
- * 作者: @author Harmon <br>
- * 时间: 2017-08-11 08:32<br>
- * 描述: IndexController <br>
- */
+
 @Api(tags = "商户支付")
 @RestController
 @RequestMapping("/api/pay")
 public class PayController extends BaseController {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    /*private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -40,8 +38,8 @@ public class PayController extends BaseController {
     private RedisService redisService;
 
 
-    /**
-     */
+    *//**
+     *//*
     @ApiOperation(value = "跳转")
     @PostMapping("index")
     public Object index() {
@@ -49,12 +47,12 @@ public class PayController extends BaseController {
         return toResponsSuccess("");
     }
 
-    /**
+    *//**
      * 获取支付的请求参数
-     */
+     *//*
     @ApiOperation(value = "获取支付的请求参数")
     @PostMapping("prepay")
-    public Object payPrepay(@LoginUser UserVo loginUser, Integer orderId) {
+    public Object payPrepay(ShopUser loginUser, Integer orderId) {
         //
         OrderDO orderInfo = orderService.queryObject(orderId);
 
@@ -150,12 +148,12 @@ public class PayController extends BaseController {
         return toResponsFail("下单失败");
     }
 
-    /**
+    *//**
      * 微信查询订单状态
-     */
+     *//*
     @ApiOperation(value = "查询订单状态")
     @PostMapping("query")
-    public Object orderQuery(@LoginUser UserVo loginUser, Integer orderId) {
+    public Object orderQuery(ShopUser loginUser, Integer orderId) {
         if (orderId == null) {
             return toResponsFail("订单不存在");
         }
@@ -225,11 +223,11 @@ public class PayController extends BaseController {
         return toResponsFail("查询失败，未知错误");
     }
 
-    /**
+    *//**
      * 微信订单回调接口
      *
      * @return
-     */
+     *//*
     @ApiOperation(value = "微信订单回调接口")
     @RequestMapping(value = "/notify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     @ResponseBody
@@ -279,9 +277,9 @@ public class PayController extends BaseController {
         }
     }
 
-    /**
+    *//**
      * 订单退款请求
-     */
+     *//*
     @ApiOperation(value = "订单退款请求")
     @PostMapping("refund")
     public Object refund(Integer orderId) {
@@ -326,5 +324,5 @@ public class PayController extends BaseController {
     //模拟微信回调接口
     public static String callbakcXml(String orderNum) {
         return "<xml><appid><![CDATA[wx2421b1c4370ec43b]]></appid><attach><![CDATA[支付测试]]></attach><bank_type><![CDATA[CFT]]></bank_type><fee_type><![CDATA[CNY]]></fee_type> <is_subscribe><![CDATA[Y]]></is_subscribe><mch_id><![CDATA[10000100]]></mch_id><nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str><openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid> <out_trade_no><![CDATA[" + orderNum + "]]></out_trade_no>  <result_code><![CDATA[SUCCESS]]></result_code> <return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[B552ED6B279343CB493C5DD0D78AB241]]></sign><sub_mch_id><![CDATA[10000100]]></sub_mch_id> <time_end><![CDATA[20140903131540]]></time_end><total_fee>1</total_fee><trade_type><![CDATA[JSAPI]]></trade_type><transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id></xml>";
-    }
+    }*/
 }

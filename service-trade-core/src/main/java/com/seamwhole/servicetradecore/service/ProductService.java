@@ -11,9 +11,8 @@ public interface ProductService {
 
     ProductDO queryObject(Integer id);
 
-    List<Product> queryList(Map<String, Object> map);
+    List<ProductDO> queryList(Map<String, Object> map);
 
-    int queryTotal(Map<String, Object> map);
 
     void save(Product goods);
 
@@ -21,6 +20,5 @@ public interface ProductService {
 
     void delete(Integer id);
 
-    void deleteBatch(Integer[] ids);
 
 }
