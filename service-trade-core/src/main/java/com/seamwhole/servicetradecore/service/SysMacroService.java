@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.platform.entity.SysMacroEntity;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.model.SysMacro;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface SysMacroService {
      * @param macroId 主键
      * @return 实体
      */
-    SysMacroEntity queryObject(Long macroId);
+    SysMacro queryObject(Long macroId);
 
     /**
      * 分页查询
@@ -28,15 +29,11 @@ public interface SysMacroService {
      * @param map 参数
      * @return list
      */
-    List<SysMacroEntity> queryList(Map<String, Object> map);
+    List<SysMacro> queryList(Map<String, Object> map);
 
-    /**
-     * 分页统计总数
-     *
-     * @param map 参数
-     * @return 总数
-     */
-    int queryTotal(Map<String, Object> map);
+
+    PageInfo<SysMacro> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
+
 
     /**
      * 保存实体
@@ -44,7 +41,7 @@ public interface SysMacroService {
      * @param sysMacro 实体
      * @return 保存条数
      */
-    int save(SysMacroEntity sysMacro);
+    int save(SysMacro sysMacro);
 
     /**
      * 根据主键更新实体
@@ -52,7 +49,7 @@ public interface SysMacroService {
      * @param sysMacro 实体
      * @return 更新条数
      */
-    int update(SysMacroEntity sysMacro);
+    int update(SysMacro sysMacro);
 
     /**
      * 根据主键删除
@@ -70,7 +67,7 @@ public interface SysMacroService {
      */
     int deleteBatch(Long[] macroIds);
 
-    List<SysMacroEntity> queryMacrosByValue(String value);
+    List<SysMacro> queryMacrosByValue(String value);
 
     /**
      * 查看字典目录列表
@@ -78,5 +75,5 @@ public interface SysMacroService {
      * @param map
      * @return
      */
-    List<SysMacroEntity> queryAllParent(Map<String, Object> map);
+    List<SysMacro> queryAllParent(Map<String, Object> map);
 }

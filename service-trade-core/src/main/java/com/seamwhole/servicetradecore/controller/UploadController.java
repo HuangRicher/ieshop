@@ -1,10 +1,8 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.oss.OSSFactory;
-import com.platform.util.ApiBaseAction;
-import com.platform.utils.RRException;
+
 import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.oss.OSSFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

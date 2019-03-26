@@ -2,8 +2,13 @@ package com.seamwhole.servicetradecore.controller;
 
 import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.model.SysSmsLog;
+import com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs;
 import com.seamwhole.servicetradecore.service.SysSmsLogService;
+import com.seamwhole.servicetradecore.util.RequestUtil;
+import com.seamwhole.servicetradecore.util.ResourceUtil;
 import com.seamwhole.servicetradecore.util.ResponseObject;
+import com.seamwhole.util.DateUtils;
+import com.seamwhole.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +19,6 @@ import java.util.Map;
 
 /**
  * 发送短信接口Controller
- *
- * @author liepngjun
- * @email 939961241@qq.com
- * @date 2018-06-05 13:58:47
  */
 @RestController
 @RequestMapping("api")
@@ -33,8 +34,8 @@ public class SmsController {
      * @return R
      */
     @RequestMapping("/sendSms")
-    public ResponseObject sendSms(HttpServletRequest request, @RequestParam Map<String, String> params) {
-        SysSmsLog smsLog = new SysSmsLog();
+    public ResponseObject sendSms(HttpServletRequest request, @RequestParam Map<String, String> params,Long userId) {
+        SysSmsLogWithBLOBs smsLog = new SysSmsLogWithBLOBs();
         String validIP = RequestUtil.getIpAddrByRequest(request);
         if (ResourceUtil.getConfigByName("sms.validIp").indexOf(validIP) < 0) {
             throw new CheckException("非法IP请求！");
@@ -45,7 +46,7 @@ public class SmsController {
         if (StringUtils.isNotEmpty(stime)) {
             smsLog.setStime(DateUtils.convertStringToDate(stime));
         }
-        SysSmsLogEntity sysSmsLogEntity = smsLogService.sendSms(smsLog);
+        SysSmsLogWithBLOBs sysSmsLogEntity = sysSmsLogService.sendSms(smsLog,userId);
         return ResponseObject.ok().put("result", sysSmsLogEntity);
     }
 }

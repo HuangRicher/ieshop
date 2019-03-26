@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.model.SysConfig;
 
 import java.util.List;
@@ -35,10 +36,7 @@ public interface SysConfigService {
      */
     List<SysConfig> queryList(Map<String, Object> map);
 
-    /**
-     * 获取总记录数
-     */
-    int queryTotal(Map<String, Object> map);
+    PageInfo<SysConfig> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
 
     SysConfig queryObject(Long id);
 

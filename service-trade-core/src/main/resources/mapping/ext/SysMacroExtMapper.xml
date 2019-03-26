@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seamwhole.servicetradecore.mapper.ext.SysMacroExtMapper">
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.SysMacro" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="DATE" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="DATE" />
+    </resultMap>
+
+    <select id="queryMacrosByValue" resultType="com.platform.entity.SysMacroEntity">
+        select
+        `id`,
+        `parent_id`,
+        `name`,
+        `value`,
+        `status`,
+        `type`,
+        `order_num`,
+        `remark`,
+        `gmt_create`,
+        `gmt_modified`
+        from sys_macro
+        WHERE 1=1
+          AND exists(SELECT 1 from sys_macro m WHERE m.id = sys_macro.parent_id and m.value =#{value} )
+          AND `type` = '1'
+    </select>
+</mapper>

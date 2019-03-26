@@ -1,6 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.platform.entity.SysSmsLogEntity;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.SysSmsLogDO;
+import com.seamwhole.servicetradecore.model.SysSmsLog;
+import com.seamwhole.servicetradecore.model.SysSmsLogWithBLOBs;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +23,7 @@ public interface SysSmsLogService {
      * @param id 主键
      * @return 实体
      */
-    SysSmsLogEntity queryObject(String id);
+    SysSmsLog queryObject(String id);
 
     /**
      * 分页查询
@@ -28,15 +31,11 @@ public interface SysSmsLogService {
      * @param map 参数
      * @return list
      */
-    List<SysSmsLogEntity> queryList(Map<String, Object> map);
+    List<SysSmsLogDO> queryList(Map<String, Object> map);
 
-    /**
-     * 分页统计总数
-     *
-     * @param map 参数
-     * @return 总数
-     */
-    int queryTotal(Map<String, Object> map);
+
+    PageInfo<SysSmsLogDO> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
+
 
     /**
      * 保存实体
@@ -44,7 +43,7 @@ public interface SysSmsLogService {
      * @param smsLog 实体
      * @return 保存条数
      */
-    int save(SysSmsLogEntity smsLog);
+    int save(SysSmsLogWithBLOBs smsLog);
 
     /**
      * 根据主键更新实体
@@ -52,7 +51,7 @@ public interface SysSmsLogService {
      * @param smsLog 实体
      * @return 更新条数
      */
-    int update(SysSmsLogEntity smsLog);
+    //int update(SysSmsLog smsLog);
 
     /**
      * 根据主键删除
@@ -60,7 +59,7 @@ public interface SysSmsLogService {
      * @param id
      * @return 删除条数
      */
-    int delete(String id);
+    //int delete(String id);
 
     /**
      * 根据主键批量删除
@@ -68,7 +67,7 @@ public interface SysSmsLogService {
      * @param ids
      * @return 删除条数
      */
-    int deleteBatch(String[] ids);
+    //int deleteBatch(String[] ids);
 
     /**
      * 发送短信
@@ -76,5 +75,5 @@ public interface SysSmsLogService {
      * @param smsLog
      * @return
      */
-    SysSmsLogEntity sendSms(SysSmsLogEntity smsLog);
+    SysSmsLogWithBLOBs sendSms(SysSmsLogWithBLOBs smsLog,Long userId);
 }

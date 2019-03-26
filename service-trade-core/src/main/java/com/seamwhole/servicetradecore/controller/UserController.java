@@ -1,30 +1,24 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.platform.annotation.LoginUser;
-import com.platform.entity.SmsConfig;
-import com.platform.entity.SmsLogVo;
-import com.platform.entity.UserVo;
-import com.platform.service.ApiUserService;
-import com.platform.service.SysConfigService;
-import com.platform.util.ApiBaseAction;
-import com.platform.utils.CharUtil;
-import com.platform.utils.Constant;
-import com.platform.utils.SmsUtil;
-import com.platform.utils.StringUtils;
+import com.seamwhole.servicetradecore.constant.Constant;
+import com.seamwhole.servicetradecore.controller.model.UserModel;
+import com.seamwhole.servicetradecore.domain.SmsConfigOutInfo;
+import com.seamwhole.servicetradecore.model.ShopUser;
+import com.seamwhole.servicetradecore.model.SmsLog;
+import com.seamwhole.servicetradecore.service.SysConfigService;
 import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.util.SmsUtil;
+import com.seamwhole.util.CharUtil;
+import com.seamwhole.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 作者: @author Harmon <br>
- * 时间: 2017-08-11 08:32<br>
- * 描述: IndexController <br>
- */
+
 @Api(tags = "会员验证")
 @RestController
 @RequestMapping("/api/user")
@@ -39,12 +33,11 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "发送短信")
     @PostMapping("smscode")
-    public Object smscode(@LoginUser UserVo loginUser) {
-        JSONObject jsonParams = getJsonRequest();
-        String phone = jsonParams.getString("phone");
+    public Object smscode(@RequestBody UserModel userModel) {
+        String phone = userModel.getPhone();
         // 一分钟之内不能重复发送短信
-        SmsLogVo smsLogVo = userService.querySmsCodeByUserId(loginUser.getUserId());
-        if (null != smsLogVo && (System.currentTimeMillis() / 1000 - smsLogVo.getLog_date()) < 1 * 60) {
+        SmsLog smsLogVo = userService.querySmsCodeByUserId(userModel.getUserId());
+        if (null != smsLogVo && (System.currentTimeMillis() / 1000 - smsLogVo.getLogDate()) < 1 * 60) {
             return toResponsFail("短信已发送");
         }
         //生成验证码
@@ -53,8 +46,8 @@ public class UserController extends BaseController {
         // 发送短信
         String result = "";
         //获取云存储配置信息
-        SmsConfig config = sysConfigService.getConfigObject(Constant.SMS_CONFIG_KEY, SmsConfig.class);
-        if (StringUtils.isNullOrEmpty(config)) {
+        SmsConfigOutInfo config = sysConfigService.getConfigObject(Constant.SMS_CONFIG_KEY, SmsConfigOutInfo.class);
+        if (config==null) {
             return toResponsFail("请先配置短信平台信息");
         }
         if (StringUtils.isNullOrEmpty(config.getName())) {
@@ -77,12 +70,12 @@ public class UserController extends BaseController {
         String arr[] = result.split(",");
 
         if ("0".equals(arr[0])) {
-            smsLogVo = new SmsLogVo();
-            smsLogVo.setLog_date(System.currentTimeMillis() / 1000);
-            smsLogVo.setUser_id(loginUser.getUserId());
+            smsLogVo = new SmsLog();
+            smsLogVo.setLogDate(System.currentTimeMillis() / 1000);
+            smsLogVo.setUserId(userModel.getUserId());
             smsLogVo.setPhone(phone);
-            smsLogVo.setSms_code(sms_code);
-            smsLogVo.setSms_text(msgContent);
+            smsLogVo.setSmsCode(sms_code);
+            smsLogVo.setSmsText(msgContent);
             userService.saveSmsCodeLog(smsLogVo);
             return toResponsSuccess("短信发送成功");
         } else {
@@ -92,13 +85,12 @@ public class UserController extends BaseController {
 
     /**
      * 获取当前会员等级
-     *
-     * @param loginUser
-     * @return
      */
     @ApiOperation(value = "获取当前会员等级")
     @PostMapping("getUserLevel")
-    public Object getUserLevel(@LoginUser UserVo loginUser) {
+    public Object getUserLevel(@RequestBody UserModel userModel) {
+        ShopUser loginUser=new ShopUser();
+        loginUser.setUserLevelId(userModel.getUserLevelId());
         String userLevel = userService.getUserLevel(loginUser);
         return toResponsSuccess(userLevel);
     }
@@ -108,17 +100,14 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "绑定手机")
     @PostMapping("bindMobile")
-    public Object bindMobile(@LoginUser UserVo loginUser) {
-        JSONObject jsonParams = getJsonRequest();
-        SmsLogVo smsLogVo = userService.querySmsCodeByUserId(loginUser.getUserId());
-
-        String mobile_code = jsonParams.getString("mobile_code");
-        String mobile = jsonParams.getString("mobile");
-
-        if (!mobile_code.equals(smsLogVo.getSms_code())) {
+    public Object bindMobile(@RequestBody UserModel userModel) {
+        SmsLog smsLogVo = userService.querySmsCodeByUserId(userModel.getUserId());
+        String mobile_code = userModel.getMobileCode();
+        String mobile = userModel.getMobile();
+        if (!mobile_code.equals(smsLogVo.getSmsCode())) {
             return toResponsFail("验证码错误");
         }
-        UserVo userVo = userService.queryObject(loginUser.getUserId());
+        ShopUser userVo = userService.queryObject(userModel.getUserId());
         userVo.setMobile(mobile);
         userService.update(userVo);
         return toResponsSuccess("手机绑定成功");

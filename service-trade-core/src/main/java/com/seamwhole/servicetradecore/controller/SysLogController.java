@@ -1,23 +1,21 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.service.SysLogService;
-import com.platform.utils.PageUtilsPlus;
-import com.platform.utils.R;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.SysLogModel;
+import com.seamwhole.servicetradecore.model.SysLog;
+import com.seamwhole.servicetradecore.service.SysLogService;
+import com.seamwhole.servicetradecore.util.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 系统日志Controller
- *
- * @author lipengjun
- * @email 939961241@qq.com
- * @date 2017-03-08 10:40:56
  */
 @Controller
 @RequestMapping("/sys/log")
@@ -27,17 +25,14 @@ public class SysLogController {
 
     /**
      * 系统日志列表
-     *
-     * @param params 请求参数
-     * @return R
      */
     @ResponseBody
     @RequestMapping("/list")
-    @RequiresPermissions("sys:log:list")
-    public R list(@RequestParam Map<String, Object> params) {
+    public ResponseObject list(@RequestBody SysLogModel logModel) {
         //查询列表数据
-        PageUtilsPlus pageUtil = sysLogService.queryPage(params);
-        return R.ok().put("page", pageUtil);
+        Map<String,Object> params=new HashMap<>();
+        PageInfo<SysLog> pageInfo=sysLogService.queryPage(params,logModel.getPageNum(),logModel.getPageSize());
+        return ResponseObject.ok().put("page", pageInfo);
     }
 
 }
