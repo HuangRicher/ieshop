@@ -1,5 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.seamwhole.servicetradecore.mapper.SysRoleDeptMapper;
+import com.seamwhole.servicetradecore.mapper.ext.SysRoleDeptExtMapper;
+import com.seamwhole.servicetradecore.model.SysRoleDeptExample;
 import com.seamwhole.servicetradecore.service.SysRoleDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +23,18 @@ import java.util.Map;
 @Service("sysRoleDeptService")
 public class SysRoleDeptServiceImpl implements SysRoleDeptService {
     @Autowired
-    private SysRoleDeptDao sysRoleDeptDao;
+    private SysRoleDeptMapper sysRoleDeptMapper;
+    @Autowired
+    private SysRoleDeptExtMapper sysRoleDeptExtMapper;
+
 
     @Override
     @Transactional
     public void saveOrUpdate(Long roleId, List<Long> deptIdList) {
         //先删除角色与菜单关系
-        sysRoleDeptDao.delete(roleId);
-
+        SysRoleDeptExample example=new SysRoleDeptExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        sysRoleDeptMapper.deleteByExample(example);
         if (deptIdList.size() == 0) {
             return;
         }
@@ -36,16 +43,16 @@ public class SysRoleDeptServiceImpl implements SysRoleDeptService {
         Map<String, Object> map = new HashMap<>();
         map.put("roleId", roleId);
         map.put("deptIdList", deptIdList);
-        sysRoleDeptDao.save(map);
+        sysRoleDeptExtMapper.insertBatch(map);
     }
 
     @Override
     public List<Long> queryDeptIdList(Long roleId) {
-        return sysRoleDeptDao.queryDeptIdList(roleId);
+        return sysRoleDeptExtMapper.queryDeptIdList(roleId);
     }
 
     @Override
     public List<Long> queryDeptIdListByUserId(Long userId) {
-        return sysRoleDeptDao.queryDeptIdListByUserId(userId);
+        return sysRoleDeptExtMapper.queryDeptIdListByUserId(userId);
     }
 }

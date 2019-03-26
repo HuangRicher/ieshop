@@ -6,8 +6,8 @@
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="value" property="value" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="order_num" property="orderNum" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="gmt_create" property="gmtCreate" jdbcType="DATE" />
@@ -110,7 +110,7 @@
       order_num, remark, gmt_create, 
       gmt_modified)
     values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{value,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, 
+      #{value,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{orderNum,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=DATE}, 
       #{gmtModified,jdbcType=DATE})
   </insert>
@@ -162,10 +162,10 @@
         #{value,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
-        #{type,jdbcType=TINYINT},
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="orderNum != null" >
         #{orderNum,jdbcType=INTEGER},
@@ -203,10 +203,10 @@
         value = #{record.value,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=TINYINT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.type != null" >
-        type = #{record.type,jdbcType=TINYINT},
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.orderNum != null" >
         order_num = #{record.orderNum,jdbcType=INTEGER},
@@ -231,8 +231,8 @@
       parent_id = #{record.parentId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       value = #{record.value,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=TINYINT},
-      type = #{record.type,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
       order_num = #{record.orderNum,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
       gmt_create = #{record.gmtCreate,jdbcType=DATE},
@@ -254,10 +254,10 @@
         value = #{value,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
-        type = #{type,jdbcType=TINYINT},
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="orderNum != null" >
         order_num = #{orderNum,jdbcType=INTEGER},
@@ -279,8 +279,8 @@
     set parent_id = #{parentId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
       value = #{value,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT},
-      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
       order_num = #{orderNum,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=DATE},

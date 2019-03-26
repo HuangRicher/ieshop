@@ -3,7 +3,7 @@
 
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ext.SysUserExtMapper">
 
-	<resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.SysUser" >
+	<resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.SysUserDO" >
 		<id column="user_id" property="userId" jdbcType="BIGINT" />
 		<result column="username" property="username" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
@@ -13,9 +13,10 @@
 		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="dept_id" property="deptId" jdbcType="BIGINT" />
+		<result column="dept_name" property="deptName" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="queryList" resultMap="BaseResultMap">
-		select u.*, (select d.name from sys_dept d where d.dept_id = u.dept_id) deptName from sys_user u
+		select u.*, (select d.name from sys_dept d where d.dept_id = u.dept_id) dept_name from sys_user u
 		<where>
 			<if test="createUserId != null">
 				and `create_user_id` = #{createUserId} 
@@ -32,9 +33,6 @@
 				order by u.user_id desc
 			</otherwise>
 		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
 	</select>
 	
 	<!-- 查询用户的所有权限 -->

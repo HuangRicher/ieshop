@@ -11,9 +11,9 @@ public class SysMacro {
 
     private String value;
 
-    private Byte status;
+    private Integer status;
 
-    private Byte type;
+    private Integer type;
 
     private Integer orderNum;
 
@@ -55,19 +55,19 @@ public class SysMacro {
         this.value = value == null ? null : value.trim();
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

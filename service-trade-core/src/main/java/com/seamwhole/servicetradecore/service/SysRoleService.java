@@ -1,8 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.platform.entity.SysRoleEntity;
-import com.platform.entity.UserWindowDto;
-import com.platform.page.Page;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.SysRoleModel;
+import com.seamwhole.servicetradecore.mapper.model.SysRoleDO;
+import com.seamwhole.servicetradecore.model.SysRole;
 
 import java.util.List;
 import java.util.Map;
@@ -17,15 +18,15 @@ import java.util.Map;
  */
 public interface SysRoleService {
 
-    SysRoleEntity queryObject(Long roleId);
+    SysRole queryObject(Long roleId);
 
-    List<SysRoleEntity> queryList(Map<String, Object> map);
+    List<SysRoleDO> queryList(Map<String, Object> map);
 
-    int queryTotal(Map<String, Object> map);
+    PageInfo<SysRoleDO> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize);
 
-    void save(SysRoleEntity role);
+    void save(SysRoleModel roleModel);
 
-    void update(SysRoleEntity role);
+    void update(SysRoleModel roleModel);
 
     void deleteBatch(Long[] roleIds);
 
@@ -38,5 +39,5 @@ public interface SysRoleService {
      * 分页查询角色审批选择范围
      * @return
      */
-    Page<UserWindowDto> queryPageByDto(UserWindowDto userWindowDto, int pageNmu);
+    //Page<UserWindowDto> queryPageByDto(UserWindowDto userWindowDto, int pageNmu);
 }

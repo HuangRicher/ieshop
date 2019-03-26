@@ -1,8 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.platform.entity.SysDeptEntity;
-import com.platform.entity.UserWindowDto;
-import com.platform.page.Page;
+import com.seamwhole.servicetradecore.mapper.model.SysDeptDO;
+import com.seamwhole.servicetradecore.model.SysDept;
 
 import java.util.List;
 import java.util.Map;
@@ -16,13 +15,13 @@ import java.util.Map;
  */
 public interface SysDeptService {
 
-    SysDeptEntity queryObject(Long deptId);
+    SysDept queryObject(Long deptId);
 
-    List<SysDeptEntity> queryList(Map<String, Object> map);
+    List<SysDeptDO> queryList(Map<String, Object> map);
 
-    void save(SysDeptEntity sysDept);
+    void save(SysDept sysDept);
 
-    void update(SysDeptEntity sysDept);
+    void update(SysDept sysDept);
 
     void delete(Long deptId);
 
@@ -31,7 +30,7 @@ public interface SysDeptService {
      *
      * @param parentId 上级部门ID
      */
-    List<Long> queryDetpIdList(Long parentId);
+    List<Long> queryDeptIdList(Long parentId);
 
     /**
      * 获取子部门ID(包含本部门ID)，用于数据过滤
@@ -42,5 +41,5 @@ public interface SysDeptService {
      * 分页查询组织审批选择范围
      * @return
      */
-    Page<UserWindowDto> queryPageByDto(UserWindowDto userWindowDto, int pageNum);
+    //Page<UserWindowDto> queryPageByDto(UserWindowDto userWindowDto, int pageNum);
 }

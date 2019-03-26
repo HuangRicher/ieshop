@@ -1,29 +1,29 @@
 package com.seamwhole.servicetradecore.model;
 
 public class SysRegion {
-    private Short id;
+    private Integer id;
 
-    private Short parentId;
+    private Integer parentId;
 
     private String name;
 
-    private Boolean type;
+    private Integer type;
 
-    private Short agencyId;
+    private Integer agencyId;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Short getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(Short parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
@@ -35,19 +35,19 @@ public class SysRegion {
         this.name = name == null ? null : name.trim();
     }
 
-    public Boolean getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Boolean type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public Short getAgencyId() {
+    public Integer getAgencyId() {
         return agencyId;
     }
 
-    public void setAgencyId(Short agencyId) {
+    public void setAgencyId(Integer agencyId) {
         this.agencyId = agencyId;
     }
 }

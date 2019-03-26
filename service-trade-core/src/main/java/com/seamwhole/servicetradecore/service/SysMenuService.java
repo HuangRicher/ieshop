@@ -1,6 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
-import com.platform.entity.SysMenuEntity;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.domain.SysMenuInfo;
+import com.seamwhole.servicetradecore.mapper.model.SysMenuDO;
+import com.seamwhole.servicetradecore.model.SysMenu;
 
 import java.util.List;
 import java.util.Map;
@@ -21,43 +24,41 @@ public interface SysMenuService {
      * @param parentId   父菜单ID
      * @param menuIdList 用户菜单ID
      */
-    List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList);
+    List<SysMenuInfo> queryListParentId(Long parentId, List<Long> menuIdList);
 
     /**
      * 获取不包含按钮的菜单列表
      */
-    List<SysMenuEntity> queryNotButtonList();
+    List<SysMenu> queryNotButtonList();
 
     /**
      * 获取用户菜单列表
      */
-    List<SysMenuEntity> getUserMenuList(Long userId);
+    List<SysMenuInfo> getUserMenuList(Long userId);
 
 
     /**
      * 查询菜单
      */
-    SysMenuEntity queryObject(Long menuId);
+    SysMenu queryObject(Long menuId);
 
     /**
      * 查询菜单列表
      */
-    List<SysMenuEntity> queryList(Map<String, Object> map);
+    List<SysMenuDO> queryList(Map<String, Object> map);
 
-    /**
-     * 查询总数
-     */
-    int queryTotal(Map<String, Object> map);
+    PageInfo<SysMenuDO> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize);
+
 
     /**
      * 保存菜单
      */
-    void save(SysMenuEntity menu);
+    void save(SysMenu menu);
 
     /**
      * 修改
      */
-    void update(SysMenuEntity menu);
+    void update(SysMenu menu);
 
     /**
      * 删除
@@ -67,5 +68,5 @@ public interface SysMenuService {
     /**
      * 查询用户的权限列表
      */
-    List<SysMenuEntity> queryUserList(Long userId);
+    List<SysMenuDO> queryUserList(Long userId);
 }

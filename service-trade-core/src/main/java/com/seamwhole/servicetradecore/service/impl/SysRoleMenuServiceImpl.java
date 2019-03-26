@@ -1,6 +1,9 @@
 package com.seamwhole.servicetradecore.service.impl;
 
 
+import com.seamwhole.servicetradecore.mapper.SysRoleMenuMapper;
+import com.seamwhole.servicetradecore.mapper.ext.SysRoleMenuExtMapper;
+import com.seamwhole.servicetradecore.model.SysRoleMenuExample;
 import com.seamwhole.servicetradecore.service.SysRoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,9 @@ import java.util.Map;
 @Service("sysRoleMenuService")
 public class SysRoleMenuServiceImpl implements SysRoleMenuService {
     @Autowired
-    private SysRoleMenuDao sysRoleMenuDao;
+    private SysRoleMenuMapper sysRoleMenuMapper;
+    @Autowired
+    private SysRoleMenuExtMapper sysRoleMenuExtMapper;
 
     @Override
     @Transactional
@@ -30,18 +35,21 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
             return;
         }
         //先删除角色与菜单关系
-        sysRoleMenuDao.delete(roleId);
+        SysRoleMenuExample example=new SysRoleMenuExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        sysRoleMenuMapper.deleteByExample(example);
 
         //保存角色与菜单关系
+
         Map<String, Object> map = new HashMap<>();
         map.put("roleId", roleId);
         map.put("menuIdList", menuIdList);
-        sysRoleMenuDao.save(map);
+        sysRoleMenuExtMapper.insertBatch(map);
     }
 
     @Override
     public List<Long> queryMenuIdList(Long roleId) {
-        return sysRoleMenuDao.queryMenuIdList(roleId);
+        return sysRoleMenuExtMapper.queryMenuIdList(roleId);
     }
 
 }

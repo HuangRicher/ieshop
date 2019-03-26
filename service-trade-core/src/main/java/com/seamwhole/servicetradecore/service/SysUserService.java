@@ -1,6 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.controller.model.SysUserModel;
+import com.seamwhole.servicetradecore.mapper.model.SysUserDO;
 import com.seamwhole.servicetradecore.model.SysUser;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public interface SysUserService {
      *
      * @param userId 用户ID
      */
-    List<String> queryAllPerms(Long userId);
+    //List<String> queryAllPerms(Long userId);
 
     /**
      * 查询用户的所有菜单ID
@@ -44,22 +47,17 @@ public interface SysUserService {
     /**
      * 查询用户列表
      */
-    List<SysUser> queryList(Map<String, Object> map);
-
-    /**
-     * 查询总数
-     */
-    int queryTotal(Map<String, Object> map);
+    PageInfo<SysUserDO> queryByPage(Map<String, Object> param, Integer pageNum, Integer pageSize);
 
     /**
      * 保存用户
      */
-    void save(SysUser user);
+    void save(SysUserModel user);
 
     /**
      * 修改用户
      */
-    void update(SysUser user);
+    void update(SysUserModel user);
 
     /**
      * 删除用户
@@ -81,5 +79,5 @@ public interface SysUserService {
      * @param pageNum
      * @return
      */
-    Page<SysUser> findPage(String name,Integer pageNum,Integer pageSize);
+    //Page<SysUser> findPage(String name,Integer pageNum,Integer pageSize);
 }

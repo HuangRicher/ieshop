@@ -10,7 +10,7 @@ public interface SysRegionMapper {
 
     int deleteByExample(SysRegionExample example);
 
-    int deleteByPrimaryKey(Short id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(SysRegion record);
 
@@ -18,7 +18,7 @@ public interface SysRegionMapper {
 
     List<SysRegion> selectByExample(SysRegionExample example);
 
-    SysRegion selectByPrimaryKey(Short id);
+    SysRegion selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") SysRegion record, @Param("example") SysRegionExample example);
 

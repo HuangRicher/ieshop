@@ -114,52 +114,52 @@ public class SysRegionExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Short value) {
+        public Criteria andIdEqualTo(Integer value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Short value) {
+        public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Short value) {
+        public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Short value) {
+        public Criteria andIdLessThan(Integer value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Short value) {
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Short> values) {
+        public Criteria andIdIn(List<Integer> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Short> values) {
+        public Criteria andIdNotIn(List<Integer> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Short value1, Short value2) {
+        public Criteria andIdBetween(Integer value1, Integer value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Short value1, Short value2) {
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -174,52 +174,52 @@ public class SysRegionExample {
             return (Criteria) this;
         }
 
-        public Criteria andParentIdEqualTo(Short value) {
+        public Criteria andParentIdEqualTo(Integer value) {
             addCriterion("parent_id =", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdNotEqualTo(Short value) {
+        public Criteria andParentIdNotEqualTo(Integer value) {
             addCriterion("parent_id <>", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdGreaterThan(Short value) {
+        public Criteria andParentIdGreaterThan(Integer value) {
             addCriterion("parent_id >", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andParentIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("parent_id >=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdLessThan(Short value) {
+        public Criteria andParentIdLessThan(Integer value) {
             addCriterion("parent_id <", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdLessThanOrEqualTo(Short value) {
+        public Criteria andParentIdLessThanOrEqualTo(Integer value) {
             addCriterion("parent_id <=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdIn(List<Short> values) {
+        public Criteria andParentIdIn(List<Integer> values) {
             addCriterion("parent_id in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdNotIn(List<Short> values) {
+        public Criteria andParentIdNotIn(List<Integer> values) {
             addCriterion("parent_id not in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdBetween(Short value1, Short value2) {
+        public Criteria andParentIdBetween(Integer value1, Integer value2) {
             addCriterion("parent_id between", value1, value2, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andParentIdNotBetween(Short value1, Short value2) {
+        public Criteria andParentIdNotBetween(Integer value1, Integer value2) {
             addCriterion("parent_id not between", value1, value2, "parentId");
             return (Criteria) this;
         }
@@ -304,52 +304,52 @@ public class SysRegionExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(Boolean value) {
+        public Criteria andTypeEqualTo(Integer value) {
             addCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(Boolean value) {
+        public Criteria andTypeNotEqualTo(Integer value) {
             addCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(Boolean value) {
+        public Criteria andTypeGreaterThan(Integer value) {
             addCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(Boolean value) {
+        public Criteria andTypeLessThan(Integer value) {
             addCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(Boolean value) {
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
             addCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<Boolean> values) {
+        public Criteria andTypeIn(List<Integer> values) {
             addCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<Boolean> values) {
+        public Criteria andTypeNotIn(List<Integer> values) {
             addCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(Boolean value1, Boolean value2) {
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
             addCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
@@ -364,52 +364,52 @@ public class SysRegionExample {
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdEqualTo(Short value) {
+        public Criteria andAgencyIdEqualTo(Integer value) {
             addCriterion("agency_id =", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdNotEqualTo(Short value) {
+        public Criteria andAgencyIdNotEqualTo(Integer value) {
             addCriterion("agency_id <>", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdGreaterThan(Short value) {
+        public Criteria andAgencyIdGreaterThan(Integer value) {
             addCriterion("agency_id >", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdGreaterThanOrEqualTo(Short value) {
+        public Criteria andAgencyIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("agency_id >=", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdLessThan(Short value) {
+        public Criteria andAgencyIdLessThan(Integer value) {
             addCriterion("agency_id <", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdLessThanOrEqualTo(Short value) {
+        public Criteria andAgencyIdLessThanOrEqualTo(Integer value) {
             addCriterion("agency_id <=", value, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdIn(List<Short> values) {
+        public Criteria andAgencyIdIn(List<Integer> values) {
             addCriterion("agency_id in", values, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdNotIn(List<Short> values) {
+        public Criteria andAgencyIdNotIn(List<Integer> values) {
             addCriterion("agency_id not in", values, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdBetween(Short value1, Short value2) {
+        public Criteria andAgencyIdBetween(Integer value1, Integer value2) {
             addCriterion("agency_id between", value1, value2, "agencyId");
             return (Criteria) this;
         }
 
-        public Criteria andAgencyIdNotBetween(Short value1, Short value2) {
+        public Criteria andAgencyIdNotBetween(Integer value1, Integer value2) {
             addCriterion("agency_id not between", value1, value2, "agencyId");
             return (Criteria) this;
         }

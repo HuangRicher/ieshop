@@ -1,6 +1,10 @@
 package com.seamwhole.servicetradecore.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.mapper.SysConfigMapper;
+import com.seamwhole.servicetradecore.model.SysConfig;
+import com.seamwhole.servicetradecore.model.SysConfigExample;
 import com.seamwhole.servicetradecore.service.SysConfigService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,33 +13,40 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-@Service("sysConfigService")
+@Service
 public class SysConfigServiceImpl implements SysConfigService {
 	@Autowired
-	private SysConfigDao sysConfigDao;
+	private SysConfigMapper sysConfigMapper;
 	
 	@Override
-	public void save(SysConfigEntity config) {
-		sysConfigDao.save(config);
+	public void save(SysConfig config) {
+		sysConfigMapper.insertSelective(config);
 	}
 
 	@Override
-	public void update(SysConfigEntity config) {
-		sysConfigDao.update(config);
+	public void update(SysConfig config) {
+		sysConfigMapper.updateByPrimaryKeySelective(config);
 	}
 
 	@Override
 	public void updateValueByKey(String key, String value) {
-		sysConfigDao.updateValueByKey(key, value);
+		SysConfigExample example=new SysConfigExample();
+		example.createCriteria().andKeyEqualTo(key);
+		SysConfig config=new SysConfig();
+		config.setValue(value);
+		sysConfigMapper.updateByExampleSelective(config,example);
 	}
 
 	@Override
 	public void deleteBatch(Long[] ids) {
+		SysConfigExample example=new SysConfigExample();
+		example.createCriteria().andKeyEqualTo(key);SysConfigExample example=new SysConfigExample();
+		example.createCriteria().andKeyEqualTo(key);
 		sysConfigDao.deleteBatch(ids);
 	}
 
 	@Override
-	public List<SysConfigEntity> queryList(Map<String, Object> map) {
+	public List<SysConfig> queryList(Map<String, Object> map) {
 		return sysConfigDao.queryList(map);
 	}
 
@@ -45,7 +56,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 	}
 
 	@Override
-	public SysConfigEntity queryObject(Long id) {
+	public SysConfig queryObject(Long id) {
 		return sysConfigDao.queryObject(id);
 	}
 
@@ -68,7 +79,7 @@ public class SysConfigServiceImpl implements SysConfigService {
 		try {
 			return clazz.newInstance();
 		} catch (Exception e) {
-			throw new RRException("获取参数失败");
+			throw new CheckException("获取参数失败");
 		}
 	}
 }

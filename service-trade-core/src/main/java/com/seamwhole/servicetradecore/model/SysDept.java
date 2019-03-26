@@ -9,7 +9,7 @@ public class SysDept {
 
     private Integer orderNum;
 
-    private Byte delFlag;
+    private Integer delFlag;
 
     public Long getDeptId() {
         return deptId;
@@ -43,11 +43,11 @@ public class SysDept {
         this.orderNum = orderNum;
     }
 
-    public Byte getDelFlag() {
+    public Integer getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Byte delFlag) {
+    public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
 }

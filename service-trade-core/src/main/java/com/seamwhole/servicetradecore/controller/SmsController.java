@@ -1,9 +1,9 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.platform.annotation.IgnoreAuth;
-import com.platform.entity.SysSmsLogEntity;
-import com.platform.service.SysSmsLogService;
-import com.platform.utils.*;
+import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.model.SysSmsLog;
+import com.seamwhole.servicetradecore.service.SysSmsLogService;
+import com.seamwhole.servicetradecore.util.ResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("api")
 public class SmsController {
     @Autowired
-    private SysSmsLogService smsLogService;
+    private SysSmsLogService sysSmsLogService;
 
     /**
      * 发送短信
@@ -32,13 +32,12 @@ public class SmsController {
      * @param params 请求参数{mobile：电话号码字符串，中间用英文逗号间隔,content：内容字符串,stime：追加发送时间，可为空，为空为及时发送}
      * @return R
      */
-    @IgnoreAuth
     @RequestMapping("/sendSms")
-    public R sendSms(HttpServletRequest request, @RequestParam Map<String, String> params) {
-        SysSmsLogEntity smsLog = new SysSmsLogEntity();
+    public ResponseObject sendSms(HttpServletRequest request, @RequestParam Map<String, String> params) {
+        SysSmsLog smsLog = new SysSmsLog();
         String validIP = RequestUtil.getIpAddrByRequest(request);
         if (ResourceUtil.getConfigByName("sms.validIp").indexOf(validIP) < 0) {
-            throw new RRException("非法IP请求！");
+            throw new CheckException("非法IP请求！");
         }
         smsLog.setMobile(params.get("mobile"));
         smsLog.setContent(params.get("content"));
@@ -47,6 +46,6 @@ public class SmsController {
             smsLog.setStime(DateUtils.convertStringToDate(stime));
         }
         SysSmsLogEntity sysSmsLogEntity = smsLogService.sendSms(smsLog);
-        return R.ok().put("result", sysSmsLogEntity);
+        return ResponseObject.ok().put("result", sysSmsLogEntity);
     }
 }

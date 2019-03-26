@@ -6,7 +6,7 @@
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="order_num" property="orderNum" jdbcType="INTEGER" />
-    <result column="del_flag" property="delFlag" jdbcType="TINYINT" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -103,7 +103,7 @@
     insert into sys_dept (dept_id, parent_id, name, 
       order_num, del_flag)
     values (#{deptId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{orderNum,jdbcType=INTEGER}, #{delFlag,jdbcType=TINYINT})
+      #{orderNum,jdbcType=INTEGER}, #{delFlag,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.SysDept" >
     insert into sys_dept
@@ -138,7 +138,7 @@
         #{orderNum,jdbcType=INTEGER},
       </if>
       <if test="delFlag != null" >
-        #{delFlag,jdbcType=TINYINT},
+        #{delFlag,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -164,7 +164,7 @@
         order_num = #{record.orderNum,jdbcType=INTEGER},
       </if>
       <if test="record.delFlag != null" >
-        del_flag = #{record.delFlag,jdbcType=TINYINT},
+        del_flag = #{record.delFlag,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -177,7 +177,7 @@
       parent_id = #{record.parentId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       order_num = #{record.orderNum,jdbcType=INTEGER},
-      del_flag = #{record.delFlag,jdbcType=TINYINT}
+      del_flag = #{record.delFlag,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -195,7 +195,7 @@
         order_num = #{orderNum,jdbcType=INTEGER},
       </if>
       <if test="delFlag != null" >
-        del_flag = #{delFlag,jdbcType=TINYINT},
+        del_flag = #{delFlag,jdbcType=INTEGER},
       </if>
     </set>
     where dept_id = #{deptId,jdbcType=BIGINT}
@@ -205,7 +205,7 @@
     set parent_id = #{parentId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
       order_num = #{orderNum,jdbcType=INTEGER},
-      del_flag = #{delFlag,jdbcType=TINYINT}
+      del_flag = #{delFlag,jdbcType=INTEGER}
     where dept_id = #{deptId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -364,52 +364,52 @@ public class SysDeptExample {
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagEqualTo(Byte value) {
+        public Criteria andDelFlagEqualTo(Integer value) {
             addCriterion("del_flag =", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotEqualTo(Byte value) {
+        public Criteria andDelFlagNotEqualTo(Integer value) {
             addCriterion("del_flag <>", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagGreaterThan(Byte value) {
+        public Criteria andDelFlagGreaterThan(Integer value) {
             addCriterion("del_flag >", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagGreaterThanOrEqualTo(Byte value) {
+        public Criteria andDelFlagGreaterThanOrEqualTo(Integer value) {
             addCriterion("del_flag >=", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagLessThan(Byte value) {
+        public Criteria andDelFlagLessThan(Integer value) {
             addCriterion("del_flag <", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagLessThanOrEqualTo(Byte value) {
+        public Criteria andDelFlagLessThanOrEqualTo(Integer value) {
             addCriterion("del_flag <=", value, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagIn(List<Byte> values) {
+        public Criteria andDelFlagIn(List<Integer> values) {
             addCriterion("del_flag in", values, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotIn(List<Byte> values) {
+        public Criteria andDelFlagNotIn(List<Integer> values) {
             addCriterion("del_flag not in", values, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagBetween(Byte value1, Byte value2) {
+        public Criteria andDelFlagBetween(Integer value1, Integer value2) {
             addCriterion("del_flag between", value1, value2, "delFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDelFlagNotBetween(Byte value1, Byte value2) {
+        public Criteria andDelFlagNotBetween(Integer value1, Integer value2) {
             addCriterion("del_flag not between", value1, value2, "delFlag");
             return (Criteria) this;
         }

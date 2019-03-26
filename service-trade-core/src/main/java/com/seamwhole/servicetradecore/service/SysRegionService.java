@@ -1,7 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
 
-import com.platform.entity.SysRegionEntity;
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.SysRegionDO;
+import com.seamwhole.servicetradecore.model.SysRegion;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,7 @@ public interface SysRegionService {
      * @param id 主键
      * @return 实体
      */
-    SysRegionEntity queryObject(Integer id);
+    SysRegion queryObject(Integer id);
 
     /**
      * 分页查询
@@ -29,15 +31,11 @@ public interface SysRegionService {
      * @param map 参数
      * @return list
      */
-    List<SysRegionEntity> queryList(Map<String, Object> map);
+    List<SysRegionDO> queryList(Map<String, Object> map);
 
-    /**
-     * 分页统计总数
-     *
-     * @param map 参数
-     * @return 总数
-     */
-    int queryTotal(Map<String, Object> map);
+
+    PageInfo<SysRegionDO> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
+
 
     /**
      * 保存实体
@@ -45,7 +43,7 @@ public interface SysRegionService {
      * @param region 实体
      * @return 保存条数
      */
-    int save(SysRegionEntity region);
+    int save(SysRegion region);
 
     /**
      * 根据主键更新实体
@@ -53,7 +51,7 @@ public interface SysRegionService {
      * @param region 实体
      * @return 更新条数
      */
-    int update(SysRegionEntity region);
+    int update(SysRegion region);
 
     /**
      * 根据主键删除

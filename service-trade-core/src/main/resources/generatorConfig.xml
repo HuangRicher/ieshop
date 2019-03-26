@@ -73,15 +73,15 @@
         <!--<table tableName="ishop_sms_log" domainObjectName="SmsLog"></table>-->
         <table tableName="sys_config" domainObjectName="SysConfig"></table>
         <table tableName="sys_dept" domainObjectName="SysDept"></table>
-        <table tableName="sys_log" domainObjectName="SysLog"></table>
+        <!--<table tableName="sys_log" domainObjectName="SysLog"></table>-->
         <table tableName="sys_macro" domainObjectName="SysMacro"></table>
-        <table tableName="sys_menu" domainObjectName="SysMenu"></table>
+        <!--<table tableName="sys_menu" domainObjectName="SysMenu"></table>-->
         <table tableName="sys_region" domainObjectName="SysRegion"></table>
-        <table tableName="sys_role" domainObjectName="SysRole"></table>
-        <table tableName="sys_role_dept" domainObjectName="SysRoleDept"></table>
-        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"></table>
-        <table tableName="sys_sms_log" domainObjectName="SysSmsLog"></table>
+        <!--<table tableName="sys_role" domainObjectName="SysRole"></table>-->
+        <!--<table tableName="sys_role_dept" domainObjectName="SysRoleDept"></table>-->
+        <!--<table tableName="sys_role_menu" domainObjectName="SysRoleMenu"></table>-->
+        <!--<table tableName="sys_sms_log" domainObjectName="SysSmsLog"></table>-->
         <table tableName="sys_user" domainObjectName="SysUser"></table>
-        <table tableName="sys_user_role" domainObjectName="SysUserRole"></table>
+        <!--<table tableName="sys_user_role" domainObjectName="SysUserRole"></table>-->
     </context>
 </generatorConfiguration>
