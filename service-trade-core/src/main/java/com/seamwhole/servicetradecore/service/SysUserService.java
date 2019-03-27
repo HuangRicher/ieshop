@@ -73,6 +73,8 @@ public interface SysUserService {
      */
     int updatePassword(Long userId, String password, String newPassword);
 
+    List<String> queryAllPerms(Long userId);
+
     /**
      * 根据条件分页查询
      * @param

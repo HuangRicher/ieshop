@@ -15,4 +15,6 @@ public interface SysUserExtMapper {
      * 查询用户的所有菜单ID
      */
     List<Long> queryAllMenuId(Long userId);
+
+    List<String> queryAllPerms(Long userId);
 }

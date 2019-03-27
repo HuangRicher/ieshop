@@ -1,4 +1,4 @@
-package com.seamwhole.servicetradecore.model;
+package com.seamwhole.webtradeadmin.shiro;
 
 import java.io.Serializable;
 import java.util.Date;

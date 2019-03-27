@@ -158,6 +158,10 @@ public class SysUserServiceImpl implements SysUserService {
         }
     }
 
+    @Override
+    public List<String> queryAllPerms(Long userId) {
+        return sysUserExtMapper.queryAllPerms(userId);
+    }
 
     /*@Override
     public Page<SysUser> findPage(String name, Integer pageNum, Integer pageSize) {
