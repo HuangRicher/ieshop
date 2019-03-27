@@ -59,7 +59,7 @@
 	</select>
 
 	<!--根据角色id查询可用的组织机构-->
-	<select id="queryPageByDto" resultType="com.platform.entity.UserWindowDto" >
+	<!--<select id="queryPageByDto" resultType="com.platform.entity.UserWindowDto" >
 		select
 		role_id id,role_name name ,dept_id
 		from sys_role
@@ -67,5 +67,5 @@
 		<if test="name != null and name != '' ">
 			AND role_name LIKE concat('%',#{name},'%')
 		</if>
-	</select>
+	</select>-->
 </mapper>

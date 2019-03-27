@@ -50,20 +50,6 @@
 		where ur.user_id = #{userId}
 	</select>
 
-	<update id="update" parameterType="com.platform.entity.SysUserEntity">
-		update sys_user
-		<set>
-			<if test="username != null">`username` = #{username}, </if>
-			<if test="email != null">`email` = #{email}, </if>
-			<if test="mobile != null">`mobile` = #{mobile}, </if>
-			<if test="status != null">`status` = #{status}, </if>
-			<if test="deptId != null">`dept_id` = #{deptId}, </if>
-		</set>
-		where user_id = #{userId}
-		<if test="createUserId != null">
-			and `create_user_id` = #{createUserId}
-		</if>
-	</update>
 	
 	<delete id="deleteBatch">
 		delete from sys_user where user_id in 

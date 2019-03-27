@@ -15,7 +15,7 @@
     </resultMap>
 
 
-    <select id="queryList" resultMap="commentMap">
+    <select id="queryList" resultMap="BaseResultMap">
         select distinct c.* from ishop_comment c
         <if test="hasPic != null and hasPic == 1">
             left join ishop_comment_picture cp on cp.comment_id = c.id

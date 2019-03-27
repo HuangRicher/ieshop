@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Service实现类
  */
-@Service("regionService")
+@Service
 public class SysRegionServiceImpl implements SysRegionService {
     @Autowired
     private SysRegionMapper sysRegionMapper;

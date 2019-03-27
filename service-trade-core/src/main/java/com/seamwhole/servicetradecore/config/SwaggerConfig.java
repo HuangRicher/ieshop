@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .select()
 // 指定controller存放的目录路径
-                .apis(RequestHandlerSelectors.basePackage("com.seamwhole.serviceuser.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.seamwhole.servicetradecore.controller"))
 // .paths(PathSelectors.ant("/api/v1/*"))
                 .paths(PathSelectors.any())
                 .build();

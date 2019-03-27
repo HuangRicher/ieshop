@@ -15,7 +15,7 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="DATE" />
     </resultMap>
 
-    <select id="queryMacrosByValue" resultType="com.platform.entity.SysMacroEntity">
+    <select id="queryMacrosByValue" resultMap="BaseResultMap">
         select
         `id`,
         `parent_id`,

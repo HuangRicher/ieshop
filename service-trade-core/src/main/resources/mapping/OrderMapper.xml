@@ -133,7 +133,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.Order" >
+  <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.Order" useGeneratedKeys="true" keyProperty="id">
     insert into ishop_order (id, order_sn, user_id, 
       order_status, shipping_status, pay_status, 
       consignee, country, province, 
@@ -159,7 +159,7 @@
       #{couponPrice,jdbcType=DECIMAL}, #{callbackStatus,jdbcType=CHAR}, #{shippingNo,jdbcType=VARCHAR}, 
       #{fullCutPrice,jdbcType=DECIMAL}, #{orderType,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.Order" >
+  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.Order" useGeneratedKeys="true" keyProperty="id">
     insert into ishop_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

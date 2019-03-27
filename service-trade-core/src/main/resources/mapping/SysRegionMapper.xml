@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, parent_id, name, type, agency_id
+    id, parent_id, `name`, `type`, agency_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.SysRegionExample" >
     select
@@ -100,8 +100,8 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.SysRegion" >
-    insert into sys_region (id, parent_id, name, 
-      type, agency_id)
+    insert into sys_region (id, parent_id, `name`,
+      `type`, agency_id)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{agencyId,jdbcType=INTEGER})
   </insert>
@@ -115,10 +115,10 @@
         parent_id,
       </if>
       <if test="name != null" >
-        name,
+        `name`,
       </if>
       <if test="type != null" >
-        type,
+        `type`,
       </if>
       <if test="agencyId != null" >
         agency_id,
@@ -158,10 +158,10 @@
         parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
       <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null" >
-        type = #{record.type,jdbcType=INTEGER},
+        `type` = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.agencyId != null" >
         agency_id = #{record.agencyId,jdbcType=INTEGER},
@@ -175,8 +175,8 @@
     update sys_region
     set id = #{record.id,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `type` = #{record.type,jdbcType=INTEGER},
       agency_id = #{record.agencyId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -189,10 +189,10 @@
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="agencyId != null" >
         agency_id = #{agencyId,jdbcType=INTEGER},
@@ -203,8 +203,8 @@
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.SysRegion" >
     update sys_region
     set parent_id = #{parentId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
+      `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
       agency_id = #{agencyId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
