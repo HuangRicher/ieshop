@@ -3,6 +3,7 @@ package com.seamwhole.webtradeadmin.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.seamwhole.webtradeadmin.shiro.ShiroUtils;
+import com.seamwhole.webtradeadmin.shiro.SysUser;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import com.seamwhole.webtradeadmin.util.StringDataUtils;
 import org.apache.shiro.SecurityUtils;
@@ -35,8 +36,8 @@ public class LoginController {
     @RequestMapping("/")
     public String toLogin(){
         Subject subject = SecurityUtils.getSubject();
-        String username = (String) subject.getPrincipal();
-        if (username == null){
+        SysUser user = (SysUser) subject.getPrincipal();
+        if (user == null){
             return "login";
         }else{
             return "redirect:/index";
@@ -78,7 +79,7 @@ public class LoginController {
         try {
             Subject subject = ShiroUtils.getSubject();
             //sha256加密
-            password = StringDataUtils.md5(password,username);
+            //password = StringDataUtils.md5(password,username);
             UsernamePasswordToken token = new UsernamePasswordToken(username, password,false);
             subject.login(token);
         } catch (UnknownAccountException e) {
@@ -101,6 +102,14 @@ public class LoginController {
     public String logout() {
         ShiroUtils.logout();
         return "redirect:/";
+    }
+
+    /**
+     * 退出
+     */
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String index() {
+        return "index";
     }
 
 }

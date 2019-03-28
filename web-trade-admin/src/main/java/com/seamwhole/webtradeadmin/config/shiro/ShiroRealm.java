@@ -2,7 +2,7 @@ package com.seamwhole.webtradeadmin.config.shiro;
 
 import com.seamwhole.webtradeadmin.constant.Constant;
 import com.seamwhole.webtradeadmin.redis.RedisService;
-import com.seamwhole.webtradeadmin.service.SysUserMenuService;
+import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import com.seamwhole.webtradeadmin.shiro.SysMenuDO;
 import com.seamwhole.webtradeadmin.shiro.SysUser;
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +25,7 @@ import java.util.*;
 public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private SysUserMenuService sysUserService;
+    private SysUserRoleMenuService sysUserService;
     @Autowired
     private RedisService redisService;
 
@@ -104,7 +104,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         redisService.set(Constant.PERMS_LIST + user.getUserId(), permsList);
 
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password,new MyByteSource(user.getUsername()), getName());
         return info;
     }
 

@@ -1,7 +1,7 @@
 package com.seamwhole.webtradeadmin.config.shiro;
 
 
-import com.seamwhole.webtradeadmin.service.SysUserMenuService;
+import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import com.seamwhole.webtradeadmin.shiro.SysUser;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -26,7 +26,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     public static final String DEFAULT_RETRYLIMIT_CACHE_KEY_PREFIX = "shiro:cache:retrylimit:";
     private String keyPrefix = DEFAULT_RETRYLIMIT_CACHE_KEY_PREFIX;
     @Autowired
-    private SysUserMenuService sysUserService;
+    private SysUserRoleMenuService sysUserService;
     private RedisManager redisManager;
 
     public void setRedisManager(RedisManager redisManager) {

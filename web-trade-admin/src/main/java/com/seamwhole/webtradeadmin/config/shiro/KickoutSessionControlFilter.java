@@ -1,5 +1,6 @@
 package com.seamwhole.webtradeadmin.config.shiro;
 
+import com.seamwhole.webtradeadmin.shiro.SysUser;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -103,11 +104,12 @@ public class KickoutSessionControlFilter  extends AccessControlFilter{
         Session session = subject.getSession();
         //这里获取的User是实体 因为我在 自定义ShiroRealm中的doGetAuthenticationInfo方法中
         //new SimpleAuthenticationInfo(user, password, getName()); 传的是 User实体 所以这里拿到的也是实体,如果传的是userName 这里拿到的就是userName
-        String username = (String)subject.getPrincipal();
+        //String username = (String)subject.getPrincipal();
+        SysUser user=(SysUser)subject.getPrincipal();
         Serializable sessionId = session.getId();
 
         // 初始化用户的队列放到缓存里
-        Deque<Serializable> deque = (Deque<Serializable>) redisManager.get(getRedisKickoutKey(username));
+        Deque<Serializable> deque = (Deque<Serializable>) redisManager.get(getRedisKickoutKey(user.getUsername()));
         if(deque == null || deque.size()==0) {
             deque = new LinkedList<Serializable>();
         }
@@ -137,7 +139,7 @@ public class KickoutSessionControlFilter  extends AccessControlFilter{
             }
         }
 
-        redisManager.set(getRedisKickoutKey(username), deque);
+        redisManager.set(getRedisKickoutKey(user.getUsername()), deque);
 
         //如果被踢出了，直接退出，重定向到踢出后的地址
         if (session.getAttribute("kickout") != null) {

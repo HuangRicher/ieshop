@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(value = "trade-core-service",configuration = FeignConfig.class,fallback = SysUserMenuServiceHystrix.class)
-public interface SysUserMenuService {
+public interface SysUserRoleMenuService {
 
     @GetMapping(value = "/sysUser/queryByUserName/{username}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

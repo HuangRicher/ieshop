@@ -1,6 +1,6 @@
 package com.seamwhole.webtradeadmin.service.impl;
 
-import com.seamwhole.webtradeadmin.service.SysUserMenuService;
+import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import com.seamwhole.webtradeadmin.shiro.SysMenuDO;
 import com.seamwhole.webtradeadmin.shiro.SysUser;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SysUserMenuServiceHystrix implements SysUserMenuService {
+public class SysUserMenuServiceHystrix implements SysUserRoleMenuService {
     @Override
     public SysUser queryByUserName(String username) {
         return null;

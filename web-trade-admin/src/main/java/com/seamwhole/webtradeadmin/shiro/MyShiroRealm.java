@@ -3,7 +3,7 @@ package com.seamwhole.webtradeadmin.shiro;
 
 import com.seamwhole.webtradeadmin.constant.Constant;
 import com.seamwhole.webtradeadmin.redis.RedisService;
-import com.seamwhole.webtradeadmin.service.SysUserMenuService;
+import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -19,7 +19,7 @@ import java.util.*;
 
 public class MyShiroRealm extends AuthorizingRealm {
     @Autowired
-    private SysUserMenuService sysUserService;
+    private SysUserRoleMenuService sysUserService;
     @Autowired
     private RedisService redisService;
 
