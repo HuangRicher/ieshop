@@ -23,4 +23,9 @@ public class SysUserMenuServiceHystrix implements SysUserMenuService {
     public List<SysMenuDO> queryList() {
         return null;
     }
+
+    @Override
+    public void updateSysUserStatus(SysUser user) {
+
+    }
 }

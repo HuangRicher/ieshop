@@ -126,6 +126,15 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    public void updateSysUserStatus(Long userId, Integer status) {
+        SysUserExample example=new SysUserExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        SysUser user=new SysUser();
+        user.setStatus(status);
+        sysUserMapper.updateByExampleSelective(user,example);
+    }
+
+    @Override
     @Transactional
     public void deleteBatch(Long[] userId) {
         sysUserExtMapper.deleteBatch(userId);

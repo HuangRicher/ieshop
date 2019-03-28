@@ -3,6 +3,7 @@ package com.seamwhole.servicetradecore.resource;
 import com.seamwhole.servicetradecore.model.SysUser;
 import com.seamwhole.servicetradecore.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,5 +22,10 @@ public class SysUserResource {
     @GetMapping("/queryAllPerms/{userId}")
     List<String> queryAllPerms(@PathVariable("userId")Long userId){
         return sysUserService.queryAllPerms(userId);
+    }
+
+    @PostMapping("/updateSysUserStatus")
+    void updateSysUserStatus(@RequestBody SysUser user){
+        sysUserService.updateSysUserStatus(user.getUserId(),user.getStatus());
     }
 }

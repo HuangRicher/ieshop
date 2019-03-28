@@ -6,9 +6,7 @@ import com.seamwhole.webtradeadmin.shiro.SysMenuDO;
 import com.seamwhole.webtradeadmin.shiro.SysUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +27,9 @@ public interface SysUserMenuService {
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     List<SysMenuDO> queryList();
+
+    @PostMapping(value = "/sysUser/updateSysUserStatus",
+            consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    void updateSysUserStatus(@RequestBody SysUser user);
 }

@@ -75,6 +75,8 @@ public interface SysUserService {
 
     List<String> queryAllPerms(Long userId);
 
+    void updateSysUserStatus(Long userId, Integer status);
+
     /**
      * 根据条件分页查询
      * @param
