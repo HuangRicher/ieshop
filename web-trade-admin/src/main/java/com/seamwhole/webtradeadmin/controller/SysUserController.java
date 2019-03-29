@@ -2,23 +2,22 @@ package com.seamwhole.webtradeadmin.controller;
 
 
 import com.seamwhole.except.CheckException;
+import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.constant.Constant;
 import com.seamwhole.webtradeadmin.info.SysUserDO;
 import com.seamwhole.webtradeadmin.info.SysUserInfo;
+import com.seamwhole.webtradeadmin.info.SysUserModel;
 import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import com.seamwhole.webtradeadmin.shiro.ShiroUtils;
-import com.seamwhole.webtradeadmin.shiro.SysUser;
 import com.seamwhole.webtradeadmin.util.ResourceUtil;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import com.seamwhole.webtradeadmin.util.StringDataUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 import static com.seamwhole.webtradeadmin.shiro.ShiroUtils.getUserId;
@@ -43,8 +42,8 @@ public class SysUserController {
             params.put("createUserId", ShiroUtils.getUserEntity().getUserId());
         }
         //查询列表数据
-        List<SysUserDO> userList = sysUserRoleMenuService.queryUserByPage(params);
-        return ResponseObject.ok().put("page", userList);
+        PagesInfo<SysUserDO> page = sysUserRoleMenuService.queryUserByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -66,9 +65,9 @@ public class SysUserController {
         if(StringUtils.isBlank(newPassword))
             throw new CheckException("新密码不为能空");
         //MD5加密
-        password = new Sha256Hash(password).toHex();
+        password = StringDataUtils.md5(password,ShiroUtils.getUserEntity().getUsername());;
         //MD5加密
-        newPassword = StringDataUtils.md5(password,ShiroUtils.getUserEntity().getUsername());
+        newPassword = StringDataUtils.md5(newPassword,ShiroUtils.getUserEntity().getUsername());
         //更新密码
         int count = sysUserRoleMenuService.updatePassword(ShiroUtils.getUserEntity().getUserId(), password, newPassword);
         if (count == 0) {
@@ -85,11 +84,7 @@ public class SysUserController {
     @RequestMapping("/info/{userId}")
     @RequiresPermissions("sys:user:info")
     public ResponseObject info(@PathVariable("userId") Long userId) {
-        SysUserInfo user = sysUserRoleMenuService.getUserById(userId);
-        //获取用户所属的角色列表
-        List<Long> roleIdList = sysUserRoleMenuService.queryRoleIdList(userId);
-        user.setRoleIdList(roleIdList);
-
+        SysUserInfo user = sysUserRoleMenuService.getUserInfoById(userId);
         return ResponseObject.ok().put("user", user);
     }
 
@@ -98,8 +93,8 @@ public class SysUserController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:user:save")
-    public ResponseObject save(@RequestBody SysUser user) {
-        user.setCreateUserId(ShiroUtils.getUserEntity().getUserId());
+    public ResponseObject save(@RequestBody SysUserModel user) {
+        user.setUserId(ShiroUtils.getUserEntity().getUserId());
         sysUserRoleMenuService.saveUser(user);
         return ResponseObject.ok();
     }
@@ -109,9 +104,9 @@ public class SysUserController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:user:update")
-    public ResponseObject update(@RequestBody SysUser user) {
+    public ResponseObject update(@RequestBody SysUserModel user) {
 
-        user.setCreateUserId(ShiroUtils.getUserEntity().getUserId());
+        user.setUserId(ShiroUtils.getUserEntity().getUserId());
         sysUserRoleMenuService.updateUser(user);
 
         return ResponseObject.ok();
@@ -122,14 +117,14 @@ public class SysUserController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("sys:user:delete")
-    public ResponseObject delete(@RequestBody Long[] userIds) {
-        if (ArrayUtils.contains(userIds, 1L)) {
+    public ResponseObject delete(@RequestBody SysUserModel user) {
+        if (ArrayUtils.contains(user.getUserIds(), 1L)) {
             return ResponseObject.error("系统管理员不能删除");
         }
-        if (ArrayUtils.contains(userIds, getUserId())) {
+        if (ArrayUtils.contains(user.getUserIds(), getUserId())) {
             return ResponseObject.error("当前用户不能删除");
         }
-        sysUserRoleMenuService.deleteUserBatch(userIds);
+        sysUserRoleMenuService.deleteUserBatch(user);
         return ResponseObject.ok();
     }
 }

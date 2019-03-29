@@ -100,6 +100,7 @@ public class SysUserServiceImpl implements SysUserService {
         sysUserRoleService.saveOrUpdate(user.getUserId(), sysUserModel.getRoleIdList());
     }
 
+
     @Override
     @Transactional
     public void update(SysUserModel sysUserModel) {

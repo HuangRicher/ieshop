@@ -94,7 +94,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
         //系统管理员，拥有最高权限
         if (Constant.SUPER_ADMIN == user.getUserId()) {
-            List<SysMenuDO> menuList = sysUserService.queryList();
+            List<SysMenuDO> menuList = sysUserService.queryMenuList();
             permsList = new ArrayList<>(menuList.size());
             for (SysMenuDO menu : menuList) {
                 permsList.add(menu.getPerms());
