@@ -38,11 +38,14 @@ public class SysUserController {
     @RequiresPermissions("sys:user:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //只有超级管理员，才能查看所有管理员列表
+        SysUserModel userModel=new SysUserModel();
         if (getUserId() != Constant.SUPER_ADMIN) {
             params.put("createUserId", ShiroUtils.getUserEntity().getUserId());
         }
+        userModel.setPageNum(Integer.valueOf((String)params.get("page")));
+        userModel.setPageSize(Integer.valueOf((String)params.get("limit")));
         //查询列表数据
-        PagesInfo<SysUserDO> page = sysUserRoleMenuService.queryUserByPage(params);
+        PagesInfo<SysUserDO> page = sysUserRoleMenuService.queryUserByPage(userModel);
         return ResponseObject.ok().put("page", page);
     }
 

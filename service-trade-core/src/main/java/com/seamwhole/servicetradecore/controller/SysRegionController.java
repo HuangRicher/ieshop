@@ -23,7 +23,7 @@ import java.util.Map;
  * 地址管理Controller
  */
 @RestController
-@RequestMapping("sys/region")
+@RequestMapping("/old/sys/region")
 public class SysRegionController {
     @Autowired
     private SysRegionService sysRegionService;

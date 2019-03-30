@@ -32,7 +32,7 @@ import java.util.Map;
  * @date 2016年10月31日 上午10:40:10
  */
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/old/sys/user")
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;

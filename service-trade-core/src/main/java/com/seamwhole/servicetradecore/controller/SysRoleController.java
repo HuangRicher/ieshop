@@ -26,7 +26,7 @@ import java.util.Map;
  * @date 2016年11月8日 下午2:18:33
  */
 @RestController
-@RequestMapping("/sys/role")
+@RequestMapping("/old/sys/role")
 public class SysRoleController{
     @Autowired
     private SysRoleService sysRoleService;

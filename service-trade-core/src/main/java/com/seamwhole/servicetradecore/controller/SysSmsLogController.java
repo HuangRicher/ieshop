@@ -22,7 +22,7 @@ import java.util.Map;
  * 发送短信日志Controller
  */
 @RestController
-@RequestMapping("/sys/smslog")
+@RequestMapping("/old/sys/smslog")
 public class SysSmsLogController {
     @Autowired
     private SysSmsLogService sysSmsLogService;

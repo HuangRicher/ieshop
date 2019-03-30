@@ -18,7 +18,7 @@ import java.util.Map;
  * 系统日志Controller
  */
 @Controller
-@RequestMapping("/sys/log")
+@RequestMapping("/old/sys/log")
 public class SysLogController {
     @Autowired
     private SysLogService sysLogService;

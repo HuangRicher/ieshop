@@ -21,7 +21,7 @@ import java.util.Map;
  * 部门管理Controller
  */
 @RestController
-@RequestMapping("/sys/dept")
+@RequestMapping("/old/sys/dept")
 public class SysDeptController{
     @Autowired
     private SysDeptService sysDeptService;

@@ -25,7 +25,7 @@ import java.util.Map;
  * 文件上传Controller
  */
 @RestController
-@RequestMapping("sys/oss")
+@RequestMapping("/old/sys/oss")
 public class SysOssController {
     @Autowired
     private SysOssService sysOssService;

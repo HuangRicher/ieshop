@@ -37,7 +37,7 @@ public class SysUserMenuServiceHystrix implements SysUserRoleMenuService {
     }
 
     @Override
-    public PagesInfo<SysUserDO> queryUserByPage(Map<String, Object> params) {
+    public PagesInfo<SysUserDO> queryUserByPage(SysUserModel userModel) {
         return null;
     }
 

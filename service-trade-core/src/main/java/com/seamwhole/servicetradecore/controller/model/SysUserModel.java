@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.controller.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class SysUserModel implements Serializable {
@@ -133,4 +134,5 @@ public class SysUserModel implements Serializable {
     public void setRoleIdList(List<Long> roleIdList) {
         this.roleIdList = roleIdList;
     }
+
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>管理员列表</title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -15,15 +15,15 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("sys:user:save"))
+                <shiro:hasPermission name="sys:user:save">　
                 <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
-                #end
-                #if($shiro.hasPermission("sys:user:update"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:user:update">　
                 <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
-                #end
-                #if($shiro.hasPermission("sys:user:delete"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:user:delete">　
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -37,7 +37,7 @@
                 <i-input v-model="user.username" placeholder="登录账号"/>
             </Form-item>
             <Form-item label="所属部门" prop="deptName">
-                <i-input type="text" v-model="user.deptName" icon="eye" readonly="readonly"
+                <i-input type="text" v-model="user.deptName" icon="eye"
                          @on-click="deptTree" readonly="readonly" placeholder="所属部门"/>
             </Form-item>
             <Form-item label="邮箱" prop="email">
@@ -75,6 +75,6 @@
 <div id="deptLayer" style="display: none;padding:10px;">
     <ul id="deptTree" class="ztree"></ul>
 </div>
-<script src="${rc.contextPath}/js/sys/user.js?_${date.systemTime}"></script>
+<script src="/js/sys/user.js?_"+$.now()></script>
 </body>
 </html>

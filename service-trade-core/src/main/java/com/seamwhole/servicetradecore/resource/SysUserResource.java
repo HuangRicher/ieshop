@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +40,11 @@ public class SysUserResource {
         sysUserService.updateSysUserStatus(user.getUserId(),user.getStatus());
     }
 
-    @GetMapping("/queryUserByPage")
-    public PagesInfo<SysUserDO> queryUserByPage(@RequestBody Map<String, Object> params){
-        int pageNum=(int)params.get("pageNum");
-        int pageSize=(int)params.get("pageSize");
+    @PostMapping("/queryUserByPage")
+    public PagesInfo<SysUserDO> queryUserByPage(@RequestBody SysUserModel userModel){
+        int pageNum=userModel.getPageNum();
+        int pageSize=userModel.getPageSize();
+        Map<String,Object> params=new HashMap<>();
         PageInfo<SysUserDO> data= sysUserService.queryByPage(params,pageNum,pageSize);
         return new PagesInfo<SysUserDO>(data.getPageNum(),data.getPageSize(),data.getTotal(),data.getPages(),data.getList());
     }

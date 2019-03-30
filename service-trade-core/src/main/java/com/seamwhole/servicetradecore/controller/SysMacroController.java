@@ -16,7 +16,7 @@ import java.util.Map;
  * 通用字典表Controller
  */
 @RestController
-@RequestMapping("sys/macro")
+@RequestMapping("/old/sys/macro")
 public class SysMacroController {
     @Autowired
     private SysMacroService sysMacroService;

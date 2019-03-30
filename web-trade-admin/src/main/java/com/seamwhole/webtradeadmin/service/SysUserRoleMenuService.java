@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(value = "trade-core-service",configuration = FeignConfig.class,fallback = SysUserMenuServiceHystrix.class)
+@FeignClient(serviceId = "trade-core-service" ,configuration = FeignConfig.class,fallback = SysUserMenuServiceHystrix.class)
 public interface SysUserRoleMenuService {
 
     @GetMapping(value = "/sysUser/queryByUserName/{username}",
@@ -38,11 +38,11 @@ public interface SysUserRoleMenuService {
     @ResponseBody
     void updateSysUserStatus(@RequestBody SysUser user);
 
-    @GetMapping(value = "/sysUser/queryUserByPage",
+    @PostMapping(value = "/sysUser/queryUserByPage",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    PagesInfo<SysUserDO> queryUserByPage(@RequestBody Map<String, Object> params);
+    PagesInfo<SysUserDO> queryUserByPage(@RequestBody SysUserModel userModel);
 
     @PostMapping(value = "/sysUser/updatePassword/{userId}/{password}/{newPassword}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
