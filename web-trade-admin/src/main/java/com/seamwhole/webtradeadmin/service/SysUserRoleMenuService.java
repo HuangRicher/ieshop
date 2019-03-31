@@ -84,13 +84,13 @@ public interface SysUserRoleMenuService {
     @ResponseBody
     List<SysMenuDO> queryMenuList();
 
-    @GetMapping(value = "/sysMenu/queryMenusByPage",
+    @PostMapping(value = "/sysMenu/queryMenusByPage",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     PagesInfo<SysMenuDO> queryMenusByPage(@RequestBody Map<String, Object> params);
 
-    @GetMapping(value = "/sysMenu/queryMenuList",
+    @PostMapping(value = "/sysMenu/queryMenuList",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody

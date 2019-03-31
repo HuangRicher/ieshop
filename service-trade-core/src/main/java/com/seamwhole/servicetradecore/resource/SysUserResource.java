@@ -68,17 +68,17 @@ public class SysUserResource {
     }
 
     @PostMapping("/saveUser")
-    public void saveUser(SysUserModel user){
+    public void saveUser(@RequestBody SysUserModel user){
         sysUserService.save(user);
     }
 
     @PostMapping("/updateUser")
-    public void updateUser(SysUserModel user){
+    public void updateUser(@RequestBody SysUserModel user){
         sysUserService.update(user);
     }
 
     @PostMapping("/deleteUserBatch")
-    public void deleteUserBatch(SysUserModel user){
+    public void deleteUserBatch(@RequestBody SysUserModel user){
         sysUserService.deleteBatch(user.getUserIds());
     }
 }

@@ -1,15 +1,20 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.mapper.ShopUserMapper;
 import com.seamwhole.servicetradecore.mapper.SmsLogMapper;
 import com.seamwhole.servicetradecore.mapper.UserLevelMapper;
+import com.seamwhole.servicetradecore.mapper.ext.ShopUserExtMapper;
 import com.seamwhole.servicetradecore.mapper.ext.SmsLogExtMapper;
+import com.seamwhole.servicetradecore.mapper.model.ShopUserDO;
 import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.model.ShopUserExample;
 import com.seamwhole.servicetradecore.model.SmsLog;
 import com.seamwhole.servicetradecore.model.UserLevel;
-import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.service.ShopUserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +27,13 @@ import java.util.Map;
 
 
 @Service
-public class UserServiceImpl implements UserService {
+public class ShopUserServiceImpl implements ShopUserService {
 
     @Autowired
     private ShopUserMapper shopUserMapper;
+
+    @Autowired
+    private ShopUserExtMapper shopUserExtMapper;
 
     @Autowired
     private UserLevelMapper userLevelMapper;
@@ -54,14 +62,21 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public List<ShopUser> queryList(Map<String, Object> map) {
-        ShopUserExample example=new ShopUserExample();
+    @Override
+    public PageInfo<ShopUserDO> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize) {
+        Page<ShopUserDO> page= PageHelper.startPage(pageNum,pageSize);
+        shopUserExtMapper.queryList(map);
+        return page.toPageInfo();
+    }
 
-        return shopUserMapper.selectByExample(example);
+    public List<ShopUserDO> queryList(Map<String, Object> map) {
+        return shopUserExtMapper.queryList(map);
     }
 
     public int queryTotal(Map<String, Object> map) {
         ShopUserExample example=new ShopUserExample();
+        if(map.get("username")!=null)
+            example.createCriteria().andUsernameLike("%"+map.get("username")+"%");
         return shopUserMapper.countByExample(example);
     }
 
@@ -75,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void save(ShopUser userVo) {
+        userVo.setRegisterTime(new Date());
         shopUserMapper.insertSelective(userVo);
     }
 

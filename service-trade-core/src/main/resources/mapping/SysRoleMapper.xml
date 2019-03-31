@@ -108,7 +108,7 @@
       #{createUserId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{deptId,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.SysRole" >
+  <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.SysRole"  useGeneratedKeys="true" keyProperty="roleId">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >

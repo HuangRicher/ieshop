@@ -133,7 +133,7 @@
                     dataType: "json",
                     success: function (result) {
                         if (result.code == 0) {//登录成功
-                            parent.location.href = 'index.html';
+                            parent.location.href = 'index';
                         } else {
                             vm.refreshCode();
                             iview.Message.error(result.msg);

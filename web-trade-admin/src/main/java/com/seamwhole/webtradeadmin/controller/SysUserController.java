@@ -15,9 +15,11 @@ import com.seamwhole.webtradeadmin.util.StringDataUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.seamwhole.webtradeadmin.shiro.ShiroUtils.getUserId;
@@ -98,6 +100,7 @@ public class SysUserController {
     @RequiresPermissions("sys:user:save")
     public ResponseObject save(@RequestBody SysUserModel user) {
         user.setUserId(ShiroUtils.getUserEntity().getUserId());
+        user.setPassword(StringDataUtils.md5(Constant.DEFAULT_PASS_WORD,user.getUsername()));
         sysUserRoleMenuService.saveUser(user);
         return ResponseObject.ok();
     }
@@ -109,7 +112,7 @@ public class SysUserController {
     @RequiresPermissions("sys:user:update")
     public ResponseObject update(@RequestBody SysUserModel user) {
 
-        user.setUserId(ShiroUtils.getUserEntity().getUserId());
+        user.setCreateUserId(ShiroUtils.getUserEntity().getUserId());
         sysUserRoleMenuService.updateUser(user);
 
         return ResponseObject.ok();
@@ -120,13 +123,15 @@ public class SysUserController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("sys:user:delete")
-    public ResponseObject delete(@RequestBody SysUserModel user) {
-        if (ArrayUtils.contains(user.getUserIds(), 1L)) {
+    public ResponseObject delete(@RequestBody Long[] ids) {
+        if (ArrayUtils.contains(ids, 1L)) {
             return ResponseObject.error("系统管理员不能删除");
         }
-        if (ArrayUtils.contains(user.getUserIds(), getUserId())) {
+        if (ArrayUtils.contains(ids, getUserId())) {
             return ResponseObject.error("当前用户不能删除");
         }
+        SysUserModel user=new SysUserModel();
+        user.setUserIds(ids);
         sysUserRoleMenuService.deleteUserBatch(user);
         return ResponseObject.ok();
     }

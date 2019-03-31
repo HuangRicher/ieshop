@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>通用字典表</title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -12,15 +12,15 @@
                 <i-button type="ghost" @click="reload"><i class="fa fa-refresh"></i>&nbsp;刷新</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("sys:macro:save"))
+                <shiro:hasPermission name="sys:macro:save">
                 <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
-                #end
-                #if($shiro.hasPermission("sys:macro:update"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:macro:update">
                 <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
-                #end
-                #if($shiro.hasPermission("sys:macro:delete"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:macro:delete">
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -77,6 +77,6 @@
     </Card>
 </div>
 
-<script src="${rc.contextPath}/js/sys/macro.js?_${date.systemTime}"></script>
+<script src="/js/sys/macro.js?_"+$.now()></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.seamwhole.servicetradecore.model.ShopUser;
-import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.service.ShopUserService;
 import com.seamwhole.servicetradecore.util.ResponseObject;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Autowired
-    private UserService userService;
+    private ShopUserService userService;
 
     /**
      * 获取用户信息

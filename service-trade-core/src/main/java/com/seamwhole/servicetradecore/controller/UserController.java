@@ -6,7 +6,7 @@ import com.seamwhole.servicetradecore.domain.SmsConfigOutInfo;
 import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.model.SmsLog;
 import com.seamwhole.servicetradecore.service.SysConfigService;
-import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.service.ShopUserService;
 import com.seamwhole.servicetradecore.util.SmsUtil;
 import com.seamwhole.util.CharUtil;
 import com.seamwhole.util.StringUtils;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController extends BaseController {
     @Autowired
-    private UserService userService;
+    private ShopUserService shopUserService;
     @Autowired
     private SysConfigService sysConfigService;
 
@@ -36,7 +36,7 @@ public class UserController extends BaseController {
     public Object smscode(@RequestBody UserModel userModel) {
         String phone = userModel.getPhone();
         // 一分钟之内不能重复发送短信
-        SmsLog smsLogVo = userService.querySmsCodeByUserId(userModel.getUserId());
+        SmsLog smsLogVo = shopUserService.querySmsCodeByUserId(userModel.getUserId());
         if (null != smsLogVo && (System.currentTimeMillis() / 1000 - smsLogVo.getLogDate()) < 1 * 60) {
             return toResponsFail("短信已发送");
         }
@@ -76,7 +76,7 @@ public class UserController extends BaseController {
             smsLogVo.setPhone(phone);
             smsLogVo.setSmsCode(sms_code);
             smsLogVo.setSmsText(msgContent);
-            userService.saveSmsCodeLog(smsLogVo);
+            shopUserService.saveSmsCodeLog(smsLogVo);
             return toResponsSuccess("短信发送成功");
         } else {
             return toResponsFail("短信发送失败");
@@ -91,7 +91,7 @@ public class UserController extends BaseController {
     public Object getUserLevel(@RequestBody UserModel userModel) {
         ShopUser loginUser=new ShopUser();
         loginUser.setUserLevelId(userModel.getUserLevelId());
-        String userLevel = userService.getUserLevel(loginUser);
+        String userLevel = shopUserService.getUserLevel(loginUser);
         return toResponsSuccess(userLevel);
     }
 
@@ -101,15 +101,15 @@ public class UserController extends BaseController {
     @ApiOperation(value = "绑定手机")
     @PostMapping("bindMobile")
     public Object bindMobile(@RequestBody UserModel userModel) {
-        SmsLog smsLogVo = userService.querySmsCodeByUserId(userModel.getUserId());
+        SmsLog smsLogVo = shopUserService.querySmsCodeByUserId(userModel.getUserId());
         String mobile_code = userModel.getMobileCode();
         String mobile = userModel.getMobile();
         if (!mobile_code.equals(smsLogVo.getSmsCode())) {
             return toResponsFail("验证码错误");
         }
-        ShopUser userVo = userService.queryObject(userModel.getUserId());
+        ShopUser userVo = shopUserService.queryObject(userModel.getUserId());
         userVo.setMobile(mobile);
-        userService.update(userVo);
+        shopUserService.update(userVo);
         return toResponsSuccess("手机绑定成功");
     }
 }

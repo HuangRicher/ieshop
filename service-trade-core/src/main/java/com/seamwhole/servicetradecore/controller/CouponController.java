@@ -34,7 +34,7 @@ import java.util.*;
 @RequestMapping("/api/coupon")
 public class CouponController extends BaseController {
     @Autowired
-    private UserService userService;
+    private ShopUserService userService;
     @Autowired
     private CouponService couponService;
     @Autowired

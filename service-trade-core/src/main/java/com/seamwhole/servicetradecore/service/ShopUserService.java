@@ -1,5 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.ShopUserDO;
 import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.model.SmsLog;
 
@@ -7,13 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface UserService {
+public interface ShopUserService {
 
     ShopUser queryObject(Integer userId);
 
     ShopUser queryByOpenId(String openId);
 
-    List<ShopUser> queryList(Map<String, Object> map);
+    List<ShopUserDO> queryList(Map<String, Object> map);
+
+    PageInfo<ShopUserDO> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
 
     int queryTotal(Map<String, Object> map);
 

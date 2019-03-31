@@ -89,8 +89,7 @@ public class SysUserServiceImpl implements SysUserService {
         user.setUsername(sysUserModel.getUsername());
         user.setCreateUserId(sysUserModel.getUserId());
         user.setCreateTime(new Date());
-        //sha256加密
-        user.setPassword(Constant.DEFAULT_PASS_WORD);
+        user.setPassword(sysUserModel.getPassword());
         sysUserMapper.insertSelective(user);
 
         //检查角色是否越权
@@ -110,9 +109,9 @@ public class SysUserServiceImpl implements SysUserService {
         user.setDeptId(sysUserModel.getDeptId());
         user.setUsername(sysUserModel.getUsername());
         user.setStatus(sysUserModel.getStatus());
-        user.setCreateUserId(sysUserModel.getUserId());
-        user.setUserId(sysUserModel.getUid());
-        if (StringUtils.isBlank(user.getPassword())) {
+        user.setCreateUserId(sysUserModel.getCreateUserId());
+        user.setUserId(sysUserModel.getUserId());
+        if (StringUtils.isBlank(sysUserModel.getPassword())) {
             user.setPassword(Constant.DEFAULT_PASS_WORD);
         } else {
             user.setPassword(user.getPassword());

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -15,15 +15,15 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("goodsissue:save"))
+                <shiro:hasPermission name="goodsissue:save">
                 <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
-                #end
-                #if($shiro.hasPermission("goodsissue:update"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="goodsissue:update">
                 <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
-                #end
-                #if($shiro.hasPermission("goodsissue:delete"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="goodsissue:delete">
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -49,6 +49,6 @@
     </Card>
 </div>
 
-<script src="${rc.contextPath}/js/shop/goodsissue.js?_${date.systemTime}"></script>
+<script src="/js/shop/goodsissue.js?_"></script>
 </body>
 </html>

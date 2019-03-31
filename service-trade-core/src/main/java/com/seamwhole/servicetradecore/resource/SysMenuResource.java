@@ -28,16 +28,16 @@ public class SysMenuResource {
         return sysMenuService.queryList(new HashMap<String, Object>());
     }
 
-    @GetMapping("/queryMenusByPage")
-    public PagesInfo<SysMenuDO> queryMenusByPage(Map<String, Object> params){
+    @PostMapping("/queryMenusByPage")
+    public PagesInfo<SysMenuDO> queryMenusByPage(@RequestBody Map<String, Object> params){
         int pageNum=(int)params.get("pageNum");
         int pageSize=(int)params.get("pageSize");
         PageInfo<SysMenuDO> pageInfo=sysMenuService.queryByPage(params,pageNum,pageSize);
         return new PagesInfo<SysMenuDO>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(),pageInfo.getPages(),pageInfo.getList());
     }
 
-    @GetMapping("/queryMenuList")
-    public List<SysMenuDO> queryMenuList(Map<String, Object> params){
+    @PostMapping("/queryMenuList")
+    public List<SysMenuDO> queryMenuList(@RequestBody Map<String, Object> params){
         return sysMenuService.queryList(params);
     }
 

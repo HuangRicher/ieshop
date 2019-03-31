@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>部门管理</title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -12,15 +12,15 @@
                 <i-button type="ghost" @click="reload"><i class="fa fa-refresh"></i>&nbsp;刷新</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("sys:dept:save"))
+                <shiro:hasPermission name="sys:dept:save">
                 <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
-                #end
-                #if($shiro.hasPermission("sys:dept:update"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:dept:update">
                 <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
-                #end
-                #if($shiro.hasPermission("sys:dept:delete"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="sys:dept:delete">
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="deptTable" data-mobile-responsive="true" data-click-to-select="true">
@@ -40,7 +40,7 @@
             </Form-item>
 
             <Form-item label="上级部门" prop="deptName">
-                <i-input type="text" v-model="dept.parentName" icon="eye" readonly="readonly"
+                <i-input type="text" v-model="dept.parentName" icon="eye"
                          @on-click="deptTree" readonly="readonly" placeholder="一级部门"/>
             </Form-item>
             <Form-item label="排序号" prop="orderNum">
@@ -59,6 +59,6 @@
     <ul id="deptTree" class="ztree"></ul>
 </div>
 
-<script src="${rc.contextPath}/js/sys/dept.js?_${date.systemTime}"></script>
+<script src="/js/sys/dept.js?_"+$.now()></script>
 </body>
 </html>

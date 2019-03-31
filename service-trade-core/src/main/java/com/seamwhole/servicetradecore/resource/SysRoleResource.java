@@ -35,7 +35,7 @@ public class SysRoleResource {
     public PagesInfo<SysRoleDO> queryRoleByPage(@RequestBody SysRoleModel roleModel){
         Map<String, Object> params = new HashMap<>();
         //如果不是超级管理员，则只查询自己创建的角色列表
-        if (roleModel.getUserId() != Constant.SUPER_ADMIN) {
+        if (roleModel.getUserId() !=null && roleModel.getUserId() != Constant.SUPER_ADMIN) {
             params.put("createUserId", roleModel.getUserId());
         }
         //查询列表数据
@@ -47,7 +47,7 @@ public class SysRoleResource {
     public List<SysRoleDO> queryRoleList(@RequestBody SysRoleModel roleModel){
         Map<String, Object> map = new HashMap<>();
         //如果不是超级管理员，则只查询自己所拥有的角色列表
-        if (roleModel.getUserId() != Constant.SUPER_ADMIN) {
+        if (roleModel.getUserId()!=null && roleModel.getUserId() != Constant.SUPER_ADMIN) {
             map.put("createUserId", roleModel.getUserId());
         }
         return sysRoleService.queryList(map);

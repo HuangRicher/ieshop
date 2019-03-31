@@ -47,6 +47,7 @@ public class SysDeptResource {
     public void updateById(@RequestBody SysDeptModel deptModel){
         SysDept dept=new SysDept();
         dept.setDeptId(deptModel.getDeptId());
+        dept.setParentId(deptModel.getParentId());
         if(deptModel.getOrderNum()!=null && deptModel.getOrderNum()>0)
             dept.setOrderNum(deptModel.getOrderNum());
         if(StringUtils.isNotBlank(deptModel.getName()))

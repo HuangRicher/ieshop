@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -15,15 +15,15 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("brand:save"))
+                <shiro:hasPermission name="brand:save">　
                 <i-button type="info" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</i-button>
-                #end
-                #if($shiro.hasPermission("brand:update"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="brand:update">　
                 <i-button type="warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</i-button>
-                #end
-                #if($shiro.hasPermission("brand:delete"))
+                </shiro:hasPermission>
+                <shiro:hasPermission name="brand:delete">　
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -65,7 +65,7 @@
             <Row>
                 <i-col span="16">
                     <Form-item label="图片" prop="picUrl">
-                        <i-input v-model="brand.picUrl" placeholder="图片" readonly/>
+                        <i-input v-model="brand.picUrl" placeholder="图片" readonly="readonly"/>
                     </Form-item>
                 </i-col>
                 <i-col span="3">
@@ -137,7 +137,7 @@
             <Row>
                 <i-col span="16">
                     <Form-item label="新品牌图片" prop="newPicUrl">
-                        <i-input v-model="brand.newPicUrl" placeholder="新品牌图片" readonly/>
+                        <i-input v-model="brand.newPicUrl" placeholder="新品牌图片" readonly="readonly"/>
                     </Form-item>
                 </i-col>
                 <i-col span="3">
@@ -171,6 +171,6 @@
     </Card>
 </div>
 
-<script src="${rc.contextPath}/js/shop/brand.js?_${date.systemTime}"></script>
+<script src="/js/shop/brand.js?_"></script>
 </body>
 </html>

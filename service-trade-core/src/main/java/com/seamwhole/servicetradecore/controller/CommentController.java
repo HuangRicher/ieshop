@@ -26,7 +26,7 @@ public class CommentController extends BaseController {
     @Autowired
     private CommentService commentService;
     @Autowired
-    private UserService userService;
+    private ShopUserService userService;
     @Autowired
     private CommentPictureService commentPictureService;
     @Autowired

@@ -3,7 +3,7 @@ package com.seamwhole.servicetradecore.controller;
 import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.controller.model.UserModel;
 import com.seamwhole.servicetradecore.service.TokenService;
-import com.seamwhole.servicetradecore.service.UserService;
+import com.seamwhole.servicetradecore.service.ShopUserService;
 import com.seamwhole.servicetradecore.util.ResponseObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class AuthController extends BaseController {
 
     @Autowired
-    private UserService userService;
+    private ShopUserService userService;
 
     @Autowired
     private TokenService tokenService;

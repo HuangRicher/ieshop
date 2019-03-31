@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -18,9 +18,9 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("address:delete"))
+                <shiro:hasPermission name="address:delete">　
                 <i-button type="error" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -28,6 +28,6 @@
     </div>
 </div>
 
-<script src="${rc.contextPath}/js/shop/address.js?_${date.systemTime}"></script>
+<script src="/js/shop/address.js?_"></script>
 </body>
 </html>

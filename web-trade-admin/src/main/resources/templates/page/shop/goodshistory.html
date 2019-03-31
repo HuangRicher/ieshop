@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
-    #parse("sys/header.html")
+    <div th:replace="page/sys/header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -15,9 +15,9 @@
                 <i-button @click="query">查询</i-button>
             </div>
             <div class="buttons-group">
-                #if($shiro.hasPermission("goods:back"))
+                <shiro:hasPermission name="goods:back">
                 <i-button type="warning" @click="back"><i class="fa fa-pencil-square-o"></i>&nbsp;恢复</i-button>
-                #end
+                </shiro:hasPermission>
             </div>
         </Row>
         <table id="jqGrid"></table>
@@ -26,6 +26,6 @@
 
 </div>
 
-<script src="${rc.contextPath}/js/shop/goodshistory.js?_${date.systemTime}"></script>
+<script src="/js/shop/goodshistory.js?_"></script>
 </body>
 </html>

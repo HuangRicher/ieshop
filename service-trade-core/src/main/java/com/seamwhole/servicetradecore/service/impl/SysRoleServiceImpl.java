@@ -69,6 +69,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         role.setCreateUserId(roleModel.getCreateUserId());
         role.setDeptId(roleModel.getDeptId());
         role.setRoleName(roleModel.getRoleName());
+        role.setRemark(roleModel.getRemark());
         role.setCreateTime(new Date());
         sysRoleMapper.insertSelective(role);
 
@@ -90,6 +91,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         role.setCreateUserId(roleModel.getCreateUserId());
         role.setDeptId(roleModel.getDeptId());
         role.setRoleName(roleModel.getRoleName());
+        role.setRemark(roleModel.getRemark());
         sysRoleMapper.updateByPrimaryKeySelective(role);
 
         //检查权限是否越权

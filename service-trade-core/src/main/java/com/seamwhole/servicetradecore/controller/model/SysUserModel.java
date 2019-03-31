@@ -6,6 +6,7 @@ import java.util.List;
 
 public class SysUserModel implements Serializable {
 
+    private Long createUserId;
     private Integer roleId;
     private Long userId;
     private String username;
@@ -135,4 +136,11 @@ public class SysUserModel implements Serializable {
         this.roleIdList = roleIdList;
     }
 
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
 }

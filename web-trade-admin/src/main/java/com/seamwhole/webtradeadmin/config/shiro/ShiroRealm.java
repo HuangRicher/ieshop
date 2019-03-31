@@ -5,6 +5,7 @@ import com.seamwhole.webtradeadmin.redis.RedisService;
 import com.seamwhole.webtradeadmin.service.SysUserRoleMenuService;
 import com.seamwhole.webtradeadmin.shiro.SysMenuDO;
 import com.seamwhole.webtradeadmin.shiro.SysUser;
+import com.seamwhole.webtradeadmin.util.StringDataUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -76,7 +77,7 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         //密码错误
-        if (!password.equals(user.getPassword())) {
+        if (!StringDataUtils.md5(password,user.getUsername()).equals(user.getPassword())) {
             throw new IncorrectCredentialsException("账号或密码不正确");
         }
 
