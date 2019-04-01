@@ -1,5 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.OrderGoods;
+import com.seamwhole.webtradeadmin.service.OrderGoodsService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +25,8 @@ public class OrderGoodsController {
 	@RequiresPermissions("ordergoods:list")
 	public ResponseObject list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
-
-		List<OrderGoodsEntity> orderGoodsList = orderGoodsService.queryList(query);
-		int total = orderGoodsService.queryTotal(query);
-
-		PageUtils pageUtil = new PageUtils(orderGoodsList, total, query.getLimit(), query.getPage());
-
-		return ResponseObject.ok().put("page", pageUtil);
+		PagesInfo<OrderGoods> page=orderGoodsService.queryByPage(params);
+		return ResponseObject.ok().put("page", page);
 	}
 
 
@@ -39,8 +36,7 @@ public class OrderGoodsController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("ordergoods:info")
 	public ResponseObject info(@PathVariable("id") Integer id){
-		OrderGoodsEntity orderGoods = orderGoodsService.queryObject(id);
-
+		OrderGoods orderGoods = orderGoodsService.queryObject(id);
 		return ResponseObject.ok().put("orderGoods", orderGoods);
 	}
 
@@ -49,9 +45,8 @@ public class OrderGoodsController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("ordergoods:save")
-	public ResponseObject save(@RequestBody OrderGoodsEntity orderGoods){
+	public ResponseObject save(@RequestBody OrderGoods orderGoods){
 		orderGoodsService.save(orderGoods);
-
 		return ResponseObject.ok();
 	}
 
@@ -60,9 +55,8 @@ public class OrderGoodsController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("ordergoods:update")
-	public ResponseObject update(@RequestBody OrderGoodsEntity orderGoods){
+	public ResponseObject update(@RequestBody OrderGoods orderGoods){
 		orderGoodsService.update(orderGoods);
-
 		return ResponseObject.ok();
 	}
 
@@ -73,7 +67,6 @@ public class OrderGoodsController {
 	@RequiresPermissions("ordergoods:delete")
 	public ResponseObject delete(@RequestBody Integer[] ids){
 		orderGoodsService.deleteBatch(ids);
-
 		return ResponseObject.ok();
 	}
 
@@ -82,9 +75,7 @@ public class OrderGoodsController {
 	 */
 	@RequestMapping("/queryAll")
 	public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
-
-		List<OrderGoodsEntity> list = orderGoodsService.queryList(params);
-
+		List<OrderGoods> list = orderGoodsService.queryList(params);
 		return ResponseObject.ok().put("list", list);
 	}
 }

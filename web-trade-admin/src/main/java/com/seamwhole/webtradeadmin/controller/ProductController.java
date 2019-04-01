@@ -1,5 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.Product;
+import com.seamwhole.webtradeadmin.info.ProductDO;
+import com.seamwhole.webtradeadmin.service.ProductService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +15,9 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("/product")
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
@@ -23,14 +28,8 @@ public class ProductController {
     @RequiresPermissions("product:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<ProductEntity> productList = productService.queryList(query);
-        int total = productService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(productList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<ProductDO> page=productService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -39,8 +38,7 @@ public class ProductController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("product:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        ProductEntity product = productService.queryObject(id);
-
+        Product product = productService.queryObject(id);
         return ResponseObject.ok().put("product", product);
     }
 
@@ -49,9 +47,8 @@ public class ProductController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("product:save")
-    public ResponseObject save(@RequestBody ProductEntity product) {
+    public ResponseObject save(@RequestBody Product product) {
         productService.save(product);
-
         return ResponseObject.ok();
     }
 
@@ -60,9 +57,8 @@ public class ProductController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("product:update")
-    public ResponseObject update(@RequestBody ProductEntity product) {
+    public ResponseObject update(@RequestBody Product product) {
         productService.update(product);
-
         return ResponseObject.ok();
     }
 
@@ -73,7 +69,6 @@ public class ProductController {
     @RequiresPermissions("product:delete")
     public ResponseObject delete(@RequestBody Integer[] ids) {
         productService.deleteBatch(ids);
-
         return ResponseObject.ok();
     }
 
@@ -85,9 +80,7 @@ public class ProductController {
      */
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
-
-        List<ProductEntity> list = productService.queryList(params);
-
+        List<ProductDO> list = productService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -101,8 +94,7 @@ public class ProductController {
     public ResponseObject queryByGoodsId(@PathVariable("goodsId") String goodsId) {
         Map<String, Object> params = new HashMap<>();
         params.put("goodsId", goodsId);
-        List<ProductEntity> list = productService.queryList(params);
-
+        List<ProductDO> list = productService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 }

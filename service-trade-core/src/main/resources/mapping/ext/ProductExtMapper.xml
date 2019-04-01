@@ -39,4 +39,33 @@
       </otherwise>
     </choose>
   </select>
+
+  <select id="queryShopProductList" resultMap="BaseResultMap">
+    select
+    ishop_product.id,
+    ishop_product.goods_id,
+    ishop_product.goods_specification_ids,
+    ishop_product.goods_sn,
+    ishop_product.goods_number,
+    ishop_product.retail_price,
+    ishop_product.market_price,
+    ishop_goods.name goods_name
+    from ishop_product
+    LEFT JOIN ishop_goods ON ishop_product.goods_id = ishop_goods.id
+    WHERE 1=1
+    <if test="goodsId != null and goodsId.trim() != ''">
+      AND ishop_product.goods_id = #{goodsId}
+    </if>
+    <if test="goodsName != null and goodsName.trim() != ''">
+      AND ishop_goods.name LIKE concat('%',#{goodsName},'%')
+    </if>
+    <choose>
+      <when test="sidx != null and sidx.trim() != ''">
+        order by ${sidx} ${order}
+      </when>
+      <otherwise>
+        order by ishop_product.id desc
+      </otherwise>
+    </choose>
+  </select>
 </mapper>

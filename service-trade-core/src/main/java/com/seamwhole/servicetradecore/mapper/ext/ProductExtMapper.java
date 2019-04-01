@@ -11,4 +11,6 @@ public interface ProductExtMapper {
     ProductDO queryObject(@Param("id") Integer id);
 
     List<ProductDO> queryList(Map<String,Object> map);
+
+    List<ProductDO> queryShopProductList(Map<String,Object> map);
 }

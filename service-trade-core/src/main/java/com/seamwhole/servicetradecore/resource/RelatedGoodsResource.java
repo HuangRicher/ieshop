@@ -20,25 +20,26 @@ public class RelatedGoodsResource {
     @PostMapping("/queryByPage")
     public PagesInfo<RelatedGoods> queryByPage(@RequestBody Map<String, Object> params){
         PageInfo<RelatedGoods> pageInfo=relatedGoodsService.queryByPage(params,Integer.valueOf((String)params.get("page")),Integer.valueOf((String)params.get("limit")));
+        return new PagesInfo<RelatedGoods>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(), pageInfo.getPages(),pageInfo.getList());
     }
 
     @GetMapping("/queryObject/{id}")
     public RelatedGoods queryObject(@PathVariable("id") Integer id){
-
+        return relatedGoodsService.getById(id);
     }
 
     @PostMapping("/save")
     public void save(@RequestBody RelatedGoods relatedGoods){
-
+        relatedGoodsService.save(relatedGoods);
     }
 
     @PostMapping("/update")
     public void update(@RequestBody RelatedGoods relatedGoods){
-
+        relatedGoodsService.updateById(relatedGoods);
     }
 
     @PostMapping("/deleteBatch")
     public void deleteBatch(@RequestBody Integer[] ids){
-
+        relatedGoodsService.deleteBatch(ids);
     }
 }

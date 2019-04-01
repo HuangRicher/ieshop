@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.ProductDO;
 import com.seamwhole.servicetradecore.model.Product;
 
@@ -21,4 +22,13 @@ public interface ProductService {
     void delete(Integer id);
 
 
+    List<ProductDO> queryShopProductList(Map<String, Object> params);
+
+    void deleteBatch(Integer[] ids);
+
+    void updateById(Product product);
+
+    Product getById(Integer id);
+
+    PageInfo<ProductDO> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
 }
