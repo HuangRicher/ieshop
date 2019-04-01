@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopCartDO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="session_id" property="sessionId" jdbcType="CHAR" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
     <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
@@ -50,6 +51,20 @@
       </when>
       <otherwise>
         order by a.id desc
+      </otherwise>
+    </choose>
+  </select>
+
+  <select id="queryShopUserList" resultMap="ResultMapWithBLOBs">
+    select a.* ,b.username as user_name
+    from ishop_cart a
+    left join ieshop_user b on a.user_id = b.id
+    <choose>
+      <when test="sidx != null and sidx.trim() != ''">
+        order by ${sidx} ${order}
+      </when>
+      <otherwise>
+        order by id desc
       </otherwise>
     </choose>
   </select>

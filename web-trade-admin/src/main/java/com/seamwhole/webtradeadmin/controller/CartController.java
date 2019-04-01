@@ -1,6 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.ShopCart;
+import com.seamwhole.webtradeadmin.info.ShopCartDO;
 import com.seamwhole.webtradeadmin.service.CartService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,14 +29,8 @@ public class CartController {
 	@RequiresPermissions("cart:list")
 	public ResponseObject list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
-
-		List<CartEntity> cartList = cartService.queryList(query);
-		int total = cartService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(cartList, total, query.getLimit(), query.getPage());
-		
-		return ResponseObject.ok().put("page", pageUtil);
+		PagesInfo<ShopCartDO> page=cartService.queryByPage(params);
+		return ResponseObject.ok().put("page", page);
 	}
 	
 	
@@ -43,8 +40,7 @@ public class CartController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("cart:info")
 	public ResponseObject info(@PathVariable("id") Integer id){
-		CartEntity cart = cartService.queryObject(id);
-		
+		ShopCart cart = cartService.queryObject(id);
 		return ResponseObject.ok().put("cart", cart);
 	}
 	
@@ -53,9 +49,8 @@ public class CartController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("cart:save")
-	public ResponseObject save(@RequestBody CartEntity cart){
+	public ResponseObject save(@RequestBody ShopCart cart){
 		cartService.save(cart);
-		
 		return ResponseObject.ok();
 	}
 	
@@ -64,9 +59,8 @@ public class CartController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("cart:update")
-	public ResponseObject update(@RequestBody CartEntity cart){
+	public ResponseObject update(@RequestBody ShopCart cart){
 		cartService.update(cart);
-		
 		return ResponseObject.ok();
 	}
 	
@@ -77,7 +71,6 @@ public class CartController {
 	@RequiresPermissions("cart:delete")
 	public ResponseObject delete(@RequestBody Integer[] ids){
 		cartService.deleteBatch(ids);
-		
 		return ResponseObject.ok();
 	}
 	

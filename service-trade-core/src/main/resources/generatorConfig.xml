@@ -69,7 +69,8 @@
         <!--<table tableName="ishop_token" domainObjectName="ShopToken"></table>-->
         <!--<table tableName="ishop_user_coupon" domainObjectName="UserCoupon"></table>-->
         <!--<table tableName="ishop_user_level" domainObjectName="UserLevel"></table>-->
-        <table tableName="ishop_user" domainObjectName="ShopUser"></table>
+        <!--<table tableName="ishop_user" domainObjectName="ShopUser"></table>-->
+        <table tableName="ishop_shipping" domainObjectName="ShopShipping"></table>
         <!--<table tableName="ishop_sms_log" domainObjectName="SmsLog"></table>-->
         <!--<table tableName="sys_config" domainObjectName="SysConfig"></table>-->
         <!--<table tableName="sys_dept" domainObjectName="SysDept"></table>-->

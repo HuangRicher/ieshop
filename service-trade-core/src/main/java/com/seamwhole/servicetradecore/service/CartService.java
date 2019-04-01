@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.ShopCart;
 
@@ -11,6 +12,8 @@ public interface CartService {
     ShopCart queryObject(Integer id);
 
     List<ShopCartDO> queryList(Integer userId, String sessionId, Integer goodsId, Integer productId, Integer checked, String order);
+
+    PageInfo<ShopCartDO> queryByPage(Map<String,Object> params,Integer pageNum,Integer pageSize);
 
     int queryTotal(Map<String, Object> map);
 

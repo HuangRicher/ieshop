@@ -1,5 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.ShopCartMapper;
 import com.seamwhole.servicetradecore.mapper.ext.ShopCartExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
@@ -35,6 +38,12 @@ public class CartServiceImpl implements CartService {
         return cartInfoList;
     }
 
+    @Override
+    public PageInfo<ShopCartDO> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<ShopCartDO> page= PageHelper.startPage(pageNum,pageSize);
+        shopCartExtMapper.queryShopUserList(params);
+        return page.toPageInfo();
+    }
 
     public int queryTotal(Map<String, Object> map) {
         ShopCartExample example=new ShopCartExample();

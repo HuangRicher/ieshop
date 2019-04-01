@@ -14,4 +14,10 @@ public interface TopicService {
     List<ShopTopic> queryList(Map<String, Object> map);
 
     PageInfo<ShopTopic> queryByPage(Map<String, Object> map,Integer pageNum,Integer pageSize);
+
+    void save(ShopTopic topic);
+
+    void updateById(ShopTopic topic);
+
+    void deleteBatch(Integer[] ids);
 }
