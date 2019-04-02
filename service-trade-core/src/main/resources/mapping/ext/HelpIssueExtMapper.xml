@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seamwhole.servicetradecore.mapper.ext.HelpIssueExtMapper">
+
+	<resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.HelpIssueDO" >
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="type_id" property="typeId" jdbcType="INTEGER" />
+		<result column="question" property="question" jdbcType="VARCHAR" />
+		<result column="answer" property="answer" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="queryShopHelpIssueList" resultMap="BaseResultMap">
+		select
+		ishop_help_issue.id,
+		ishop_help_issue.type_id,
+		ishop_help_issue.question,
+		ishop_help_issue.answer,
+		ishop_help_issue.sort,
+		ishop_help_type.type_name
+		from ishop_help_issue
+		LEFT JOIN ishop_help_type ON ishop_help_issue.type_id = ishop_help_type.id
+		WHERE 1=1
+		<if test="typeName != null and typeName.trim() != ''">
+			AND ishop_help_type.type_name LIKE concat('%',#{typeName},'%')
+		</if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by type_id desc
+			</otherwise>
+        </choose>
+	</select>
+
+</mapper>

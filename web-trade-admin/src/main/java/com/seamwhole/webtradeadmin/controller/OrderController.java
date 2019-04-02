@@ -1,5 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.Order;
+import com.seamwhole.webtradeadmin.info.OrderDO;
+import com.seamwhole.webtradeadmin.service.OrderService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +26,8 @@ public class OrderController {
     @RequiresPermissions("order:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         // 查询列表数据
-        Query query = new Query(params);
-
-        List<OrderEntity> orderList = orderService.queryList(query);
-        int total = orderService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<OrderDO> page=orderService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
 
@@ -39,8 +37,7 @@ public class OrderController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("order:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        OrderEntity order = orderService.queryObject(id);
-
+        OrderDO order = orderService.queryObject(id);
         return ResponseObject.ok().put("order", order);
     }
 
@@ -49,9 +46,8 @@ public class OrderController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("order:save")
-    public ResponseObject save(@RequestBody OrderEntity order) {
+    public ResponseObject save(@RequestBody Order order) {
         orderService.save(order);
-
         return ResponseObject.ok();
     }
 
@@ -60,9 +56,8 @@ public class OrderController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("order:update")
-    public ResponseObject update(@RequestBody OrderEntity order) {
+    public ResponseObject update(@RequestBody Order order) {
         orderService.update(order);
-
         return ResponseObject.ok();
     }
 
@@ -73,7 +68,6 @@ public class OrderController {
     @RequiresPermissions("order:delete")
     public ResponseObject delete(@RequestBody Integer[] ids) {
         orderService.deleteBatch(ids);
-
         return ResponseObject.ok();
     }
 
@@ -82,9 +76,7 @@ public class OrderController {
      */
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
-
-        List<OrderEntity> list = orderService.queryList(params);
-
+        List<OrderDO> list = orderService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -94,7 +86,6 @@ public class OrderController {
     @RequestMapping("/queryTotal")
     public ResponseObject queryTotal(@RequestParam Map<String, Object> params) {
         int sum = orderService.queryTotal(params);
-
         return ResponseObject.ok().put("sum", sum);
     }
 
@@ -108,7 +99,6 @@ public class OrderController {
     @RequiresPermissions("order:confirm")
     public ResponseObject confirm(@RequestBody Integer id) {
         orderService.confirm(id);
-
         return ResponseObject.ok();
     }
 
@@ -120,9 +110,8 @@ public class OrderController {
      */
     @RequestMapping("/sendGoods")
     @RequiresPermissions("order:sendGoods")
-    public ResponseObject sendGoods(@RequestBody OrderEntity order) {
+    public ResponseObject sendGoods(@RequestBody Order order) {
         orderService.sendGoods(order);
-
         return ResponseObject.ok();
     }
 }

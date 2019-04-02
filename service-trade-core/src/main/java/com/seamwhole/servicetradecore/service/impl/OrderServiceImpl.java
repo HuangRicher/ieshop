@@ -1,7 +1,9 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
 import com.seamwhole.servicetradecore.domain.BuyGoods;
 import com.seamwhole.servicetradecore.mapper.*;
@@ -40,7 +42,8 @@ public class OrderServiceImpl implements OrderService {
     private ProductService productService;
     @Autowired
     private RedisService redisService;
-
+    @Autowired
+    private ShippingService shippingService;
 
     public OrderDO queryObject(Integer id) {
         return orderExtMapper.queryObject(id);
@@ -216,4 +219,61 @@ public class OrderServiceImpl implements OrderService {
         return resultObj;
     }
 
+    @Override
+    public PageInfo<OrderDO> queryShopOrderByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<OrderDO> page=PageHelper.startPage(pageNum,pageSize);
+        orderExtMapper.queryShopOrderList(params);
+        return page.toPageInfo();
+    }
+
+    @Override
+    public OrderDO getShopOrderById(Integer id) {
+        return orderExtMapper.queryShopOrderObject(id);
+    }
+
+    @Override
+    public List<OrderDO> queryShopOrderList(Map<String, Object> params) {
+        return orderExtMapper.queryShopOrderList(params);
+    }
+
+    @Override
+    public int getTotalCount(Map<String, Object> params) {
+        OrderExample example=new OrderExample();
+        return orderMapper.countByExample(example);
+    }
+
+    @Override
+    public void confirm(Integer id) {
+        OrderDO orderEntity = getShopOrderById(id);
+        Integer shippingStatus = orderEntity.getShippingStatus();//发货状态
+        Integer payStatus = orderEntity.getPayStatus();//付款状态
+        if (2 != payStatus) {
+            throw new CheckException("此订单未付款，不能确认收货！");
+        }
+        if (4 == shippingStatus) {
+            throw new CheckException("此订单处于退货状态，不能确认收货！");
+        }
+        if (0 == shippingStatus) {
+            throw new CheckException("此订单未发货，不能确认收货！");
+        }
+        orderEntity.setShippingStatus(2);
+        orderEntity.setOrderStatus(301);
+        orderMapper.updateByPrimaryKeySelective(orderEntity);
+    }
+
+    @Override
+    public void sendGoods(Order order) {
+        Integer payStatus = order.getPayStatus();//付款状态
+        if (2 != payStatus) {
+            throw new CheckException("此订单未付款！");
+        }
+
+        ShopShipping shippingEntity = shippingService.getById(order.getShippingId());
+        if (null != shippingEntity) {
+            order.setShippingName(shippingEntity.getName());
+        }
+        order.setOrderStatus(300);//订单已发货
+        order.setShippingStatus(1);//已发货
+        orderMapper.updateByPrimaryKeySelective(order);
+    }
 }

@@ -1,5 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.ShopChannel;
+import com.seamwhole.webtradeadmin.service.ChannelService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +24,8 @@ public class ChannelController {
     @RequiresPermissions("channel:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<ChannelEntity> channelList = channelService.queryList(query);
-        int total = channelService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(channelList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<ShopChannel> page=channelService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -37,8 +34,7 @@ public class ChannelController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("channel:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        ChannelEntity channel = channelService.queryObject(id);
-
+        ShopChannel channel = channelService.queryObject(id);
         return ResponseObject.ok().put("channel", channel);
     }
 
@@ -47,9 +43,8 @@ public class ChannelController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("channel:save")
-    public ResponseObject save(@RequestBody ChannelEntity channel) {
+    public ResponseObject save(@RequestBody ShopChannel channel) {
         channelService.save(channel);
-
         return ResponseObject.ok();
     }
 
@@ -58,9 +53,8 @@ public class ChannelController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("channel:update")
-    public ResponseObject update(@RequestBody ChannelEntity channel) {
+    public ResponseObject update(@RequestBody ShopChannel channel) {
         channelService.update(channel);
-
         return ResponseObject.ok();
     }
 
@@ -71,7 +65,6 @@ public class ChannelController {
     @RequiresPermissions("channel:delete")
     public ResponseObject delete(@RequestBody Integer[] ids) {
         channelService.deleteBatch(ids);
-
         return ResponseObject.ok();
     }
 
@@ -80,9 +73,7 @@ public class ChannelController {
      */
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
-
-        List<ChannelEntity> list = channelService.queryList(params);
-
+        List<ShopChannel> list = channelService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 }

@@ -1,6 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.HelpType;
+import com.seamwhole.webtradeadmin.service.HelpTypeService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +27,8 @@ public class HelpTypeController {
     @ResponseBody
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<HelpTypeEntity> helpTypeList = helpTypeService.queryList(query);
-        int total = helpTypeService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(helpTypeList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<HelpType> page=helpTypeService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -41,8 +38,7 @@ public class HelpTypeController {
     @RequiresPermissions("helptype:info")
     @ResponseBody
     public ResponseObject info(@PathVariable("id") Integer id) {
-        HelpTypeEntity helpType = helpTypeService.queryObject(id);
-
+        HelpType helpType = helpTypeService.queryObject(id);
         return ResponseObject.ok().put("helpType", helpType);
     }
 
@@ -52,9 +48,8 @@ public class HelpTypeController {
     @RequestMapping("/save")
     @RequiresPermissions("helptype:save")
     @ResponseBody
-    public ResponseObject save(@RequestBody HelpTypeEntity helpType) {
+    public ResponseObject save(@RequestBody HelpType helpType) {
         helpTypeService.save(helpType);
-
         return ResponseObject.ok();
     }
 
@@ -64,9 +59,8 @@ public class HelpTypeController {
     @RequestMapping("/update")
     @RequiresPermissions("helptype:update")
     @ResponseBody
-    public ResponseObject update(@RequestBody HelpTypeEntity helpType) {
+    public ResponseObject update(@RequestBody HelpType helpType) {
         helpTypeService.update(helpType);
-
         return ResponseObject.ok();
     }
 
@@ -78,7 +72,6 @@ public class HelpTypeController {
     @ResponseBody
     public ResponseObject delete(@RequestBody Integer[]ids) {
         helpTypeService.deleteBatch(ids);
-
         return ResponseObject.ok();
     }
 
@@ -88,9 +81,7 @@ public class HelpTypeController {
     @RequestMapping("/queryAll")
     @ResponseBody
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
-
-        List<HelpTypeEntity> list = helpTypeService.queryList(params);
-
+        List<HelpType> list = helpTypeService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 }

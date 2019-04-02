@@ -2,60 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ext.OrderExtMapper">
-
-    <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.seamwhole.servicetradecore.mapper.model.OrderDO" id="orderMap">
-        <result property="id" column="id"/>
-        <result property="order_sn" column="order_sn"/>
-        <result property="user_id" column="user_id"/>
-        <result property="order_status" column="order_status"/>
-        <result property="shipping_status" column="shipping_status"/>
-        <result property="pay_status" column="pay_status"/>
-        <result property="consignee" column="consignee"/>
-        <result property="country" column="country"/>
-        <result property="province" column="province"/>
-        <result property="city" column="city"/>
-        <result property="district" column="district"/>
-        <result property="address" column="address"/>
-        <result property="mobile" column="mobile"/>
-        <result property="postscript" column="postscript"/>
-        <result property="shipping_id" column="shipping_id"/>
-        <result property="shipping_name" column="shipping_name"/>
-        <result property="shipping_code" column="shipping_code"/>
-        <result property="shipping_no" column="shipping_no"/>
-        <result property="pay_id" column="pay_id"/>
-        <result property="pay_name" column="pay_name"/>
-        <result property="shipping_fee" column="shipping_fee"/>
-        <result property="actual_price" column="actual_price"/>
-        <result property="integral" column="integral"/>
-        <result property="integral_money" column="integral_money"/>
-        <result property="order_price" column="order_price"/>
-        <result property="goods_price" column="goods_price"/>
-        <result property="add_time" column="add_time"/>
-        <result property="confirm_time" column="confirm_time"/>
-        <result property="pay_time" column="pay_time"/>
-        <result property="freight_price" column="freight_price"/>
-        <result property="coupon_id" column="coupon_id"/>
-        <result property="parent_id" column="parent_id"/>
-        <result property="coupon_price" column="coupon_price"/>
-        <result property="callback_status" column="callback_status"/>
-        <result property="full_cut_price" column="full_cut_price"/>
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.OrderDO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+        <result column="shipping_status" property="shippingStatus" jdbcType="INTEGER" />
+        <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="district" property="district" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="postscript" property="postscript" jdbcType="VARCHAR" />
+        <result column="shipping_id" property="shippingId" jdbcType="INTEGER" />
+        <result column="shipping_name" property="shippingName" jdbcType="VARCHAR" />
+        <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+        <result column="pay_name" property="payName" jdbcType="VARCHAR" />
+        <result column="shipping_fee" property="shippingFee" jdbcType="DECIMAL" />
+        <result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+        <result column="integral" property="integral" jdbcType="INTEGER" />
+        <result column="integral_money" property="integralMoney" jdbcType="DECIMAL" />
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+        <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="confirm_time" property="confirmTime" jdbcType="TIMESTAMP" />
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+        <result column="freight_price" property="freightPrice" jdbcType="INTEGER" />
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+        <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL" />
+        <result column="callback_status" property="callbackStatus" jdbcType="CHAR" />
+        <result column="shipping_no" property="shippingNo" jdbcType="VARCHAR" />
+        <result column="full_cut_price" property="fullCutPrice" jdbcType="DECIMAL" />
+        <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+        <result column="shipping_code" property="shippingCode" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
     </resultMap>
+  
 
-    <select id="queryObject" resultMap="orderMap">
+    <select id="queryObject" resultMap="BaseResultMap">
 		select a.*,b.code as  shipping_code
-		from nideshop_order a
-		left join nideshop_shipping b on a.shipping_id = b.id
+		from ishop_order a
+		left join ishop_shipping b on a.shipping_id = b.id
 		where a.id = #{value}
 	</select>
 
-    <select id="queryList" resultMap="orderMap">
-        select * from nideshop_order
-        <where>
-            <if test="user_id != null">
-                and user_id = #{user_id}
-            </if>
-        </where>
+    <select id="queryShopOrderObject" resultMap="BaseResultMap">
+		select o.*,u.username as username
+        from ishop_order o
+        left join ishop_user u on o.user_id = u.id
+        where o.id = #{value}
+	</select>
+
+
+    <select id="queryShopOrderList" resultMap="BaseResultMap">
+        select o.*,u.username as username
+        from ishop_order o
+        left join ishop_user u on o.user_id = u.id
+        WHERE 1=1
+        <if test="orderSn != null and orderSn.trim() != ''">
+            AND o.order_sn LIKE concat('%',#{orderSn},'%')
+        </if>
+        <if test="shippingStatus != null and shippingStatus.trim() != ''">
+            AND o.shipping_status = #{shippingStatus}
+        </if>
+        <if test="payStatus != null and payStatus.trim() != ''">
+            AND o.pay_status = #{payStatus}
+        </if>
+        <if test="orderStatus != null and orderStatus.trim() != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+        <if test="orderType != null and orderType.trim() != ''">
+            AND o.order_type = #{orderType}
+        </if>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -64,13 +86,6 @@
                 order by id desc
             </otherwise>
         </choose>
-        <if test="offset != null and limit != null">
-            limit #{offset}, #{limit}
-        </if>
     </select>
-
-    <select id="queryTotal" resultType="int">
-		select count(*) from nideshop_order
-	</select>
 
 </mapper>

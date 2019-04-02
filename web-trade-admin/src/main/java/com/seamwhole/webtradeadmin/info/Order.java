@@ -1,4 +1,4 @@
-package com.seamwhole.servicetradecore.model;
+package com.seamwhole.webtradeadmin.info;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -1,6 +1,4 @@
-package com.seamwhole.servicetradecore.mapper.model;
-
-import com.seamwhole.servicetradecore.model.Order;
+package com.seamwhole.webtradeadmin.info;
 
 import java.io.Serializable;
 

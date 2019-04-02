@@ -1,6 +1,10 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.HelpIssue;
+import com.seamwhole.webtradeadmin.info.HelpIssueDO;
+import com.seamwhole.webtradeadmin.service.HelpIssueService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("helpissue")
+@RequestMapping("/helpissue")
 public class HelpIssueController {
     @Autowired
     private HelpIssueService helpIssueService;
@@ -24,14 +28,8 @@ public class HelpIssueController {
     @ResponseBody
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<HelpIssueEntity> helpIssueList = helpIssueService.queryList(query);
-        int total = helpIssueService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(helpIssueList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<HelpIssueDO> page=helpIssueService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -41,8 +39,7 @@ public class HelpIssueController {
     @RequiresPermissions("helpissue:info")
     @ResponseBody
     public ResponseObject info(@PathVariable("id") Integer id) {
-        HelpIssueEntity helpIssue = helpIssueService.queryObject(id);
-
+        HelpIssue helpIssue = helpIssueService.queryObject(id);
         return ResponseObject.ok().put("helpIssue", helpIssue);
     }
 
@@ -52,7 +49,7 @@ public class HelpIssueController {
     @RequestMapping("/save")
     @RequiresPermissions("helpissue:save")
     @ResponseBody
-    public ResponseObject save(@RequestBody HelpIssueEntity helpIssue) {
+    public ResponseObject save(@RequestBody HelpIssue helpIssue) {
         helpIssueService.save(helpIssue);
 
         return ResponseObject.ok();
@@ -64,7 +61,7 @@ public class HelpIssueController {
     @RequestMapping("/update")
     @RequiresPermissions("helpissue:update")
     @ResponseBody
-    public ResponseObject update(@RequestBody HelpIssueEntity helpIssue) {
+    public ResponseObject update(@RequestBody HelpIssue helpIssue) {
         helpIssueService.update(helpIssue);
 
         return ResponseObject.ok();
@@ -89,7 +86,7 @@ public class HelpIssueController {
     @ResponseBody
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<HelpIssueEntity> list = helpIssueService.queryList(params);
+        List<HelpIssueDO> list = helpIssueService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }
