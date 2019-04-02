@@ -1,6 +1,10 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.Category;
+import com.seamwhole.webtradeadmin.service.CategoryService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
+import org.apache.commons.configuration.tree.TreeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +27,8 @@ public class CategoryController {
     @RequiresPermissions("category:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-
-        List<CategoryEntity> categoryList = categoryService.queryList(query);
-        int total = categoryService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(categoryList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<Category> page=categoryService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -39,8 +37,7 @@ public class CategoryController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("category:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        CategoryEntity category = categoryService.queryObject(id);
-
+        Category category = categoryService.queryObject(id);
         return ResponseObject.ok().put("category", category);
     }
 
@@ -49,7 +46,7 @@ public class CategoryController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("category:save")
-    public ResponseObject save(@RequestBody CategoryEntity category) {
+    public ResponseObject save(@RequestBody Category category) {
         categoryService.save(category);
 
         return ResponseObject.ok();
@@ -60,7 +57,7 @@ public class CategoryController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("category:update")
-    public ResponseObject update(@RequestBody CategoryEntity category) {
+    public ResponseObject update(@RequestBody Category category) {
         categoryService.update(category);
 
         return ResponseObject.ok();
@@ -83,9 +80,9 @@ public class CategoryController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<CategoryEntity> list = categoryService.queryList(params);
+        List<Category> list = categoryService.queryList(params);
         //添加顶级菜单
-        CategoryEntity root = new CategoryEntity();
+        Category root = new CategoryEntity();
         root.setId(0);
         root.setName("一级分类");
         root.setParentId(-1);
@@ -99,12 +96,12 @@ public class CategoryController {
      */
     @RequestMapping("/getAreaTree")
     public ResponseObject getAreaTree() {
-        List<CategoryEntity> list = categoryService.queryList(new HashMap<String, Object>());
-        for (CategoryEntity sysRegionEntity : list) {
+        List<Category> list = categoryService.queryList(new HashMap<String, Object>());
+        for (Category sysRegionEntity : list) {
             sysRegionEntity.setValue(sysRegionEntity.getId() + "");
             sysRegionEntity.setLabel(sysRegionEntity.getName());
         }
-        List<CategoryEntity> node = TreeUtils.factorTree(list);
+        List<Category> node = TreeUtils.factorTree(list);
 
         return ResponseObject.ok().put("node", node);
     }
@@ -118,7 +115,7 @@ public class CategoryController {
     public ResponseObject getCategorySelect() {
         Map<String, Object> map = new HashMap<>();
         map.put("parentId", "0");
-        List<CategoryEntity> list = categoryService.queryList(map);
+        List<Category> list = categoryService.queryList(map);
         return ResponseObject.ok().put("list", list);
     }
 }

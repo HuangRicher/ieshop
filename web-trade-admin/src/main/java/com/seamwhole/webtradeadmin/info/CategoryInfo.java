@@ -1,6 +1,4 @@
-package com.seamwhole.servicetradecore.domain;
-
-import com.seamwhole.servicetradecore.model.Category;
+package com.seamwhole.webtradeadmin.info;
 
 import java.io.Serializable;
 import java.util.List;
