@@ -1,5 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.ShopAttribute;
+import com.seamwhole.webtradeadmin.info.ShopAttributeDO;
+import com.seamwhole.webtradeadmin.service.AttributeService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +26,9 @@ public class AttributeController {
     @RequiresPermissions("attribute:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<ShopAttributeDO> page=attributeService.queryByPage(params);
 
-        List<AttributeEntity> attributeList = attributeService.queryList(query);
-        int total = attributeService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(attributeList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
 
@@ -39,7 +38,7 @@ public class AttributeController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("attribute:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        AttributeEntity attribute = attributeService.queryObject(id);
+        ShopAttribute attribute = attributeService.queryObject(id);
 
         return ResponseObject.ok().put("attribute", attribute);
     }
@@ -49,7 +48,7 @@ public class AttributeController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("attribute:save")
-    public ResponseObject save(@RequestBody AttributeEntity attribute) {
+    public ResponseObject save(@RequestBody ShopAttribute attribute) {
         attributeService.save(attribute);
 
         return ResponseObject.ok();
@@ -60,7 +59,7 @@ public class AttributeController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("attribute:update")
-    public ResponseObject update(@RequestBody AttributeEntity attribute) {
+    public ResponseObject update(@RequestBody ShopAttribute attribute) {
         attributeService.update(attribute);
 
         return ResponseObject.ok();
@@ -83,7 +82,7 @@ public class AttributeController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<AttributeEntity> list = attributeService.queryList(params);
+        List<ShopAttributeDO> list = attributeService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

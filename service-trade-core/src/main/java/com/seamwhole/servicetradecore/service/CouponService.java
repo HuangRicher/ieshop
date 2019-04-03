@@ -1,7 +1,9 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
 import com.seamwhole.servicetradecore.model.Coupon;
+import com.seamwhole.servicetradecore.util.ResponseObject;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +34,10 @@ public interface CouponService {
     CouponDO getUserCoupon(Integer id);
 
     void updateUserCoupon(CouponDO couponVo);
+
+    ResponseObject publish(Map<String, Object> params);
+
+    List<Coupon> queryShopList(Map<String, Object> params);
+
+    PageInfo<Coupon> queryShopCommentByPage(Map<String, Object> params, Integer page, Integer limit);
 }

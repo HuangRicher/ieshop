@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seamwhole.servicetradecore.mapper.ext.ShopAttributeExpMapper">
+
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopAttributeDO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="attribute_category_id" property="attributeCategoryId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="input_type" property="inputType" jdbcType="INTEGER" />
+        <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="queryShopList" resultMap="BaseResultMap">
+        select
+        a.id,
+        a.attribute_category_id,
+        a.name,
+        a.input_type,
+        a.value,
+        a.sort_order,
+        ac.name category_name
+        from ishop_attribute a LEFT JOIN ishop_attribute_category ac
+        ON a.attribute_category_id = ac.id
+        WHERE 1=1
+        <if test="name != null and name.trim() != ''">
+            AND a.name LIKE concat('%', #{name},'%')
+        </if>
+        <if test="categoryName != null and categoryName.trim() != ''">
+            AND ac.name LIKE concat('%', #{categoryName},'%')
+        </if>
+        <if test="attributeCategoryId != null and attributeCategoryId.trim() != ''">
+            AND a.attribute_category_id = #{attributeCategoryId}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.attribute_category_id desc
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

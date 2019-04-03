@@ -1,5 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.ShopAttributeDO;
 import com.seamwhole.servicetradecore.model.ShopAttribute;
 
 import java.util.List;
@@ -22,4 +24,7 @@ public interface AttributeService {
 
     void deleteBatch(Integer[] ids);
 
+    PageInfo<ShopAttributeDO> queryShopAdByPage(Map<String, Object> params, Integer page, Integer limit);
+
+    List<ShopAttributeDO> queryShopList(Map<String, Object> params);
 }

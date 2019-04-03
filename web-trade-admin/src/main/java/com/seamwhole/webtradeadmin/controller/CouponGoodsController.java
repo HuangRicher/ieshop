@@ -1,5 +1,6 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.webtradeadmin.service.CouponGoodsService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

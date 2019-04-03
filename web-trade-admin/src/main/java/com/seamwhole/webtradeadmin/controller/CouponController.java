@@ -1,5 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.Coupon;
+import com.seamwhole.webtradeadmin.service.CouponService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +27,9 @@ public class CouponController {
     @RequiresPermissions("coupon:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-        PageHelper.startPage(query.getPage(), query.getLimit());
-        List<CouponEntity> couponList = couponService.queryList(query);
-        PageUtils pageUtil = new PageUtils(new PageInfo(couponList));
+        PagesInfo<Coupon> page=couponService.queryByPage(params);
 
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
 
@@ -39,7 +39,7 @@ public class CouponController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("coupon:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        CouponEntity coupon = couponService.queryObject(id);
+        Coupon coupon = couponService.queryObject(id);
 
         return ResponseObject.ok().put("coupon", coupon);
     }
@@ -49,7 +49,7 @@ public class CouponController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("coupon:save")
-    public ResponseObject save(@RequestBody CouponEntity coupon) {
+    public ResponseObject save(@RequestBody Coupon coupon) {
         couponService.save(coupon);
 
         return ResponseObject.ok();
@@ -60,7 +60,7 @@ public class CouponController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("coupon:update")
-    public ResponseObject update(@RequestBody CouponEntity coupon) {
+    public ResponseObject update(@RequestBody Coupon coupon) {
         couponService.update(coupon);
 
         return ResponseObject.ok();
@@ -83,7 +83,7 @@ public class CouponController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<CouponEntity> list = couponService.queryList(params);
+        List<Coupon> list = couponService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }
@@ -95,7 +95,7 @@ public class CouponController {
      * @return
      */
     @RequiresPermissions("coupon:publish")
-    @RequestMapping(value = "publish", method = RequestMethod.POST)
+    @RequestMapping(value = "/publish", method = RequestMethod.POST)
     public ResponseObject publish(@RequestBody Map<String, Object> params) {
         return couponService.publish(params);
     }

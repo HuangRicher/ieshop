@@ -1,5 +1,8 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.CouponMapper;
 import com.seamwhole.servicetradecore.mapper.UserCouponMapper;
 import com.seamwhole.servicetradecore.mapper.ext.CouponExtMapper;
@@ -9,6 +12,9 @@ import com.seamwhole.servicetradecore.model.CouponExample;
 import com.seamwhole.servicetradecore.model.UserCoupon;
 import com.seamwhole.servicetradecore.model.UserCouponExample;
 import com.seamwhole.servicetradecore.service.CouponService;
+import com.seamwhole.servicetradecore.util.ResponseObject;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,5 +112,78 @@ public class CouponServiceImpl implements CouponService {
         UserCoupon userCoupon=new UserCoupon();
         userCoupon.setCouponStatus(couponVo.getCoupon_status());
         userCouponMapper.updateByExampleSelective(userCoupon,example);
+    }
+
+    @Override
+    public ResponseObject publish(Map<String, Object> params) {
+        // 发放方式 0：按订单发放 1：按用户发放 2:商品转发送券 3：按商品发放 4:新用户注册  5：线下发放 6评价好评红包（固定或随机红包）
+        Integer sendType = MapUtils.getInteger(params, "sendType");
+        Integer couponId = MapUtils.getInteger(params, "couponId");
+        if (null == sendType) {
+            return ResponseObject.error("发放方式不能为空");
+        }
+        if (null == couponId) {
+            return ResponseObject.error("优惠券不能为空");
+        }
+        if (1 == sendType) {
+            String userIds = MapUtils.getString(params, "userIds"); // 下发用户逗号分割
+            if (StringUtils.isEmpty(userIds)) {
+                return ResponseObject.error("用户不能为空");
+            }
+            //是否发送短信通知
+            boolean sendSms = "true".equals(MapUtils.getString(params, "sendSms"));
+            for (String strUserId : userIds.split(",")) {
+                if (StringUtils.isEmpty(strUserId)) {
+                    continue;
+                }
+                Integer userId = Integer.valueOf(strUserId);
+                UserCoupon userCouponVo = new UserCoupon();
+                userCouponVo.setUserId(userId);
+                userCouponVo.setCouponId(couponId);
+                userCouponVo.setCouponNumber("1");
+                userCouponVo.setAddTime(new Date());
+                userCouponMapper.insertSelective(userCouponVo);
+                if (sendSms) {
+                    //UserEntity userEntity = userDao.queryObject(userId);
+                    // todo 发送短信
+
+                }
+            }
+        } else if (3 == sendType) {
+            String goodsIds = MapUtils.getString(params, "goodsIds"); // 下发商品逗号分割
+            if (StringUtils.isEmpty(goodsIds)) {
+                return ResponseObject.error("商品Id不能为空");
+            }
+            for (String goodsId : goodsIds.split(",")) {
+                if (StringUtils.isEmpty(goodsId)) {
+                    continue;
+                }
+                CouponGoods couponGoodsVo = new CouponGoodsEntity();
+                couponGoodsVo.setCouponId(couponId);
+                couponGoodsVo.setGoodsId(Integer.valueOf(goodsId));
+                couponGoodsDao.save(couponGoodsVo);
+            }
+        } else {
+            return ResponseObject.error("此类优惠券不支持手动发放");
+        }
+        return ResponseObject.ok("发放成功");
+    }
+
+    @Override
+    public List<Coupon> queryShopList(Map<String, Object> params) {
+        CouponExample example=new CouponExample();
+        if(params.get("name")!=null)
+            example.createCriteria().andNameLike("%"+params.get("name")+"%");
+        return couponMapper.selectByExample(example);
+    }
+
+    @Override
+    public PageInfo<Coupon> queryShopCommentByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        CouponExample example=new CouponExample();
+        if(params.get("name")!=null)
+            example.createCriteria().andNameLike("%"+params.get("name")+"%");
+        Page<Coupon> page= PageHelper.startPage(pageNum,pageSize);
+        couponMapper.selectByExample(example);
+        return page.toPageInfo();
     }
 }
