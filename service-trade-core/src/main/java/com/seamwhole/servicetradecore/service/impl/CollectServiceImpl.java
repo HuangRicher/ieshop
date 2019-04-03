@@ -1,8 +1,12 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.ShopCollectMapper;
 import com.seamwhole.servicetradecore.mapper.ext.ShopCollectExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.CollectDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopCollectDO;
 import com.seamwhole.servicetradecore.model.ShopCollect;
 import com.seamwhole.servicetradecore.model.ShopCollectExample;
 import com.seamwhole.servicetradecore.service.CollectService;
@@ -69,4 +73,10 @@ public class CollectServiceImpl implements CollectService {
         shopCollectMapper.deleteByExample(example);
     }
 
+    @Override
+    public PageInfo<ShopCollectDO> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<ShopCollectDO> page= PageHelper.startPage(pageNum,pageSize);
+        shopCollectExtMapper.queryShopCollectList(params);
+        return page.toPageInfo();
+    }
 }

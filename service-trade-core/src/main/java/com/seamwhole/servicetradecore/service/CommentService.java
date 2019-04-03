@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.mapper.model.ShopCommentDO;
 import com.seamwhole.servicetradecore.model.ShopComment;
 
 import java.util.List;
@@ -20,4 +21,17 @@ public interface CommentService {
     int save(ShopComment comment);
 
 
+    PageInfo<ShopCommentDO> queryShopCommentByPage(Map<String, Object> params, Integer page, Integer limit);
+
+    ShopComment getById(Integer id);
+
+    void updateById(ShopComment comment);
+
+    void deleteBatch(Integer[] ids);
+
+    List<ShopCommentDO> queryShopCommentList(Map<String, Object> params);
+
+    void toggleStatus(ShopComment comment);
+
+    int queryShopTotal(Map<String, Object> params);
 }

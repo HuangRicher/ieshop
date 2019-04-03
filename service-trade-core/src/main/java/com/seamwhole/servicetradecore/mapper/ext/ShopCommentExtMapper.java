@@ -1,9 +1,11 @@
 package com.seamwhole.servicetradecore.mapper.ext;
 
+import com.seamwhole.servicetradecore.mapper.model.ShopCommentDO;
 import com.seamwhole.servicetradecore.model.ShopComment;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ShopCommentExtMapper {
 
@@ -21,5 +23,9 @@ public interface ShopCommentExtMapper {
 
     int queryHasPicTotal(@Param("typeId") Integer typeId,
                          @Param("valueId") Integer valueId);
+
+    List<ShopCommentDO> queryShopCommentList(Map<String,Object> map);
+
+    int queryShopCommentTotal(Map<String,Object> map);
 
 }

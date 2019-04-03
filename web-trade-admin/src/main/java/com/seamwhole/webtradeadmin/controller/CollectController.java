@@ -1,5 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.ShopCollect;
+import com.seamwhole.webtradeadmin.info.ShopCollectDO;
+import com.seamwhole.webtradeadmin.service.CollectService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("collect")
 public class CollectController {
+
 	@Autowired
 	private CollectService collectService;
 	
@@ -22,14 +27,8 @@ public class CollectController {
 	@RequiresPermissions("collect:list")
 	public ResponseObject list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
-
-		List<CollectEntity> collectList = collectService.queryList(query);
-		int total = collectService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(collectList, total, query.getLimit(), query.getPage());
-		
-		return ResponseObject.ok().put("page", pageUtil);
+		PagesInfo<ShopCollectDO> page=collectService.queryByPage(params);
+		return ResponseObject.ok().put("page", page);
 	}
 	
 	
@@ -39,8 +38,7 @@ public class CollectController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("collect:info")
 	public ResponseObject info(@PathVariable("id") Integer id){
-		CollectEntity collect = collectService.queryObject(id);
-		
+		ShopCollect collect = collectService.queryObject(id);
 		return ResponseObject.ok().put("collect", collect);
 	}
 	
@@ -49,9 +47,8 @@ public class CollectController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("collect:save")
-	public ResponseObject save(@RequestBody CollectEntity collect){
+	public ResponseObject save(@RequestBody ShopCollect collect){
 		collectService.save(collect);
-		
 		return ResponseObject.ok();
 	}
 	
@@ -60,9 +57,8 @@ public class CollectController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("collect:update")
-	public ResponseObject update(@RequestBody CollectEntity collect){
+	public ResponseObject update(@RequestBody ShopCollect collect){
 		collectService.update(collect);
-		
 		return ResponseObject.ok();
 	}
 	
@@ -73,7 +69,6 @@ public class CollectController {
 	@RequiresPermissions("collect:delete")
 	public ResponseObject delete(@RequestBody Integer[] ids){
 		collectService.deleteBatch(ids);
-		
 		return ResponseObject.ok();
 	}
 	

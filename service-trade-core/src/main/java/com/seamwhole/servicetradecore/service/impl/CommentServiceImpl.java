@@ -5,12 +5,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.ShopCommentMapper;
 import com.seamwhole.servicetradecore.mapper.ext.ShopCommentExtMapper;
+import com.seamwhole.servicetradecore.mapper.model.ShopCommentDO;
 import com.seamwhole.servicetradecore.model.ShopComment;
 import com.seamwhole.servicetradecore.model.ShopCommentExample;
 import com.seamwhole.servicetradecore.service.CommentService;
+import com.seamwhole.servicetradecore.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +102,48 @@ public class CommentServiceImpl implements CommentService {
         return shopCommentMapper.insertSelective(comment);
     }
 
+    @Override
+    public PageInfo<ShopCommentDO> queryShopCommentByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<ShopCommentDO> page=PageHelper.startPage(pageNum,pageSize);
+        shopCommentExtMapper.queryShopCommentList(params);
+        return page.toPageInfo();
+    }
 
+    @Override
+    public ShopComment getById(Integer id) {
+        return shopCommentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void updateById(ShopComment comment) {
+        shopCommentMapper.updateByPrimaryKeySelective(comment);
+    }
+
+    @Override
+    public void deleteBatch(Integer[] ids) {
+        ShopCommentExample example=new ShopCommentExample();
+        example.createCriteria().andIdIn(Arrays.asList(ids));
+        shopCommentMapper.deleteByExample(example);
+    }
+
+    @Override
+    public List<ShopCommentDO> queryShopCommentList(Map<String, Object> params) {
+        /*List<ShopCommentDO> list=shopCommentExtMapper.queryShopCommentList(params);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (ShopCommentDO commentEntity : list) {
+                commentEntity.setContent(Base64.decode(commentEntity.getContent()));
+            }
+        }*/
+        return shopCommentExtMapper.queryShopCommentList(params);
+    }
+
+    @Override
+    public void toggleStatus(ShopComment comment) {
+
+    }
+
+    @Override
+    public int queryShopTotal(Map<String, Object> params) {
+        return shopCommentExtMapper.queryShopCommentTotal(params);
+    }
 }

@@ -1,5 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.CommentPicture;
+import com.seamwhole.webtradeadmin.service.CommentPictureService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("commentpicture")
+@RequestMapping("/commentpicture")
 public class CommentPictureController {
     @Autowired
     private CommentPictureService commentPictureService;
@@ -22,14 +25,9 @@ public class CommentPictureController {
     @RequiresPermissions("commentpicture:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<CommentPicture> page=commentPictureService.queryByPage(params);
 
-        List<CommentPictureEntity> commentPictureList = commentPictureService.queryList(query);
-        int total = commentPictureService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(commentPictureList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -38,7 +36,7 @@ public class CommentPictureController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("commentpicture:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        CommentPictureEntity commentPicture = commentPictureService.queryObject(id);
+        CommentPicture commentPicture = commentPictureService.queryObject(id);
 
         return ResponseObject.ok().put("commentPicture", commentPicture);
     }
@@ -48,7 +46,7 @@ public class CommentPictureController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("commentpicture:save")
-    public ResponseObject save(@RequestBody CommentPictureEntity commentPicture) {
+    public ResponseObject save(@RequestBody CommentPicture commentPicture) {
         commentPictureService.save(commentPicture);
 
         return ResponseObject.ok();
@@ -59,7 +57,7 @@ public class CommentPictureController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("commentpicture:update")
-    public ResponseObject update(@RequestBody CommentPictureEntity commentPicture) {
+    public ResponseObject update(@RequestBody CommentPicture commentPicture) {
         commentPictureService.update(commentPicture);
 
         return ResponseObject.ok();
@@ -82,7 +80,7 @@ public class CommentPictureController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<CommentPictureEntity> list = commentPictureService.queryList(params);
+        List<CommentPicture> list = commentPictureService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

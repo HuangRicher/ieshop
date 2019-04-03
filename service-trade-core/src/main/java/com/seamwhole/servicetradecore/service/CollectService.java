@@ -1,6 +1,8 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.CollectDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopCollectDO;
 import com.seamwhole.servicetradecore.model.ShopCollect;
 
 import java.util.List;
@@ -23,4 +25,5 @@ public interface CollectService {
 
     void deleteBatch(Integer[] ids);
 
+    PageInfo<ShopCollectDO> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
 }

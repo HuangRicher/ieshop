@@ -16,7 +16,16 @@
         <result property="goods_brief" column="goods_brief"/>
         <result property="retail_price" column="retail_price"/>
     </resultMap>
-
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopCollect" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="value_id" property="valueId" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="INTEGER" />
+        <result column="is_attention" property="isAttention" jdbcType="INTEGER" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="value_name" property="valueName" jdbcType="VARCHAR" />
+    </resultMap>
     <select id="queryList" resultMap="collectMap">
         select c.*,g.name, g.list_pic_url as list_pic_url, g.goods_brief as goods_brief, g.retail_price as retail_price
         from ishop_collect c
@@ -37,6 +46,21 @@
             </when>
             <otherwise>
                 order by c.id desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryShopCollectList" resultMap="BaseResultMap">
+        select a.* , b.username as user_name,c.name as value_name
+        from ishop_collect a
+        left join ishop_user b on a.user_id = b.id
+        left join ishop_goods c on a.value_id = c.id
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by a.id desc
             </otherwise>
         </choose>
     </select>

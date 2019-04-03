@@ -4,7 +4,7 @@
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ext.ShopCommentExtMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopComment" >
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopCommentDO" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="type_id" property="typeId" jdbcType="INTEGER" />
         <result column="value_id" property="valueId" jdbcType="INTEGER" />
@@ -12,6 +12,8 @@
         <result column="add_time" property="addTime" jdbcType="BIGINT" />
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="value_name" property="valueName" jdbcType="VARCHAR" />
     </resultMap>
 
 
@@ -72,5 +74,57 @@
         </if>
     </select>
 
+    <select id="queryShopCommentList" resultMap="BaseResultMap">
+        select
+        ishop_comment.id,
+        ishop_comment.type_id,
+        ishop_comment.value_id,
+        ishop_comment.content,
+        ishop_comment.add_time,
+        ishop_comment.status,
+        ishop_comment.user_id,
+        ishop_user.username user_name,
+        ishop_goods.name value_name
+        from ishop_comment LEFT JOIN ishop_user ON ishop_comment.user_id = ishop_user.id
+        LEFT JOIN ishop_goods ON ishop_comment.value_id = ishop_goods.id
+        WHERE 1=1
+        <if test="userName != null and userName.trim() != ''">
+            AND ishop_user.username LIKE concat('%',#{userName},'%')
+        </if>
+        <if test="valueName != null and valueName.trim() != ''">
+            AND ishop_goods.name LIKE concat('%',#{valueName},'%')
+        </if>
+        <if test="status != null">
+            AND ishop_comment.status = #{status}
+        </if>
+        <if test="picUrl == 'true'">
+            AND EXISTS(SELECT 1 FROM ishop_comment_picture WHERE ishop_comment.id = ishop_comment_picture.comment_id)
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by ishop_comment.id desc
+            </otherwise>
+        </choose>
+    </select>
 
+    <select id="queryShopCommentTotal" resultType="int">
+        select count(*) from ishop_comment LEFT JOIN ishop_user ON ishop_comment.user_id = ishop_user.id
+        LEFT JOIN ishop_goods ON ishop_comment.value_id = ishop_goods.id
+        WHERE 1=1
+        <if test="userName != null and userName.trim() != ''">
+            AND ishop_user.username LIKE concat('%',#{userName},'%')
+        </if>
+        <if test="valueName != null and valueName.trim() != ''">
+            AND ishop_goods.name LIKE concat('%',#{valueName},'%')
+        </if>
+        <if test="status != null">
+            AND ishop_comment.status = #{status}
+        </if>
+        <if test="picUrl == 'true'">
+            AND EXISTS(SELECT 1 FROM ishop_comment_picture WHERE ishop_comment.id = ishop_comment_picture.comment_id)
+        </if>
+    </select>
 </mapper>
