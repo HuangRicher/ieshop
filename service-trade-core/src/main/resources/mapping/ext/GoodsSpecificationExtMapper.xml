@@ -13,6 +13,16 @@
         <result property="name" column="name"/>
     </resultMap>
 
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopGoodsSpecificationDO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="specification_id" property="specificationId" jdbcType="INTEGER" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="specification_name" property="specificationName" jdbcType="VARCHAR" />
+    </resultMap>
+
     <select id="queryList" resultMap="goodsSpecificationMap">
         select
         <if test="fields != null and fields != ''">
@@ -21,9 +31,9 @@
         <if test="fields == null or fields == ''">
             gs.*
         </if>
-        from nideshop_goods_specification gs
+        from ishop_goods_specification gs
         <if test="specification == true">
-            inner join nideshop_specification s on gs.specification_id= s.id
+            inner join ishop_specification s on gs.specification_id= s.id
         </if>
         <where>
             <if test="goods_id != null">
@@ -44,6 +54,37 @@
                 order by gs.id desc
             </otherwise>
         </choose>
+    </select>
 
+    <select id="queryShopList" resultMap="BaseResultMap">
+        select
+        ishop_goods_specification.id,
+        ishop_goods_specification.goods_id,
+        ishop_goods_specification.specification_id,
+        ishop_goods_specification.value,
+        ishop_goods_specification.pic_url,
+        ishop_goods.name goods_name,
+        ishop_specification.name specification_name
+        from ishop_goods_specification
+        LEFT JOIN ishop_goods ON ishop_goods.id = ishop_goods_specification.goods_id
+        LEFT JOIN ishop_specification ON ishop_specification.id = ishop_goods_specification.specification_id
+        WHERE 1=1
+        <if test="goodsName != null and goodsName.trim() != ''">
+            AND ishop_goods.name LIKE concat('%',#{goodsName},'%')
+        </if>
+        <if test="goodsId != null">
+            AND ishop_goods_specification.goods_id = #{goodsId}
+        </if>
+        <if test="specificationId != null">
+            AND ishop_goods_specification.specification_id = #{specificationId}
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by ishop_goods_specification.id desc
+            </otherwise>
+        </choose>
     </select>
 </mapper>

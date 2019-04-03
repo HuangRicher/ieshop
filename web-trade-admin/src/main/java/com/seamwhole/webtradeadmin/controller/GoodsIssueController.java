@@ -1,5 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.GoodsIssue;
+import com.seamwhole.webtradeadmin.service.GoodsIssueService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("goodsissue")
+@RequestMapping("/goodsissue")
 public class GoodsIssueController {
     @Autowired
     private GoodsIssueService goodsIssueService;
@@ -21,14 +24,9 @@ public class GoodsIssueController {
     @RequiresPermissions("goodsissue:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<GoodsIssue> page=goodsIssueService.queryByPage(params);
 
-        List<GoodsIssueEntity> goodsIssueList = goodsIssueService.queryList(query);
-        int total = goodsIssueService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(goodsIssueList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -37,7 +35,7 @@ public class GoodsIssueController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("goodsissue:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        GoodsIssueEntity goodsIssue = goodsIssueService.queryObject(id);
+        GoodsIssue goodsIssue = goodsIssueService.queryObject(id);
 
         return ResponseObject.ok().put("goodsIssue", goodsIssue);
     }
@@ -47,7 +45,7 @@ public class GoodsIssueController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("goodsissue:save")
-    public ResponseObject save(@RequestBody GoodsIssueEntity goodsIssue) {
+    public ResponseObject save(@RequestBody GoodsIssue goodsIssue) {
         goodsIssueService.save(goodsIssue);
 
         return ResponseObject.ok();
@@ -58,7 +56,7 @@ public class GoodsIssueController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("goodsissue:update")
-    public ResponseObject update(@RequestBody GoodsIssueEntity goodsIssue) {
+    public ResponseObject update(@RequestBody GoodsIssue goodsIssue) {
         goodsIssueService.update(goodsIssue);
 
         return ResponseObject.ok();
@@ -81,7 +79,7 @@ public class GoodsIssueController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<GoodsIssueEntity> list = goodsIssueService.queryList(params);
+        List<GoodsIssue> list = goodsIssueService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

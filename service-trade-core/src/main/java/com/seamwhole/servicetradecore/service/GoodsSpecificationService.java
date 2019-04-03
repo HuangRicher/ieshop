@@ -1,6 +1,8 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.GoodsSpecificationDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopGoodsSpecificationDO;
 import com.seamwhole.servicetradecore.model.GoodsSpecification;
 
 import java.util.List;
@@ -21,4 +23,7 @@ public interface GoodsSpecificationService {
 
     void deleteBatch(Integer[] ids);
 
+    List<ShopGoodsSpecificationDO> queryShopList(Map<String, Object> params);
+
+    PageInfo<ShopGoodsSpecificationDO> queryShopByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
 }

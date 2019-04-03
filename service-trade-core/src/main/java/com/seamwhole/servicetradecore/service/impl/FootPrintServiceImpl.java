@@ -6,12 +6,14 @@ import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.FootPrintMapper;
 import com.seamwhole.servicetradecore.mapper.ext.FootPrintExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopFootPrintDO;
 import com.seamwhole.servicetradecore.model.FootPrint;
 import com.seamwhole.servicetradecore.model.FootPrintExample;
 import com.seamwhole.servicetradecore.service.FootPrintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +26,6 @@ public class FootPrintServiceImpl implements FootPrintService {
 
     @Autowired
     private FootPrintExtMapper footPrintExtMapper;
-
-
 
 
     public FootPrint queryObject(Integer id) {
@@ -64,5 +64,24 @@ public class FootPrintServiceImpl implements FootPrintService {
         Page<FootPrintDO> page= PageHelper.startPage(pageNum,pageSize);
         footPrintExtMapper.queryListFootprint(userId);
         return page.toPageInfo();
+    }
+
+    @Override
+    public PageInfo<ShopFootPrintDO> queryShopByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<ShopFootPrintDO> page=PageHelper.startPage(pageNum,pageSize);
+        footPrintExtMapper.queryShopFootPrintList(params);
+        return page.toPageInfo();
+    }
+
+    @Override
+    public void updateById(FootPrint footprint) {
+        footPrintMapper.updateByPrimaryKeySelective(footprint);
+    }
+
+    @Override
+    public void deleteBatch(Integer[] ids) {
+        FootPrintExample example=new FootPrintExample();
+        example.createCriteria().andIdIn(Arrays.asList(ids));
+        footPrintMapper.deleteByExample(example);
     }
 }

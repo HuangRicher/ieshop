@@ -1,6 +1,10 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.Goods;
+import com.seamwhole.webtradeadmin.info.ShopGoodsDO;
+import com.seamwhole.webtradeadmin.service.GoodsService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +26,9 @@ public class GoodsController {
     @RequiresPermissions("goods:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<ShopGoodsDO> page=goodsService.queryByPage(params);
 
-        query.put("isDelete", 0);
-        List<GoodsEntity> goodsList = goodsService.queryList(query);
-        int total = goodsService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(goodsList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -39,7 +37,7 @@ public class GoodsController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("goods:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        GoodsEntity goods = goodsService.queryObject(id);
+        Goods goods = goodsService.queryObject(id);
 
         return ResponseObject.ok().put("goods", goods);
     }
@@ -49,7 +47,7 @@ public class GoodsController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("goods:save")
-    public ResponseObject save(@RequestBody GoodsEntity goods) {
+    public ResponseObject save(@RequestBody Goods goods) {
         goodsService.save(goods);
 
         return ResponseObject.ok();
@@ -60,7 +58,7 @@ public class GoodsController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("goods:update")
-    public ResponseObject update(@RequestBody GoodsEntity goods) {
+    public ResponseObject update(@RequestBody Goods goods) {
         goodsService.update(goods);
 
         return ResponseObject.ok();
@@ -84,7 +82,7 @@ public class GoodsController {
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
         params.put("isDelete", 0);
-        List<GoodsEntity> list = goodsService.queryList(params);
+        List<ShopGoodsDO> list = goodsService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }
@@ -99,15 +97,10 @@ public class GoodsController {
     @RequestMapping("/historyList")
     public ResponseObject historyList(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        params.put("isDelete", 1);
+        PagesInfo<ShopGoodsDO> page=goodsService.queryByPage(params);
 
-        query.put("isDelete", 1);
-        List<GoodsEntity> goodsList = goodsService.queryList(query);
-        int total = goodsService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(goodsList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**

@@ -1,5 +1,9 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.GoodsSpecification;
+import com.seamwhole.webtradeadmin.info.ShopGoodsSpecificationDO;
+import com.seamwhole.webtradeadmin.service.GoodsSpecificationService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,7 @@ import java.util.Map;
  * 商品对应规格表值表Controller
  */
 @RestController
-@RequestMapping("goodsspecification")
+@RequestMapping("/goodsspecification")
 public class GoodsSpecificationController {
     @Autowired
     private GoodsSpecificationService goodsSpecificationService;
@@ -24,14 +28,9 @@ public class GoodsSpecificationController {
     @RequiresPermissions("goodsspecification:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<ShopGoodsSpecificationDO> page=goodsSpecificationService.queryByPage(params);
 
-        List<GoodsSpecificationEntity> goodsSpecificationList = goodsSpecificationService.queryList(query);
-        int total = goodsSpecificationService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(goodsSpecificationList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -40,7 +39,7 @@ public class GoodsSpecificationController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("goodsspecification:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        GoodsSpecificationEntity goodsSpecification = goodsSpecificationService.queryObject(id);
+        GoodsSpecification goodsSpecification = goodsSpecificationService.queryObject(id);
 
         return ResponseObject.ok().put("goodsSpecification", goodsSpecification);
     }
@@ -50,7 +49,7 @@ public class GoodsSpecificationController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("goodsspecification:save")
-    public ResponseObject save(@RequestBody GoodsSpecificationEntity goodsSpecification) {
+    public ResponseObject save(@RequestBody GoodsSpecification goodsSpecification) {
         goodsSpecificationService.save(goodsSpecification);
 
         return ResponseObject.ok();
@@ -61,7 +60,7 @@ public class GoodsSpecificationController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("goodsspecification:update")
-    public ResponseObject update(@RequestBody GoodsSpecificationEntity goodsSpecification) {
+    public ResponseObject update(@RequestBody GoodsSpecification goodsSpecification) {
         goodsSpecificationService.update(goodsSpecification);
 
         return ResponseObject.ok();
@@ -84,7 +83,7 @@ public class GoodsSpecificationController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<GoodsSpecificationEntity> list = goodsSpecificationService.queryList(params);
+        List<ShopGoodsSpecificationDO> list = goodsSpecificationService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

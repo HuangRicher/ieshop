@@ -43,6 +43,46 @@
         <result column="order_num" property="orderNum" jdbcType="INTEGER" />
     </resultMap>
 
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopGoodsDO" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+        <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+        <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+        <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+        <result column="goods_brief" property="goodsBrief" jdbcType="VARCHAR" />
+        <result column="is_on_sale" property="isOnSale" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="attribute_category" property="attributeCategory" jdbcType="INTEGER" />
+        <result column="counter_price" property="counterPrice" jdbcType="DECIMAL" />
+        <result column="extra_price" property="extraPrice" jdbcType="DECIMAL" />
+        <result column="is_new" property="isNew" jdbcType="INTEGER" />
+        <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+        <result column="primary_pic_url" property="primaryPicUrl" jdbcType="VARCHAR" />
+        <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
+        <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+        <result column="sell_volume" property="sellVolume" jdbcType="INTEGER" />
+        <result column="primary_product_id" property="primaryProductId" jdbcType="INTEGER" />
+        <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+        <result column="promotion_desc" property="promotionDesc" jdbcType="VARCHAR" />
+        <result column="promotion_tag" property="promotionTag" jdbcType="VARCHAR" />
+        <result column="app_exclusive_price" property="appExclusivePrice" jdbcType="DECIMAL" />
+        <result column="is_app_exclusive" property="isAppExclusive" jdbcType="INTEGER" />
+        <result column="is_limited" property="isLimited" jdbcType="INTEGER" />
+        <result column="is_hot" property="isHot" jdbcType="INTEGER" />
+        <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_user_dept_id" property="createUserDeptId" jdbcType="BIGINT" />
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+        <result column="attribute_category_name" property="attributeCategoryName" jdbcType="VARCHAR" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    </resultMap>
+
     <select id="queryList" resultMap="goodsMap">
         select * from ishop_goods
         where 1 = 1
@@ -209,4 +249,80 @@
             and is_on_sale = #{isOnSale}
         </if>
 	</select>
+
+    <select id="queryShopGoodsList" resultMap="BaseResultMap">
+        select
+        ishop_goods.id,
+        ishop_goods.category_id,
+        ishop_goods.goods_sn,
+        ishop_goods.name,
+        ishop_goods.brand_id,
+        ishop_goods.goods_number,
+        ishop_goods.keywords,
+        ishop_goods.goods_brief,
+        ishop_goods.goods_desc,
+        ishop_goods.is_on_sale,
+        ishop_goods.add_time,
+        ishop_goods.update_time,
+        ishop_goods.sort_order,
+        ishop_goods.is_delete,
+        ishop_goods.attribute_category,
+        ishop_goods.counter_price,
+        ishop_goods.extra_price,
+        ishop_goods.is_new,
+        ishop_goods.goods_unit,
+        ishop_goods.primary_pic_url,
+        ishop_goods.list_pic_url,
+        ishop_goods.retail_price,
+        ishop_goods.sell_volume,
+        ishop_goods.primary_product_id,
+        ishop_goods.unit_price,
+        ishop_goods.promotion_desc,
+        ishop_goods.promotion_tag,
+        ishop_goods.app_exclusive_price,
+        ishop_goods.is_app_exclusive,
+        ishop_goods.is_limited,
+        ishop_goods.is_hot,
+        ishop_goods.market_price,
+        ishop_goods.create_user_id,
+        ishop_goods.create_user_dept_id,
+        ishop_goods.update_user_id,
+        ishop_category.name category_name,
+        ishop_attribute_category.name attribute_category_name,
+        ishop_brand.name brand_name
+        from ishop_goods
+        LEFT JOIN ishop_category
+        ON ishop_goods.category_id = ishop_category.id
+        LEFT JOIN ishop_attribute_category ON ishop_goods.attribute_category = ishop_attribute_category.id
+        LEFT JOIN ishop_brand ON ishop_brand.id = ishop_goods.brand_id
+        WHERE 1=1
+        <!--  数据过滤  -->
+        ${filterSql}
+        <if test="name != null and name != ''">
+            AND ishop_goods.name LIKE concat('%',#{name},'%')
+        </if>
+        AND ishop_goods.is_Delete = #{isDelete}
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by ishop_goods.id desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryShopTotal" resultType="int">
+        select count(*) from ishop_goods WHERE 1=1
+        <!--  数据过滤  -->
+        ${filterSql}
+        <if test="name != null and name != ''">
+            AND name LIKE concat('%',#{name},'%')
+        </if>
+        AND ishop_goods.is_Delete = #{isDelete}
+    </select>
+
+    <select id="queryShopMaxId" resultType="java.lang.Integer" parameterType="map">
+        SELECT MAX(id) FROM nideshop_goods
+    </select>
 </mapper>

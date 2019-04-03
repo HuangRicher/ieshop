@@ -2,6 +2,7 @@ package com.seamwhole.servicetradecore.service;
 
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
+import com.seamwhole.servicetradecore.mapper.model.ShopFootPrintDO;
 import com.seamwhole.servicetradecore.model.FootPrint;
 
 import java.util.List;
@@ -23,4 +24,10 @@ public interface FootPrintService {
     void save(FootPrint footprint);
 
     void deleteByParam(Map<String, Object> map);
+
+    PageInfo<ShopFootPrintDO> queryShopByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
+
+    void updateById(FootPrint footprint);
+
+    void deleteBatch(Integer[] ids);
 }

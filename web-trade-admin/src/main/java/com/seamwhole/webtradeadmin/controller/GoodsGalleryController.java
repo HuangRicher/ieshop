@@ -1,6 +1,10 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.GoodsGallery;
+import com.seamwhole.webtradeadmin.info.GoodsGalleryDO;
+import com.seamwhole.webtradeadmin.service.GoodsGalleryService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +26,9 @@ public class GoodsGalleryController {
     @RequiresPermissions("goodsgallery:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<GoodsGalleryDO> page=goodsGalleryService.queryByPage(params);
 
-        List<GoodsGalleryEntity> goodsGalleryList = goodsGalleryService.queryList(query);
-        int total = goodsGalleryService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(goodsGalleryList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -38,7 +37,7 @@ public class GoodsGalleryController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("goodsgallery:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        GoodsGalleryEntity goodsGallery = goodsGalleryService.queryObject(id);
+        GoodsGallery goodsGallery = goodsGalleryService.queryObject(id);
 
         return ResponseObject.ok().put("goodsGallery", goodsGallery);
     }
@@ -48,7 +47,7 @@ public class GoodsGalleryController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("goodsgallery:save")
-    public ResponseObject save(@RequestBody GoodsGalleryEntity goodsGallery) {
+    public ResponseObject save(@RequestBody GoodsGallery goodsGallery) {
         goodsGalleryService.save(goodsGallery);
 
         return ResponseObject.ok();
@@ -59,7 +58,7 @@ public class GoodsGalleryController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("goodsgallery:update")
-    public ResponseObject update(@RequestBody GoodsGalleryEntity goodsGallery) {
+    public ResponseObject update(@RequestBody GoodsGallery goodsGallery) {
         goodsGalleryService.update(goodsGallery);
 
         return ResponseObject.ok();
@@ -82,7 +81,7 @@ public class GoodsGalleryController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<GoodsGalleryEntity> list = goodsGalleryService.queryList(params);
+        List<GoodsGalleryDO> list = goodsGalleryService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

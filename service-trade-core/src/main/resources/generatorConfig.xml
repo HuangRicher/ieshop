@@ -52,6 +52,7 @@
         <!--<table tableName="ishop_feedback" domainObjectName="FeedBack"></table>-->
         <!--<table tableName="ishop_footprint" domainObjectName="FootPrint"></table>-->
         <!--<table tableName="ishop_goods" domainObjectName="Goods"></table>-->
+        <table tableName="ishop_goods_attribute" domainObjectName="GoodsAttribute"></table>
         <!--<table tableName="ishop_goods_issue" domainObjectName="GoodsIssue"></table>-->
         <!--<table tableName="ishop_goods_gallery" domainObjectName="GoodsGallery"></table>-->
         <!--<table tableName="ishop_goods_specification" domainObjectName="GoodsSpecification"></table>-->
@@ -70,7 +71,7 @@
         <!--<table tableName="ishop_user_coupon" domainObjectName="UserCoupon"></table>-->
         <!--<table tableName="ishop_user_level" domainObjectName="UserLevel"></table>-->
         <!--<table tableName="ishop_user" domainObjectName="ShopUser"></table>-->
-        <table tableName="ishop_shipping" domainObjectName="ShopShipping"></table>
+        <!--<table tableName="ishop_shipping" domainObjectName="ShopShipping"></table>-->
         <!--<table tableName="ishop_sms_log" domainObjectName="SmsLog"></table>-->
         <!--<table tableName="sys_config" domainObjectName="SysConfig"></table>-->
         <!--<table tableName="sys_dept" domainObjectName="SysDept"></table>-->

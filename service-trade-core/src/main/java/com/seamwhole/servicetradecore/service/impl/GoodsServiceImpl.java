@@ -3,18 +3,21 @@ package com.seamwhole.servicetradecore.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.mapper.GoodsMapper;
 import com.seamwhole.servicetradecore.mapper.ext.GoodsExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
-import com.seamwhole.servicetradecore.model.Goods;
-import com.seamwhole.servicetradecore.model.GoodsExample;
+import com.seamwhole.servicetradecore.mapper.model.ShopGoodsDO;
+import com.seamwhole.servicetradecore.model.*;
+import com.seamwhole.servicetradecore.service.GoodsAttributeService;
+import com.seamwhole.servicetradecore.service.GoodsGalleryService;
 import com.seamwhole.servicetradecore.service.GoodsService;
+import com.seamwhole.servicetradecore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Service
@@ -25,6 +28,15 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodsExtMapper goodsExtMapper;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private GoodsAttributeService goodsAttributeService;
+
+    @Autowired
+    private GoodsGalleryService goodsGalleryService;
 
 
 
@@ -84,5 +96,131 @@ public class GoodsServiceImpl implements GoodsService {
         Page<GoodsDO> page= PageHelper.startPage(pageNum,pageSize);
         goodsExtMapper.queryCatalogProductList(map);
         return page.toPageInfo();
+    }
+
+    @Override
+    public PageInfo<ShopGoodsDO> queryShopByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+        Page<ShopGoodsDO> page=PageHelper.startPage(pageNum,pageSize);
+        goodsExtMapper.queryShopGoodsList(params);
+        return page.toPageInfo();
+    }
+
+    @Override
+    public List<ShopGoodsDO> queryShopList(Map<String, Object> params) {
+        return goodsExtMapper.queryShopGoodsList(params);
+    }
+
+    @Override
+    @Transactional
+    public int back(Integer[] ids, Long userId) {
+        int result = 0;
+        for (Integer id : ids) {
+            Goods goodsEntity = queryObject(id);
+            goodsEntity.setIsDelete(0);
+            goodsEntity.setIsOnSale(1);
+            goodsEntity.setUpdateUserId(userId);
+            goodsEntity.setUpdateTime(new Date());
+            result += goodsMapper.updateByPrimaryKeySelective(goodsEntity);
+        }
+        return result;
+    }
+
+    @Override
+    public int queryShopToTal(Map<String, Object> params) {
+        return goodsExtMapper.queryShopTotal(params);
+    }
+
+    @Override
+    public int enSale(Integer id, Long userId) {
+        Goods goodsEntity = queryObject(id);
+        if (1 == goodsEntity.getIsOnSale()) {
+            throw new CheckException("此商品已处于上架状态！");
+        }
+        goodsEntity.setIsOnSale(1);
+        goodsEntity.setUpdateUserId(userId);
+        goodsEntity.setUpdateTime(new Date());
+        return goodsMapper.updateByPrimaryKeySelective(goodsEntity);
+    }
+
+    @Override
+    public int unSale(Integer id, Long userId) {
+        Goods goodsEntity = queryObject(id);
+        if (0 == goodsEntity.getIsOnSale()) {
+            throw new CheckException("此商品已处于下架状态！");
+        }
+        goodsEntity.setIsOnSale(0);
+        goodsEntity.setUpdateUserId(userId);
+        goodsEntity.setUpdateTime(new Date());
+        return goodsMapper.updateByPrimaryKeySelective(goodsEntity);
+    }
+
+    @Override
+    @Transactional
+    public int deleteShopBatch(Integer[] ids, Long userId) {
+        int result = 0;
+        for (Integer id : ids) {
+            result += deleteShopGoods(id, userId);
+        }
+        return result;
+    }
+
+    @Override
+    public int deleteShopGoods(Integer id, Long userId) {
+        Goods goodsEntity = queryObject(id);
+        goodsEntity.setIsDelete(1);
+        goodsEntity.setIsOnSale(0);
+        goodsEntity.setUpdateUserId(userId);
+        goodsEntity.setUpdateTime(new Date());
+        return goodsMapper.updateByPrimaryKeySelective(goodsEntity);
+    }
+
+    @Override
+    public int saveShopGoods(Goods goods, Long userId, Long deptId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", goods.getName());
+        List<ShopGoodsDO> list = queryShopList(map);
+        if (null != list && list.size() != 0) {
+            throw new CheckException("商品名称已存在！");
+        }
+        Integer id = goodsExtMapper.queryShopMaxId() + 1;
+        goods.setId(id);
+
+        //保存产品信息
+        Product productEntity = new Product();
+        productEntity.setGoodsId(id);
+        productEntity.setGoodsSn(goods.getGoodsSn());
+        productEntity.setGoodsNumber(goods.getGoodsNumber());
+        productEntity.setRetailPrice(goods.getRetailPrice());
+        productEntity.setMarketPrice(goods.getMarketPrice());
+        productEntity.setGoodsSpecificationIds("");
+        productService.save(productEntity);
+
+        goods.setAddTime(new Date());
+        goods.setPrimaryProductId(productEntity.getId());
+
+        //保存商品详情页面显示的属性
+        List<GoodsAttribute> attributeEntityList = goods.getAttributeEntityList();
+        if (null != attributeEntityList && attributeEntityList.size() > 0) {
+            for (GoodsAttribute item : attributeEntityList) {
+                item.setGoodsId(id);
+                goodsAttributeService.save(item);
+            }
+        }
+
+        //商品轮播图
+        List<GoodsGallery> galleryEntityList = goods.getGoodsImgList();
+        if (null != galleryEntityList && galleryEntityList.size() > 0) {
+            for (GoodsGallery galleryEntity : galleryEntityList) {
+                galleryEntity.setGoodsId(id);
+                goodsGalleryService.save(galleryEntity);
+            }
+        }
+
+        goods.setIsDelete(0);
+        goods.setCreateUserDeptId(deptId);
+        goods.setCreateUserId(userId);
+        goods.setUpdateUserId(userId);
+        goods.setUpdateTime(new Date());
+        return goodsMapper.insertSelective(goods);
     }
 }
