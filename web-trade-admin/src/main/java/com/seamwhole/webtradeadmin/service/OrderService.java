@@ -4,6 +4,7 @@ import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.config.FeignConfig;
 import com.seamwhole.webtradeadmin.info.Order;
 import com.seamwhole.webtradeadmin.info.OrderDO;
+import com.seamwhole.webtradeadmin.service.impl.OrderServiceHystrix;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

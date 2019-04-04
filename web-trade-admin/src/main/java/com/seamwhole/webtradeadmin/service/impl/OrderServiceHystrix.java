@@ -1,8 +1,9 @@
-package com.seamwhole.webtradeadmin.service;
+package com.seamwhole.webtradeadmin.service.impl;
 
 import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.info.Order;
 import com.seamwhole.webtradeadmin.info.OrderDO;
+import com.seamwhole.webtradeadmin.service.OrderService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
