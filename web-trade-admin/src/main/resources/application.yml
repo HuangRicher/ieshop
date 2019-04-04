@@ -8,8 +8,8 @@ spring:
     cache: false
     suffix: .html
   redis:
-    database: 1
-    host: 127.0.0.1
+    database: 0
+    host: 120.78.170.118
     port: 6379
     password: 123456
     lettuce:

@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.domain.GoodsModel;
 import com.seamwhole.servicetradecore.mapper.GoodsMapper;
 import com.seamwhole.servicetradecore.mapper.ext.GoodsExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
@@ -175,7 +176,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public int saveShopGoods(Goods goods, Long userId, Long deptId) {
+    public int saveShopGoods(GoodsModel goods, Long userId, Long deptId) {
         Map<String, Object> map = new HashMap<>();
         map.put("name", goods.getName());
         List<ShopGoodsDO> list = queryShopList(map);

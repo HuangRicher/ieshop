@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.mapper.CategoryMapper;
 import com.seamwhole.servicetradecore.model.Category;
 import com.seamwhole.servicetradecore.model.CategoryExample;
@@ -62,5 +63,9 @@ public class CategoryServiceImpl implements CategoryService {
 		example.createCriteria().andIdIn(Arrays.asList(ids));
 		categoryMapper.deleteByExample(example);
 	}
-	
+
+	@Override
+	public PageInfo<Category> queryByPage(Integer limit, Integer page, Map<String, Object> params, String s) {
+		return null;
+	}
 }

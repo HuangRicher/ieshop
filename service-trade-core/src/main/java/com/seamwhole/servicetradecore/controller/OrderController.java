@@ -1,6 +1,5 @@
 package com.seamwhole.servicetradecore.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.controller.model.OrderModel;
 import com.seamwhole.servicetradecore.domain.OrderInfo;
@@ -17,15 +16,14 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
-/**
- * 作者: @author Harmon <br>
- * 时间: 2017-08-11 08:32<br>
- * 描述: IndexController <br>
- */
+
 @Api(tags = "订单相关")
 @RestController
 @RequestMapping("/api/order")
@@ -99,7 +97,7 @@ public class OrderController extends BaseController {
         //订单的商品
         List<OrderGoods> orderGoods = orderGoodsService.queryList(orderGoodsParam);
         //订单最后支付时间
-        if (orderInfo.getOrder_status() == 0) {
+        if (orderInfo.getOrderStatus() == 0) {
             // if (moment().subtract(60, 'minutes') < moment(orderInfo.add_time)) {
 //            orderInfo.final_pay_time = moment("001234", "Hmmss").format("mm:ss")
             // } else {
@@ -113,9 +111,9 @@ public class OrderController extends BaseController {
         resultObj.put("orderInfo", orderInfo);
         resultObj.put("orderGoods", orderGoods);
         resultObj.put("handleOption", handleOption);
-        if (!StringUtils.isEmpty(orderInfo.getShipping_code()) && !StringUtils.isEmpty(orderInfo.getShipping_no())) {
+        if (!StringUtils.isEmpty(orderInfo.getShippingCode()) && !StringUtils.isEmpty(orderInfo.getShippingNo())) {
             // 快递
-            List Traces = apiKdniaoService.getOrderTracesByJson(orderInfo.getShipping_code(), orderInfo.getShipping_no());
+            List Traces = apiKdniaoService.getOrderTracesByJson(orderInfo.getShippingCode(), orderInfo.getShippingNo());
             resultObj.put("shippingList", Traces);
         }
         return toResponsSuccess(resultObj);
@@ -127,8 +125,8 @@ public class OrderController extends BaseController {
         OrderDO orderInfo = orderService.queryObject(orderModel.getOrderId());
         if (orderInfo == null) {
             return toResponsFail("订单不存在");
-        } else if (orderInfo.getOrder_status() != 0) {
-            return toResponsFail("订单状态不正确orderStatus" + orderInfo.getOrder_status() + "payStatus" + orderInfo.getPay_status());
+        } else if (orderInfo.getOrderStatus() != 0) {
+            return toResponsFail("订单状态不正确orderStatus" + orderInfo.getOrderStatus() + "payStatus" + orderInfo.getPayStatus());
         }
 
         Order order=new Order();
@@ -172,13 +170,13 @@ public class OrderController extends BaseController {
     public Object cancelOrder(Integer orderId) {
         try {
             OrderDO orderVo = orderService.queryObject(orderId);
-            if (orderVo.getOrder_status() == 300) {
+            if (orderVo.getOrderStatus() == 300) {
                 return toResponsFail("已发货，不能取消");
-            } else if (orderVo.getOrder_status() == 301) {
+            } else if (orderVo.getOrderStatus() == 301) {
                 return toResponsFail("已收货，不能取消");
             }
             // 需要退款
-            if (orderVo.getPay_status() == 2) {
+            if (orderVo.getPayStatus() == 2) {
                 /*WechatRefundApiResult result = WechatUtil.wxRefund(orderVo.getId().toString(),
                         0.01, 0.01);
                 if (result.getResult_code().equals("SUCCESS")) {
@@ -196,7 +194,7 @@ public class OrderController extends BaseController {
                     return toResponsObject(400, "取消成失败", "");
                 }*/
             } else {
-                orderVo.setOrder_status(101);
+                orderVo.setOrderStatus(101);
                 Order order=new Order();
                 BeanUtils.copyProperties(orderVo,order);
                 orderService.update(order);
@@ -216,9 +214,9 @@ public class OrderController extends BaseController {
     public Object confirmOrder(Integer orderId) {
         try {
             OrderDO orderVo = orderService.queryObject(orderId);
-            orderVo.setOrder_status(301);
-            orderVo.setShipping_status(2);
-            orderVo.setConfirm_time(new Date());
+            orderVo.setOrderStatus(301);
+            orderVo.setShippingStatus(2);
+            orderVo.setConfirmTime(new Date());
             Order order=new Order();
             BeanUtils.copyProperties(orderVo,order);
             orderService.update(order);

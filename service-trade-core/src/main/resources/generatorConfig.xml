@@ -52,7 +52,8 @@
         <!--<table tableName="ishop_feedback" domainObjectName="FeedBack"></table>-->
         <!--<table tableName="ishop_footprint" domainObjectName="FootPrint"></table>-->
         <!--<table tableName="ishop_goods" domainObjectName="Goods"></table>-->
-        <table tableName="ishop_goods_attribute" domainObjectName="GoodsAttribute"></table>
+        <!--<table tableName="ishop_goods_attribute" domainObjectName="GoodsAttribute"></table>-->
+        <table tableName="ishop_coupon_goods" domainObjectName="CouponGoods"></table>
         <!--<table tableName="ishop_goods_issue" domainObjectName="GoodsIssue"></table>-->
         <!--<table tableName="ishop_goods_gallery" domainObjectName="GoodsGallery"></table>-->
         <!--<table tableName="ishop_goods_specification" domainObjectName="GoodsSpecification"></table>-->

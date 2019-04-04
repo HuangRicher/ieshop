@@ -3,8 +3,11 @@ package com.seamwhole.webtradeadmin.controller;
 
 import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.info.Goods;
+import com.seamwhole.webtradeadmin.info.GoodsModel;
 import com.seamwhole.webtradeadmin.info.ShopGoodsDO;
 import com.seamwhole.webtradeadmin.service.GoodsService;
+import com.seamwhole.webtradeadmin.shiro.ShiroUtils;
+import com.seamwhole.webtradeadmin.shiro.SysUser;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +50,9 @@ public class GoodsController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("goods:save")
-    public ResponseObject save(@RequestBody Goods goods) {
-        goodsService.save(goods);
+    public ResponseObject save(@RequestBody GoodsModel goods) {
+        SysUser user=ShiroUtils.getUserEntity();
+        goodsService.save(goods,user.getUserId(),user.getDeptId());
 
         return ResponseObject.ok();
     }
@@ -70,7 +74,8 @@ public class GoodsController {
     @RequestMapping("/delete")
     @RequiresPermissions("goods:delete")
     public ResponseObject delete(@RequestBody Integer[] ids) {
-        goodsService.deleteBatch(ids);
+        SysUser user=ShiroUtils.getUserEntity();
+        goodsService.deleteBatch(ids,user.getUserId());
 
         return ResponseObject.ok();
     }
@@ -109,7 +114,8 @@ public class GoodsController {
     @RequestMapping("/back")
     @RequiresPermissions("goods:back")
     public ResponseObject back(@RequestBody Integer[] ids) {
-        goodsService.back(ids);
+        SysUser user=ShiroUtils.getUserEntity();
+        goodsService.back(ids,user.getUserId());
 
         return ResponseObject.ok();
     }
@@ -130,7 +136,8 @@ public class GoodsController {
      */
     @RequestMapping("/enSale")
     public ResponseObject enSale(@RequestBody Integer id) {
-        goodsService.enSale(id);
+        SysUser user=ShiroUtils.getUserEntity();
+        goodsService.enSale(id,user.getUserId());
 
         return ResponseObject.ok();
     }
@@ -140,7 +147,8 @@ public class GoodsController {
      */
     @RequestMapping("/unSale")
     public ResponseObject unSale(@RequestBody Integer id) {
-        goodsService.unSale(id);
+        SysUser user=ShiroUtils.getUserEntity();
+        goodsService.unSale(id,user.getUserId());
 
         return ResponseObject.ok();
     }

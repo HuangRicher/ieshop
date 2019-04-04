@@ -7,10 +7,8 @@ import com.seamwhole.servicetradecore.mapper.CouponMapper;
 import com.seamwhole.servicetradecore.mapper.UserCouponMapper;
 import com.seamwhole.servicetradecore.mapper.ext.CouponExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
-import com.seamwhole.servicetradecore.model.Coupon;
-import com.seamwhole.servicetradecore.model.CouponExample;
-import com.seamwhole.servicetradecore.model.UserCoupon;
-import com.seamwhole.servicetradecore.model.UserCouponExample;
+import com.seamwhole.servicetradecore.model.*;
+import com.seamwhole.servicetradecore.service.CouponGoodsService;
 import com.seamwhole.servicetradecore.service.CouponService;
 import com.seamwhole.servicetradecore.util.ResponseObject;
 import org.apache.commons.collections.MapUtils;
@@ -33,6 +31,9 @@ public class CouponServiceImpl implements CouponService {
     private CouponExtMapper couponExtMapper;
     @Autowired
     private UserCouponMapper userCouponMapper;
+    @Autowired
+    private CouponGoodsService couponGoodsService;
+
 
 
 
@@ -158,10 +159,10 @@ public class CouponServiceImpl implements CouponService {
                 if (StringUtils.isEmpty(goodsId)) {
                     continue;
                 }
-                CouponGoods couponGoodsVo = new CouponGoodsEntity();
+                CouponGoods couponGoodsVo = new CouponGoods();
                 couponGoodsVo.setCouponId(couponId);
                 couponGoodsVo.setGoodsId(Integer.valueOf(goodsId));
-                couponGoodsDao.save(couponGoodsVo);
+                couponGoodsService.save(couponGoodsVo);
             }
         } else {
             return ResponseObject.error("此类优惠券不支持手动发放");

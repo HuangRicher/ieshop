@@ -4,7 +4,7 @@ import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.info.Category;
 import com.seamwhole.webtradeadmin.service.CategoryService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
-import org.apache.commons.configuration.tree.TreeUtils;
+import com.seamwhole.webtradeadmin.util.TreeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +82,7 @@ public class CategoryController {
 
         List<Category> list = categoryService.queryList(params);
         //添加顶级菜单
-        Category root = new CategoryEntity();
+        Category root = new Category();
         root.setId(0);
         root.setName("一级分类");
         root.setParentId(-1);
@@ -96,7 +96,7 @@ public class CategoryController {
      */
     @RequestMapping("/getAreaTree")
     public ResponseObject getAreaTree() {
-        List<Category> list = categoryService.queryList(new HashMap<String, Object>());
+        List<Category> list = categoryService.queryList(new HashMap<String,Object>());
         for (Category sysRegionEntity : list) {
             sysRegionEntity.setValue(sysRegionEntity.getId() + "");
             sysRegionEntity.setLabel(sysRegionEntity.getName());

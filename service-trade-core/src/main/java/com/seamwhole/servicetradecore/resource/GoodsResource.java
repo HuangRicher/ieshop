@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.resource;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.domain.GoodsModel;
 import com.seamwhole.servicetradecore.mapper.model.ShopGoodsDO;
 import com.seamwhole.servicetradecore.model.Goods;
 import com.seamwhole.servicetradecore.service.GoodsService;
@@ -29,9 +30,9 @@ public class GoodsResource {
         return goodsService.queryObject(id);
     }
 
-    @PostMapping("/save")
-    public void save(@RequestBody Goods goods){
-        goodsService.saveShopGoods(goods, , );
+    @PostMapping("/save/{userId}/{deptId}")
+    public void save(@RequestBody GoodsModel goods,@PathVariable("userId") Long userId, @PathVariable("deptId") Long deptId){
+        goodsService.saveShopGoods(goods, userId,deptId );
     }
 
     @PostMapping("/update")

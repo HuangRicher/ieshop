@@ -1,30 +1,49 @@
 package com.seamwhole.webtradeadmin.service;
 
 import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.config.FeignConfig;
 import com.seamwhole.webtradeadmin.info.Goods;
+import com.seamwhole.webtradeadmin.info.GoodsModel;
 import com.seamwhole.webtradeadmin.info.ShopGoodsDO;
+import com.seamwhole.webtradeadmin.service.impl.GoodsServiceHystrix;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
 
+@FeignClient(serviceId = "trade-core-service" ,configuration = FeignConfig.class,fallback = GoodsServiceHystrix.class)
 public interface GoodsService {
-    PagesInfo<ShopGoodsDO> queryByPage(Map<String, Object> params);
+    @PostMapping("/goods/queryByPage")
+    PagesInfo<ShopGoodsDO> queryByPage(@RequestBody Map<String, Object> params);
 
-    Goods queryObject(Integer id);
+    @GetMapping("/goods/queryObject/{id}")
+    Goods queryObject(@PathVariable("id") Integer id);
 
-    void save(Goods goods);
+    @PostMapping("/goods/save/{userId}/{deptId}")
+    void save(@RequestBody GoodsModel goods,@PathVariable("userId") Long userId, @PathVariable("deptId") Long deptId);
 
-    void update(Goods goods);
+    @PostMapping("/goods/update")
+    void update(@RequestBody Goods goods);
 
-    void deleteBatch(Integer[] ids);
+    @PostMapping("/goods/deleteBatch/{userId}")
+    void deleteBatch(@RequestBody Integer[] ids,@PathVariable("userId") Long userId);
 
-    List<ShopGoodsDO> queryList(Map<String, Object> params);
+    @PostMapping("/goods/queryList")
+    List<ShopGoodsDO> queryList(@RequestBody Map<String, Object> params);
 
-    void back(Integer[] ids);
+    @PostMapping("/goods/back/{userId}")
+    void back(@RequestBody Integer[] ids,@PathVariable("userId") Long userId);
 
-    int queryTotal(Map<String, Object> params);
+    @PostMapping("/goods/queryTotal")
+    int queryTotal(@RequestBody Map<String, Object> params);
 
-    void enSale(Integer id);
+    @PostMapping("/goods/enSale/{userId}/{id}")
+    void enSale(@PathVariable("id") Integer id,@PathVariable("userId") Long userId);
 
-    void unSale(Integer id);
+    @PostMapping("/goods/unSale/{userId}/{id}")
+    void unSale(@PathVariable("id") Integer id,@PathVariable("userId") Long userId);
 }

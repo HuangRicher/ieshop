@@ -1,5 +1,7 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.CouponGoods;
 import com.seamwhole.webtradeadmin.service.CouponGoodsService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,14 +27,9 @@ public class CouponGoodsController {
     @RequiresPermissions("coupongoods:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<CouponGoods> page=couponGoodsService.queryByPage(params);
 
-        List<CouponGoodsEntity> couponGoodsList = couponGoodsService.queryList(query);
-        int total = couponGoodsService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(couponGoodsList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -41,7 +38,7 @@ public class CouponGoodsController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("coupongoods:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        CouponGoodsEntity couponGoods = couponGoodsService.queryObject(id);
+        CouponGoods couponGoods = couponGoodsService.queryObject(id);
 
         return ResponseObject.ok().put("couponGoods", couponGoods);
     }
@@ -51,7 +48,7 @@ public class CouponGoodsController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("coupongoods:save")
-    public ResponseObject save(@RequestBody CouponGoodsEntity couponGoods) {
+    public ResponseObject save(@RequestBody CouponGoods couponGoods) {
         couponGoodsService.save(couponGoods);
 
         return ResponseObject.ok();
@@ -62,7 +59,7 @@ public class CouponGoodsController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("coupongoods:update")
-    public ResponseObject update(@RequestBody CouponGoodsEntity couponGoods) {
+    public ResponseObject update(@RequestBody CouponGoods couponGoods) {
         couponGoodsService.update(couponGoods);
 
         return ResponseObject.ok();
@@ -85,7 +82,7 @@ public class CouponGoodsController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<CouponGoodsEntity> list = couponGoodsService.queryList(params);
+        List<CouponGoods> list = couponGoodsService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }

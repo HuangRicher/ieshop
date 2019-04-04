@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.service;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.domain.GoodsModel;
 import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
 import com.seamwhole.servicetradecore.mapper.model.ShopGoodsDO;
 import com.seamwhole.servicetradecore.model.Goods;
@@ -49,5 +50,5 @@ public interface GoodsService {
 
     int deleteShopGoods(Integer id, Long userId);
 
-    int saveShopGoods(Goods goods, Long userId, Long deptId);
+    int saveShopGoods(GoodsModel goods, Long userId, Long deptId);
 }

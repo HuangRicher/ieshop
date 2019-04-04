@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.service;
 
+import com.github.pagehelper.PageInfo;
 import com.seamwhole.servicetradecore.model.Category;
 
 import java.util.List;
@@ -21,5 +22,6 @@ public interface CategoryService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
-	
+
+    PageInfo<Category> queryByPage(Integer limit, Integer page, Map<String, Object> params, String s);
 }
