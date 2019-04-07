@@ -1,6 +1,8 @@
 server:
   port: 10008
 spring:
+  application:
+    name: web-admin
   main:
     allow-bean-definition-overriding: true
   thymeleaf:

@@ -19,7 +19,7 @@ public class KeyWordsResource {
 
 
     @PostMapping("/queryByPage")
-    public PagesInfo<KeyWords> queryByPage(Map<String, Object> params){
+    public PagesInfo<KeyWords> queryByPage(@RequestBody Map<String, Object> params){
         PageInfo<KeyWords> pageInfo=keyWordsService.queryByPage(params,Integer.valueOf((String)params.get("page")),Integer.valueOf((String)params.get("limit")));
         return new PagesInfo<KeyWords>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(), pageInfo.getPages(),pageInfo.getList());
     }
@@ -30,22 +30,22 @@ public class KeyWordsResource {
     }
 
     @PostMapping("/save")
-    public void save(KeyWords keywords){
+    public void save(@RequestBody KeyWords keywords){
         keyWordsService.save(keywords);
     }
 
     @PostMapping("/update")
-    public void update(KeyWords keywords){
+    public void update(@RequestBody KeyWords keywords){
         keyWordsService.updateById(keywords);
     }
 
     @PostMapping("/deleteBatch")
-    public void deleteBatch(Integer[] ids){
+    public void deleteBatch(@RequestBody Integer[] ids){
         keyWordsService.deleteBatch(ids);
     }
 
     @PostMapping("/queryList")
-    public List<KeyWords> queryList(Map<String, Object> params){
+    public List<KeyWords> queryList(@RequestBody Map<String, Object> params){
         return keyWordsService.queryList(params);
     }
 }

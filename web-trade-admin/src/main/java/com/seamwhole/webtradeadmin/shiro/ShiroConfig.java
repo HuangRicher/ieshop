@@ -156,7 +156,7 @@ public class ShiroConfig {
         //缓存AuthorizationInfo信息的缓存名称
         shiroRealm.setAuthorizationCacheName("authorizationCache");
         //配置自定义密码比较器
-        shiroRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher());
+        //shiroRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher());
         return shiroRealm;
     }
 

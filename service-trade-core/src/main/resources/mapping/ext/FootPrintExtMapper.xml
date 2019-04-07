@@ -30,12 +30,12 @@
         select f.id,f.user_id,f.goods_id,f.add_time add_time,f.referrer,
         g.name as name, g.list_pic_url as list_pic_url, g.goods_brief as goods_brief, g.retail_price as
         retail_price
-        from nideshop_footprint f
+        from ishop_footprint f
         <if test="maxFoot == true">
-            left join nideshop_footprint max on f.goods_id = max.goods_id and f.user_id = max.user_id
+            left join ishop_footprint max on f.goods_id = max.goods_id and f.user_id = max.user_id
             and max.add_time > f.add_time
         </if>
-        left join nideshop_goods g on f.goods_id = g.id
+        left join ishop_goods g on f.goods_id = g.id
         <where>
             <if test="user_id != null">
                 and f.user_id = #{user_id}
@@ -58,9 +58,9 @@
     </select>
     <select id="queryShopFootPrintList" resultMap="ShopResultMap">
         select a.* ,b.username as user_name,c.name as goods_name
-        from nideshop_footprint a
-        left join nideshop_user b on a.user_id = b.id
-        left join nideshop_goods c on a.goods_id = c.id
+        from ishop_footprint a
+        left join ishop_user b on a.user_id = b.id
+        left join ishop_goods c on a.goods_id = c.id
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -82,8 +82,8 @@
 				g.goods_brief AS goods_brief,
 				g.retail_price AS retail_price
 			FROM
-				nideshop_footprint f
-			  LEFT JOIN nideshop_goods g ON f.goods_id = g.id
+				ishop_footprint f
+			  LEFT JOIN ishop_goods g ON f.goods_id = g.id
 			WHERE
 				f.user_id = #{0} GROUP BY goods_id
 			 ORDER BY
@@ -91,7 +91,7 @@
     </select>
 
     <select id="queryTotal" resultType="int">
-        select count(*) from nideshop_footprint f
+        select count(*) from ishop_footprint f
         <where>
             <if test="user_id != null">
                 and f.user_id = #{user_id}
@@ -110,9 +110,9 @@
         g.name as name, g.list_pic_url as list_pic_url, g.goods_brief as goods_brief,
         g.retail_price as retail_price,
         u.nickname as nickname,u.avatar as avatar
-        from nideshop_footprint f
-        left join nideshop_goods g on f.goods_id = g.id
-        left join nideshop_user u on u.id = f.user_id
+        from ishop_footprint f
+        left join ishop_goods g on f.goods_id = g.id
+        left join ishop_user u on u.id = f.user_id
         <where>
             u.id is not null
             <if test="user_id != null">

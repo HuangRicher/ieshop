@@ -104,8 +104,8 @@ public class ShiroRealm extends AuthorizingRealm {
             permsList = sysUserService.queryAllPerms(user.getUserId());
         }
         redisService.set(Constant.PERMS_LIST + user.getUserId(), permsList);
-
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password,new MyByteSource(user.getUsername()), getName());
+        //password = StringDataUtils.md5(password,username);
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;
     }
 

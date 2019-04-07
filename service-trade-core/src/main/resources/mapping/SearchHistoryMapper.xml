@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, keyword, from, add_time, user_id
+    id, keyword, `from`, add_time, user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.SearchHistoryExample" >
     select
@@ -100,7 +100,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.SearchHistory" >
-    insert into ishop_search_history (id, keyword, from, 
+    insert into ishop_search_history (id, keyword, `from`,
       add_time, user_id)
     values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=CHAR}, #{from,jdbcType=VARCHAR}, 
       #{addTime,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR})
@@ -115,7 +115,7 @@
         keyword,
       </if>
       <if test="from != null" >
-        from,
+        `from`,
       </if>
       <if test="addTime != null" >
         add_time,
@@ -158,7 +158,7 @@
         keyword = #{record.keyword,jdbcType=CHAR},
       </if>
       <if test="record.from != null" >
-        from = #{record.from,jdbcType=VARCHAR},
+        `from` = #{record.from,jdbcType=VARCHAR},
       </if>
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=INTEGER},
@@ -175,7 +175,7 @@
     update ishop_search_history
     set id = #{record.id,jdbcType=INTEGER},
       keyword = #{record.keyword,jdbcType=CHAR},
-      from = #{record.from,jdbcType=VARCHAR},
+      `from` = #{record.from,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -189,7 +189,7 @@
         keyword = #{keyword,jdbcType=CHAR},
       </if>
       <if test="from != null" >
-        from = #{from,jdbcType=VARCHAR},
+        `from` = #{from,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null" >
         add_time = #{addTime,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.SearchHistory" >
     update ishop_search_history
     set keyword = #{keyword,jdbcType=CHAR},
-      from = #{from,jdbcType=VARCHAR},
+      `from` = #{from,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
