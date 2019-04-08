@@ -58,7 +58,7 @@
   <select id="queryShopUserList" resultMap="ResultMapWithBLOBs">
     select a.* ,b.username as user_name
     from ishop_cart a
-    left join ieshop_user b on a.user_id = b.id
+    left join ishop_user b on a.user_id = b.id
     <choose>
       <when test="sidx != null and sidx.trim() != ''">
         order by ${sidx} ${order}

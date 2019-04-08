@@ -15,6 +15,8 @@ $(function () {
                 index: 'goods_specification_ids',
                 width: 100,
                 formatter: function (value, options, row) {
+                    console.info(value);
+                    console.info(row);
                     return value.replace(row.goodsName + " ", '');
                 }
             },

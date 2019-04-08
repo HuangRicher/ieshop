@@ -10,6 +10,8 @@ public class ProductDO extends Product implements Serializable {
 
     private String listPicUrl;
 
+    private String specificationValue;
+
     public String getGoodsName() {
         return goodsName;
     }
@@ -24,5 +26,13 @@ public class ProductDO extends Product implements Serializable {
 
     public void setListPicUrl(String listPicUrl) {
         this.listPicUrl = listPicUrl;
+    }
+
+    public String getSpecificationValue() {
+        return specificationValue;
+    }
+
+    public void setSpecificationValue(String specificationValue) {
+        this.specificationValue = specificationValue;
     }
 }

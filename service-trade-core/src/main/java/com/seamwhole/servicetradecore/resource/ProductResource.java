@@ -35,7 +35,7 @@ public class ProductResource {
 
     @PostMapping("/save")
     public void save(@RequestBody Product product){
-        productService.save(product);
+        productService.saveShop(product);
     }
 
     @PostMapping("/queryObject/{id}")

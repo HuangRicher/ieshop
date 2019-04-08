@@ -16,7 +16,7 @@ public interface ProductService {
 
 
     void save(Product goods);
-
+    int saveShop(Product product);
     void update(Product goods);
 
     void delete(Integer id);

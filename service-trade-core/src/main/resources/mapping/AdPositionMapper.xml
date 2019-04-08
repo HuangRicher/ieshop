@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, width, height, desc
+    id, `name`, width, height, `desc`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.AdPositionExample" >
     select
@@ -100,8 +100,8 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.AdPosition" >
-    insert into ishop_ad_position (id, name, width, 
-      height, desc)
+    insert into ishop_ad_position (id, `name`, width,
+      height, `desc`)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{width,jdbcType=INTEGER}, 
       #{height,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR})
   </insert>
@@ -112,7 +112,7 @@
         id,
       </if>
       <if test="name != null" >
-        name,
+        `name`,
       </if>
       <if test="width != null" >
         width,
@@ -121,7 +121,7 @@
         height,
       </if>
       <if test="desc != null" >
-        desc,
+        `desc`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -155,7 +155,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.width != null" >
         width = #{record.width,jdbcType=INTEGER},
@@ -164,7 +164,7 @@
         height = #{record.height,jdbcType=INTEGER},
       </if>
       <if test="record.desc != null" >
-        desc = #{record.desc,jdbcType=VARCHAR},
+        `desc` = #{record.desc,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -174,10 +174,10 @@
   <update id="updateByExample" parameterType="map" >
     update ishop_ad_position
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       width = #{record.width,jdbcType=INTEGER},
       height = #{record.height,jdbcType=INTEGER},
-      desc = #{record.desc,jdbcType=VARCHAR}
+      `desc` = #{record.desc,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -186,7 +186,7 @@
     update ishop_ad_position
     <set >
       <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="width != null" >
         width = #{width,jdbcType=INTEGER},
@@ -195,17 +195,17 @@
         height = #{height,jdbcType=INTEGER},
       </if>
       <if test="desc != null" >
-        desc = #{desc,jdbcType=VARCHAR},
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.AdPosition" >
     update ishop_ad_position
-    set name = #{name,jdbcType=VARCHAR},
+    set `name` = #{name,jdbcType=VARCHAR},
       width = #{width,jdbcType=INTEGER},
       height = #{height,jdbcType=INTEGER},
-      desc = #{desc,jdbcType=VARCHAR}
+      `desc` = #{desc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
