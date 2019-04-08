@@ -19,7 +19,7 @@ public class SysOssServiceImpl implements SysOssService {
 
 
     @Override
-    public PageInfo<SysOss> queryPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
+    public PageInfo<SysOss> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
         SysOssExample example=new SysOssExample();
         example.setOrderByClause(" create_date desc");
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(()->sysOssMapper.selectByExample(example));

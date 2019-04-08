@@ -15,5 +15,5 @@ public interface SysLogService {
      * @param params
      * @return
      */
-    PageInfo<SysLog> queryPage(Map<String, Object> params,Integer pageNum,Integer pageSize);
+    PageInfo<SysLog> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
 }

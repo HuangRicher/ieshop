@@ -31,7 +31,7 @@ public class SysLogController {
     public ResponseObject list(@RequestBody SysLogModel logModel) {
         //查询列表数据
         Map<String,Object> params=new HashMap<>();
-        PageInfo<SysLog> pageInfo=sysLogService.queryPage(params,logModel.getPageNum(),logModel.getPageSize());
+        PageInfo<SysLog> pageInfo=sysLogService.queryByPage(params,logModel.getPageNum(),logModel.getPageSize());
         return ResponseObject.ok().put("page", pageInfo);
     }
 

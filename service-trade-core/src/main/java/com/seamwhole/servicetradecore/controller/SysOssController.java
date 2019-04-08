@@ -40,7 +40,7 @@ public class SysOssController {
     @RequestMapping("/list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        PageInfo<SysOss> pageInfo=sysOssService.queryPage(params,1,10);
+        PageInfo<SysOss> pageInfo=sysOssService.queryByPage(params,1,10);
         return ResponseObject.ok().put("page", pageInfo);
     }
 

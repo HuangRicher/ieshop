@@ -1,5 +1,7 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.SysLog;
 import com.seamwhole.webtradeadmin.service.SysLogService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,8 +31,8 @@ public class SysLogController {
     @RequiresPermissions("sys:log:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        PageUtilsPlus pageUtil = sysLogService.queryPage(params);
-        return ResponseObject.ok().put("page", pageUtil);
+        PagesInfo<SysLog> page=sysLogService.queryByPage(params);
+        return ResponseObject.ok().put("page", page);
     }
 
 }

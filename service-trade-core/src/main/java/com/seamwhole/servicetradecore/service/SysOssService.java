@@ -12,12 +12,12 @@ import java.util.Map;
 public interface SysOssService {
 
     /**
-     * queryPage
+     * queryByPage
      *
      * @param params
      * @return
      */
-    PageInfo<SysOss> queryPage(Map<String, Object> params,Integer pageNum,Integer pageSize);
+    PageInfo<SysOss> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize);
 
     void save(SysOss ossEntity);
 

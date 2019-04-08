@@ -1,6 +1,8 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.SysConfig;
 import com.seamwhole.webtradeadmin.service.SysConfigService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -27,13 +29,9 @@ public class SysConfigController {
     @RequiresPermissions("sys:config:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
-        List<SysConfigEntity> configList = sysConfigService.queryList(query);
-        int total = sysConfigService.queryTotal(query);
+        PagesInfo<SysConfig> page=sysConfigService.queryByPage(params);
 
-        PageUtils pageUtil = new PageUtils(configList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
 
@@ -44,7 +42,7 @@ public class SysConfigController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("sys:config:info")
     public ResponseObject info(@PathVariable("id") Long id) {
-        SysConfigEntity config = sysConfigService.queryObject(id);
+        SysConfig config = sysConfigService.queryObject(id);
 
         return ResponseObject.ok().put("config", config);
     }
@@ -55,8 +53,7 @@ public class SysConfigController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:config:save")
-    public ResponseObject save(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
+    public ResponseObject save(@RequestBody SysConfig config) {
 
         sysConfigService.save(config);
 
@@ -69,8 +66,7 @@ public class SysConfigController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:config:update")
-    public ResponseObject update(@RequestBody SysConfigEntity config) {
-        ValidatorUtils.validateEntity(config);
+    public ResponseObject update(@RequestBody SysConfig config) {
 
         sysConfigService.update(config);
 

@@ -1,6 +1,10 @@
 package com.seamwhole.webtradeadmin.controller;
 
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.SysRegion;
+import com.seamwhole.webtradeadmin.info.SysRegionDO;
+import com.seamwhole.webtradeadmin.info.SysRegionInfo;
 import com.seamwhole.webtradeadmin.service.SysRegionService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,14 +32,9 @@ public class SysRegionController {
     @RequiresPermissions("sys:region:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<SysRegionDO> page=sysRegionService.queryByPage(params);
 
-        List<SysRegionEntity> regionList = sysRegionService.queryList(query);
-        int total = sysRegionService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(regionList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -45,7 +44,7 @@ public class SysRegionController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("sys:region:info")
     public ResponseObject info(@PathVariable("id") Integer id) {
-        SysRegionEntity region = sysRegionService.queryObject(id);
+        SysRegion region = sysRegionService.queryObject(id);
 
         return ResponseObject.ok().put("region", region);
     }
@@ -56,7 +55,7 @@ public class SysRegionController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:region:save")
-    public ResponseObject save(@RequestBody SysRegionEntity region) {
+    public ResponseObject save(@RequestBody SysRegion region) {
         sysRegionService.save(region);
 
         return ResponseObject.ok();
@@ -68,7 +67,7 @@ public class SysRegionController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:region:update")
-    public ResponseObject update(@RequestBody SysRegionEntity region) {
+    public ResponseObject update(@RequestBody SysRegion region) {
         sysRegionService.update(region);
 
         return ResponseObject.ok();
@@ -91,7 +90,7 @@ public class SysRegionController {
      */
     @RequestMapping("/getAllCountry")
     public ResponseObject getAllCountry() {
-        List<SysRegionEntity> list = RegionCacheUtil.getAllCountry();
+        List<SysRegionDO> list = sysRegionService.getAllCountry();
         return ResponseObject.ok().put("list", list);
     }
 
@@ -100,7 +99,7 @@ public class SysRegionController {
      */
     @RequestMapping("/getAllProvice")
     public ResponseObject getAllProvice(@RequestParam(required = false) Integer areaId) {
-        List<SysRegionEntity> list = RegionCacheUtil.getAllProviceByParentId(areaId);
+        List<SysRegionDO> list = sysRegionService.getAllProvinceByParentId(areaId);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -109,7 +108,7 @@ public class SysRegionController {
      */
     @RequestMapping("/getAllCity")
     public ResponseObject getAllCity(@RequestParam(required = false) Integer areaId) {
-        List<SysRegionEntity> list = RegionCacheUtil.getChildrenCity(areaId);
+        List<SysRegionDO> list = sysRegionService.getChildrenCity(areaId);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -119,7 +118,7 @@ public class SysRegionController {
      */
     @RequestMapping("/getChildrenDistrict")
     public ResponseObject getChildrenDistrict(@RequestParam(required = false) Integer areaId) {
-        List<SysRegionEntity> list = RegionCacheUtil.getChildrenDistrict(areaId);
+        List<SysRegionDO> list = sysRegionService.getChildrenDistrict(areaId);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -128,12 +127,7 @@ public class SysRegionController {
      */
     @RequestMapping("/getAreaTree")
     public ResponseObject getAreaTree() {
-        List<SysRegionEntity> list = RegionCacheUtil.sysRegionEntityList;
-        for (SysRegionEntity sysRegionEntity : list) {
-            sysRegionEntity.setValue(sysRegionEntity.getId() + "");
-            sysRegionEntity.setLabel(sysRegionEntity.getName());
-        }
-        List<SysRegionEntity> node = TreeUtils.factorTree(list);
+        List<SysRegionInfo> node = sysRegionService.getAreaTree();
 
         return ResponseObject.ok().put("node", node);
     }
@@ -145,15 +139,15 @@ public class SysRegionController {
     @RequestMapping("/getAreaByType")
     public ResponseObject getAreaByType(@RequestParam(required = false) Integer type) {
 
-        List<SysRegionEntity> list = new ArrayList<>();
+        List<SysRegionDO> list = new ArrayList<>();
         if (type.equals(0)) {
 
         } else if (type.equals(1)) {//省份
-            list = RegionCacheUtil.getAllCountry();
+            list = sysRegionService.getAllCountry();
         } else if (type.equals(2)) {
-            list = RegionCacheUtil.getAllProvice();
+            list = sysRegionService.getAllProvice();
         } else if (type.equals(3)) {
-            list = RegionCacheUtil.getAllCity();
+            list = sysRegionService.getAllCity();
         }
         return ResponseObject.ok().put("list", list);
     }

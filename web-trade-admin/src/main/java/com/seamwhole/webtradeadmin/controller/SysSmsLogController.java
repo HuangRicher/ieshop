@@ -1,9 +1,15 @@
 package com.seamwhole.webtradeadmin.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.seamwhole.util.PagesInfo;
 import com.seamwhole.webtradeadmin.constant.Constant;
+import com.seamwhole.webtradeadmin.info.SmsConfigOutInfo;
+import com.seamwhole.webtradeadmin.info.SysSmsLog;
+import com.seamwhole.webtradeadmin.info.SysSmsLogDO;
+import com.seamwhole.webtradeadmin.info.SysSmsLogWithBLOBs;
 import com.seamwhole.webtradeadmin.service.SysConfigService;
 import com.seamwhole.webtradeadmin.service.SysSmsLogService;
+import com.seamwhole.webtradeadmin.shiro.ShiroUtils;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +25,7 @@ import java.util.Map;
 @RequestMapping("/sys/smslog")
 public class SysSmsLogController {
     @Autowired
-    private SysSmsLogService smsLogService;
+    private SysSmsLogService sysSmsLogService;
     @Autowired
     private SysConfigService sysConfigService;
     /**
@@ -35,14 +41,9 @@ public class SysSmsLogController {
     @RequiresPermissions("sys:smslog:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<SysSmsLogDO> page=sysSmsLogService.queryByPage(params);
 
-        List<SysSmsLogEntity> smsLogList = smsLogService.queryList(query);
-        int total = smsLogService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(smsLogList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -52,7 +53,7 @@ public class SysSmsLogController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("sys:smslog:info")
     public ResponseObject info(@PathVariable("id") String id) {
-        SysSmsLogEntity smsLog = smsLogService.queryObject(id);
+        SysSmsLog smsLog = sysSmsLogService.queryObject(id);
 
         return ResponseObject.ok().put("smsLog", smsLog);
     }
@@ -64,7 +65,7 @@ public class SysSmsLogController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<SysSmsLogEntity> list = smsLogService.queryList(params);
+        List<SysSmsLogDO> list = sysSmsLogService.queryList(params);
         return ResponseObject.ok().put("list", list);
     }
 
@@ -73,7 +74,7 @@ public class SysSmsLogController {
      */
     @RequestMapping("/config")
     public ResponseObject config() {
-        SmsConfig config = sysConfigService.getConfigObject(KEY, SmsConfig.class);
+        SmsConfigOutInfo config = sysConfigService.getConfigObject(KEY, SmsConfigOutInfo.class);
         return ResponseObject.ok().put("config", config);
     }
 
@@ -82,7 +83,7 @@ public class SysSmsLogController {
      * @param config 短信配置信息
      */
     @RequestMapping("/saveConfig")
-    public ResponseObject saveConfig(@RequestBody SmsConfig config) {
+    public ResponseObject saveConfig(@RequestBody SmsConfigOutInfo config) {
         sysConfigService.updateValueByKey(KEY, JSON.toJSONString(config));
         return ResponseObject.ok();
     }
@@ -92,8 +93,8 @@ public class SysSmsLogController {
      * @param smsLog 短信
      */
     @RequestMapping("/sendSms")
-    public ResponseObject sendSms(@RequestBody SysSmsLogEntity smsLog) {
-        SysSmsLogEntity sysSmsLogEntity = smsLogService.sendSms(smsLog);
+    public ResponseObject sendSms(@RequestBody SysSmsLogWithBLOBs smsLog) {
+        SysSmsLogWithBLOBs sysSmsLogEntity = sysSmsLogService.sendSms(smsLog, ShiroUtils.getUserId());
         return ResponseObject.ok().put("result", sysSmsLogEntity);
     }
 }

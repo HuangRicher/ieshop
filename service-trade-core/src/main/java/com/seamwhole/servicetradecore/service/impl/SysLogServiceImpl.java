@@ -20,7 +20,7 @@ public class SysLogServiceImpl implements SysLogService {
     private SysLogMapper sysLogMapper;
 
     @Override
-    public PageInfo<SysLog> queryPage(Map<String, Object> params,Integer pageNum,Integer pageSize) {
+    public PageInfo<SysLog> queryByPage(Map<String, Object> params, Integer pageNum, Integer pageSize) {
         //排序
         SysLogExample example=new SysLogExample();
         example.setOrderByClause(" create_date desc");
