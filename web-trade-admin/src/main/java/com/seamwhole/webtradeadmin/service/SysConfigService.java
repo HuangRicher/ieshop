@@ -18,19 +18,21 @@ public interface SysConfigService {
     @PostMapping("/sysConfig/queryByPage")
     PagesInfo<SysConfig> queryByPage(@RequestBody Map<String, Object> params);
 
-    @GetMapping("/sysConfig/queryByPage/{id}")
+    @GetMapping("/sysConfig/queryObject/{id}")
     SysConfig queryObject(@PathVariable("id") Long id);
 
-    @PostMapping("/sysConfig/queryByPage")
+    @PostMapping("/sysConfig/save")
     void save(@RequestBody SysConfig config);
 
-    @PostMapping("/sysConfig/queryByPage")
+    @PostMapping("/sysConfig/update")
     void update(@RequestBody SysConfig config);
 
-    @PostMapping("/sysConfig/queryByPage")
+    @PostMapping("/sysConfig/deleteBatch")
     void deleteBatch(@RequestBody Long[] ids);
 
-    <T> T getConfigObject(String key, Class<T> clazz);
+    @PostMapping("/sysConfig/getConfigObject/{key}")
+    <T> T getConfigObject(@PathVariable("key") String key, @RequestBody Class<T> clazz);
 
-    void updateValueByKey(String key, String s);
+    @PostMapping("/sysConfig/updateValueByKey/{key}/{s}")
+    void updateValueByKey(@PathVariable("key") String key, @PathVariable("s") String s);
 }

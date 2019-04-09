@@ -23,24 +23,34 @@ public class SysConfigResource {
         return new PagesInfo<SysConfig>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getList());
     }
 
-    @GetMapping("/queryByPage/{id}")
+    @GetMapping("/queryObject/{id}")
     public SysConfig queryObject(@PathVariable("id") Long id){
         return sysConfigService.queryObject(id);
     }
 
-    @PostMapping("/queryByPage")
+    @PostMapping("/save")
     public void save(@RequestBody SysConfig config){
         sysConfigService.save(config);
     }
 
-    @PostMapping("/queryByPage")
+    @PostMapping("/update")
     public void update(@RequestBody SysConfig config){
         sysConfigService.update(config);
     }
 
-    @PostMapping("/queryByPage")
+    @PostMapping("/deleteBatch")
     public void deleteBatch(@RequestBody Long[] ids){
         sysConfigService.deleteBatch(ids);
+    }
+
+    @PostMapping("/getConfigObject/{key}")
+    public <T> T getConfigObject(@PathVariable("key") String key, @RequestBody Class<T> clazz){
+        return sysConfigService.getConfigObject(key,clazz);
+    }
+
+    @PostMapping("/updateValueByKey/{key}/{s}")
+    public void updateValueByKey(@PathVariable("key") String key, @PathVariable("s") String s){
+        sysConfigService.updateValueByKey(key,s);
     }
 
 }

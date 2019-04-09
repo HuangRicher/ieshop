@@ -1,5 +1,7 @@
 package com.seamwhole.webtradeadmin.controller;
 
+import com.seamwhole.util.PagesInfo;
+import com.seamwhole.webtradeadmin.info.SysMacro;
 import com.seamwhole.webtradeadmin.service.SysMacroService;
 import com.seamwhole.webtradeadmin.util.ResponseObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,14 +28,9 @@ public class SysMacroController {
     @RequiresPermissions("sys:macro:list")
     public ResponseObject list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        Query query = new Query(params);
+        PagesInfo<SysMacro> page=sysMacroService.queryByPage(params);
 
-        List<SysMacroEntity> sysMacroList = sysMacroService.queryList(query);
-        int total = sysMacroService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(sysMacroList, total, query.getLimit(), query.getPage());
-
-        return ResponseObject.ok().put("page", pageUtil);
+        return ResponseObject.ok().put("page", page);
     }
 
     /**
@@ -43,7 +40,7 @@ public class SysMacroController {
     @RequestMapping("/info/{macroId}")
     @RequiresPermissions("sys:macro:info")
     public ResponseObject info(@PathVariable("macroId") Long macroId) {
-        SysMacroEntity sysMacro = sysMacroService.queryObject(macroId);
+        SysMacro sysMacro = sysMacroService.queryObject(macroId);
 
         return ResponseObject.ok().put("macro", sysMacro);
     }
@@ -54,7 +51,7 @@ public class SysMacroController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:macro:save")
-    public ResponseObject save(@RequestBody SysMacroEntity sysMacro) {
+    public ResponseObject save(@RequestBody SysMacro sysMacro) {
         sysMacroService.save(sysMacro);
 
         return ResponseObject.ok();
@@ -66,7 +63,7 @@ public class SysMacroController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:macro:update")
-    public ResponseObject update(@RequestBody SysMacroEntity sysMacro) {
+    public ResponseObject update(@RequestBody SysMacro sysMacro) {
         sysMacroService.update(sysMacro);
 
         return ResponseObject.ok();
@@ -91,7 +88,7 @@ public class SysMacroController {
     @RequestMapping("/queryAll")
     public ResponseObject queryAll(@RequestParam Map<String, Object> params) {
 
-        List<SysMacroEntity> list = sysMacroService.queryList(params);
+        List<SysMacro> list = sysMacroService.queryList(params);
 
         return ResponseObject.ok().put("list", list);
     }
@@ -103,7 +100,7 @@ public class SysMacroController {
     @RequestMapping("/queryAllParent")
     public ResponseObject queryAllParent(@RequestParam Map<String, Object> params) {
 
-        List<SysMacroEntity> list = sysMacroService.queryAllParent(params);
+        List<SysMacro> list = sysMacroService.queryAllParent(params);
 
         return ResponseObject.ok().put("list", list);
     }
@@ -115,7 +112,7 @@ public class SysMacroController {
     @RequestMapping("/queryMacrosByValue")
     public ResponseObject queryMacrosByValue(@RequestParam String value) {
 
-        List<SysMacroEntity> list = sysMacroService.queryMacrosByValue(value);
+        List<SysMacro> list = sysMacroService.queryMacrosByValue(value);
 
         return ResponseObject.ok().put("list", list);
     }

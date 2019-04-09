@@ -32,4 +32,14 @@ public class SysConfigServiceHystrix implements SysConfigService {
     public void deleteBatch(Long[] ids) {
 
     }
+
+    @Override
+    public <T> T getConfigObject(String key, Class<T> clazz) {
+        return null;
+    }
+
+    @Override
+    public void updateValueByKey(String key, String s) {
+
+    }
 }

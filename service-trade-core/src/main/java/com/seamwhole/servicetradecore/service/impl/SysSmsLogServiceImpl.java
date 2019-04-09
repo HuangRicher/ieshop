@@ -1,5 +1,7 @@
 package com.seamwhole.servicetradecore.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.constant.Constant;
@@ -43,7 +45,9 @@ public class SysSmsLogServiceImpl implements SysSmsLogService {
 
     @Override
     public PageInfo<SysSmsLogDO> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize) {
-        return null;
+        Page<SysSmsLogDO> page= PageHelper.startPage(pageNum,pageSize);
+        sysSmsLogExtMapper.queryList(map);
+        return page.toPageInfo();
     }
 
     @Override
