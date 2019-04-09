@@ -43,6 +43,10 @@ public class LoginController {
             return "redirect:/index";
         }
     }
+    @RequestMapping("/toLogin")
+    public String toToLogin(){
+        return "login";
+    }
 
 
     @RequestMapping("/captcha.jpg")

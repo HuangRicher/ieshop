@@ -75,6 +75,7 @@ public class ShiroConfig {
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/toLogin", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/libs/**", "anon");
         filterChainDefinitionMap.put("/plugins/**", "anon");
@@ -108,7 +109,7 @@ public class ShiroConfig {
     public ShiroLogoutFilter shiroLogoutFilter(){
         ShiroLogoutFilter shiroLogoutFilter = new ShiroLogoutFilter();
         //配置登出后重定向的地址
-        shiroLogoutFilter.setRedirectUrl("/login");
+        shiroLogoutFilter.setRedirectUrl("/toLogin");
         return shiroLogoutFilter;
     }
 
@@ -156,7 +157,7 @@ public class ShiroConfig {
         //缓存AuthorizationInfo信息的缓存名称
         shiroRealm.setAuthorizationCacheName("authorizationCache");
         //配置自定义密码比较器
-        //shiroRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher());
+        shiroRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher());
         return shiroRealm;
     }
 

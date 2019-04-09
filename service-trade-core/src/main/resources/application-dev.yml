@@ -1,6 +1,9 @@
 server:
     port: 10006
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
   ##数据库连接信息
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

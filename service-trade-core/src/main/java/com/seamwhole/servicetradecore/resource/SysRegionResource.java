@@ -74,22 +74,22 @@ public class SysRegionResource {
     }
 
     @PostMapping("/save")
-    public void save(SysRegion region){
+    public void save(@RequestBody SysRegion region){
         sysRegionService.save(region);
     }
 
     @PostMapping("/update")
-    public void update(SysRegion region){
+    public void update(@RequestBody SysRegion region){
         sysRegionService.update(region);
     }
 
     @PostMapping("/deleteBatch")
-    public void deleteBatch(Integer[] ids){
+    public void deleteBatch(@RequestBody Integer[] ids){
         sysRegionService.deleteBatch(ids);
     }
 
     @PostMapping("/queryByPage")
-    public PagesInfo<SysRegionDO> queryByPage(Map<String, Object> params){
+    public PagesInfo<SysRegionDO> queryByPage(@RequestBody Map<String, Object> params){
         PageInfo<SysRegionDO> page=sysRegionService.queryByPage(params,Integer.valueOf((String)params.get("page")),Integer.valueOf((String)params.get("limit")));
         return new PagesInfo<SysRegionDO>(page.getPageNum(),page.getPageSize(),page.getTotal(),page.getPages(),page.getList());
     }

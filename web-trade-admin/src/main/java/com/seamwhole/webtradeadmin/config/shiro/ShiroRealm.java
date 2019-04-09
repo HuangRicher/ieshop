@@ -15,6 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -39,7 +40,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
-        /*//获取用户名密码 第一种方式
+        //获取用户名密码 第一种方式
         //String username = (String) authenticationToken.getPrincipal();
         //String password = new String((char[]) authenticationToken.getCredentials());
 
@@ -49,7 +50,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String password = new String(usernamePasswordToken.getPassword());
 
         //从数据库查询用户信息
-        User user = this.userMapper.findByUserName(username);
+        SysUser user = sysUserService.queryByUserName(username);
 
         //可以在这里直接对用户名校验,或者调用 CredentialsMatcher 校验
         if (user == null) {
@@ -59,28 +60,6 @@ public class ShiroRealm extends AuthorizingRealm {
         //if (!password.equals(user.getPassword())) {
         //    throw new IncorrectCredentialsException("用户名或密码错误！");
         //}
-        if ("1".equals(user.getState())) {
-            throw new LockedAccountException("账号已被锁定,请联系管理员！");
-        }
-
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),new MyByteSource(user.getUsername()),getName());
-        return info;*/
-        String username = (String) authenticationToken.getPrincipal();
-        String password = new String((char[]) authenticationToken.getCredentials());
-
-        //查询用户信息
-        SysUser user = sysUserService.queryByUserName(username);
-
-        //账号不存在
-        if (user == null) {
-            throw new UnknownAccountException("账号或密码不正确");
-        }
-
-        //密码错误
-        if (!StringDataUtils.md5(password,user.getUsername()).equals(user.getPassword())) {
-            throw new IncorrectCredentialsException("账号或密码不正确");
-        }
-
         //账号锁定
         if (user.getStatus() == 0) {
             throw new LockedAccountException("账号已被锁定,请联系管理员");
@@ -104,8 +83,8 @@ public class ShiroRealm extends AuthorizingRealm {
             permsList = sysUserService.queryAllPerms(user.getUserId());
         }
         redisService.set(Constant.PERMS_LIST + user.getUserId(), permsList);
-        //password = StringDataUtils.md5(password,username);
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(),new MyByteSource(user.getUsername()),getName());
+        //SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
         return info;
     }
 

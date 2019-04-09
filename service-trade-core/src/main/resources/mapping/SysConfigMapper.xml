@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, key, value, status, remark
+    id, `key`, `value`, status, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.SysConfigExample" >
     select
@@ -100,7 +100,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.seamwhole.servicetradecore.model.SysConfig" >
-    insert into sys_config (id, key, value, 
+    insert into sys_config (id, `key`, `value`,
       status, remark)
     values (#{id,jdbcType=BIGINT}, #{key,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
@@ -112,10 +112,10 @@
         id,
       </if>
       <if test="key != null" >
-        key,
+        `key`,
       </if>
       <if test="value != null" >
-        value,
+        `value`,
       </if>
       <if test="status != null" >
         status,
@@ -155,10 +155,10 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.key != null" >
-        key = #{record.key,jdbcType=VARCHAR},
+        `key` = #{record.key,jdbcType=VARCHAR},
       </if>
       <if test="record.value != null" >
-        value = #{record.value,jdbcType=VARCHAR},
+        `value` = #{record.value,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
@@ -174,8 +174,8 @@
   <update id="updateByExample" parameterType="map" >
     update sys_config
     set id = #{record.id,jdbcType=BIGINT},
-      key = #{record.key,jdbcType=VARCHAR},
-      value = #{record.value,jdbcType=VARCHAR},
+      `key` = #{record.key,jdbcType=VARCHAR},
+      `value` = #{record.value,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -186,10 +186,10 @@
     update sys_config
     <set >
       <if test="key != null" >
-        key = #{key,jdbcType=VARCHAR},
+        `key` = #{key,jdbcType=VARCHAR},
       </if>
       <if test="value != null" >
-        value = #{value,jdbcType=VARCHAR},
+        `value` = #{value,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -202,8 +202,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.seamwhole.servicetradecore.model.SysConfig" >
     update sys_config
-    set key = #{key,jdbcType=VARCHAR},
-      value = #{value,jdbcType=VARCHAR},
+    set `key` = #{key,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}

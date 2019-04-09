@@ -1,6 +1,9 @@
 server:
     port: 9095
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
   ##数据库连接信息
   datasource:
     url: jdbc:mysql://10.66.225.229:3306/tongzhu_treehouse_dev?useUnicode=true&characterEncoding=utf8&useSSL=false
