@@ -362,13 +362,14 @@ public class CartController extends BaseController {
     //  获取购物车商品的总件件数
     @ApiOperation(value = "获取购物车商品的总件件数")
     @PostMapping("goodscount")
-    public Object goodscount(@RequestBody CartModel cartModel) {
-        if (null == cartModel || null == cartModel.getUserId()) {
+    public Object goodscount() {
+        Integer userId=null;
+        if (null == userId) {
             return toResponsFail("未登录");
         }
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据
-        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(), "", null,null,null,"");
+        List<ShopCartDO> cartList = cartService.queryList(userId, "", null,null,null,"");
         //获取购物车统计信息
         Integer goodsCount = 0;
         for (ShopCartDO cartItem : cartList) {

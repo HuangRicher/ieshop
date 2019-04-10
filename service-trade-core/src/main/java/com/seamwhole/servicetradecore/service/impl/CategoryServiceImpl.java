@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if(map.get("notName")!=null)
 			criteria.andNameNotEqualTo((String)map.get("notName"));
 		if(map.get("ids")!=null)
-			criteria.andIdIn(Arrays.asList((Integer[])(map.get("ids"))));
+			criteria.andIdIn((List<Integer>)(map.get("ids")));
 		return categoryMapper.selectByExample(example);
 	}
 	

@@ -34,6 +34,7 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public PageInfo<ShopTopic> queryByPage(Map<String, Object> map, Integer pageNum, Integer pageSize) {
         ShopTopicExample example=new ShopTopicExample();
+        example.setOrderByClause(" id desc ");
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(()->shopTopicMapper.selectByExample(example));
     }
 

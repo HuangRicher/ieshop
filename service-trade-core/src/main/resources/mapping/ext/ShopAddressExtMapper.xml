@@ -33,7 +33,7 @@
 		where ishop_address.id = #{id}
 	</select>
 
-    <select id="queryList" resultMap="BaseResultMap">
+    <select id="queryList" resultMap="BaseResultMap" parameterType="map">
         select
         ishop_address.id,
         ishop_address.user_id,
@@ -48,6 +48,9 @@
         ishop_user.username shop_user_name
         from ishop_address LEFT JOIN ishop_user ON ishop_address.user_id = ishop_user.id
         WHERE 1=1
+        <if test="userId != null">
+            AND ishop_address.user_id = #{userId}
+        </if>
         <if test="userName != null and userName != ''">
             AND ishop_address.user_name LIKE concat('%', #{userName},'%')
         </if>

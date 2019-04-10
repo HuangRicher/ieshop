@@ -105,17 +105,17 @@ public class GoodsController extends BaseController {
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "商品id", paramType = "path", required = true),
             @ApiImplicitParam(name = "referrer", value = "商品referrer", paramType = "path", required = false)})
     @PostMapping(value = "detail")
-    public Object detail(@RequestBody GoodsModel goodsModel ) {
+    public Object detail(Integer id, Integer referrer) {
         Map<String, Object> resultObj = new HashMap();
         //
-        Integer userId = goodsModel.getUserId();
-        Goods info = goodsService.queryObject(goodsModel.getGoodsId());
+        Integer userId = null;
+        Goods info = goodsService.queryObject(id);
         Map param = new HashMap();
-        param.put("goodsId", goodsModel.getGoodsId());
+        param.put("goodsId", id);
         //
         Map specificationParam = new HashMap();
         specificationParam.put("fields", "gs.*, s.name");
-        specificationParam.put("goodsId", goodsModel.getGoodsId());
+        specificationParam.put("goodsId", id);
         specificationParam.put("specification", true);
         specificationParam.put("sidx", "s.sort_order");
         specificationParam.put("order", "asc");
@@ -160,7 +160,7 @@ public class GoodsController extends BaseController {
         ngaParam.put("fields", "nga.value, na.name");
         ngaParam.put("sidx", "nga.id");
         ngaParam.put("order", "asc");
-        ngaParam.put("goodsId", goodsModel.getGoodsId());
+        ngaParam.put("goodsId", id);
         List<ShopAttribute> attribute = attributeService.queryList(ngaParam);
         //
         Map issueParam = new HashMap();
@@ -169,7 +169,7 @@ public class GoodsController extends BaseController {
         //
         ShopBrand brand = brandService.getById(info.getBrandId());
         //
-        param.put("valueId", goodsModel.getGoodsId());
+        param.put("valueId", id);
         param.put("typeId", 0);
         Integer commentCount = commentService.queryTotal(param);
         List<ShopComment> hotComment = commentService.queryList(param);
@@ -190,8 +190,8 @@ public class GoodsController extends BaseController {
         comment.put("data", commentInfo);
         //当前用户是否收藏
         Map collectParam = new HashMap();
-        collectParam.put("userId", goodsModel.getUserId());
-        collectParam.put("valueId", goodsModel.getGoodsId());
+        collectParam.put("userId", userId);
+        collectParam.put("valueId", id);
         collectParam.put("typeId", 0);
         Integer userHasCollect = collectService.queryTotal(collectParam);
         if (userHasCollect > 0) {
@@ -206,8 +206,8 @@ public class GoodsController extends BaseController {
         //footprintEntity.setName(info.getName());
         //footprintEntity.setRetail_price(info.getRetailPrice());
         footprintEntity.setUserId(userId);
-        if (null != goodsModel.getReferrer()) {
-            footprintEntity.setReferrer(goodsModel.getReferrer());
+        if (null != referrer) {
+            footprintEntity.setReferrer(referrer);
         } else {
             footprintEntity.setReferrer(0);
         }
@@ -231,7 +231,7 @@ public class GoodsController extends BaseController {
             params.put("unUsed", true);
             List<CouponDO> enabledCouponVos = couponService.queryUserCoupons(params);
             if ((null == enabledCouponVos || enabledCouponVos.size() == 0)
-                    && null != goodsModel.getReferrer() && null != userId) {
+                    && null != referrer && null != userId) {
                 // 获取优惠信息提示
                 Map couponParam = new HashMap();
                 couponParam.put("enabled", true);
@@ -241,8 +241,8 @@ public class GoodsController extends BaseController {
                 if (null != couponVos && couponVos.size() > 0) {
                     CouponDO couponVo = couponVos.get(0);
                     Map footprintParam = new HashMap();
-                    footprintParam.put("goodsId", goodsModel.getGoodsId());
-                    footprintParam.put("referrer", goodsModel.getReferrer());
+                    footprintParam.put("goodsId", id);
+                    footprintParam.put("referrer", referrer);
                     Integer footprintNum = footPrintService.queryTotal(footprintParam);
                     if (null != footprintNum && null != couponVo.getMin_transmit_num()
                             && footprintNum > couponVo.getMin_transmit_num()) {
@@ -250,7 +250,7 @@ public class GoodsController extends BaseController {
                         userCouponVo.setAddTime(new Date());
                         userCouponVo.setCouponId(couponVo.getId());
                         userCouponVo.setCouponNumber(CharUtil.getRandomString(12));
-                        userCouponVo.setUserId(goodsModel.getUserId());
+                        userCouponVo.setUserId(userId);
                         userCouponService.save(userCouponVo);
                     }
                 }
@@ -268,10 +268,10 @@ public class GoodsController extends BaseController {
     @ApiOperation(value = " 获取分类下的商品")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "分类id", paramType = "path", required = true)})
     @PostMapping(value = "category")
-    public Object category(@RequestBody GoodsModel goodsModel) {
+    public Object category(Integer id) {
         Map<String, Object> resultObj = new HashMap();
         //
-        Category currentCategory = categoryService.queryObject(goodsModel.getCategoryId());
+        Category currentCategory = categoryService.queryObject(id);
         //
         Category parentCategory = categoryService.queryObject(currentCategory.getParentId());
         Map params = new HashMap();
@@ -293,32 +293,35 @@ public class GoodsController extends BaseController {
             @ApiImplicitParam(name = "isNew", value = "新商品", paramType = "path", required = true),
             @ApiImplicitParam(name = "isHot", value = "热卖商品", paramType = "path", required = true)})
     @PostMapping(value = "list")
-    public Object list(@RequestBody GoodsModel goodsModel) {
+    public Object list(Integer categoryId,
+                       Integer brandId, String keyword, Integer isNew, Integer isHot,
+                       @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
+                       String sort, String order) {
         Map params = new HashMap();
         params.put("isDelete", 0);
         params.put("isOnSale", 1);
-        params.put("brandId", goodsModel.getBrandId());
-        params.put("keyword", goodsModel.getKeyword());
-        params.put("isNew", goodsModel.getIsNew());
-        params.put("isHot", goodsModel.getIsHot());
-        params.put("page", goodsModel.getPageNum());
-        params.put("limit", goodsModel.getPageSize());
-        params.put("order", goodsModel.getOrder());
-        params.put("sidx", goodsModel.getSort());
+        params.put("brandId", brandId);
+        params.put("keyword", keyword);
+        params.put("isNew", isNew);
+        params.put("isHot", isHot);
+        params.put("page", page);
+        params.put("limit", size);
+        params.put("order", order);
+        params.put("sidx", sort);
         //
-        if (null != goodsModel.getSort() && goodsModel.getSort().equals("price")) {
+        if (null != sort && sort.equals("price")) {
             params.put("sidx", "retail_price");
-            params.put("order", goodsModel.getOrder());
+            params.put("order", sort);
         } else {
             params.put("sidx", "id");
             params.put("order", "desc");
         }
         //添加到搜索历史
-        if (!StringUtils.isNullOrEmpty(goodsModel.getKeyword())) {
+        if (!StringUtils.isNullOrEmpty(keyword)) {
             SearchHistory searchHistoryVo = new SearchHistory();
             searchHistoryVo.setAddTime((int)(System.currentTimeMillis() / 1000));
-            searchHistoryVo.setKeyword(goodsModel.getKeyword());
-            searchHistoryVo.setUserId(null != goodsModel ? goodsModel.getUserId().toString() : "");
+            searchHistoryVo.setKeyword(keyword);
+            searchHistoryVo.setUserId("");
             searchHistoryVo.setFrom("");
             searchHistoryService.save(searchHistoryVo);
 
@@ -365,34 +368,36 @@ public class GoodsController extends BaseController {
             }
         }
         //加入分类条件
-        if (null != goodsModel.getCategoryId() && goodsModel.getCategoryId() > 0) {
+        if (null != categoryId && categoryId > 0) {
             List<Integer> categoryIds = new ArrayList();
             Map categoryParam = new HashMap();
-            categoryParam.put("parentId", goodsModel.getCategoryId());
+            categoryParam.put("parentId", categoryId);
             categoryParam.put("fields", "id");
             List<Category> childIds = categoryService.queryList(categoryParam);
             for (Category categoryEntity : childIds) {
                 categoryIds.add(categoryEntity.getId());
             }
-            categoryIds.add(goodsModel.getCategoryId());
+            categoryIds.add(categoryId);
             params.put("categoryIds", categoryIds);
         }
         //查询列表数据
         params.put("fields", "id, name, list_pic_url, market_price, retail_price, goods_brief");
 
-        PageInfo<GoodsDO> pageInfo=goodsService.queryByPage(params,goodsModel.getPageNum(),goodsModel.getPageSize());
+        PageInfo<GoodsDO> pageInfo=goodsService.queryByPage(params,page,size);
         List<GoodsDO> goodsList = pageInfo.getList();
 
         //搜索到的商品
         for (CategoryInfo categoryEntity : filterCategory) {
-        	if (null != goodsModel.getCategoryId() && (categoryEntity.getId() == 0 || goodsModel.getCategoryId().equals(categoryEntity.getId()))
-        	   ||null == goodsModel.getCategoryId()&&null == categoryEntity.getId()) {
+        	if (null != categoryId && (categoryEntity.getId() == 0 || categoryId.equals(categoryEntity.getId()))
+        	   ||null == categoryId&&null == categoryEntity.getId()) {
                 categoryEntity.setChecked(true);
             } else {
                 categoryEntity.setChecked(false);
             }
         }
         Map<String,Object> result=new HashMap<>();
+        result.put("currentPage",pageInfo.getPageNum());
+        result.put("totalPages",pageInfo.getPages());
         result.put("filterCategory",filterCategory);
         result.put("goodsList",goodsList);
         return toResponsSuccess(result);

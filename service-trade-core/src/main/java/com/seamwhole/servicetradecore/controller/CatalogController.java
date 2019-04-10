@@ -47,18 +47,17 @@ public class CatalogController extends BaseController {
         //查询列表数据
         List<Category> data = categoryService.queryList(params);
         //
-        CategoryInfo currentCategoryInfo = null;
+        CategoryInfo currentCategoryInfo = new CategoryInfo();
         Category currentCategory=null;
         if (null != id) {
             currentCategory = categoryService.queryObject(id);
-            BeanUtils.copyProperties(currentCategory,currentCategoryInfo);
         }
         if (null == currentCategory && null != data && data.size() != 0) {
             currentCategory = data.get(0);
         } else {
             currentCategory = new Category();
         }
-
+        BeanUtils.copyProperties(currentCategory,currentCategoryInfo);
         //获取子分类数据
         if (null != currentCategory && null != currentCategory.getId()) {
             params.put("parent_id", currentCategory.getId());
@@ -79,11 +78,12 @@ public class CatalogController extends BaseController {
         Map<String, Object> resultObj = new HashMap();
         Map params = new HashMap();
         params.put("parent_id", 0);
-        CategoryInfo currentCategoryInfo = null;
+        CategoryInfo currentCategoryInfo = new CategoryInfo();
         Category currentCategory = null;
         if (null != id) {
             currentCategory = categoryService.queryObject(id);
         }
+        BeanUtils.copyProperties(currentCategory,currentCategoryInfo);
         //获取子分类数据
         if (null != currentCategory && null != currentCategory.getId()) {
             params.put("parent_id", currentCategory.getId());
