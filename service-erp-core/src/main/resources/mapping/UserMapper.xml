@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.serviceerpcore.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="loginame" property="loginame" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phonenum" property="phonenum" jdbcType="VARCHAR" />
+    <result column="ismanager" property="ismanager" jdbcType="TINYINT" />
+    <result column="isystem" property="isystem" jdbcType="TINYINT" />
+    <result column="Status" property="status" jdbcType="TINYINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, loginame, password, position, department, email, phonenum, ismanager, 
+    isystem, Status, description, remark, tenant_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from erp_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from erp_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from erp_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.serviceerpcore.model.UserExample" >
+    delete from erp_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.serviceerpcore.model.User" >
+    insert into erp_user (id, username, loginame, 
+      password, position, department, 
+      email, phonenum, ismanager, 
+      isystem, Status, description, 
+      remark, tenant_id)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{loginame,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, #{ismanager,jdbcType=TINYINT}, 
+      #{isystem,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{tenantId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.serviceerpcore.model.User" >
+    insert into erp_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="loginame != null" >
+        loginame,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phonenum != null" >
+        phonenum,
+      </if>
+      <if test="ismanager != null" >
+        ismanager,
+      </if>
+      <if test="isystem != null" >
+        isystem,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginame != null" >
+        #{loginame,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="ismanager != null" >
+        #{ismanager,jdbcType=TINYINT},
+      </if>
+      <if test="isystem != null" >
+        #{isystem,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.serviceerpcore.model.UserExample" resultType="java.lang.Integer" >
+    select count(*) from erp_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update erp_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginame != null" >
+        loginame = #{record.loginame,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenum != null" >
+        phonenum = #{record.phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ismanager != null" >
+        ismanager = #{record.ismanager,jdbcType=TINYINT},
+      </if>
+      <if test="record.isystem != null" >
+        isystem = #{record.isystem,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        Status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tenantId != null" >
+        tenant_id = #{record.tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update erp_user
+    set id = #{record.id,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      loginame = #{record.loginame,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      phonenum = #{record.phonenum,jdbcType=VARCHAR},
+      ismanager = #{record.ismanager,jdbcType=TINYINT},
+      isystem = #{record.isystem,jdbcType=TINYINT},
+      Status = #{record.status,jdbcType=TINYINT},
+      description = #{record.description,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      tenant_id = #{record.tenantId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.serviceerpcore.model.User" >
+    update erp_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginame != null" >
+        loginame = #{loginame,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        phonenum = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="ismanager != null" >
+        ismanager = #{ismanager,jdbcType=TINYINT},
+      </if>
+      <if test="isystem != null" >
+        isystem = #{isystem,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.serviceerpcore.model.User" >
+    update erp_user
+    set username = #{username,jdbcType=VARCHAR},
+      loginame = #{loginame,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phonenum = #{phonenum,jdbcType=VARCHAR},
+      ismanager = #{ismanager,jdbcType=TINYINT},
+      isystem = #{isystem,jdbcType=TINYINT},
+      Status = #{status,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      tenant_id = #{tenantId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

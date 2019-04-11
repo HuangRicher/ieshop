@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.TblSequenceMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.serviceerpcore.model.TblSequence" >
+    <id column="seq_name" property="seqName" jdbcType="VARCHAR" />
+    <result column="min_value" property="minValue" jdbcType="BIGINT" />
+    <result column="max_value" property="maxValue" jdbcType="BIGINT" />
+    <result column="current_val" property="currentVal" jdbcType="BIGINT" />
+    <result column="increment_val" property="incrementVal" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    seq_name, min_value, max_value, current_val, increment_val, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.TblSequenceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_sequence
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_sequence
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.serviceerpcore.model.TblSequenceExample" >
+    delete from tbl_sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.serviceerpcore.model.TblSequence" >
+    insert into tbl_sequence (seq_name, min_value, max_value, 
+      current_val, increment_val, remark
+      )
+    values (#{seqName,jdbcType=VARCHAR}, #{minValue,jdbcType=BIGINT}, #{maxValue,jdbcType=BIGINT}, 
+      #{currentVal,jdbcType=BIGINT}, #{incrementVal,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.serviceerpcore.model.TblSequence" >
+    insert into tbl_sequence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="seqName != null" >
+        seq_name,
+      </if>
+      <if test="minValue != null" >
+        min_value,
+      </if>
+      <if test="maxValue != null" >
+        max_value,
+      </if>
+      <if test="currentVal != null" >
+        current_val,
+      </if>
+      <if test="incrementVal != null" >
+        increment_val,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="seqName != null" >
+        #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="minValue != null" >
+        #{minValue,jdbcType=BIGINT},
+      </if>
+      <if test="maxValue != null" >
+        #{maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentVal != null" >
+        #{currentVal,jdbcType=BIGINT},
+      </if>
+      <if test="incrementVal != null" >
+        #{incrementVal,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.serviceerpcore.model.TblSequenceExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_sequence
+    <set >
+      <if test="record.seqName != null" >
+        seq_name = #{record.seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minValue != null" >
+        min_value = #{record.minValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.maxValue != null" >
+        max_value = #{record.maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.currentVal != null" >
+        current_val = #{record.currentVal,jdbcType=BIGINT},
+      </if>
+      <if test="record.incrementVal != null" >
+        increment_val = #{record.incrementVal,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_sequence
+    set seq_name = #{record.seqName,jdbcType=VARCHAR},
+      min_value = #{record.minValue,jdbcType=BIGINT},
+      max_value = #{record.maxValue,jdbcType=BIGINT},
+      current_val = #{record.currentVal,jdbcType=BIGINT},
+      increment_val = #{record.incrementVal,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.serviceerpcore.model.TblSequence" >
+    update tbl_sequence
+    <set >
+      <if test="minValue != null" >
+        min_value = #{minValue,jdbcType=BIGINT},
+      </if>
+      <if test="maxValue != null" >
+        max_value = #{maxValue,jdbcType=BIGINT},
+      </if>
+      <if test="currentVal != null" >
+        current_val = #{currentVal,jdbcType=BIGINT},
+      </if>
+      <if test="incrementVal != null" >
+        increment_val = #{incrementVal,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.serviceerpcore.model.TblSequence" >
+    update tbl_sequence
+    set min_value = #{minValue,jdbcType=BIGINT},
+      max_value = #{maxValue,jdbcType=BIGINT},
+      current_val = #{currentVal,jdbcType=BIGINT},
+      increment_val = #{incrementVal,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where seq_name = #{seqName,jdbcType=VARCHAR}
+  </update>
+</mapper>

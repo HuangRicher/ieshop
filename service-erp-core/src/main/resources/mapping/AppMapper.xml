@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.AppMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.serviceerpcore.model.App" >
+    <id column="Id" property="id" jdbcType="BIGINT" />
+    <result column="Number" property="number" jdbcType="VARCHAR" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Type" property="type" jdbcType="VARCHAR" />
+    <result column="Icon" property="icon" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="Width" property="width" jdbcType="VARCHAR" />
+    <result column="Height" property="height" jdbcType="VARCHAR" />
+    <result column="ReSize" property="resize" jdbcType="BIT" />
+    <result column="OpenMax" property="openmax" jdbcType="BIT" />
+    <result column="Flash" property="flash" jdbcType="BIT" />
+    <result column="ZL" property="zl" jdbcType="VARCHAR" />
+    <result column="Sort" property="sort" jdbcType="VARCHAR" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+    <result column="Enabled" property="enabled" jdbcType="BIT" />
+    <result column="delete_Flag" property="deleteFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, Number, Name, Type, Icon, URL, Width, Height, ReSize, OpenMax, Flash, ZL, Sort, 
+    Remark, Enabled, delete_Flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.AppExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from erp_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from erp_app
+    where Id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from erp_app
+    where Id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.serviceerpcore.model.AppExample" >
+    delete from erp_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.serviceerpcore.model.App" >
+    insert into erp_app (Id, Number, Name, 
+      Type, Icon, URL, Width, 
+      Height, ReSize, OpenMax, Flash, 
+      ZL, Sort, Remark, Enabled, 
+      delete_Flag)
+    values (#{id,jdbcType=BIGINT}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{width,jdbcType=VARCHAR}, 
+      #{height,jdbcType=VARCHAR}, #{resize,jdbcType=BIT}, #{openmax,jdbcType=BIT}, #{flash,jdbcType=BIT}, 
+      #{zl,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
+      #{deleteFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.serviceerpcore.model.App" >
+    insert into erp_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="number != null" >
+        Number,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="icon != null" >
+        Icon,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="width != null" >
+        Width,
+      </if>
+      <if test="height != null" >
+        Height,
+      </if>
+      <if test="resize != null" >
+        ReSize,
+      </if>
+      <if test="openmax != null" >
+        OpenMax,
+      </if>
+      <if test="flash != null" >
+        Flash,
+      </if>
+      <if test="zl != null" >
+        ZL,
+      </if>
+      <if test="sort != null" >
+        Sort,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+      <if test="enabled != null" >
+        Enabled,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_Flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="resize != null" >
+        #{resize,jdbcType=BIT},
+      </if>
+      <if test="openmax != null" >
+        #{openmax,jdbcType=BIT},
+      </if>
+      <if test="flash != null" >
+        #{flash,jdbcType=BIT},
+      </if>
+      <if test="zl != null" >
+        #{zl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.serviceerpcore.model.AppExample" resultType="java.lang.Integer" >
+    select count(*) from erp_app
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update erp_app
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.number != null" >
+        Number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        Type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icon != null" >
+        Icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.width != null" >
+        Width = #{record.width,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        Height = #{record.height,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resize != null" >
+        ReSize = #{record.resize,jdbcType=BIT},
+      </if>
+      <if test="record.openmax != null" >
+        OpenMax = #{record.openmax,jdbcType=BIT},
+      </if>
+      <if test="record.flash != null" >
+        Flash = #{record.flash,jdbcType=BIT},
+      </if>
+      <if test="record.zl != null" >
+        ZL = #{record.zl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        Sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enabled != null" >
+        Enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.deleteFlag != null" >
+        delete_Flag = #{record.deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update erp_app
+    set Id = #{record.id,jdbcType=BIGINT},
+      Number = #{record.number,jdbcType=VARCHAR},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Type = #{record.type,jdbcType=VARCHAR},
+      Icon = #{record.icon,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      Width = #{record.width,jdbcType=VARCHAR},
+      Height = #{record.height,jdbcType=VARCHAR},
+      ReSize = #{record.resize,jdbcType=BIT},
+      OpenMax = #{record.openmax,jdbcType=BIT},
+      Flash = #{record.flash,jdbcType=BIT},
+      ZL = #{record.zl,jdbcType=VARCHAR},
+      Sort = #{record.sort,jdbcType=VARCHAR},
+      Remark = #{record.remark,jdbcType=VARCHAR},
+      Enabled = #{record.enabled,jdbcType=BIT},
+      delete_Flag = #{record.deleteFlag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.serviceerpcore.model.App" >
+    update erp_app
+    <set >
+      <if test="number != null" >
+        Number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        Icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        Width = #{width,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        Height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="resize != null" >
+        ReSize = #{resize,jdbcType=BIT},
+      </if>
+      <if test="openmax != null" >
+        OpenMax = #{openmax,jdbcType=BIT},
+      </if>
+      <if test="flash != null" >
+        Flash = #{flash,jdbcType=BIT},
+      </if>
+      <if test="zl != null" >
+        ZL = #{zl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        Sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        Enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_Flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.serviceerpcore.model.App" >
+    update erp_app
+    set Number = #{number,jdbcType=VARCHAR},
+      Name = #{name,jdbcType=VARCHAR},
+      Type = #{type,jdbcType=VARCHAR},
+      Icon = #{icon,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      Width = #{width,jdbcType=VARCHAR},
+      Height = #{height,jdbcType=VARCHAR},
+      ReSize = #{resize,jdbcType=BIT},
+      OpenMax = #{openmax,jdbcType=BIT},
+      Flash = #{flash,jdbcType=BIT},
+      ZL = #{zl,jdbcType=VARCHAR},
+      Sort = #{sort,jdbcType=VARCHAR},
+      Remark = #{remark,jdbcType=VARCHAR},
+      Enabled = #{enabled,jdbcType=BIT},
+      delete_Flag = #{deleteFlag,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

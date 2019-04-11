@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.seamwhole.serviceerpcore.model.Organization" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_no" property="orgNo" jdbcType="VARCHAR" />
+    <result column="org_full_name" property="orgFullName" jdbcType="VARCHAR" />
+    <result column="org_abr" property="orgAbr" jdbcType="VARCHAR" />
+    <result column="org_tpcd" property="orgTpcd" jdbcType="VARCHAR" />
+    <result column="org_stcd" property="orgStcd" jdbcType="CHAR" />
+    <result column="org_parent_no" property="orgParentNo" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="BIGINT" />
+    <result column="org_create_time" property="orgCreateTime" jdbcType="TIMESTAMP" />
+    <result column="org_stop_time" property="orgStopTime" jdbcType="TIMESTAMP" />
+    <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, org_no, org_full_name, org_abr, org_tpcd, org_stcd, org_parent_no, sort, remark, 
+    create_time, creator, update_time, updater, org_create_time, org_stop_time, tenant_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.OrganizationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from erp_organization
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from erp_organization
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from erp_organization
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seamwhole.serviceerpcore.model.OrganizationExample" >
+    delete from erp_organization
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seamwhole.serviceerpcore.model.Organization" >
+    insert into erp_organization (id, org_no, org_full_name, 
+      org_abr, org_tpcd, org_stcd, 
+      org_parent_no, sort, remark, 
+      create_time, creator, update_time, 
+      updater, org_create_time, org_stop_time, 
+      tenant_id)
+    values (#{id,jdbcType=BIGINT}, #{orgNo,jdbcType=VARCHAR}, #{orgFullName,jdbcType=VARCHAR}, 
+      #{orgAbr,jdbcType=VARCHAR}, #{orgTpcd,jdbcType=VARCHAR}, #{orgStcd,jdbcType=CHAR}, 
+      #{orgParentNo,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updater,jdbcType=BIGINT}, #{orgCreateTime,jdbcType=TIMESTAMP}, #{orgStopTime,jdbcType=TIMESTAMP}, 
+      #{tenantId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seamwhole.serviceerpcore.model.Organization" >
+    insert into erp_organization
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgNo != null" >
+        org_no,
+      </if>
+      <if test="orgFullName != null" >
+        org_full_name,
+      </if>
+      <if test="orgAbr != null" >
+        org_abr,
+      </if>
+      <if test="orgTpcd != null" >
+        org_tpcd,
+      </if>
+      <if test="orgStcd != null" >
+        org_stcd,
+      </if>
+      <if test="orgParentNo != null" >
+        org_parent_no,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="orgCreateTime != null" >
+        org_create_time,
+      </if>
+      <if test="orgStopTime != null" >
+        org_stop_time,
+      </if>
+      <if test="tenantId != null" >
+        tenant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgNo != null" >
+        #{orgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullName != null" >
+        #{orgFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAbr != null" >
+        #{orgAbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTpcd != null" >
+        #{orgTpcd,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStcd != null" >
+        #{orgStcd,jdbcType=CHAR},
+      </if>
+      <if test="orgParentNo != null" >
+        #{orgParentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=BIGINT},
+      </if>
+      <if test="orgCreateTime != null" >
+        #{orgCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgStopTime != null" >
+        #{orgStopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantId != null" >
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seamwhole.serviceerpcore.model.OrganizationExample" resultType="java.lang.Integer" >
+    select count(*) from erp_organization
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update erp_organization
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgNo != null" >
+        org_no = #{record.orgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFullName != null" >
+        org_full_name = #{record.orgFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAbr != null" >
+        org_abr = #{record.orgAbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgTpcd != null" >
+        org_tpcd = #{record.orgTpcd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgStcd != null" >
+        org_stcd = #{record.orgStcd,jdbcType=CHAR},
+      </if>
+      <if test="record.orgParentNo != null" >
+        org_parent_no = #{record.orgParentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgCreateTime != null" >
+        org_create_time = #{record.orgCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orgStopTime != null" >
+        org_stop_time = #{record.orgStopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tenantId != null" >
+        tenant_id = #{record.tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update erp_organization
+    set id = #{record.id,jdbcType=BIGINT},
+      org_no = #{record.orgNo,jdbcType=VARCHAR},
+      org_full_name = #{record.orgFullName,jdbcType=VARCHAR},
+      org_abr = #{record.orgAbr,jdbcType=VARCHAR},
+      org_tpcd = #{record.orgTpcd,jdbcType=VARCHAR},
+      org_stcd = #{record.orgStcd,jdbcType=CHAR},
+      org_parent_no = #{record.orgParentNo,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      updater = #{record.updater,jdbcType=BIGINT},
+      org_create_time = #{record.orgCreateTime,jdbcType=TIMESTAMP},
+      org_stop_time = #{record.orgStopTime,jdbcType=TIMESTAMP},
+      tenant_id = #{record.tenantId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seamwhole.serviceerpcore.model.Organization" >
+    update erp_organization
+    <set >
+      <if test="orgNo != null" >
+        org_no = #{orgNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullName != null" >
+        org_full_name = #{orgFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAbr != null" >
+        org_abr = #{orgAbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orgTpcd != null" >
+        org_tpcd = #{orgTpcd,jdbcType=VARCHAR},
+      </if>
+      <if test="orgStcd != null" >
+        org_stcd = #{orgStcd,jdbcType=CHAR},
+      </if>
+      <if test="orgParentNo != null" >
+        org_parent_no = #{orgParentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=BIGINT},
+      </if>
+      <if test="orgCreateTime != null" >
+        org_create_time = #{orgCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgStopTime != null" >
+        org_stop_time = #{orgStopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tenantId != null" >
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seamwhole.serviceerpcore.model.Organization" >
+    update erp_organization
+    set org_no = #{orgNo,jdbcType=VARCHAR},
+      org_full_name = #{orgFullName,jdbcType=VARCHAR},
+      org_abr = #{orgAbr,jdbcType=VARCHAR},
+      org_tpcd = #{orgTpcd,jdbcType=VARCHAR},
+      org_stcd = #{orgStcd,jdbcType=CHAR},
+      org_parent_no = #{orgParentNo,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=BIGINT},
+      org_create_time = #{orgCreateTime,jdbcType=TIMESTAMP},
+      org_stop_time = #{orgStopTime,jdbcType=TIMESTAMP},
+      tenant_id = #{tenantId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

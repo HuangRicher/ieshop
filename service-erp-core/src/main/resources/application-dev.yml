@@ -1,0 +1,70 @@
+server:
+    port: 10007
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  ##数据库连接信息
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        maxLifetime: 1800000
+        idleTimeout: 600000
+  application:
+      name: trade-core-service
+  redis:
+      database: 0
+      #120.78.170.118
+      host: 120.78.170.118
+      port: 6379
+      password: 123456
+      lettuce:
+        shutdown-timeout: 30000ms
+        pool:
+          max-active: 10
+          max-wait: -1ms
+          max-idle: 0
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+  type-aliases-package: com.seamwhole.servicetradecore.model
+  mapper-locations: classpath:mapping/**/*Mapper.xml
+
+#pagehelper分页工具
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+#logging:
+#  level:
+#    com.tongzhu.user.mapper : debug
+
+## tx-manager 配置
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
