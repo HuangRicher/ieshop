@@ -19,7 +19,7 @@ spring:
         maxLifetime: 1800000
         idleTimeout: 600000
   application:
-      name: trade-core-service
+      name: erp-core-service
   redis:
       database: 0
       #120.78.170.118
@@ -36,7 +36,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
     use-generated-keys: true
-  type-aliases-package: com.seamwhole.servicetradecore.model
+  type-aliases-package: com.seamwhole.serviceerpcore.model
   mapper-locations: classpath:mapping/**/*Mapper.xml
 
 #pagehelper分页工具
