@@ -1,5 +1,6 @@
 package com.seamwhole.serviceerpcore.mapper.ext;
 
+
 import com.seamwhole.serviceerpcore.mapper.vo.AccountItemVo4List;
 import com.seamwhole.serviceerpcore.model.AccountItem;
 import org.apache.ibatis.annotations.Param;
@@ -24,5 +25,11 @@ public interface AccountItemExtMapper {
     List<AccountItemVo4List> getDetailList(
             @Param("headerId") Long headerId);
 
-    int batchDeleteAccountItemByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String ids[]);
+    int batchDeleteAccountItemByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String[] ids);
+
+    List<AccountItem> getAccountItemListByAccountIds(@Param("accountIds") String[] accountIds);
+
+    List<AccountItem> getAccountItemListByHeaderIds(@Param("headerIds") String[] headerIds);
+
+    List<AccountItem> getAccountItemListByInOutItemIds(@Param("inOutItemIds") String[] inOutItemIds);
 }

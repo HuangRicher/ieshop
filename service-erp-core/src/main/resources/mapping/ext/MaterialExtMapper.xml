@@ -52,7 +52,7 @@
     </select>
 
     <select id="findUnitName" resultType="java.lang.String">
-        select jsh_unit.UName  from jsh_unit u
+        select u.UName  from jsh_unit u
         left join jsh_material m on m.UnitId=u.id and ifnull(m.delete_Flag,'0') !='1'
         where m.id = ${mId}
         and ifnull(u.delete_Flag,'0') !='1'
@@ -118,7 +118,7 @@
         and ifnull(m.delete_Flag,'0') !='1'
 
     </select>
-    <select id="getMaterialEnableSerialNumberList" parameterType="java.util.Map" resultMap="com.jsh.erp.datasource.mappers.MaterialMapper.BaseResultMap">
+    <select id="getMaterialEnableSerialNumberList" parameterType="java.util.Map" resultMap="com.seamwhole.serviceerpcore.mapper.MaterialMapper.BaseResultMap">
         select
         Id, CategoryId, name, Mfrs, Packing, SafetyStock, Model, Standard, Color, Unit, Remark,
         RetailPrice, LowPrice, PresetPriceOne, PresetPriceTwo, UnitId, FirstOutUnit, FirstInUnit,
@@ -149,6 +149,29 @@
         </foreach>
         )
     </update>
-
+    <select id="getMaterialListByCategoryIds"  resultMap="com.seamwhole.serviceerpcore.mapper.MaterialMapper.BaseResultMap">
+        select
+        <include refid="com.jsh.erp.datasource.mappers.MaterialMapper.Base_Column_List" />
+        from jsh_material
+        where 1=1
+        and categoryId in (
+        <foreach collection="categoryIds" item="categoryId" separator=",">
+            #{categoryId}
+        </foreach>
+        )
+        and ifnull(delete_Flag,'0') !='1'
+    </select>
+    <select id="getMaterialListByUnitIds"  resultMap="com.seamwhole.serviceerpcore.mapper.MaterialMapper.BaseResultMap">
+        select
+        <include refid="com.seamwhole.serviceerpcore.mapper.MaterialMapper.Base_Column_List" />
+        from jsh_material
+        where 1=1
+        and unitId in (
+        <foreach collection="unitIds" item="unitId" separator=",">
+            #{unitId}
+        </foreach>
+        )
+        and ifnull(delete_Flag,'0') !='1'
+    </select>
 
 </mapper>

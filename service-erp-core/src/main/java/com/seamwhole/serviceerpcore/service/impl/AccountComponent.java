@@ -4,6 +4,7 @@ import com.jsh.erp.service.ICommonQuery;
 import com.jsh.erp.utils.Constants;
 import com.jsh.erp.utils.QueryUtils;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.service.AccountService;
 import com.seamwhole.serviceerpcore.service.account.AccountResource;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 public class AccountComponent implements ICommonQuery {
 
     @Resource
-    private AccountServiceImpl accountService;
+    private AccountService accountService;
 
     @Override
     public Object selectOne(String condition) {

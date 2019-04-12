@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.OrgaUserRelExtMapper" >
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.OrgUserRelExtMapper" >
   <resultMap extends="com.seamwhole.serviceerpcore.mapper.OrgUserRelMapper.BaseResultMap" id="BaseResultMapEx" type="com.seamwhole.serviceerpcore.mapper.vo.OrgaUserRelEx" >
   </resultMap>
   <insert id="addOrgaUserRel" parameterType="com.seamwhole.serviceerpcore.model.OrgUserRel"

@@ -113,6 +113,20 @@ public interface DepotItemExtMapper {
             @Param("MId") Long MId,
             @Param("MonthTime") String MonthTime);
 
+    BigDecimal findAssembleIsPrev(
+            @Param("subType") String subType,
+            @Param("mType") String mType,
+            @Param("ProjectId") Integer ProjectId,
+            @Param("MId") Long MId,
+            @Param("MonthTime") String MonthTime);
+
+    BigDecimal findAssembleIsNotPrev(
+            @Param("subType") String subType,
+            @Param("mType") String mType,
+            @Param("ProjectId") Integer ProjectId,
+            @Param("MId") Long MId,
+            @Param("MonthTime") String MonthTime);
+
     BigDecimal buyOrSaleNumber(
             @Param("type") String type,
             @Param("subType") String subType,
@@ -158,4 +172,8 @@ public interface DepotItemExtMapper {
      int batchDeleteDepotItemByDepotHeadIds(@Param("depotheadIds") Long[] depotHeadIds);
 
     int batchDeleteDepotItemByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String ids[]);
+
+    List<DepotItem> getDepotItemListListByDepotIds(@Param("depotIds") String[] depotIds);
+
+    List<DepotItem> getDepotItemListListByMaterialIds(@Param("materialIds") String[] materialIds);
 }

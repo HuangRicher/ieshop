@@ -1,5 +1,6 @@
 package com.seamwhole.serviceerpcore.mapper.ext;
 
+
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InDetail;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InOutMCount;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4List;
@@ -115,4 +116,12 @@ public interface DepotHeadExtMapper {
      Long  getBuildOnlyNumber(@Param("seq_name") String seq_name);
 
     int batchDeleteDepotHeadByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String ids[]);
+
+    List<DepotHead> getDepotHeadListByAccountIds(@Param("accountIds") String[] accountIds);
+
+    List<DepotHead> getDepotHeadListByOrganIds(@Param("organIds") String[] organIds);
+
+    List<DepotHead> getDepotHeadListByHandsPersonIds(@Param("handsPersonIds") String[] handsPersonIds);
+
+    List<DepotHead> getDepotHeadListByDepotIds(@Param("depotIds") String[] depotIds);
 }

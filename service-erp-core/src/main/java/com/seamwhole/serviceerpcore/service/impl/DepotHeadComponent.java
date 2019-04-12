@@ -4,8 +4,8 @@ import com.jsh.erp.service.ICommonQuery;
 import com.jsh.erp.utils.Constants;
 import com.jsh.erp.utils.QueryUtils;
 import com.jsh.erp.utils.StringUtil;
-import com.seamwhole.serviceerpcore.service.DepotHeadService;
 import com.seamwhole.serviceerpcore.service.depotHead.DepotHeadResource;
+import com.seamwhole.serviceerpcore.service.impl.DepotHeadService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

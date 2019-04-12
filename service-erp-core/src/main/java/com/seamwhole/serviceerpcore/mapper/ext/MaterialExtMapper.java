@@ -1,5 +1,6 @@
 package com.seamwhole.serviceerpcore.mapper.ext;
 
+
 import com.seamwhole.serviceerpcore.mapper.vo.MaterialVo4Unit;
 import com.seamwhole.serviceerpcore.model.Material;
 import org.apache.ibatis.annotations.Param;
@@ -57,4 +58,8 @@ public interface MaterialExtMapper {
     List<Material> getMaterialEnableSerialNumberList(Map<String, Object> parameterMap);
 
     int batchDeleteMaterialByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String ids[]);
+
+    List<Material> getMaterialListByCategoryIds(@Param("categoryIds") String[] categoryIds);
+
+    List<Material> getMaterialListByUnitIds(@Param("unitIds") String[] unitIds);
 }

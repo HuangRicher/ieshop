@@ -1,5 +1,6 @@
 package com.seamwhole.serviceerpcore.mapper.ext;
 
+
 import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
 import com.seamwhole.serviceerpcore.model.MaterialCategory;
 import org.apache.ibatis.annotations.Param;
@@ -35,4 +36,6 @@ public interface MaterialCategoryExtMapper {
     int editMaterialCategory(MaterialCategory mc);
 
     List<MaterialCategory> getMaterialCategoryBySerialNo(@Param("serialNo") String serialNo);
+
+    List<MaterialCategory> getMaterialCategoryListByCategoryIds(@Param("parentIds") String[] categoryIds);
 }
