@@ -2,16 +2,15 @@ package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.AccountItem;
-import com.jsh.erp.datasource.entities.AccountItemExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.AccountItemMapper;
-import com.jsh.erp.datasource.mappers.AccountItemMapperEx;
-import com.jsh.erp.datasource.vo.AccountItemVo4List;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.mapper.AccountItemMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.AccountItemExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.AccountItemVo4List;
+import com.seamwhole.serviceerpcore.model.AccountItem;
+import com.seamwhole.serviceerpcore.model.AccountItemExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.AccountItemService;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -27,18 +26,18 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AccountItemService {
-    private Logger logger = LoggerFactory.getLogger(AccountItemService.class);
+public class AccountItemServiceImpl implements AccountItemService{
+    private Logger logger = LoggerFactory.getLogger(AccountItemServiceImpl.class);
 
     @Resource
     private AccountItemMapper accountItemMapper;
 
     @Resource
-    private AccountItemMapperEx accountItemMapperEx;
+    private AccountItemExtMapper accountItemExtMapper;
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     public AccountItem getAccountItem(long id) {
         return accountItemMapper.selectByPrimaryKey(id);
@@ -50,11 +49,11 @@ public class AccountItemService {
     }
 
     public List<AccountItem> select(String name, Integer type, String remark, int offset, int rows) {
-        return accountItemMapperEx.selectByConditionAccountItem(name, type, remark, offset, rows);
+        return accountItemExtMapper.selectByConditionAccountItem(name, type, remark, offset, rows);
     }
 
     public Long countAccountItem(String name, Integer type, String remark) {
-        return accountItemMapperEx.countsByAccountItem(name, type, remark);
+        return accountItemExtMapper.countsByAccountItem(name, type, remark);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -101,7 +100,7 @@ public class AccountItemService {
     }
 
     public List<AccountItemVo4List> getDetailList(Long headerId) {
-        return accountItemMapperEx.getDetailList(headerId);
+        return accountItemExtMapper.getDetailList(headerId);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public String saveDetials(String inserted, String deleted, String updated, Long headerId, String listType) throws DataAccessException {
@@ -183,6 +182,6 @@ public class AccountItemService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return accountItemMapperEx.batchDeleteAccountItemByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return accountItemExtMapper.batchDeleteAccountItemByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
 }

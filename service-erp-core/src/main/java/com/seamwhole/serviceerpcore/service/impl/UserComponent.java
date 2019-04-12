@@ -17,7 +17,7 @@ import java.util.Map;
 public class UserComponent implements ICommonQuery {
 
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Override
     public Object selectOne(String condition) {

@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class DepotItemService {
+
+public interface DepotItemService {
     private Logger logger = LoggerFactory.getLogger(DepotItemService.class);
 
     private final static String TYPE = "入库";

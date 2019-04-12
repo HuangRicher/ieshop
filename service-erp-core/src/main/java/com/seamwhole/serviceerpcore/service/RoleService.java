@@ -9,6 +9,7 @@ import com.jsh.erp.datasource.mappers.RoleMapper;
 import com.jsh.erp.datasource.mappers.RoleMapperEx;
 import com.jsh.erp.service.user.UserService;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.Role;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,17 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class RoleService {
-    @Resource
-    private RoleMapper roleMapper;
 
-    @Resource
-    private RoleMapperEx roleMapperEx;
-    @Resource
-    private LogService logService;
-    @Resource
-    private UserService userService;
+public interface RoleService {
+
 
     public Role getRole(long id) {
         return roleMapper.selectByPrimaryKey(id);

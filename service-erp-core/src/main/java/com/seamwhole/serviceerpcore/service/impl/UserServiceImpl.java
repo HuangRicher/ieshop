@@ -13,6 +13,7 @@ import com.seamwhole.serviceerpcore.mapper.vo.UserEx;
 import com.seamwhole.serviceerpcore.model.OrgUserRel;
 import com.seamwhole.serviceerpcore.model.User;
 import com.seamwhole.serviceerpcore.model.UserExample;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.ExceptionCodeConstants;
 import com.seamwhole.serviceerpcore.utils.JshException;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
@@ -34,19 +35,17 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class UserService {
-    private Logger logger = LoggerFactory.getLogger(UserService.class);
+public class UserServiceImpl implements UserService{
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
 
     @Resource
     private UserExtMapper userExtMapper;
     @Resource
-    private OrgaUserRelService orgaUserRelService;
+    private OrgUserRelService orgaUserRelService;
     @Resource
     private LogService logService;
-    @Resource
-    private UserService userService;
 
     @Resource
     private UserBusinessService userBusinessService;
@@ -300,7 +299,7 @@ public class UserService {
         User user = new User();
         user.setId(ue.getId());
         user.setTenantId(ue.getId());
-        userService.updateUserTenant(user);
+        this.updateUserTenant(user);
         //新增用户与角色的关系
         JSONObject ubObj = new JSONObject();
         ubObj.put("type", "UserRole");

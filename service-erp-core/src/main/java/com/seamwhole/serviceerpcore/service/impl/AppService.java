@@ -30,7 +30,7 @@ public class AppService {
     @Resource
     private AppExtMapper appExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
 

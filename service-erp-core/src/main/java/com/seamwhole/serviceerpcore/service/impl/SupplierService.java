@@ -1,19 +1,17 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.datasource.mappers.AccountHeadMapperEx;
-import com.jsh.erp.datasource.mappers.DepotHeadMapperEx;
-import com.jsh.erp.datasource.mappers.SupplierMapper;
-import com.jsh.erp.datasource.mappers.SupplierMapperEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.BaseResponseInfo;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.SupplierMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.SupplierExtMapper;
+import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,15 +35,15 @@ public class SupplierService {
     private SupplierMapper supplierMapper;
 
     @Resource
-    private SupplierMapperEx supplierMapperEx;
+    private SupplierExtMapper supplierExtMapper;
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
-    private AccountHeadMapperEx accountHeadMapperEx;
+    private AccountHeadExtMapper accountHeadExtMapper;
     @Resource
-    private DepotHeadMapperEx depotHeadMapperEx;
+    private DepotHeadExtMapper depotHeadExtMapper;
 
     public Supplier getSupplier(long id) {
         return supplierMapper.selectByPrimaryKey(id);
@@ -57,11 +55,11 @@ public class SupplierService {
     }
 
     public List<Supplier> select(String supplier, String type, String phonenum, String telephone, String description, int offset, int rows) {
-        return supplierMapperEx.selectByConditionSupplier(supplier, type, phonenum, telephone, description, offset, rows);
+        return supplierExtMapper.selectByConditionSupplier(supplier, type, phonenum, telephone, description, offset, rows);
     }
 
     public Long countSupplier(String supplier, String type, String phonenum, String telephone, String description) {
-        return supplierMapperEx.countsBySupplier(supplier, type, phonenum, telephone, description);
+        return supplierExtMapper.countsBySupplier(supplier, type, phonenum, telephone, description);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -162,7 +160,7 @@ public class SupplierService {
     }
 
     public List<Supplier> findByAll(String supplier, String type, String phonenum, String telephone, String description) {
-        return supplierMapperEx.findByAll(supplier, type, phonenum, telephone, description);
+        return supplierExtMapper.findByAll(supplier, type, phonenum, telephone, description);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public BaseResponseInfo importExcel(List<Supplier> mList) throws Exception {
@@ -192,7 +190,7 @@ public class SupplierService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return supplierMapperEx.batchDeleteSupplierByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return supplierExtMapper.batchDeleteSupplierByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
     /**
      * create by: qiankunpingtai
@@ -219,7 +217,7 @@ public class SupplierService {
         /**
          * 校验财务主表	jsh_accounthead
          * */
-        List<AccountHead> accountHeadList=accountHeadMapperEx.getAccountHeadListByOrganIds(idArray);
+        List<AccountHead> accountHeadList=accountHeadExtMapper.getAccountHeadListByOrganIds(idArray);
         if(accountHeadList!=null&&accountHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,OrganIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -229,7 +227,7 @@ public class SupplierService {
         /**
          * 校验单据主表	jsh_depothead
          * */
-        List<DepotHead> depotHeadList=depotHeadMapperEx.getDepotHeadListByOrganIds(idArray);
+        List<DepotHead> depotHeadList=depotHeadExtMapper.getDepotHeadListByOrganIds(idArray);
         if(depotHeadList!=null&&depotHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,OrganIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

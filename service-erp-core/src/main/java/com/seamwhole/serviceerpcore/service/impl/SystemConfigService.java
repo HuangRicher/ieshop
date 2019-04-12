@@ -1,15 +1,13 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.SystemConfig;
-import com.jsh.erp.datasource.entities.SystemConfigExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.SystemConfigMapper;
-import com.jsh.erp.datasource.mappers.SystemConfigMapperEx;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.mapper.SystemConfigMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.SystemConfigExtMapper;
+import com.seamwhole.serviceerpcore.model.SystemConfig;
+import com.seamwhole.serviceerpcore.model.SystemConfigExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,9 +28,9 @@ public class SystemConfigService {
     private SystemConfigMapper systemConfigMapper;
 
     @Resource
-    private SystemConfigMapperEx systemConfigMapperEx;
+    private SystemConfigExtMapper systemConfigExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
 
@@ -45,11 +43,11 @@ public class SystemConfigService {
         return systemConfigMapper.selectByExample(example);
     }
     public List<SystemConfig> select(String companyName, int offset, int rows) {
-        return systemConfigMapperEx.selectByConditionSystemConfig(companyName, offset, rows);
+        return systemConfigExtMapper.selectByConditionSystemConfig(companyName, offset, rows);
     }
 
     public Long countSystemConfig(String companyName) {
-        return systemConfigMapperEx.countsBySystemConfig(companyName);
+        return systemConfigExtMapper.countsBySystemConfig(companyName);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -91,6 +89,6 @@ public class SystemConfigService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return systemConfigMapperEx.batchDeleteSystemConfigByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return systemConfigExtMapper.batchDeleteSystemConfigByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
 }

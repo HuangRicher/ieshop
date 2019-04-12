@@ -9,6 +9,7 @@ import com.jsh.erp.datasource.mappers.MaterialPropertyMapper;
 import com.jsh.erp.datasource.mappers.MaterialPropertyMapperEx;
 import com.jsh.erp.service.user.UserService;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.MaterialProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,19 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class MaterialPropertyService {
-    private Logger logger = LoggerFactory.getLogger(MaterialPropertyService.class);
 
-    @Resource
-    private MaterialPropertyMapper materialPropertyMapper;
+public interface MaterialPropertyService {
 
-    @Resource
-    private MaterialPropertyMapperEx materialPropertyMapperEx;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
 
     public MaterialProperty getMaterialProperty(long id) {
         return materialPropertyMapper.selectByPrimaryKey(id);

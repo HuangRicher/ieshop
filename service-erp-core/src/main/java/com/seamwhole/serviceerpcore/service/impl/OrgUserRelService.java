@@ -25,7 +25,7 @@ import java.util.List;
  * @Date: 2019/3/11 18:11
  */
 @Service
-public class OrgaUserRelService {
+public class OrgUserRelService {
     private Logger logger = LoggerFactory.getLogger(OrganizationService.class);
 
     @Resource
@@ -33,7 +33,7 @@ public class OrgaUserRelService {
     @Resource
     private OrgUserRelExtMapper orgUserRelExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)

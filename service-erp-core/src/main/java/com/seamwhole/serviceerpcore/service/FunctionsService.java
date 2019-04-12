@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class FunctionsService {
+
+public interface FunctionsService {
     private Logger logger = LoggerFactory.getLogger(FunctionsService.class);
 
     @Resource

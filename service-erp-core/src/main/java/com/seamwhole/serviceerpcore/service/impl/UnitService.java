@@ -1,20 +1,18 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Material;
-import com.jsh.erp.datasource.entities.Unit;
-import com.jsh.erp.datasource.entities.UnitExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.MaterialMapperEx;
-import com.jsh.erp.datasource.mappers.UnitMapper;
-import com.jsh.erp.datasource.mappers.UnitMapperEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.UnitMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.MaterialExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.UnitExtMapper;
+import com.seamwhole.serviceerpcore.model.Material;
+import com.seamwhole.serviceerpcore.model.Unit;
+import com.seamwhole.serviceerpcore.model.UnitExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,13 +33,13 @@ public class UnitService {
     private UnitMapper unitMapper;
 
     @Resource
-    private UnitMapperEx unitMapperEx;
+    private UnitExtMapper unitExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource
-    private MaterialMapperEx materialMapperEx;
+    private MaterialExtMapper materialExtMapper;
 
     public Unit getUnit(long id) {
         return unitMapper.selectByPrimaryKey(id);
@@ -53,11 +51,11 @@ public class UnitService {
     }
 
     public List<Unit> select(String name, int offset, int rows) {
-        return unitMapperEx.selectByConditionUnit(name, offset, rows);
+        return unitExtMapper.selectByConditionUnit(name, offset, rows);
     }
 
     public Long countUnit(String name) {
-        return unitMapperEx.countsByUnit(name);
+        return unitExtMapper.countsByUnit(name);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -99,7 +97,7 @@ public class UnitService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return unitMapperEx.batchDeleteUnitByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return unitExtMapper.batchDeleteUnitByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
 
     /**
@@ -126,7 +124,7 @@ public class UnitService {
         /**
          * 校验产品表	jsh_material
          * */
-        List<Material> materialList=materialMapperEx.getMaterialListByUnitIds(idArray);
+        List<Material> materialList=materialExtMapper.getMaterialListByUnitIds(idArray);
         if(materialList!=null&&materialList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,UnitIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

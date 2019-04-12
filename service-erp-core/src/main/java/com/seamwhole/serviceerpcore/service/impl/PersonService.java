@@ -1,18 +1,16 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.datasource.mappers.AccountHeadMapperEx;
-import com.jsh.erp.datasource.mappers.DepotHeadMapperEx;
-import com.jsh.erp.datasource.mappers.PersonMapper;
-import com.jsh.erp.datasource.mappers.PersonMapperEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.PersonMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.PersonExtMapper;
+import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,15 +31,15 @@ public class PersonService {
     private PersonMapper personMapper;
 
     @Resource
-    private PersonMapperEx personMapperEx;
+    private PersonExtMapper personExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource
-    private AccountHeadMapperEx accountHeadMapperEx;
+    private AccountHeadExtMapper accountHeadExtMapper;
     @Resource
-    private DepotHeadMapperEx depotHeadMapperEx;
+    private DepotHeadExtMapper depotHeadExtMapper;
 
     public Person getPerson(long id) {
         return personMapper.selectByPrimaryKey(id);
@@ -53,11 +51,11 @@ public class PersonService {
     }
 
     public List<Person> select(String name, String type, int offset, int rows) {
-        return personMapperEx.selectByConditionPerson(name, type, offset, rows);
+        return personExtMapper.selectByConditionPerson(name, type, offset, rows);
     }
 
     public Long countPerson(String name, String type) {
-        return personMapperEx.countsByPerson(name, type);
+        return personExtMapper.countsByPerson(name, type);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -122,7 +120,7 @@ public class PersonService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return personMapperEx.batchDeletePersonByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return personExtMapper.batchDeletePersonByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
     /**
      * create by: qiankunpingtai
@@ -149,7 +147,7 @@ public class PersonService {
         /**
          * 校验财务主表	jsh_accounthead
          * */
-        List<AccountHead> accountHeadList=accountHeadMapperEx.getAccountHeadListByHandsPersonIds(idArray);
+        List<AccountHead> accountHeadList=accountHeadExtMapper.getAccountHeadListByHandsPersonIds(idArray);
         if(accountHeadList!=null&&accountHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,HandsPersonIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -159,7 +157,7 @@ public class PersonService {
         /**
          * 校验单据主表	jsh_depothead
          * */
-        List<DepotHead> depotHeadList=depotHeadMapperEx.getDepotHeadListByHandsPersonIds(idArray);
+        List<DepotHead> depotHeadList=depotHeadExtMapper.getDepotHeadListByHandsPersonIds(idArray);
         if(depotHeadList!=null&&depotHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,HandsPersonIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

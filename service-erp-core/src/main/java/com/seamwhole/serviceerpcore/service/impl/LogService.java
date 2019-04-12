@@ -1,14 +1,14 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.Log;
-import com.jsh.erp.datasource.entities.LogExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.LogMapper;
-import com.jsh.erp.datasource.mappers.LogMapperEx;
-import com.jsh.erp.datasource.vo.LogVo4List;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.mapper.LogMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.LogExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.LogVo4List;
+import com.seamwhole.serviceerpcore.model.Log;
+import com.seamwhole.serviceerpcore.model.LogExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-import static com.jsh.erp.utils.Tools.getLocalIp;
+import static com.seamwhole.serviceerpcore.utils.Tools.getLocalIp;
 
 @Service
 public class LogService {
@@ -28,7 +28,7 @@ public class LogService {
     private LogMapper logMapper;
 
     @Resource
-    private LogMapperEx logMapperEx;
+    private LogExtMapper logExtMapper;
 
     public Log getLog(long id) {
         return logMapper.selectByPrimaryKey(id);
@@ -41,13 +41,13 @@ public class LogService {
 
     public List<LogVo4List> select(String operation, Integer usernameID, String clientIp, Integer status, String beginTime, String endTime,
                                    String contentdetails, int offset, int rows) {
-        return logMapperEx.selectByConditionLog(operation, usernameID, clientIp, status, beginTime, endTime,
+        return logExtMapper.selectByConditionLog(operation, usernameID, clientIp, status, beginTime, endTime,
                             contentdetails, offset, rows);
     }
 
     public Long countLog(String operation, Integer usernameID, String clientIp, Integer status, String beginTime, String endTime,
                         String contentdetails) {
-        return logMapperEx.countsByLog(operation, usernameID, clientIp, status, beginTime, endTime, contentdetails);
+        return logExtMapper.countsByLog(operation, usernameID, clientIp, status, beginTime, endTime, contentdetails);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)

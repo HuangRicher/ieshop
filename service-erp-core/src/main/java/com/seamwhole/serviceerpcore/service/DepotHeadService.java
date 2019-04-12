@@ -36,8 +36,8 @@ import java.util.List;
 
 import static com.jsh.erp.utils.Tools.getCenternTime;
 
-@Service
-public class DepotHeadService {
+
+public interface DepotHeadService {
     private Logger logger = LoggerFactory.getLogger(DepotHeadService.class);
 
     @Resource

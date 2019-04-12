@@ -41,7 +41,7 @@ public class DepotHeadService {
     @Resource
     private DepotHeadExtMapper depotHeadExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     DepotItemService depotItemService;
     @Resource

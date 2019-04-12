@@ -7,6 +7,7 @@ import com.jsh.erp.datasource.mappers.UserBusinessMapper;
 import com.jsh.erp.datasource.mappers.UserBusinessMapperEx;
 import com.jsh.erp.service.user.UserService;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.UserBusiness;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,27 +20,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-@Service
-public class UserBusinessService {
-    private Logger logger = LoggerFactory.getLogger(UserBusinessService.class);
 
-    @Resource
-    private UserBusinessMapper userBusinessMapper;
-    @Resource
-    private UserBusinessMapperEx userBusinessMapperEx;
-    @Resource
-    private LogService logService;
-    @Resource
-    private UserService userService;
+public interface UserBusinessService {
 
-    @Resource
-    private FunctionsService functionsService;
-
-    @Resource
-    private AppService appService;
-
-    @Resource
-    private CommonQueryManager configResourceManager;
 
     public UserBusiness getUserBusiness(long id) {
         return userBusinessMapper.selectByPrimaryKey(id);

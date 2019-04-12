@@ -13,6 +13,7 @@ import com.jsh.erp.datasource.mappers.UnitMapper;
 import com.jsh.erp.datasource.mappers.UnitMapperEx;
 import com.jsh.erp.exception.BusinessRunTimeException;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.Unit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,21 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class UnitService {
-    private Logger logger = LoggerFactory.getLogger(UnitService.class);
 
-    @Resource
-    private UnitMapper unitMapper;
+public interface UnitService {
 
-    @Resource
-    private UnitMapperEx unitMapperEx;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
-    @Resource
-    private MaterialMapperEx materialMapperEx;
 
     public Unit getUnit(long id) {
         return unitMapper.selectByPrimaryKey(id);

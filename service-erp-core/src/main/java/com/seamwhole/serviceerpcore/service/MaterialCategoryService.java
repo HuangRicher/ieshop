@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class MaterialCategoryService {
+
+public interface MaterialCategoryService {
     private Logger logger = LoggerFactory.getLogger(MaterialCategoryService.class);
 
     @Resource

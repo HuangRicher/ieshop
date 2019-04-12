@@ -23,8 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class DepotService {
+
+public interface DepotService {
     private Logger logger = LoggerFactory.getLogger(DepotService.class);
 
     @Resource

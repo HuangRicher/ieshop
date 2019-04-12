@@ -31,22 +31,9 @@ import java.util.List;
  * @Author: cjl
  * @Date: 2019/1/21 16:33
  */
-@Service
-public class SerialNumberService {
-    private Logger logger = LoggerFactory.getLogger(AccountHeadComponent.MaterialService.class);
 
-    @Resource
-    private SerialNumberMapper serialNumberMapper;
-    @Resource
-    private SerialNumberExtMapper serialNumberExtMapper;
-    @Resource
-    private MaterialExtMapper materialExtMapper;
-    @Resource
-    private MaterialMapper materialMapper;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
+public interface SerialNumberService {
+
 
 
     public SerialNumber getSerialNumber(long id) {

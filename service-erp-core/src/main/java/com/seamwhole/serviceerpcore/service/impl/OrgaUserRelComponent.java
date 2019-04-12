@@ -1,7 +1,6 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.jsh.erp.service.ICommonQuery;
-import com.seamwhole.serviceerpcore.service.impl.OrgaUserRelService;
 import com.seamwhole.serviceerpcore.service.orgaUserRel.OrgaUserRelResource;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 @OrgaUserRelResource
 public class OrgaUserRelComponent implements ICommonQuery {
     @Resource
-    private OrgaUserRelService orgaUserRelService;
+    private OrgUserRelService orgaUserRelService;
     @Override
     public Object selectOne(String condition) {
         return null;

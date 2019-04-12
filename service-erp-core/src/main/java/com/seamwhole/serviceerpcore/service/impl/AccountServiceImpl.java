@@ -15,6 +15,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.vo.AccountVo4InOutList;
 import com.seamwhole.serviceerpcore.mapper.vo.AccountVo4List;
 import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.service.AccountService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import com.seamwhole.serviceerpcore.utils.Tools;
 import org.apache.commons.lang3.StringUtils;
@@ -35,8 +36,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AccountService {
-    private Logger logger = LoggerFactory.getLogger(AccountService.class);
+public class AccountServiceImpl implements AccountService{
+    private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Resource
     private AccountMapper accountMapper;
@@ -61,7 +62,7 @@ public class AccountService {
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     public Account getAccount(long id) {
         return accountMapper.selectByPrimaryKey(id);

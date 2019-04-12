@@ -1,18 +1,16 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Organization;
-import com.jsh.erp.datasource.entities.OrganizationExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.OrganizationMapper;
-import com.jsh.erp.datasource.mappers.OrganizationMapperEx;
-import com.jsh.erp.datasource.vo.TreeNode;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.OrganizationMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.OrganizationExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
+import com.seamwhole.serviceerpcore.model.Organization;
+import com.seamwhole.serviceerpcore.model.OrganizationExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,9 +36,9 @@ public class OrganizationService {
     @Resource
     private OrganizationMapper organizationMapper;
     @Resource
-    private OrganizationMapperEx organizationMapperEx;
+    private OrganizationExtMapper organizationExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -92,7 +90,7 @@ public class OrganizationService {
         if(StringUtil.isEmpty(org.getOrgParentNo())){
             org.setOrgParentNo(BusinessConstants.ORGANIZATION_ROOT_PARENT_NO);
         }
-        return organizationMapperEx.addOrganization(org);
+        return organizationExtMapper.addOrganization(org);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int editOrganization(Organization org)throws Exception {
@@ -116,11 +114,11 @@ public class OrganizationService {
         if(StringUtil.isEmpty(org.getOrgParentNo())){
             org.setOrgParentNo(BusinessConstants.ORGANIZATION_ROOT_PARENT_NO);
         }
-        return organizationMapperEx.editOrganization(org);
+        return organizationExtMapper.editOrganization(org);
     }
 
     public List<TreeNode> getOrganizationTree(Long id)throws Exception {
-        return organizationMapperEx.getNodeTree(id);
+        return organizationExtMapper.getNodeTree(id);
     }
 
     public List<Organization> findById(Long id) throws Exception{
@@ -177,6 +175,6 @@ public class OrganizationService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return organizationMapperEx.batchDeleteOrganizationByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return organizationExtMapper.batchDeleteOrganizationByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
 }

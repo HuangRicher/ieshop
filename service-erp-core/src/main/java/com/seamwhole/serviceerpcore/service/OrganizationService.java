@@ -30,8 +30,8 @@ import java.util.List;
  * @Author: cjl
  * @Date: 2019/3/6 15:10
  */
-@Service
-public class OrganizationService {
+
+public interface OrganizationService {
     private Logger logger = LoggerFactory.getLogger(OrganizationService.class);
 
     @Resource

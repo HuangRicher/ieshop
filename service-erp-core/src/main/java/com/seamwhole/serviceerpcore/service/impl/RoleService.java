@@ -1,15 +1,13 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.Role;
-import com.jsh.erp.datasource.entities.RoleExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.RoleMapper;
-import com.jsh.erp.datasource.mappers.RoleMapperEx;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.mapper.RoleMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.RoleExtMapper;
+import com.seamwhole.serviceerpcore.model.Role;
+import com.seamwhole.serviceerpcore.model.RoleExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,11 +24,11 @@ public class RoleService {
     private RoleMapper roleMapper;
 
     @Resource
-    private RoleMapperEx roleMapperEx;
+    private RoleExtMapper roleExtMapper;
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     public Role getRole(long id) {
         return roleMapper.selectByPrimaryKey(id);
@@ -42,11 +40,11 @@ public class RoleService {
     }
 
     public List<Role> select(String name, int offset, int rows) {
-        return roleMapperEx.selectByConditionRole(name, offset, rows);
+        return roleExtMapper.selectByConditionRole(name, offset, rows);
     }
 
     public Long countRole(String name) {
-        return roleMapperEx.countsByRole(name);
+        return roleExtMapper.countsByRole(name);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -98,6 +96,6 @@ public class RoleService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return roleMapperEx.batchDeleteRoleByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return roleExtMapper.batchDeleteRoleByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
 }

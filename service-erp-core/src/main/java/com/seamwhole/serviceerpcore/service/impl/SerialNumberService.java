@@ -43,7 +43,7 @@ public class SerialNumberService {
     @Resource
     private MaterialMapper materialMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
 

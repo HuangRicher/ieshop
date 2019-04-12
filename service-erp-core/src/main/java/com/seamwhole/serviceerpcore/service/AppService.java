@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class AppService {
+
+public interface AppService {
     private Logger logger = LoggerFactory.getLogger(AppService.class);
 
     @Resource

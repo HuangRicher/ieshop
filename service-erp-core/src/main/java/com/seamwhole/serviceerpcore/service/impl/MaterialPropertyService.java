@@ -1,15 +1,13 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.MaterialProperty;
-import com.jsh.erp.datasource.entities.MaterialPropertyExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.MaterialPropertyMapper;
-import com.jsh.erp.datasource.mappers.MaterialPropertyMapperEx;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.mapper.MaterialPropertyMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.MaterialPropertyExtMapper;
+import com.seamwhole.serviceerpcore.model.MaterialProperty;
+import com.seamwhole.serviceerpcore.model.MaterialPropertyExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,9 +28,9 @@ public class MaterialPropertyService {
     private MaterialPropertyMapper materialPropertyMapper;
 
     @Resource
-    private MaterialPropertyMapperEx materialPropertyMapperEx;
+    private MaterialPropertyExtMapper materialPropertyExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
 
@@ -45,11 +43,11 @@ public class MaterialPropertyService {
         return materialPropertyMapper.selectByExample(example);
     }
     public List<MaterialProperty> select(String name, int offset, int rows) {
-        return materialPropertyMapperEx.selectByConditionMaterialProperty(name, offset, rows);
+        return materialPropertyExtMapper.selectByConditionMaterialProperty(name, offset, rows);
     }
 
     public Long countMaterialProperty(String name) {
-        return materialPropertyMapperEx.countsByMaterialProperty(name);
+        return materialPropertyExtMapper.countsByMaterialProperty(name);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -88,7 +86,7 @@ public class MaterialPropertyService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return materialPropertyMapperEx.batchDeleteMaterialPropertyByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return materialPropertyExtMapper.batchDeleteMaterialPropertyByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
 
     }
 }

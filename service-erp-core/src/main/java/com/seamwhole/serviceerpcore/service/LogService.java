@@ -21,8 +21,8 @@ import java.util.List;
 
 import static com.jsh.erp.utils.Tools.getLocalIp;
 
-@Service
-public class LogService {
+
+public interface LogService {
     private Logger logger = LoggerFactory.getLogger(LogService.class);
     @Resource
     private LogMapper logMapper;

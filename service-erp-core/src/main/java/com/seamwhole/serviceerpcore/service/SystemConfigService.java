@@ -8,6 +8,7 @@ import com.jsh.erp.datasource.entities.User;
 import com.jsh.erp.datasource.mappers.SystemConfigMapper;
 import com.jsh.erp.datasource.mappers.SystemConfigMapperEx;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.SystemConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,19 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class SystemConfigService {
-    private Logger logger = LoggerFactory.getLogger(SystemConfigService.class);
 
-    @Resource
-    private SystemConfigMapper systemConfigMapper;
+public interface SystemConfigService {
 
-    @Resource
-    private SystemConfigMapperEx systemConfigMapperEx;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
 
     public SystemConfig getSystemConfig(long id) {
         return systemConfigMapper.selectByPrimaryKey(id);

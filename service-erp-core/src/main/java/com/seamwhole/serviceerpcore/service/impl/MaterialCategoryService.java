@@ -1,18 +1,19 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.datasource.mappers.MaterialCategoryMapper;
-import com.jsh.erp.datasource.mappers.MaterialCategoryMapperEx;
-import com.jsh.erp.datasource.mappers.MaterialMapperEx;
-import com.jsh.erp.datasource.vo.TreeNode;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.MaterialCategoryMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.MaterialCategoryExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.MaterialExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
+import com.seamwhole.serviceerpcore.model.Material;
+import com.seamwhole.serviceerpcore.model.MaterialCategory;
+import com.seamwhole.serviceerpcore.model.MaterialCategoryExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,13 @@ public class MaterialCategoryService {
     @Resource
     private MaterialCategoryMapper materialCategoryMapper;
     @Resource
-    private MaterialCategoryMapperEx materialCategoryMapperEx;
+    private MaterialCategoryExtMapper materialCategoryExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource
-    private MaterialMapperEx materialMapperEx;
+    private MaterialExtMapper materialExtMapper;
 
     public MaterialCategory getMaterialCategory(long id) {
         return materialCategoryMapper.selectByPrimaryKey(id);
@@ -57,11 +58,11 @@ public class MaterialCategoryService {
     }
 
     public List<MaterialCategory> select(String name, Integer parentId, int offset, int rows) {
-        return materialCategoryMapperEx.selectByConditionMaterialCategory(name, parentId, offset, rows);
+        return materialCategoryExtMapper.selectByConditionMaterialCategory(name, parentId, offset, rows);
     }
 
     public Long countMaterialCategory(String name, Integer parentId) {
-        return materialCategoryMapperEx.countsByMaterialCategory(name, parentId);
+        return materialCategoryExtMapper.countsByMaterialCategory(name, parentId);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -108,7 +109,7 @@ public class MaterialCategoryService {
      * @return java.util.List<com.jsh.erp.datasource.vo.TreeNode>
      */
     public List<TreeNode> getMaterialCategoryTree(Long id) throws Exception{
-       return materialCategoryMapperEx.getNodeTree(id);
+       return materialCategoryExtMapper.getNodeTree(id);
     }
     /**
      * create by: cjl
@@ -144,7 +145,7 @@ public class MaterialCategoryService {
         mc.setUpdateTime(date);
         //更新人
         mc.setUpdater(userInfo==null?null:userInfo.getId());
-        return materialCategoryMapperEx.addMaterialCategory(mc);
+        return materialCategoryExtMapper.addMaterialCategory(mc);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int batchDeleteMaterialCategoryByIds(String ids) throws Exception {
@@ -161,7 +162,7 @@ public class MaterialCategoryService {
             return 0;
         }
 
-       return materialCategoryMapperEx.batchDeleteMaterialCategoryByIds(updateDate,updater,strArray);
+       return materialCategoryExtMapper.batchDeleteMaterialCategoryByIds(updateDate,updater,strArray);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int editMaterialCategory(MaterialCategory mc) {
@@ -180,7 +181,7 @@ public class MaterialCategoryService {
         //更新人
         User userInfo=userService.getCurrentUser();
         mc.setUpdater(userInfo==null?null:userInfo.getId());
-        return materialCategoryMapperEx.editMaterialCategory(mc);
+        return materialCategoryExtMapper.editMaterialCategory(mc);
     }
     /**
      * 根据商品类别编号判断商品类别是否已存在
@@ -193,7 +194,7 @@ public class MaterialCategoryService {
             return;
         }
         //根据商品类别编号查询商品类别
-        List<MaterialCategory> mList=materialCategoryMapperEx.getMaterialCategoryBySerialNo(mc.getSerialNo());
+        List<MaterialCategory> mList=materialCategoryExtMapper.getMaterialCategoryBySerialNo(mc.getSerialNo());
         if(mList==null||mList.size()<1){
             //未查询到对应数据，编号可用
             return;
@@ -243,7 +244,7 @@ public class MaterialCategoryService {
         /**
          * 校验产品表	jsh_material
          * */
-        List<Material> materialList=materialMapperEx.getMaterialListByCategoryIds(idArray);
+        List<Material> materialList=materialExtMapper.getMaterialListByCategoryIds(idArray);
         if(materialList!=null&&materialList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,CategoryIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -253,7 +254,7 @@ public class MaterialCategoryService {
         /**
          * 校验产品类型表	jsh_materialcategory
          * */
-        List<MaterialCategory> materialCategoryList=materialCategoryMapperEx.getMaterialCategoryListByCategoryIds(idArray);
+        List<MaterialCategory> materialCategoryList=materialCategoryExtMapper.getMaterialCategoryListByCategoryIds(idArray);
         if(materialCategoryList!=null&&materialCategoryList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,CategoryIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

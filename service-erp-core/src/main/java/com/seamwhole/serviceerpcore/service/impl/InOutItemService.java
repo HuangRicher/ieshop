@@ -1,20 +1,18 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.AccountItem;
-import com.jsh.erp.datasource.entities.InOutItem;
-import com.jsh.erp.datasource.entities.InOutItemExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.AccountItemMapperEx;
-import com.jsh.erp.datasource.mappers.InOutItemMapper;
-import com.jsh.erp.datasource.mappers.InOutItemMapperEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.InOutItemMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.AccountItemExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.InOutItemExtMapper;
+import com.seamwhole.serviceerpcore.model.AccountItem;
+import com.seamwhole.serviceerpcore.model.InOutItem;
+import com.seamwhole.serviceerpcore.model.InOutItemExample;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,13 +33,13 @@ public class InOutItemService {
     private InOutItemMapper inOutItemMapper;
 
     @Resource
-    private InOutItemMapperEx inOutItemMapperEx;
+    private InOutItemExtMapper inOutItemExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource
-    private AccountItemMapperEx accountItemMapperEx;
+    private AccountItemExtMapper accountItemExtMapper;
 
     public InOutItem getInOutItem(long id) {
         return inOutItemMapper.selectByPrimaryKey(id);
@@ -53,11 +51,11 @@ public class InOutItemService {
     }
 
     public List<InOutItem> select(String name, String type, String remark, int offset, int rows) {
-        return inOutItemMapperEx.selectByConditionInOutItem(name, type, remark, offset, rows);
+        return inOutItemExtMapper.selectByConditionInOutItem(name, type, remark, offset, rows);
     }
 
     public Long countInOutItem(String name, String type, String remark) {
-        return inOutItemMapperEx.countsByInOutItem(name, type, remark);
+        return inOutItemExtMapper.countsByInOutItem(name, type, remark);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -110,7 +108,7 @@ public class InOutItemService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return inOutItemMapperEx.batchDeleteInOutItemByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return inOutItemExtMapper.batchDeleteInOutItemByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
     /**
      * create by: qiankunpingtai
@@ -136,7 +134,7 @@ public class InOutItemService {
         /**
          * 校验财务子表	jsh_accountitem
          * */
-        List<AccountItem> accountItemList=accountItemMapperEx.getAccountItemListByInOutItemIds(idArray);
+        List<AccountItem> accountItemList=accountItemExtMapper.getAccountItemListByInOutItemIds(idArray);
         if(accountItemList!=null&&accountItemList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,InOutItemIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

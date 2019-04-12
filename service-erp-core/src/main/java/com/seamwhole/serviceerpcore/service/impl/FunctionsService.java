@@ -30,7 +30,7 @@ public class FunctionsService {
     @Resource
     private FunctionsExtMapper functionsExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
 

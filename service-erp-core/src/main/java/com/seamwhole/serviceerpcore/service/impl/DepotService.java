@@ -1,15 +1,17 @@
 package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.datasource.mappers.*;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.log.LogService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.DepotMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.DepotExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.DepotItemExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotEx;
+import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,15 +33,15 @@ public class DepotService {
     private DepotMapper depotMapper;
 
     @Resource
-    private DepotMapperEx depotMapperEx;
+    private DepotExtMapper depotExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource
-    private DepotHeadMapperEx depotHeadMapperEx;
+    private DepotHeadExtMapper depotHeadExtMapper;
     @Resource
-    private DepotItemMapperEx depotItemMapperEx;
+    private DepotItemExtMapper depotItemExtMapper;
 
     public Depot getDepot(long id) {
         return depotMapper.selectByPrimaryKey(id);
@@ -57,11 +59,11 @@ public class DepotService {
     }
 
     public List<Depot> select(String name, Integer type, String remark, int offset, int rows) {
-        return depotMapperEx.selectByConditionDepot(name, type, remark, offset, rows);
+        return depotExtMapper.selectByConditionDepot(name, type, remark, offset, rows);
     }
 
     public Long countDepot(String name, Integer type, String remark) {
-        return depotMapperEx.countsByDepot(name, type, remark);
+        return depotExtMapper.countsByDepot(name, type, remark);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
@@ -114,7 +116,7 @@ public class DepotService {
     }
 
     public List<DepotEx> getDepotList(Map<String, Object> parameterMap) {
-        return depotMapperEx.getDepotList(parameterMap);
+        return depotExtMapper.getDepotList(parameterMap);
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int batchDeleteDepotByIds(String ids) {
@@ -123,7 +125,7 @@ public class DepotService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return depotMapperEx.batchDeleteDepotByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        return depotExtMapper.batchDeleteDepotByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
     }
     /**
      * create by: qiankunpingtai
@@ -151,7 +153,7 @@ public class DepotService {
         /**
          * 校验单据主表	jsh_depothead
          * */
-        List<DepotHead> depotHeadList=depotHeadMapperEx.getDepotHeadListByDepotIds(idArray);
+        List<DepotHead> depotHeadList=depotHeadExtMapper.getDepotHeadListByDepotIds(idArray);
         if(depotHeadList!=null&&depotHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,DepotIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -161,7 +163,7 @@ public class DepotService {
         /**
          * 校验单据子表	jsh_depotitem
          * */
-        List<DepotItem> depotItemList=depotItemMapperEx.getDepotItemListListByDepotIds(idArray);
+        List<DepotItem> depotItemList=depotItemExtMapper.getDepotItemListListByDepotIds(idArray);
         if(depotItemList!=null&&depotItemList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,DepotIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

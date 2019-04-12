@@ -37,7 +37,7 @@ public class MaterialService {
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private DepotItemExtMapper depotItemExtMapper;
 

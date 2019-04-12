@@ -12,6 +12,7 @@ import com.jsh.erp.datasource.mappers.PersonMapperEx;
 import com.jsh.erp.exception.BusinessRunTimeException;
 import com.jsh.erp.service.user.UserService;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,23 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class PersonService {
-    private Logger logger = LoggerFactory.getLogger(PersonService.class);
 
-    @Resource
-    private PersonMapper personMapper;
+public interface PersonService {
 
-    @Resource
-    private PersonMapperEx personMapperEx;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
-    @Resource
-    private AccountHeadMapperEx accountHeadMapperEx;
-    @Resource
-    private DepotHeadMapperEx depotHeadMapperEx;
 
     public Person getPerson(long id) {
         return personMapper.selectByPrimaryKey(id);

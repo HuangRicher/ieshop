@@ -12,6 +12,7 @@ import com.seamwhole.serviceerpcore.model.AccountHead;
 import com.seamwhole.serviceerpcore.model.AccountHeadExample;
 import com.seamwhole.serviceerpcore.model.AccountItem;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.AccountHeadService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,8 +30,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AccountHeadService {
-    private Logger logger = LoggerFactory.getLogger(AccountHeadService.class);
+public class AccountHeadServiceImpl implements AccountHeadService{
+    private Logger logger = LoggerFactory.getLogger(AccountHeadServiceImpl.class);
 
     @Resource
     private AccountHeadMapper accountHeadMapper;
@@ -38,7 +39,7 @@ public class AccountHeadService {
     @Resource
     private AccountHeadExtMapper accountHeadExtMapper;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
     @Resource
     private LogService logService;
     @Resource

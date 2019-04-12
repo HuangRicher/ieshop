@@ -24,18 +24,9 @@ import java.util.List;
  * @Author: cjl
  * @Date: 2019/3/11 18:11
  */
-@Service
-public class OrgaUserRelService {
-    private Logger logger = LoggerFactory.getLogger(OrganizationService.class);
 
-    @Resource
-    private OrgUserRelMapper orgUserRelMapper;
-    @Resource
-    private OrgUserRelExtMapper orgUserRelExtMapper;
-    @Resource
-    private UserService userService;
-    @Resource
-    private LogService logService;
+public interface OrgUserRelService {
+
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int insertOrgaUserRel(String beanJson, HttpServletRequest request) {
         OrgUserRel orgaUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);

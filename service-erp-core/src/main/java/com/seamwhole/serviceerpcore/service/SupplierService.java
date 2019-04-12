@@ -13,6 +13,11 @@ import com.jsh.erp.exception.BusinessRunTimeException;
 import com.jsh.erp.service.user.UserService;
 import com.jsh.erp.utils.BaseResponseInfo;
 import com.jsh.erp.utils.StringUtil;
+import com.seamwhole.serviceerpcore.model.AccountHead;
+import com.seamwhole.serviceerpcore.model.DepotHead;
+import com.seamwhole.serviceerpcore.model.Supplier;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,23 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class SupplierService {
-    private Logger logger = LoggerFactory.getLogger(SupplierService.class);
 
-    @Resource
-    private SupplierMapper supplierMapper;
+public interface SupplierService {
 
-    @Resource
-    private SupplierMapperEx supplierMapperEx;
-    @Resource
-    private LogService logService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private AccountHeadMapperEx accountHeadMapperEx;
-    @Resource
-    private DepotHeadMapperEx depotHeadMapperEx;
 
     public Supplier getSupplier(long id) {
         return supplierMapper.selectByPrimaryKey(id);

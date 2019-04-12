@@ -30,7 +30,7 @@ public class UserBusinessService {
     @Resource
     private LogService logService;
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Resource
     private FunctionsService functionsService;
