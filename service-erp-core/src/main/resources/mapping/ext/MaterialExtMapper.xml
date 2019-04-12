@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jsh.erp.datasource.mappers.MaterialMapperEx">
-    <resultMap extends="com.jsh.erp.datasource.mappers.MaterialMapper.BaseResultMap" id="ResultMapList" type="com.jsh.erp.datasource.entities.MaterialVo4Unit">
+    <resultMap extends="com.jsh.erp.datasource.mappers.MaterialMapper.BaseResultMap" id="ResultMapList" type="com.seamwhole.serviceerpcore.model.MaterialVo4Unit">
         <result column="unitName" jdbcType="VARCHAR" property="unitName" />
         <result column="categoryName" jdbcType="VARCHAR" property="categoryName" />
     </resultMap>
 
-    <resultMap extends="com.jsh.erp.datasource.mappers.MaterialMapper.BaseResultMap" id="ResultAndUnitMap" type="com.jsh.erp.datasource.entities.MaterialVo4Unit">
+    <resultMap extends="com.jsh.erp.datasource.mappers.MaterialMapper.BaseResultMap" id="ResultAndUnitMap" type="com.seamwhole.serviceerpcore.model.MaterialVo4Unit">
         <result column="UName" jdbcType="VARCHAR" property="unitName" />
     </resultMap>
 
-    <select id="selectByConditionMaterial" parameterType="com.jsh.erp.datasource.entities.MaterialExample" resultMap="ResultMapList">
+    <select id="selectByConditionMaterial" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultMapList">
         select m.*,u.uname unitName, mc.name categoryName
         FROM jsh_material m
         left JOIN jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
@@ -58,14 +58,14 @@
         and ifnull(u.delete_Flag,'0') !='1'
     </select>
 
-    <select id="findById" parameterType="com.jsh.erp.datasource.entities.MaterialExample" resultMap="ResultAndUnitMap">
+    <select id="findById" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultAndUnitMap">
         select m.*,u.UName from jsh_material m
         left join jsh_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
         where m.id = ${id}
         and ifnull(m.delete_Flag,'0') !='1'
     </select>
 
-    <select id="findBySelect" parameterType="com.jsh.erp.datasource.entities.MaterialExample" resultMap="ResultAndUnitMap">
+    <select id="findBySelect" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultAndUnitMap">
         select m.*,u.UName from jsh_material m
         left join jsh_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
         where m.enabled=1
@@ -90,7 +90,7 @@
         where Id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="findByAll" parameterType="com.jsh.erp.datasource.entities.MaterialExample" resultMap="ResultMapList">
+    <select id="findByAll" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultMapList">
         select m.*,u.uname unitName, mc.name categoryName
         FROM jsh_material m
         left JOIN jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
@@ -108,7 +108,7 @@
         and ifnull(m.delete_Flag,'0') !='1'
         order by m.id asc
     </select>
-    <select id="findByMaterialName"  resultType="com.jsh.erp.datasource.entities.Material">
+    <select id="findByMaterialName"  resultType="com.seamwhole.serviceerpcore.model.Material">
         select m.*
         FROM jsh_material m
         where 1=1

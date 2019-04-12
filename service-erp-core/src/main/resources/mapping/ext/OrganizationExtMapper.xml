@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jsh.erp.datasource.mappers.OrganizationMapperEx">
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.OrganizationExtMapper">
 
-    <resultMap id="BaseTreeResultMap" type="com.jsh.erp.datasource.vo.TreeNode">
+    <resultMap id="BaseTreeResultMap" type="com.seamwhole.serviceerpcore.mapper.vo.TreeNode">
         <result column="id" property="id"/>
         <result column="org_abr" property="text"/>
         <result column="org_no" property="attributes"/>
         <collection column="{currentId=currentId,org_no=org_no}" property="children" javaType="java.util.ArrayList"
-                    ofType="com.jsh.erp.datasource.vo.TreeNode" select="getNextNodeTree"/>
+                    ofType="com.seamwhole.serviceerpcore.mapper.vo.TreeNode" select="getNextNodeTree"/>
     </resultMap>
 
-    <resultMap id="NextTreeResultMap" type="com.jsh.erp.datasource.vo.TreeNode">
+    <resultMap id="NextTreeResultMap" type="com.seamwhole.serviceerpcore.mapper.vo.TreeNode">
         <result column="id" property="id"/>
         <result column="org_abr" property="text"/>
         <result column="org_no" property="attributes"/>
         <collection column="{currentId=currentId,org_no=org_no}" property="children" javaType="java.util.ArrayList"
-                    ofType="com.jsh.erp.datasource.vo.TreeNode" select="getNextNodeTree"/>
+                    ofType="com.seamwhole.serviceerpcore.mapper.vo.TreeNode" select="getNextNodeTree"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -45,7 +45,7 @@
         and ifnull(org_stcd,'0') !='5'
         order by sort asc
     </select>
-    <insert id="addOrganization" parameterType="com.jsh.erp.datasource.entities.Organization"
+    <insert id="addOrganization" parameterType="com.seamwhole.serviceerpcore.model.Organization"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into jsh_organization
         (org_no, org_full_name,
@@ -81,7 +81,7 @@
       where id =#{id}
     </update>
 
-    <select id="getOrganizationRootByIds" resultMap="com.jsh.erp.datasource.mappers.OrganizationMapper.BaseResultMap">
+    <select id="getOrganizationRootByIds" resultMap="com.seamwhole.serviceerpcore.mapper.OrganizationMapper.BaseResultMap">
         select * from  jsh_organization
         where
         1=1

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jsh.erp.datasource.mappers.LogMapperEx">
-    <resultMap extends="com.jsh.erp.datasource.mappers.LogMapper.BaseResultMap" id="ResultExMap" type="com.jsh.erp.datasource.vo.LogVo4List">
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.LogExtMapper">
+    <resultMap extends="com.seamwhole.serviceerpcore.mapper.LogMapper.BaseResultMap" id="ResultExMap" type="com.seamwhole.serviceerpcore.mapper.vo.LogVo4List">
         <result column="userName" jdbcType="VARCHAR" property="username" />
     </resultMap>
 
-    <select id="selectByConditionLog" parameterType="com.jsh.erp.datasource.entities.LogExample" resultMap="ResultExMap">
+    <select id="selectByConditionLog" parameterType="com.seamwhole.serviceerpcore.model.LogExample" resultMap="ResultExMap">
         select l.*,u.username userName
         FROM jsh_log l
         left join jsh_user u on l.userID = u.id and ifnull(u.status,'0') not in('1','2')

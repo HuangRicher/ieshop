@@ -2,6 +2,7 @@ package com.seamwhole.serviceerpcore.mapper.ext;
 
 
 import com.seamwhole.serviceerpcore.mapper.vo.AccountHeadVo4ListEx;
+import com.seamwhole.serviceerpcore.model.AccountHead;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -36,4 +37,10 @@ public interface AccountHeadExtMapper {
             @Param("billNo") String billNo);
 
     int batchDeleteAccountHeadByIds(@Param("updateTime") Date updateTime, @Param("updater") Long updater, @Param("ids") String ids[]);
+
+    List<AccountHead> getAccountHeadListByAccountIds(@Param("accountIds") String[] accountIds);
+
+    List<AccountHead> getAccountHeadListByOrganIds(@Param("organIds") String[] organIds);
+
+    List<AccountHead> getAccountHeadListByHandsPersonIds(@Param("handsPersonIds") String[] handsPersonIds);
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jsh.erp.datasource.mappers.DepotHeadMapperEx">
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper">
 
-    <resultMap extends="com.jsh.erp.datasource.mappers.DepotHeadMapper.BaseResultMap" id="ResultMapEx" type="com.jsh.erp.datasource.vo.DepotHeadVo4List">
+    <resultMap extends="com.seamwhole.serviceerpcore.mapper.DepotHeadMapper.BaseResultMap" id="ResultMapEx" type="com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4List">
         <result column="ProjectName" jdbcType="VARCHAR" property="projectName" />
         <result column="OrganName" jdbcType="VARCHAR" property="organName" />
         <result column="HandsPersonName" jdbcType="VARCHAR" property="handsPersonName" />
@@ -10,7 +10,7 @@
         <result column="AllocationProjectName" jdbcType="VARCHAR" property="allocationProjectName" />
     </resultMap>
 
-    <resultMap id="ResultWithInfoExMap" type="com.jsh.erp.datasource.vo.DepotHeadVo4InDetail">
+    <resultMap id="ResultWithInfoExMap" type="com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InDetail">
         <result column="Number" jdbcType="VARCHAR" property="Number" />
         <result column="MName" jdbcType="VARCHAR" property="MName" />
         <result column="Model" jdbcType="VARCHAR" property="Model" />
@@ -23,7 +23,7 @@
         <result column="NewType" jdbcType="VARCHAR" property="NewType" />
     </resultMap>
 
-    <resultMap id="ResultInOutMaterialCount" type="com.jsh.erp.datasource.vo.DepotHeadVo4InOutMCount">
+    <resultMap id="ResultInOutMaterialCount" type="com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InOutMCount">
         <result column="MaterialId" jdbcType="BIGINT" property="MaterialId" />
         <result column="mName" jdbcType="VARCHAR" property="mName" />
         <result column="Model" jdbcType="VARCHAR" property="Model" />
@@ -32,7 +32,7 @@
         <result column="priceSum" jdbcType="DECIMAL" property="priceSum" />
     </resultMap>
 
-    <resultMap id="ResultStatementAccount" type="com.jsh.erp.datasource.vo.DepotHeadVo4StatementAccount">
+    <resultMap id="ResultStatementAccount" type="com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4StatementAccount">
         <result column="Number" jdbcType="VARCHAR" property="number" />
         <result column="type" jdbcType="VARCHAR" property="type" />
         <result column="DiscountLastMoney" jdbcType="DECIMAL" property="discountLastMoney" />
@@ -41,7 +41,7 @@
         <result column="oTime" jdbcType="VARCHAR" property="oTime" />
     </resultMap>
 
-    <select id="selectByConditionDepotHead" parameterType="com.jsh.erp.datasource.entities.DepotHeadExample" resultMap="ResultMapEx">
+    <select id="selectByConditionDepotHead" parameterType="com.seamwhole.serviceerpcore.model.DepotHeadExample" resultMap="ResultMapEx">
         select dh.*, d.name ProjectName, s.supplier OrganName, p.name HandsPersonName, a.name AccountName, dd.name AllocationProjectName
         from jsh_depothead dh
         left join jsh_depot d on dh.ProjectId=d.id and ifnull(d.delete_Flag,'0') !='1'
@@ -112,7 +112,7 @@
         and ifnull(jsh_depotitem.delete_Flag,'0') !='1'
     </select>
 
-    <select id="findByAll" parameterType="com.jsh.erp.datasource.entities.DepotItemExample" resultMap="ResultWithInfoExMap">
+    <select id="findByAll" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="ResultWithInfoExMap">
         select dh.Number,m.`name` MName,m.Model,di.UnitPrice,di.OperNumber,di.AllPrice,s.supplier SName,d.dName DName,
         date_format(dh.OperTime, '%Y-%m-%d') OperTime, concat(dh.SubType,dh.Type) as NewType
         from jsh_depothead dh
@@ -164,7 +164,7 @@
         ORDER BY OperTime DESC,Number desc
     </select>
 
-    <select id="findInOutMaterialCount" parameterType="com.jsh.erp.datasource.entities.DepotItemExample" resultMap="ResultInOutMaterialCount">
+    <select id="findInOutMaterialCount" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="ResultInOutMaterialCount">
         select di.MaterialId, m.mName,m.Model,m.categoryName,
 
         (select sum(jdi.BasicNumber) numSum from jsh_depothead jdh
@@ -244,7 +244,7 @@
         GROUP BY di.MaterialId,m.mName,m.Model,m.categoryName) a
     </select>
 
-    <select id="findStatementAccount" parameterType="com.jsh.erp.datasource.entities.DepotItemExample" resultMap="ResultStatementAccount">
+    <select id="findStatementAccount" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="ResultStatementAccount">
         select dh.Number,concat(dh.SubType,dh.Type) as type,dh.DiscountLastMoney,dh.ChangeAmount,s.supplier supplierName,
         date_format(dh.OperTime,'%Y-%m-%d %H:%i:%S') as oTime from jsh_depothead dh
         inner join jsh_supplier s on s.id=dh.OrganId and ifnull(s.delete_Flag,'0') !='1'
@@ -299,7 +299,7 @@
         and ifnull(delete_Flag,'0') !='1'
     </select>
 
-    <select id="getDetailByNumber" parameterType="com.jsh.erp.datasource.entities.DepotHeadExample" resultMap="ResultMapEx">
+    <select id="getDetailByNumber" parameterType="com.seamwhole.serviceerpcore.model.DepotHeadExample" resultMap="ResultMapEx">
         select dh.*, d.name ProjectName, s.supplier OrganName, p.name HandsPersonName, a.name AccountName, dd.name AllocationProjectName
         from jsh_depothead dh
         left join jsh_depot d on dh.ProjectId=d.id and ifnull(d.delete_Flag,'0') !='1'
@@ -314,7 +314,7 @@
         and ifnull(dh.delete_Flag,'0') !='1'
     </select>
 
-    <insert id="adddepotHead" parameterType="com.jsh.erp.datasource.entities.DepotHead"
+    <insert id="adddepotHead" parameterType="com.seamwhole.serviceerpcore.model.DepotHead"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into jsh_depothead (Type, SubType,
         ProjectId, DefaultNumber, Number,
@@ -337,7 +337,7 @@
         #{othermoneylist,jdbcType=VARCHAR}, #{othermoneyitem,jdbcType=VARCHAR}, #{accountday,jdbcType=INTEGER},
         #{status,jdbcType=VARCHAR}, #{linknumber,jdbcType=VARCHAR})
     </insert>
-    <update id="updatedepotHead" parameterType="com.jsh.erp.datasource.entities.DepotHead">
+    <update id="updatedepotHead" parameterType="com.seamwhole.serviceerpcore.model.DepotHead">
         update jsh_depothead
         <set>
             <if test="type != null">
