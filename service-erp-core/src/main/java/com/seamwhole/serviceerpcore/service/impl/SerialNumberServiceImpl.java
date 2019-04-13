@@ -10,6 +10,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.MaterialExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.SerialNumberExtMapper;
 import com.seamwhole.serviceerpcore.mapper.vo.SerialNumberEx;
 import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.service.SerialNumberService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +25,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Description
- *
- * @Author: cjl
- * @Date: 2019/1/21 16:33
- */
+
 @Service
-public class SerialNumberService {
-    private Logger logger = LoggerFactory.getLogger(MaterialService.class);
+public class SerialNumberServiceImpl implements SerialNumberService {
+    private Logger logger = LoggerFactory.getLogger(MaterialServiceImpl.class);
 
     @Resource
     private SerialNumberMapper serialNumberMapper;
@@ -45,7 +41,7 @@ public class SerialNumberService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
 
     public SerialNumber getSerialNumber(long id) {

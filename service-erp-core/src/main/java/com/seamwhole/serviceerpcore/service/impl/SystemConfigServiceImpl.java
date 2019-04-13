@@ -7,6 +7,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.SystemConfigExtMapper;
 import com.seamwhole.serviceerpcore.model.SystemConfig;
 import com.seamwhole.serviceerpcore.model.SystemConfigExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.SystemConfigService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class SystemConfigService {
-    private Logger logger = LoggerFactory.getLogger(SystemConfigService.class);
+public class SystemConfigServiceImpl implements SystemConfigService {
+    private Logger logger = LoggerFactory.getLogger(SystemConfigServiceImpl.class);
 
     @Resource
     private SystemConfigMapper systemConfigMapper;
@@ -32,7 +33,7 @@ public class SystemConfigService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
     public SystemConfig getSystemConfig(long id) {
         return systemConfigMapper.selectByPrimaryKey(id);

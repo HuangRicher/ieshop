@@ -11,6 +11,7 @@ import com.seamwhole.serviceerpcore.model.Material;
 import com.seamwhole.serviceerpcore.model.Unit;
 import com.seamwhole.serviceerpcore.model.UnitExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.UnitService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,8 +27,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UnitService {
-    private Logger logger = LoggerFactory.getLogger(UnitService.class);
+public class UnitServiceImpl implements UnitService {
+    private Logger logger = LoggerFactory.getLogger(UnitServiceImpl.class);
 
     @Resource
     private UnitMapper unitMapper;
@@ -37,7 +38,7 @@ public class UnitService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private MaterialExtMapper materialExtMapper;
 

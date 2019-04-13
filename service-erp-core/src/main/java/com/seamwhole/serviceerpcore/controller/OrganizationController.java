@@ -3,12 +3,12 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Organization;
-import com.jsh.erp.datasource.vo.TreeNode;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.organization.OrganizationService;
-import com.jsh.erp.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
+import com.seamwhole.serviceerpcore.model.Organization;
+import com.seamwhole.serviceerpcore.service.OrganizationService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * create by: cjl
- * description:
- *
- * create time: 2019/3/6 10:54
- */
+
 @RestController
 @RequestMapping(value = "/organization")
 public class OrganizationController {
@@ -84,12 +79,7 @@ public class OrganizationController {
     }
 
     /**
-     * create by: cjl
-     * description:
      * 获取机构树数据
-     * create time: 2019/2/19 11:49
-     * @Param:
-     * @return com.alibaba.fastjson.JSONArray
      */
     @RequestMapping(value = "/getOrganizationTree")
     public JSONArray getOrganizationTree(@RequestParam("id") Long id) throws Exception{
@@ -104,13 +94,10 @@ public class OrganizationController {
        }
         return arr;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  新增机构信息
-     * create time: 2019/2/19 17:17
-     * @Param: beanJson
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/addOrganization")
     public Object addOrganization(@RequestParam("info") String beanJson) throws Exception {
@@ -123,13 +110,10 @@ public class OrganizationController {
         }
         return result;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  修改机构信息
-     * create time: 2019/2/20 9:30
-     * @Param: beanJson
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/editOrganization")
     public Object editOrganization(@RequestParam("info") String beanJson) throws Exception {
@@ -142,13 +126,10 @@ public class OrganizationController {
         }
         return result;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  批量删除机构信息
-     * create time: 2019/2/19 17:26
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteOrganization")
     public Object batchDeleteOrganization(@RequestParam("ids") String ids) throws Exception {

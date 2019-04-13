@@ -1,84 +1,31 @@
 package com.seamwhole.serviceerpcore.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.MaterialProperty;
-import com.jsh.erp.datasource.entities.MaterialPropertyExample;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.mappers.MaterialPropertyMapper;
-import com.jsh.erp.datasource.mappers.MaterialPropertyMapperEx;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
 import com.seamwhole.serviceerpcore.model.MaterialProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 
 public interface MaterialPropertyService {
 
 
-    public MaterialProperty getMaterialProperty(long id) {
-        return materialPropertyMapper.selectByPrimaryKey(id);
-    }
+    MaterialProperty getMaterialProperty(long id);
 
-    public List<MaterialProperty> getMaterialProperty() {
-        MaterialPropertyExample example = new MaterialPropertyExample();
-        return materialPropertyMapper.selectByExample(example);
-    }
-    public List<MaterialProperty> select(String name, int offset, int rows) {
-        return materialPropertyMapperEx.selectByConditionMaterialProperty(name, offset, rows);
-    }
+    List<MaterialProperty> getMaterialProperty() ;
 
-    public Long countMaterialProperty(String name) {
-        return materialPropertyMapperEx.countsByMaterialProperty(name);
-    }
+    List<MaterialProperty> select(String name, int offset, int rows);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertMaterialProperty(String beanJson, HttpServletRequest request) {
-        MaterialProperty materialProperty = JSONObject.parseObject(beanJson, MaterialProperty.class);
-        return materialPropertyMapper.insertSelective(materialProperty);
-    }
+    Long countMaterialProperty(String name);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateMaterialProperty(String beanJson, Long id) {
-        MaterialProperty materialProperty = JSONObject.parseObject(beanJson, MaterialProperty.class);
-        materialProperty.setId(id);
-        return materialPropertyMapper.updateByPrimaryKeySelective(materialProperty);
-    }
+    int insertMaterialProperty(String beanJson, HttpServletRequest request);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteMaterialProperty(Long id) {
-        return materialPropertyMapper.deleteByPrimaryKey(id);
-    }
+    int updateMaterialProperty(String beanJson, Long id);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteMaterialProperty(String ids) {
-        List<Long> idList = StringUtil.strToLongList(ids);
-        MaterialPropertyExample example = new MaterialPropertyExample();
-        example.createCriteria().andIdIn(idList);
-        return materialPropertyMapper.deleteByExample(example);
-    }
+    int deleteMaterialProperty(Long id);
 
-    public int checkIsNameExist(Long id, String name) {
-        return 0;
-    }
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteMaterialPropertyByIds(String ids) {
-        logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_MATERIAL_PROPERTY,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(ids).toString(),
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
-        User userInfo=userService.getCurrentUser();
-        String [] idArray=ids.split(",");
-        return materialPropertyMapperEx.batchDeleteMaterialPropertyByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+    int batchDeleteMaterialProperty(String ids);
 
-    }
+    int checkIsNameExist(Long id, String name);
+
+    int batchDeleteMaterialPropertyByIds(String ids);
 }

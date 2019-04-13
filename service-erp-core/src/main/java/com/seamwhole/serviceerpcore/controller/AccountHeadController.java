@@ -1,12 +1,12 @@
 package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.AccountHeadVo4ListEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.accountHead.AccountHeadService;
-import com.jsh.erp.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.AccountHeadVo4ListEx;
+import com.seamwhole.serviceerpcore.service.AccountHeadService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author jishenghua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/accountHead")
 public class AccountHeadController {
@@ -148,11 +146,8 @@ public class AccountHeadController {
         return allMoney;
     }
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
      * description:
      *  批量删除账户信息
-     * create time: 2019/3/29 10:49
      * @Param: ids
      * @return java.lang.Object
      */

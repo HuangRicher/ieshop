@@ -8,6 +8,7 @@ import com.seamwhole.serviceerpcore.mapper.vo.LogVo4List;
 import com.seamwhole.serviceerpcore.model.Log;
 import com.seamwhole.serviceerpcore.model.LogExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ import java.util.List;
 import static com.seamwhole.serviceerpcore.utils.Tools.getLocalIp;
 
 @Service
-public class LogService {
-    private Logger logger = LoggerFactory.getLogger(LogService.class);
+public class LogServiceImpl implements LogService {
+    private Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
     @Resource
     private LogMapper logMapper;
 

@@ -8,6 +8,7 @@ import com.seamwhole.serviceerpcore.model.App;
 import com.seamwhole.serviceerpcore.model.AppExample;
 import com.seamwhole.serviceerpcore.model.User;
 import com.seamwhole.serviceerpcore.model.UserBusiness;
+import com.seamwhole.serviceerpcore.service.AppService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AppService {
-    private Logger logger = LoggerFactory.getLogger(AppService.class);
+public class AppServiceImpl implements AppService {
+    private Logger logger = LoggerFactory.getLogger(AppServiceImpl.class);
 
     @Resource
     private AppMapper appMapper;
@@ -32,10 +33,10 @@ public class AppService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
     @Resource
-    private UserBusinessService userBusinessService;
+    private UserBusinessServiceImpl userBusinessService;
 
     public List<App> findDock(){
         AppExample example = new AppExample();

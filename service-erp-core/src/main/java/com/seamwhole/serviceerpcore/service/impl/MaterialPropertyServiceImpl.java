@@ -7,6 +7,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.MaterialPropertyExtMapper;
 import com.seamwhole.serviceerpcore.model.MaterialProperty;
 import com.seamwhole.serviceerpcore.model.MaterialPropertyExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.MaterialPropertyService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MaterialPropertyService {
-    private Logger logger = LoggerFactory.getLogger(MaterialPropertyService.class);
+public class MaterialPropertyServiceImpl implements MaterialPropertyService {
+    private Logger logger = LoggerFactory.getLogger(MaterialPropertyServiceImpl.class);
 
     @Resource
     private MaterialPropertyMapper materialPropertyMapper;
@@ -32,7 +33,7 @@ public class MaterialPropertyService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
     public MaterialProperty getMaterialProperty(long id) {
         return materialPropertyMapper.selectByPrimaryKey(id);

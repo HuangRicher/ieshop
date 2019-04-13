@@ -10,6 +10,7 @@ import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
 import com.seamwhole.serviceerpcore.model.Organization;
 import com.seamwhole.serviceerpcore.model.OrganizationExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.OrganizationService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,15 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Description
- *
- * @Author: cjl
- * @Date: 2019/3/6 15:10
- */
+
 @Service
-public class OrganizationService {
-    private Logger logger = LoggerFactory.getLogger(OrganizationService.class);
+public class OrganizationServiceImpl implements OrganizationService {
+    private Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
     @Resource
     private OrganizationMapper organizationMapper;
@@ -40,7 +36,7 @@ public class OrganizationService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int insertOrganization(String beanJson, HttpServletRequest request) {
         Organization organization = JSONObject.parseObject(beanJson, Organization.class);

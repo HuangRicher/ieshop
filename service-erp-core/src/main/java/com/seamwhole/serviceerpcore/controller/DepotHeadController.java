@@ -1,16 +1,16 @@
 package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.DepotHead;
-import com.jsh.erp.datasource.vo.DepotHeadVo4InDetail;
-import com.jsh.erp.datasource.vo.DepotHeadVo4InOutMCount;
-import com.jsh.erp.datasource.vo.DepotHeadVo4List;
-import com.jsh.erp.datasource.vo.DepotHeadVo4StatementAccount;
-import com.jsh.erp.exception.BusinessParamCheckingException;
-import com.jsh.erp.service.depotHead.DepotHeadService;
-import com.jsh.erp.utils.BaseResponseInfo;
-import com.jsh.erp.utils.ErpInfo;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InDetail;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InOutMCount;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4List;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4StatementAccount;
+import com.seamwhole.serviceerpcore.model.DepotHead;
+import com.seamwhole.serviceerpcore.service.DepotHeadService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.ErpInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
+
 
 /**
  * @author ji-sheng-hua 752*718*920

@@ -5,14 +5,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.entities.UserEx;
-import com.jsh.erp.datasource.vo.TreeNodeEx;
-import com.jsh.erp.exception.BusinessParamCheckingException;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNodeEx;
+import com.seamwhole.serviceerpcore.mapper.vo.UserEx;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.UserService;
+import com.seamwhole.serviceerpcore.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
+
 
 /**
  * @author ji_sheng_hua 华夏erp
@@ -58,8 +59,8 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public BaseResponseInfo login(@RequestParam(value = "loginame", required = false) String loginame,
-                        @RequestParam(value = "password", required = false) String password,
-                        HttpServletRequest request) {
+                                  @RequestParam(value = "password", required = false) String password,
+                                  HttpServletRequest request) {
         logger.info("============用户登录 login 方法调用开始==============");
         String msgTip = "";
         User user=null;

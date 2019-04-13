@@ -2,13 +2,16 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.depotItem.DepotItemService;
-import com.jsh.erp.service.material.MaterialService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4DetailByTypeAndMId;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4HeaderId;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4Material;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4WithInfoEx;
+import com.seamwhole.serviceerpcore.service.DepotItemService;
+import com.seamwhole.serviceerpcore.service.MaterialService;
+import com.seamwhole.serviceerpcore.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -25,11 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji-sheng-hua 华夏erp
- */
+
 @RestController
 @RequestMapping(value = "/depotItem")
 public class DepotItemController {
@@ -716,9 +717,6 @@ public class DepotItemController {
             message = "导出失败";
             res.code = 500;
         }
-        /**
-         * 2019-01-15response已经返回，finally部分完全没必要
-         * */
         return res;
     }
 
@@ -806,14 +804,10 @@ public class DepotItemController {
         }
         return sumPrice;
     }
+
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除单据明细信息
-     * create time: 2019/3/29 11:15
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteDepotItemByIds")
     public Object batchDeleteDepotItemByIds(@RequestParam("ids") String ids) throws Exception {

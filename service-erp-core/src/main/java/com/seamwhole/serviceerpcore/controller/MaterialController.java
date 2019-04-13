@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Material;
-import com.jsh.erp.datasource.entities.MaterialVo4Unit;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.material.MaterialService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.MaterialVo4Unit;
+import com.seamwhole.serviceerpcore.model.Material;
+import com.seamwhole.serviceerpcore.service.MaterialService;
+import com.seamwhole.serviceerpcore.utils.*;
 import jxl.Sheet;
 import jxl.Workbook;
 import org.slf4j.Logger;
@@ -26,11 +26,9 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji|sheng|hua 华夏ERP
- */
+
 @RestController
 @RequestMapping(value = "/material")
 public class MaterialController {

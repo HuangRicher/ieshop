@@ -7,6 +7,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.FunctionsExtMapper;
 import com.seamwhole.serviceerpcore.model.Functions;
 import com.seamwhole.serviceerpcore.model.FunctionsExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.FunctionsService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class FunctionsService {
-    private Logger logger = LoggerFactory.getLogger(FunctionsService.class);
+public class FunctionsServiceImpl implements FunctionsService {
+    private Logger logger = LoggerFactory.getLogger(FunctionsServiceImpl.class);
 
     @Resource
     private FunctionsMapper functionsMapper;
@@ -32,7 +33,7 @@ public class FunctionsService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
     public Functions getFunctions(long id) {
         return functionsMapper.selectByPrimaryKey(id);

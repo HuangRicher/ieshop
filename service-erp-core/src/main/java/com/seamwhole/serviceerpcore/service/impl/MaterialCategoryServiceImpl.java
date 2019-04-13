@@ -12,6 +12,7 @@ import com.seamwhole.serviceerpcore.model.Material;
 import com.seamwhole.serviceerpcore.model.MaterialCategory;
 import com.seamwhole.serviceerpcore.model.MaterialCategoryExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.MaterialCategoryService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,8 +28,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MaterialCategoryService {
-    private Logger logger = LoggerFactory.getLogger(MaterialCategoryService.class);
+public class MaterialCategoryServiceImpl implements MaterialCategoryService {
+    private Logger logger = LoggerFactory.getLogger(MaterialCategoryServiceImpl.class);
 
     @Resource
     private MaterialCategoryMapper materialCategoryMapper;
@@ -37,7 +38,7 @@ public class MaterialCategoryService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private MaterialExtMapper materialExtMapper;
 

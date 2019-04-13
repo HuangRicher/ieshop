@@ -8,8 +8,8 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Map;
 
-import static com.jsh.erp.utils.Constants.CURRENT_PAGE;
-import static com.jsh.erp.utils.Constants.PAGE_SIZE;
+import static com.seamwhole.serviceerpcore.utils.Constants.CURRENT_PAGE;
+import static com.seamwhole.serviceerpcore.utils.Constants.PAGE_SIZE;
 
 /**
  * @author jishenghua qq752718920  2018-10-7 15:26:27

@@ -5,7 +5,7 @@ import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.mapper.UserBusinessMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.UserBusinessExtMapper;
 import com.seamwhole.serviceerpcore.model.*;
-import com.seamwhole.serviceerpcore.service.CommonQueryManager;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,26 +20,23 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
-public class UserBusinessService {
-    private Logger logger = LoggerFactory.getLogger(UserBusinessService.class);
+public class UserBusinessServiceImpl implements UserBusinessService {
+    private Logger logger = LoggerFactory.getLogger(UserBusinessServiceImpl.class);
 
     @Resource
     private UserBusinessMapper userBusinessMapper;
     @Resource
     private UserBusinessExtMapper userBusinessExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
 
     @Resource
-    private FunctionsService functionsService;
+    private FunctionsServiceImpl functionsService;
 
     @Resource
-    private AppService appService;
-
-    @Resource
-    private CommonQueryManager configResourceManager;
+    private AppServiceImpl appService;
 
     public UserBusiness getUserBusiness(long id) {
         return userBusinessMapper.selectByPrimaryKey(id);

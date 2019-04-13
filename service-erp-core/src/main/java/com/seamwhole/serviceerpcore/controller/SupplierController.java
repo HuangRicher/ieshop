@@ -2,14 +2,14 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Supplier;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.supplier.SupplierService;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.service.userBusiness.UserBusinessService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.Supplier;
+import com.seamwhole.serviceerpcore.service.SupplierService;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
+import com.seamwhole.serviceerpcore.service.UserService;
+import com.seamwhole.serviceerpcore.utils.*;
 import jxl.Sheet;
 import jxl.Workbook;
 import org.slf4j.Logger;
@@ -28,11 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji|sheng|hua 华夏erp
- */
+
 @RestController
 @RequestMapping(value = "/supplier")
 public class SupplierController {
@@ -164,7 +162,7 @@ public class SupplierController {
      */
     @GetMapping(value = "/findById")
     public BaseResponseInfo findById(@RequestParam("supplierId") Long supplierId,
-                              HttpServletRequest request) {
+                                     HttpServletRequest request) {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             JSONArray dataArray = new JSONArray();

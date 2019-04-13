@@ -2,11 +2,12 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.vo.AccountItemVo4List;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.accountItem.AccountItemService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.AccountItemVo4List;
+import com.seamwhole.serviceerpcore.service.AccountItemService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.ErpInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -20,11 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji sheng hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/accountItem")
 public class AccountItemController {
@@ -32,18 +31,9 @@ public class AccountItemController {
 
     @Resource
     private AccountItemService accountItemService;
+
     /**
-     * create by: cjl
-     * description:
      *  业务逻辑操作放在service层，controller只做参数解析和视图封装
-     * create time: 2019/1/11 15:08
-     * @Param: inserted
-     * @Param: deleted
-     * @Param: updated
-     * @Param: headerId
-     * @Param: listType
-     * @Param: request
-     * @return java.lang.String
      */
     @PostMapping(value = "/saveDetials")
     public String saveDetials(@RequestParam("inserted") String inserted,
@@ -63,6 +53,7 @@ public class AccountItemController {
             return returnJson(objectMap, ErpInfo.ERROR.name, ErpInfo.ERROR.code);
         }
     }
+
 
     @GetMapping(value = "/getDetailList")
     public BaseResponseInfo getDetailList(@RequestParam("headerId") Long headerId,
@@ -102,14 +93,10 @@ public class AccountItemController {
         }
         return res;
     }
+
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除财务明细信息
-     * create time: 2019/3/29 10:56
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteAccountItemByIds")
     public Object batchDeleteAccountItemByIds(@RequestParam("ids") String ids) throws Exception {

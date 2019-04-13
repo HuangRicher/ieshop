@@ -7,9 +7,9 @@ spring:
   ##数据库连接信息
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://127.0.0.1:3306/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://bj-cdb-kkucszns.sql.tencentcdb.com:62815/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
     username: root
-    password: root
+    password: rP3Za18k3Mw18gDJ
     hikari:
       data-source-properties:
         cachePrepStmts: true
@@ -68,3 +68,12 @@ hystrix:
           thread:
             timeoutInMilliseconds: 60000
 
+#mybatis-plus配置
+#open开启 close关闭
+mybatis-plus:
+  status: close
+#获取管理系统信息
+manage:
+  ip: 127.0.0.1
+  port: 8090
+  roleId: 10

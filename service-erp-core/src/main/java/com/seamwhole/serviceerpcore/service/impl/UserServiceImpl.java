@@ -43,12 +43,12 @@ public class UserServiceImpl implements UserService{
     @Resource
     private UserExtMapper userExtMapper;
     @Resource
-    private OrgUserRelService orgaUserRelService;
+    private OrgUserRelServiceImpl orgaUserRelService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
     @Resource
-    private UserBusinessService userBusinessService;
+    private UserBusinessServiceImpl userBusinessService;
 
 
     public User getUser(long id) {

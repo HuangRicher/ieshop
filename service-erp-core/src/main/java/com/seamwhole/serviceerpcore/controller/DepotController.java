@@ -5,14 +5,17 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Depot;
-import com.jsh.erp.datasource.entities.DepotEx;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.depot.DepotService;
-import com.jsh.erp.service.userBusiness.UserBusinessService;
-import com.jsh.erp.utils.*;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotEx;
+import com.seamwhole.serviceerpcore.model.Depot;
+import com.seamwhole.serviceerpcore.service.DepotService;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.Constants;
+import com.seamwhole.serviceerpcore.utils.ErpInfo;
+import com.seamwhole.serviceerpcore.utils.PageQueryInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -22,11 +25,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static com.jsh.erp.utils.ResponseJsonUtil.returnJson;
+import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji sheng hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/depot")
 public class DepotController {
@@ -129,15 +130,10 @@ public class DepotController {
         }
         return arr;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      * 查询仓库列表信息
-     * create time: 2019/2/25 14:32
-     * @Param: pageSize
-     * @Param: currentPage
-     * @Param: search
-     * @return java.lang.String
      */
     @RequestMapping(value = "/getDepotList")
     public String getDepotList(
@@ -173,14 +169,10 @@ public class DepotController {
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
+
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除仓库信息
-     * create time: 2019/3/29 11:15
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteDepotByIds")
     public Object batchDeleteDepotByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",

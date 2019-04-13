@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService{
     @Resource
     private AccountItemExtMapper accountItemExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
 

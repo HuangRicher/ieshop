@@ -35,7 +35,7 @@ public class AccountItemServiceImpl implements AccountItemService{
     @Resource
     private AccountItemExtMapper accountItemExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
 

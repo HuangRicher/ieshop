@@ -10,6 +10,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.DepotItemExtMapper;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotEx;
 import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.service.DepotService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DepotService {
-    private Logger logger = LoggerFactory.getLogger(DepotService.class);
+public class DepotServiceImpl implements DepotService {
+    private Logger logger = LoggerFactory.getLogger(DepotServiceImpl.class);
 
     @Resource
     private DepotMapper depotMapper;
@@ -37,7 +38,7 @@ public class DepotService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private DepotHeadExtMapper depotHeadExtMapper;
     @Resource

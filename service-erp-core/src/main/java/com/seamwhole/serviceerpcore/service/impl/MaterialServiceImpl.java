@@ -12,6 +12,7 @@ import com.seamwhole.serviceerpcore.model.DepotItem;
 import com.seamwhole.serviceerpcore.model.Material;
 import com.seamwhole.serviceerpcore.model.MaterialExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.MaterialService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -27,15 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
-public class MaterialService {
-    private Logger logger = LoggerFactory.getLogger(MaterialService.class);
+public class MaterialServiceImpl implements MaterialService {
+    private Logger logger = LoggerFactory.getLogger(MaterialServiceImpl.class);
 
     @Resource
     private MaterialMapper materialMapper;
     @Resource
     private MaterialExtMapper materialExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
     @Resource

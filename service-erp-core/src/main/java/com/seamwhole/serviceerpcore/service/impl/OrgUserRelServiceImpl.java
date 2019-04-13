@@ -7,6 +7,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.OrgUserRelExtMapper;
 import com.seamwhole.serviceerpcore.model.OrgUserRel;
 import com.seamwhole.serviceerpcore.model.OrgUserRelExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.OrgUserRelService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,8 @@ import java.util.List;
  * @Date: 2019/3/11 18:11
  */
 @Service
-public class OrgUserRelService {
-    private Logger logger = LoggerFactory.getLogger(OrganizationService.class);
+public class OrgUserRelServiceImpl implements OrgUserRelService {
+    private Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
     @Resource
     private OrgUserRelMapper orgUserRelMapper;
@@ -35,7 +36,7 @@ public class OrgUserRelService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int insertOrgUserRel(String beanJson, HttpServletRequest request) {
         OrgUserRel OrgUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);

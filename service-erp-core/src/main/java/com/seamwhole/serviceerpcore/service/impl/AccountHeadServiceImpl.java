@@ -41,7 +41,7 @@ public class AccountHeadServiceImpl implements AccountHeadService{
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private AccountItemExtMapper accountItemExtMapper;
 

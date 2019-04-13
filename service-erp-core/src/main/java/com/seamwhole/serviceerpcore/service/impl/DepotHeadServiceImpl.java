@@ -13,6 +13,7 @@ import com.seamwhole.serviceerpcore.model.DepotHead;
 import com.seamwhole.serviceerpcore.model.DepotHeadExample;
 import com.seamwhole.serviceerpcore.model.DepotItem;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.DepotHeadService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,8 @@ import static com.seamwhole.serviceerpcore.utils.Tools.getCenternTime;
 
 
 @Service
-public class DepotHeadService {
-    private Logger logger = LoggerFactory.getLogger(DepotHeadService.class);
+public class DepotHeadServiceImpl implements DepotHeadService {
+    private Logger logger = LoggerFactory.getLogger(DepotHeadServiceImpl.class);
 
     @Resource
     private DepotHeadMapper depotHeadMapper;
@@ -43,15 +44,15 @@ public class DepotHeadService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    DepotItemService depotItemService;
+    DepotItemServiceImpl depotItemService;
     @Resource
-    private SupplierService supplierService;
+    private SupplierServiceImpl supplierService;
     @Resource
-    private SerialNumberService serialNumberService;
+    private SerialNumberServiceImpl serialNumberService;
     @Resource
     private DepotItemExtMapper depotItemExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
 
 
     public DepotHead getDepotHead(long id) {

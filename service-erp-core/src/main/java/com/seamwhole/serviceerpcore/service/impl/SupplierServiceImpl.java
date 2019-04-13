@@ -9,6 +9,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.SupplierExtMapper;
 import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.service.SupplierService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -28,8 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SupplierService {
-    private Logger logger = LoggerFactory.getLogger(SupplierService.class);
+public class SupplierServiceImpl implements SupplierService {
+    private Logger logger = LoggerFactory.getLogger(SupplierServiceImpl.class);
 
     @Resource
     private SupplierMapper supplierMapper;
@@ -37,7 +38,7 @@ public class SupplierService {
     @Resource
     private SupplierExtMapper supplierExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
     @Resource

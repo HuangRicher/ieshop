@@ -2,11 +2,11 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.InOutItem;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.inOutItem.InOutItemService;
+import com.seamwhole.serviceerpcore.constants.BusinessConstants;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.InOutItem;
+import com.seamwhole.serviceerpcore.service.InOutItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * @author jishenghua  华夏ERP 2018年12月25日14:38:08
- */
+
 @RestController
 @RequestMapping(value = "/inOutItem")
 public class InOutItemController {
@@ -57,14 +55,10 @@ public class InOutItemController {
         }
         return res;
     }
+
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除收支项目信息
-     * create time: 2019/3/29 11:15
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteInOutItemByIds")
     public Object batchDeleteInOutItemByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",

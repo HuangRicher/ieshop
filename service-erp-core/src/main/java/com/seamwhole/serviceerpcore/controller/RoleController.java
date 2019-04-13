@@ -2,11 +2,11 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.Role;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.role.RoleService;
-import com.jsh.erp.service.userBusiness.UserBusinessService;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.Role;
+import com.seamwhole.serviceerpcore.service.RoleService;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

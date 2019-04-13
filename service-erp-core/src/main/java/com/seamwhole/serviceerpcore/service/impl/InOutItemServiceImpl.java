@@ -11,6 +11,7 @@ import com.seamwhole.serviceerpcore.model.AccountItem;
 import com.seamwhole.serviceerpcore.model.InOutItem;
 import com.seamwhole.serviceerpcore.model.InOutItemExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.InOutItemService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,8 +27,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class InOutItemService {
-    private Logger logger = LoggerFactory.getLogger(InOutItemService.class);
+public class InOutItemServiceImpl implements InOutItemService {
+    private Logger logger = LoggerFactory.getLogger(InOutItemServiceImpl.class);
 
     @Resource
     private InOutItemMapper inOutItemMapper;
@@ -37,7 +38,7 @@ public class InOutItemService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private AccountItemExtMapper accountItemExtMapper;
 

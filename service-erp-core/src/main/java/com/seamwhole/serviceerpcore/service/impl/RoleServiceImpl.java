@@ -7,6 +7,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.RoleExtMapper;
 import com.seamwhole.serviceerpcore.model.Role;
 import com.seamwhole.serviceerpcore.model.RoleExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.service.RoleService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +20,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class RoleService {
+public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleMapper roleMapper;
 
     @Resource
     private RoleExtMapper roleExtMapper;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private UserServiceImpl userService;
 

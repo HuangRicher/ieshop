@@ -14,6 +14,7 @@ import com.seamwhole.serviceerpcore.model.*;
 import com.seamwhole.serviceerpcore.mapper.DepotHeadMapper;
 import com.seamwhole.serviceerpcore.mapper.DepotItemMapper;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.DepotItemService;
 import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.SerialNumberService;
 import com.seamwhole.serviceerpcore.service.UserService;
@@ -34,8 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DepotItemService {
-    private Logger logger = LoggerFactory.getLogger(DepotItemService.class);
+public class DepotItemServiceImpl implements DepotItemService {
+    private Logger logger = LoggerFactory.getLogger(DepotItemServiceImpl.class);
 
     private final static String TYPE = "入库";
     private final static String SUM_TYPE = "Number";
@@ -47,7 +48,7 @@ public class DepotItemService {
     @Resource
     private DepotItemExtMapper depotItemExtMapper;
     @Resource
-    private MaterialService materialService;
+    private MaterialServiceImpl materialService;
     @Resource
     private SerialNumberExtMapper serialNumberExtMapper;
     @Resource

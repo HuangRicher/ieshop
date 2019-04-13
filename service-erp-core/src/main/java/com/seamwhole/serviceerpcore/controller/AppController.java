@@ -2,15 +2,15 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.ExceptionConstants;
-import com.jsh.erp.datasource.entities.App;
-import com.jsh.erp.datasource.entities.User;
-import com.jsh.erp.datasource.entities.UserBusiness;
-import com.jsh.erp.exception.BusinessRunTimeException;
-import com.jsh.erp.service.app.AppService;
-import com.jsh.erp.service.userBusiness.UserBusinessService;
-import com.jsh.erp.utils.BaseResponseInfo;
-import com.jsh.erp.utils.FileUtils;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.App;
+import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.model.UserBusiness;
+import com.seamwhole.serviceerpcore.service.AppService;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * @author ji_sheng_hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/app")
 public class AppController {
@@ -256,14 +254,10 @@ public class AppController {
         }
         return res;
     }
+
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除应用信息
-     * create time: 2019/3/29 11:15
-     * @Param: ids
-     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteAppByIds")
     public Object batchDeleteAppByIds(@RequestParam("ids") String ids) throws Exception {

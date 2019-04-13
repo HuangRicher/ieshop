@@ -1,6 +1,6 @@
 package com.seamwhole.serviceerpcore.utils;
 
-import com.alibaba.druid.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -138,7 +138,7 @@ public class Tools {
     /**
      * 判断字符串是否全部为数字
      *
-     * @param accountWaste
+     * @param checkStr
      * @return boolean值
      */
     public static boolean checkStrIsNum(String checkStr) {
@@ -245,7 +245,7 @@ public class Tools {
      *
      * @param aValue
      * @return
-     * @see 转码后的字符串
+     * @see aa 转码后的字符串
      */
     public static String decodeValue(String aValue) {
         if (aValue.trim().length() == 0) {
@@ -418,7 +418,7 @@ public class Tools {
     /**
      * 获取当前日期的前XX个月
      *
-     * @param 之前的第几个月
+     * @param beforeMonth 之前的第几个月
      * @return 前XX个月字符串
      */
     public static String getBeforeMonth(int beforeMonth) {
@@ -431,7 +431,7 @@ public class Tools {
     /**
      * 获取email用户姓名
      *
-     * @param args
+     * @param emailAddress
      */
     public static String getEmailUserName(String emailAddress) {
         return emailAddress.substring(0, emailAddress.lastIndexOf("@"));
@@ -440,7 +440,7 @@ public class Tools {
     /**
      * 获取中文编码，邮件附件乱码问题解决
      *
-     * @param str
+     * @param emailAttchmentTitle
      * @return
      */
     public static String getChineseString(String emailAttchmentTitle) {
@@ -471,7 +471,7 @@ public class Tools {
     /**
      * 模糊判断电话号码是否合法，只能是数字
      *
-     * @param macAddress
+     * @param userTel
      * @return
      */
     public static boolean isTelNumberBySlur(String userTel) {

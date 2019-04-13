@@ -1,13 +1,18 @@
 package com.seamwhole.serviceerpcore.utils;
 
-import com.alibaba.druid.util.StringUtils;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.format.*;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.VerticalAlignment;
 import jxl.write.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.lang.Boolean;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;

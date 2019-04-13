@@ -9,6 +9,7 @@ import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.PersonExtMapper;
 import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.service.PersonService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class PersonService {
-    private Logger logger = LoggerFactory.getLogger(PersonService.class);
+public class PersonServiceImpl implements PersonService {
+    private Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
     @Resource
     private PersonMapper personMapper;
@@ -35,7 +36,7 @@ public class PersonService {
     @Resource
     private UserServiceImpl userService;
     @Resource
-    private LogService logService;
+    private LogServiceImpl logService;
     @Resource
     private AccountHeadExtMapper accountHeadExtMapper;
     @Resource

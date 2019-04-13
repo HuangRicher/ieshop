@@ -1,147 +1,41 @@
 package com.seamwhole.serviceerpcore.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.jsh.erp.constants.BusinessConstants;
-import com.jsh.erp.datasource.entities.*;
-import com.jsh.erp.datasource.mappers.UserBusinessMapper;
-import com.jsh.erp.datasource.mappers.UserBusinessMapperEx;
-import com.jsh.erp.service.user.UserService;
-import com.jsh.erp.utils.StringUtil;
 import com.seamwhole.serviceerpcore.model.UserBusiness;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
 
 
 public interface UserBusinessService {
 
 
-    public UserBusiness getUserBusiness(long id) {
-        return userBusinessMapper.selectByPrimaryKey(id);
-    }
+    UserBusiness getUserBusiness(long id);
 
-    public List<UserBusiness> getUserBusiness() {
-        UserBusinessExample example = new UserBusinessExample();
-        return userBusinessMapper.selectByExample(example);
-    }
+    List<UserBusiness> getUserBusiness();
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertUserBusiness(String beanJson, HttpServletRequest request) {
-        UserBusiness userBusiness = JSONObject.parseObject(beanJson, UserBusiness.class);
-        int inserts = userBusinessMapper.insertSelective(userBusiness);
-        // 更新应用权限
-        if (BusinessConstants.TYPE_NAME_ROLE_FUNCTIONS.equals(userBusiness.getType()) && inserts > 0) {
-            inserts = insertOrUpdateAppValue(BusinessConstants.TYPE_NAME_ROLE_APP, userBusiness.getKeyid(), userBusiness.getValue());
-        }
-        return inserts;
-    }
+    int insertUserBusiness(String beanJson, HttpServletRequest request) ;
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateUserBusiness(String beanJson, Long id) {
-        UserBusiness userBusiness = JSONObject.parseObject(beanJson, UserBusiness.class);
-        userBusiness.setId(id);
-        int updates = userBusinessMapper.updateByPrimaryKeySelective(userBusiness);
-        // 更新应用权限
-        if (BusinessConstants.TYPE_NAME_ROLE_FUNCTIONS.equals(userBusiness.getType()) && updates > 0) {
-            updates = insertOrUpdateAppValue(BusinessConstants.TYPE_NAME_ROLE_APP, userBusiness.getKeyid(), userBusiness.getValue());
-        }
-        return updates;
-    }
+    int updateUserBusiness(String beanJson, Long id) ;
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteUserBusiness(Long id) {
-        return userBusinessMapper.deleteByPrimaryKey(id);
-    }
+    int deleteUserBusiness(Long id);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteUserBusiness(String ids) {
-        List<Long> idList = StringUtil.strToLongList(ids);
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andIdIn(idList);
-        return userBusinessMapper.deleteByExample(example);
-    }
+    int batchDeleteUserBusiness(String ids);
 
-    public int checkIsNameExist(Long id, String name) {
-        return 1;
-    }
+    int checkIsNameExist(Long id, String name);
 
-    public List<UserBusiness> getBasicData(String keyId, String type){
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andKeyidEqualTo(keyId).andTypeEqualTo(type);
-        List<UserBusiness> list = userBusinessMapper.selectByExample(example);
-        return list;
-    }
+    List<UserBusiness> getBasicData(String keyId, String type);
 
-    public Long checkIsValueExist(String type, String keyId) {
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andTypeEqualTo(type).andKeyidEqualTo(keyId);
-        List<UserBusiness> list = userBusinessMapper.selectByExample(example);
-        Long id = null;
-        if(list.size() > 0) {
-            id = list.get(0).getId();
-        }
-        return id;
-    }
+    Long checkIsValueExist(String type, String keyId);
 
-    public Boolean checkIsUserBusinessExist(String TypeVale, String KeyIdValue, String UBValue) {
-        UserBusinessExample example = new UserBusinessExample();
-        String newVaule = "%" + UBValue + "%";
-        if(TypeVale !=null && KeyIdValue !=null) {
-            example.createCriteria().andTypeEqualTo(TypeVale).andKeyidEqualTo(KeyIdValue).andValueLike(newVaule);
-        } else {
-            example.createCriteria().andValueLike(newVaule);
-        }
-        List<UserBusiness> list = userBusinessMapper.selectByExample(example);
-        if(list.size() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    Boolean checkIsUserBusinessExist(String TypeVale, String KeyIdValue, String UBValue);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateBtnStr(Long userBusinessId, String btnStr) {
-        logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_USER_BUSINESS,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(userBusinessId).toString(),
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
-        UserBusiness userBusiness = new UserBusiness();
-        userBusiness.setBtnstr(btnStr);
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andIdEqualTo(userBusinessId);
-        return userBusinessMapper.updateByExampleSelective(userBusiness, example);
-    }
+    int updateBtnStr(Long userBusinessId, String btnStr) ;
 
-    public List<UserBusiness> findRoleByUserId(String userId){
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andKeyidEqualTo(userId).andTypeEqualTo("UserRole");
-        List<UserBusiness> list = userBusinessMapper.selectByExample(example);
-        return list;
-    }
+    List<UserBusiness> findRoleByUserId(String userId);
 
-    public List<UserBusiness> findAppByRoles(String roles){
-        List<String> rolesList = StringUtil.strToStringList(roles);
-        UserBusinessExample example = new UserBusinessExample();
-        example.createCriteria().andKeyidIn(rolesList).andTypeEqualTo("RoleAPP");
-        List<UserBusiness> list = userBusinessMapper.selectByExample(example);
-        return list;
-    }
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteUserBusinessByIds(String ids) {
-        logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_USER_BUSINESS,
-                new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(ids).toString(),
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
-        User userInfo=userService.getCurrentUser();
-        String [] idArray=ids.split(",");
-        return userBusinessMapperEx.batchDeleteUserBusinessByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
-    }
+    List<UserBusiness> findAppByRoles(String roles);
+    
+    int batchDeleteUserBusinessByIds(String ids);
 
     /**
      * 通过功能（RoleFunctions）权限更新应用（RoleApp）权限
@@ -150,49 +44,5 @@ public interface UserBusinessService {
      * @param functionIds
      * @return
      */
-    public int insertOrUpdateAppValue(String type, String keyId, String functionIds) {
-
-        int updates = 0;
-
-        functionIds = functionIds.replaceAll("\\]\\[", ",").
-                replaceAll("\\[","").replaceAll("\\]","");
-
-        List<Functions> functionsList = functionsService.findByIds(functionIds);
-
-        if (!CollectionUtils.isEmpty(functionsList)) {
-
-            Set<String> appNumbers = new HashSet<>();
-            String appNumber;
-            for (Functions functions : functionsList) {
-
-                appNumber = functions.getNumber().substring(0, 2);
-                appNumbers.add(appNumber);
-            }
-
-            List<String> appNumberList = new ArrayList<>(appNumbers);
-            List<App> appList = appService.findAppByNumber(appNumberList);
-
-            StringBuilder appIdSb = new StringBuilder();
-
-            if (!CollectionUtils.isEmpty(appList)) {
-                for (App app : appList) {
-                    appIdSb.append("[" + app.getId() + "]");
-                }
-
-                List<UserBusiness> userBusinessList = getBasicData(keyId, type);
-                if(userBusinessList.size() > 0) {
-                    UserBusiness userBusiness = userBusinessList.get(0);
-                    userBusiness.setValue(appIdSb.toString());
-                    updates = userBusinessMapper.updateByPrimaryKeySelective(userBusiness);
-                } else {
-                    UserBusiness userBusiness = new UserBusiness();
-                    userBusiness.setType(type);
-                    userBusiness.setKeyid(keyId);
-                    userBusiness.setValue(appIdSb.toString());
-                    updates = userBusinessMapper.insertSelective(userBusiness);
-                }
-            }
-        }
-        return updates;
-    }
+    int insertOrUpdateAppValue(String type, String keyId, String functionIds);
 }
