@@ -12,7 +12,7 @@
     <script type="text/javascript" src="/js/md5/md5.js"></script>
 </head>
 <body id="login_body">
-<form action="admin.html">
+<form action="admin">
     <div id="login_main">
         <div id="login">
             <p id="login_signal"><img src="/images/login_tip.jpg" width="108" height="29" alt="login"/></p>
@@ -98,7 +98,7 @@
     });
     
     $("#btn_register").off("click").on("click", function () {
-        location.href = "register.html";
+        location.href = "register";
     });
 
     //检测用户输入数据
@@ -169,8 +169,8 @@
                                             console.log("user");
                                             var user = res.data.user;
                                             sessionStorage.setItem("userId", user.id);
-                                            console.log("http://" + location.host + "/index.html");
-                                            top.location.href = "http://" + location.host + "/index.html";
+                                            console.log("http://" + location.host + "/index");
+                                            top.location.href = "http://" + location.host + "/index";
                                         }
                                     }
                                 },
