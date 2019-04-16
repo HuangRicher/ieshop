@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.seamwhole.servicetradecore.mapper.ext.ShopAttributeExpMapper">
-
-    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopAttributeDO" >
+    <resultMap id="BaseResultMap" type="com.seamwhole.servicetradecore.model.ShopAttribute" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="attribute_category_id" property="attributeCategoryId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="input_type" property="inputType" jdbcType="INTEGER" />
+        <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="ShopResultMap" type="com.seamwhole.servicetradecore.mapper.model.ShopAttributeDO" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="attribute_category_id" property="attributeCategoryId" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
@@ -11,8 +17,31 @@
         <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
         <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
     </resultMap>
-
-    <select id="queryShopList" resultMap="BaseResultMap">
+    <select id="queryList" resultMap="BaseResultMap">
+        select
+        <if test="fields != null and fields != ''">
+            ${fields}
+        </if>
+        <if test="fields == null or fields == ''">
+            *
+        </if>
+        from ishop_attribute na
+        left join ishop_goods_attribute nga ON nga.attribute_id=na.id
+        <where>
+            <if test="goodsId != null">
+                and nga.goods_id = #{goodsId}
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by na.id desc
+            </otherwise>
+        </choose>
+    </select>
+    <select id="queryShopList" resultMap="ShopResultMap">
         select
         a.id,
         a.attribute_category_id,

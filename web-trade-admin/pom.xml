@@ -21,6 +21,7 @@
         <qiniu-version>[7.2.0, 7.2.99]</qiniu-version>
         <aliyun-oss-version>2.5.0</aliyun-oss-version>
         <qcloud-cos-version>5.2.4</qcloud-cos-version>
+        <alipay-sdk.version>3.6.0.ALL</alipay-sdk.version>
     </properties>
 
     <dependencies>
@@ -165,6 +166,12 @@
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
             <version>${qcloud-cos-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>${alipay-sdk.version}</version>
         </dependency>
     </dependencies>
 

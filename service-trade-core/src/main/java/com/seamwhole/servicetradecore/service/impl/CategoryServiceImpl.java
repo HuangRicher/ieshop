@@ -27,8 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Category> queryList(Map<String, Object> map){
 		CategoryExample example=new CategoryExample();
 		CategoryExample.Criteria criteria=example.createCriteria();
-		if(map.get("parent_id")!=null)
-			criteria.andParentIdEqualTo((int)(map.get("parent_id")));
+		if(map.get("parentId")!=null)
+			criteria.andParentIdEqualTo((int)(map.get("parentId")));
 		if(map.get("notName")!=null)
 			criteria.andNameNotEqualTo((String)map.get("notName"));
 		if(map.get("ids")!=null)

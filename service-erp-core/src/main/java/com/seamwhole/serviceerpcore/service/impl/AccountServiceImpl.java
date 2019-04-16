@@ -70,6 +70,7 @@ public class AccountServiceImpl implements AccountService{
 
     public List<Account> getAccount() {
         AccountExample example = new AccountExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return accountMapper.selectByExample(example);
     }
 
@@ -138,6 +139,7 @@ public class AccountServiceImpl implements AccountService{
 
     public List<Account> findBySelect() {
         AccountExample example = new AccountExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         return accountMapper.selectByExample(example);
     }
@@ -158,13 +160,15 @@ public class AccountServiceImpl implements AccountService{
                 Date mTime = StringUtil.getDateByString(timeStr + "-01 00:00:00", null);
                 if (type.equals("month")) {
                     example.createCriteria().andAccountidEqualTo(id).andPaytypeNotEqualTo("预付款")
-                    .andOpertimeGreaterThanOrEqualTo(bTime).andOpertimeLessThanOrEqualTo(eTime);
+                            .andOpertimeGreaterThanOrEqualTo(bTime).andOpertimeLessThanOrEqualTo(eTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 } else if (type.equals("date")) {
                     example.createCriteria().andAccountidEqualTo(id).andPaytypeNotEqualTo("预付款")
-                    .andOpertimeLessThanOrEqualTo(mTime);
+                            .andOpertimeLessThanOrEqualTo(mTime).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 }
             } else {
-                example.createCriteria().andAccountidEqualTo(id).andPaytypeNotEqualTo("预付款");
+                example.createCriteria().andAccountidEqualTo(id).andPaytypeNotEqualTo("预付款")
+                        .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
             }
             List<DepotHead> dataList = depotHeadMapper.selectByExample(example);
             if (dataList != null) {
@@ -196,13 +200,16 @@ public class AccountServiceImpl implements AccountService{
                 Date mTime = StringUtil.getDateByString(timeStr + "-01 00:00:00", null);
                 if (type.equals("month")) {
                     example.createCriteria().andAccountidEqualTo(id)
-                            .andBilltimeGreaterThanOrEqualTo(bTime).andBilltimeLessThanOrEqualTo(eTime);
+                            .andBilltimeGreaterThanOrEqualTo(bTime).andBilltimeLessThanOrEqualTo(eTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 } else if (type.equals("date")) {
                     example.createCriteria().andAccountidEqualTo(id)
-                            .andBilltimeLessThanOrEqualTo(mTime);
+                            .andBilltimeLessThanOrEqualTo(mTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 }
             } else {
-                example.createCriteria().andAccountidEqualTo(id);
+                example.createCriteria().andAccountidEqualTo(id)
+                        .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
             }
             List<AccountHead> dataList = accountHeadMapper.selectByExample(example);
             if (dataList != null) {
@@ -233,9 +240,11 @@ public class AccountServiceImpl implements AccountService{
                 Date eTime = StringUtil.getDateByString(timeStr + "-31 00:00:00", null);
                 Date mTime = StringUtil.getDateByString(timeStr + "-01 00:00:00", null);
                 if (type.equals("month")) {
-                    example.createCriteria().andBilltimeGreaterThanOrEqualTo(bTime).andBilltimeLessThanOrEqualTo(eTime);
+                    example.createCriteria().andBilltimeGreaterThanOrEqualTo(bTime).andBilltimeLessThanOrEqualTo(eTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 } else if (type.equals("date")) {
-                    example.createCriteria().andBilltimeLessThanOrEqualTo(mTime);
+                    example.createCriteria().andBilltimeLessThanOrEqualTo(mTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 }
             }
             List<AccountHead> dataList = accountHeadMapper.selectByExample(example);
@@ -251,9 +260,11 @@ public class AccountServiceImpl implements AccountService{
                 AccountItemExample exampleAi = new AccountItemExample();
                 if (!ids.equals("")) {
                     List<Long> idList = StringUtil.strToLongList(ids);
-                    exampleAi.createCriteria().andAccountidEqualTo(id).andHeaderidIn(idList);
+                    exampleAi.createCriteria().andAccountidEqualTo(id).andHeaderidIn(idList)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 } else {
-                    exampleAi.createCriteria().andAccountidEqualTo(id);
+                    exampleAi.createCriteria().andAccountidEqualTo(id)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 }
                 List<AccountItem> dataListOne = accountItemMapper.selectByExample(exampleAi);
                 if (dataListOne != null) {
@@ -288,13 +299,16 @@ public class AccountServiceImpl implements AccountService{
                 Date mTime = StringUtil.getDateByString(timeStr + "-01 00:00:00", null);
                 if (type.equals("month")) {
                     example.createCriteria().andAccountidlistLike("%" +id.toString() + "%")
-                            .andOpertimeGreaterThanOrEqualTo(bTime).andOpertimeLessThanOrEqualTo(eTime);
+                            .andOpertimeGreaterThanOrEqualTo(bTime).andOpertimeLessThanOrEqualTo(eTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 } else if (type.equals("date")) {
                     example.createCriteria().andAccountidlistLike("%" +id.toString() + "%")
-                            .andOpertimeLessThanOrEqualTo(mTime);
+                            .andOpertimeLessThanOrEqualTo(mTime)
+                            .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
                 }
             } else {
-                example.createCriteria().andAccountidlistLike("%" +id.toString() + "%");
+                example.createCriteria().andAccountidlistLike("%" +id.toString() + "%")
+                        .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
             }
             List<DepotHead> dataList = depotHeadMapper.selectByExample(example);
             if (dataList != null) {

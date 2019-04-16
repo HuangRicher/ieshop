@@ -27,6 +27,8 @@ public class AccountHeadVo4ListEx {
 
     private Long tenantId;
 
+    private String deleteFlag;
+
     private String organname;
 
     private String handspersonname;
@@ -143,5 +145,13 @@ public class AccountHeadVo4ListEx {
 
     public void setAccountname(String accountname) {
         this.accountname = accountname;
+    }
+
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }

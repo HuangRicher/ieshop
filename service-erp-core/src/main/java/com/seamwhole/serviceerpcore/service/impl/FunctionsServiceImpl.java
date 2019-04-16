@@ -41,6 +41,7 @@ public class FunctionsServiceImpl implements FunctionsService {
 
     public List<Functions> getFunctions() {
         FunctionsExample example = new FunctionsExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return functionsMapper.selectByExample(example);
     }
 

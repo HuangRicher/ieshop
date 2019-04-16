@@ -37,6 +37,7 @@ public class RoleServiceImpl implements RoleService {
 
     public List<Role> getRole() {
         RoleExample example = new RoleExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return roleMapper.selectByExample(example);
     }
 

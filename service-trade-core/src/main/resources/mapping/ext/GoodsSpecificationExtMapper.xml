@@ -36,8 +36,8 @@
             inner join ishop_specification s on gs.specification_id= s.id
         </if>
         <where>
-            <if test="goods_id != null">
-                and gs.goods_id = #{goods_id}
+            <if test="goodsId != null">
+                and gs.goods_id = #{goodsId}
             </if>
             <if test="ids != null">
                  and  gs.id in

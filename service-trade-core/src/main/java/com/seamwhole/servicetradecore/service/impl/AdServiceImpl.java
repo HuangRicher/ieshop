@@ -29,7 +29,7 @@ public class AdServiceImpl implements AdService {
     public List<ShopAd> queryByPositionId(Integer positionId) {
         ShopAdExample example=new ShopAdExample();
         example.createCriteria().andAdPositionIdEqualTo(positionId).andEnabledEqualTo(1);
-        return shopAdMapper.selectByExample(example);
+        return shopAdMapper.selectByExampleWithBLOBs(example);
     }
 
     @Override

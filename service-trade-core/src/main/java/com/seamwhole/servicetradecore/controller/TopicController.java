@@ -35,15 +35,15 @@ public class TopicController extends BaseController {
     /**
      */
     @PostMapping("detail")
-    public Object detail(@RequestBody TopicModel topicModel) {
-        ShopTopic topicEntity = topicService.queryObject(topicModel.getId());
+    public Object detail(Integer id) {
+        ShopTopic topicEntity = topicService.queryObject(id);
         return toResponsSuccess(topicEntity);
     }
 
     /**
      */
     @PostMapping("related")
-    public Object related(@RequestBody TopicModel topicModel) {
+    public Object related(Integer id) {
         Map param = new HashMap();
         param.put("limit", 4);
         List<ShopTopic> topicEntities = topicService.queryList(param);

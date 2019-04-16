@@ -5,6 +5,7 @@ package com.seamwhole.except;
  */
 public class CheckException extends RuntimeException{
 
+    private Integer errorCode;
     public CheckException(){
         super();
     }
@@ -12,7 +13,10 @@ public class CheckException extends RuntimeException{
     public CheckException(String mes){
         super( mes );
     }
-
+    public CheckException(String mes,Integer errorCode){
+        super( mes );
+        this.errorCode=errorCode;
+    }
 
     public CheckException(String mes, Throwable cause){
         super( mes , cause);
@@ -25,5 +29,13 @@ public class CheckException extends RuntimeException{
 
     public CheckException(String mes, Throwable cause, boolean str, boolean str1){
         super(mes , cause , str ,str1) ;
+    }
+
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(Integer errorCode) {
+        this.errorCode = errorCode;
     }
 }

@@ -9,7 +9,8 @@ public class UserModel implements Serializable {
     private String mobileCode;
     private String password;
     private Integer userLevelId;
-
+    private String code;
+    private UserInfo userInfo;
 
     public Integer getUserId() {
         return userId;
@@ -57,5 +58,21 @@ public class UserModel implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

@@ -492,10 +492,10 @@ public class GoodsController extends BaseController {
      */
     @ApiOperation(value = "商品详情页")
     @PostMapping(value = "related")
-    public Object related(@RequestBody GoodsModel goodsModel) {
+    public Object related(Integer id) {
         Map<String, Object> resultObj = new HashMap();
         Map param = new HashMap();
-        param.put("goodsId", goodsModel.getGoodsId());
+        param.put("goodsId", id);
         param.put("fields", "related_goods_id");
         List<RelatedGoods> relatedGoodsEntityList = relatedGoodsService.queryList(param);
 
@@ -508,7 +508,7 @@ public class GoodsController extends BaseController {
 
         if (null == relatedGoodsIds || relatedGoods.size() < 1) {
             //查找同分类下的商品
-            Goods goodsCategory = goodsService.queryObject(goodsModel.getGoodsId());
+            Goods goodsCategory = goodsService.queryObject(id);
             Map paramRelated = new HashMap();
             paramRelated.put("fields", "id, name, list_pic_url, retail_price");
             paramRelated.put("categoryId", goodsCategory.getCategoryId());
