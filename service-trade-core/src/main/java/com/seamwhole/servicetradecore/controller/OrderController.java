@@ -1,11 +1,13 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.controller.model.OrderModel;
 import com.seamwhole.servicetradecore.domain.OrderInfo;
 import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.model.Order;
 import com.seamwhole.servicetradecore.model.OrderGoods;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.ApiKdniaoService;
 import com.seamwhole.servicetradecore.service.OrderGoodsService;
 import com.seamwhole.servicetradecore.service.OrderService;
@@ -49,10 +51,10 @@ public class OrderController extends BaseController {
      */
     @ApiOperation(value = "获取订单列表")
     @PostMapping("list")
-    public Object list(@RequestBody OrderModel orderModel) {
+    public Object list(@LoginUser ShopUser loginUser, @RequestBody OrderModel orderModel) {
         //
         Map params = new HashMap();
-        params.put("user_id", orderModel.getUserId());
+        params.put("user_id", loginUser.getId());
         params.put("page", orderModel.getPageNum());
         params.put("limit", orderModel.getPageSize());
         params.put("sidx", "id");

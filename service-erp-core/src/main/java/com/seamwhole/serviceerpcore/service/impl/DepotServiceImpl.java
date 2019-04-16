@@ -50,11 +50,13 @@ public class DepotServiceImpl implements DepotService {
 
     public List<Depot> getDepot() {
         DepotExample example = new DepotExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return depotMapper.selectByExample(example);
     }
 
     public List<Depot> getAllList() {
         DepotExample example = new DepotExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("sort");
         return depotMapper.selectByExample(example);
     }
@@ -102,7 +104,7 @@ public class DepotServiceImpl implements DepotService {
 
     public List<Depot> findUserDepot(){
         DepotExample example = new DepotExample();
-        example.createCriteria().andTypeEqualTo(0);
+        example.createCriteria().andTypeEqualTo(0).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("Sort");
         List<Depot> list = depotMapper.selectByExample(example);
         return list;

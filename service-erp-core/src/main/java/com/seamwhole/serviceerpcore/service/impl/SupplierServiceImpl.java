@@ -52,6 +52,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     public List<Supplier> getSupplier() {
         SupplierExample example = new SupplierExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return supplierMapper.selectByExample(example);
     }
 
@@ -113,28 +114,31 @@ public class SupplierServiceImpl implements SupplierService {
 
     public List<Supplier> findBySelectCus() {
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andTypeLike("客户").andEnabledEqualTo(true);
+        example.createCriteria().andTypeLike("客户").andEnabledEqualTo(true).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         return supplierMapper.selectByExample(example);
     }
 
     public List<Supplier> findBySelectSup() {
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andTypeLike("供应商").andEnabledEqualTo(true);
+        example.createCriteria().andTypeLike("供应商").andEnabledEqualTo(true)
+                .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         return supplierMapper.selectByExample(example);
     }
 
     public List<Supplier> findBySelectRetail() {
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andTypeLike("会员").andEnabledEqualTo(true);
+        example.createCriteria().andTypeLike("会员").andEnabledEqualTo(true)
+                .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         return supplierMapper.selectByExample(example);
     }
 
     public List<Supplier> findById(Long supplierId) {
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andIdEqualTo(supplierId);
+        example.createCriteria().andIdEqualTo(supplierId)
+                .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         return supplierMapper.selectByExample(example);
     }
@@ -154,7 +158,8 @@ public class SupplierServiceImpl implements SupplierService {
 
     public List<Supplier> findUserCustomer(){
         SupplierExample example = new SupplierExample();
-        example.createCriteria().andTypeEqualTo("客户");
+        example.createCriteria().andTypeEqualTo("客户")
+                .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
         List<Supplier> list = supplierMapper.selectByExample(example);
         return list;

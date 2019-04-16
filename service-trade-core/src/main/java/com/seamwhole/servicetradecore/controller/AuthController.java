@@ -1,12 +1,27 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipaySystemOauthTokenRequest;
+import com.alipay.api.request.AlipayUserInfoShareRequest;
+import com.alipay.api.response.AlipaySystemOauthTokenResponse;
+import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.controller.model.UserInfo;
 import com.seamwhole.servicetradecore.controller.model.UserModel;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.TokenService;
 import com.seamwhole.servicetradecore.service.ShopUserService;
+import com.seamwhole.servicetradecore.util.ApiUserUtils;
+import com.seamwhole.servicetradecore.util.CommonUtil;
+import com.seamwhole.servicetradecore.util.ResourceUtil;
 import com.seamwhole.servicetradecore.util.ResponseObject;
+import com.seamwhole.util.CharUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,34 +69,27 @@ public class AuthController extends BaseController {
     }
 
     /**
-     * 登录
+     * 微信登录
      */
-    /*@ApiOperation(value = "登录")
+    @ApiOperation(value = "微信登录")
     @PostMapping("login_by_weixin")
-    public Object loginByWeixin() {
-        JSONObject jsonParam = this.getJsonRequest();
-        FullUserInfo fullUserInfo = null;
-        String code = "";
-        if (!StringUtils.isNullOrEmpty(jsonParam.getString("code"))) {
-            code = jsonParam.getString("code");
-        }
-        if (null != jsonParam.get("userInfo")) {
-            fullUserInfo = jsonParam.getObject("userInfo", FullUserInfo.class);
-        }
+    public Object loginByWeixin(@RequestBody UserModel userModel, HttpServletRequest request) {
+        UserInfo fullUserInfo = userModel.getUserInfo();
+        String code = userModel.getCode();
         if (null == fullUserInfo) {
             return toResponsFail("登录失败");
         }
 
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
-        UserInfo userInfo = fullUserInfo.getUserInfo();
+        UserInfo.UInfo userInfo = fullUserInfo.getUserInfo();
 
         //获取openid
         String requestUrl = ApiUserUtils.getWebAccess(code);//通过自定义工具类组合出小程序需要的登录凭证 code
         logger.info("》》》组合token为：" + requestUrl);
         JSONObject sessionData = CommonUtil.httpsRequest(requestUrl, "GET", null);
 
-        if (null == sessionData || StringUtils.isNullOrEmpty(sessionData.getString("openid"))) {
+        if (null == sessionData || StringUtils.isBlank(sessionData.getString("openid"))) {
             return toResponsFail("登录失败");
         }
         //验证用户信息完整性
@@ -93,30 +104,111 @@ public class AuthController extends BaseController {
             userVo.setUsername("微信用户" + CharUtil.getRandomString(12));
             userVo.setPassword(sessionData.getString("openid"));
             userVo.setRegisterTime(nowTime);
-            userVo.setRegisterIp(this.getClientIp());
-            userVo.setLastLoginIp(userVo.getRegister_ip());
-            userVo.setLastLoginTime(userVo.getRegister_time());
+            userVo.setRegisterIp(this.getClientIp(request));
+            userVo.setLastLoginIp(userVo.getRegisterIp());
+            userVo.setLastLoginTime(userVo.getRegisterTime());
             userVo.setWeixinOpenid(sessionData.getString("openid"));
             userVo.setAvatar(userInfo.getAvatarUrl());
             userVo.setGender(userInfo.getGender()); // //性别 0：未知、1：男、2：女
             userVo.setNickname(userInfo.getNickName());
             userService.save(userVo);
         } else {
-            userVo.setLastLoginIp(this.getClientIp());
+            userVo.setLastLoginIp(this.getClientIp(request));
             userVo.setLastLoginTime(nowTime);
             userService.update(userVo);
         }
 
-        Map<String, Object> tokenMap = tokenService.createToken(userVo.getUserId());
+        Map<String, Object> tokenMap = tokenService.createToken(userVo.getId());
         String token = MapUtils.getString(tokenMap, "token");
 
-        if (null == userInfo || StringUtils.isNullOrEmpty(token)) {
+        if (null == userInfo || StringUtils.isBlank(token)) {
             return toResponsFail("登录失败");
         }
 
         resultObj.put("token", token);
         resultObj.put("userInfo", userInfo);
-        resultObj.put("userId", userVo.getUserId());
+        resultObj.put("userId", userVo.getId());
         return toResponsSuccess(resultObj);
+    }
+
+    /**
+     * 获取请求方IP
+     *
+     * @return 客户端Ip
+     */
+    public String getClientIp(HttpServletRequest request) {
+        String xff = request.getHeader("X-Real-IP");
+        if(xff!=null) {
+            return xff;
+        }
+        xff = request.getHeader("x-forwarded-for");
+        if (xff == null) {
+            return "8.8.8.8";
+        }
+        return xff;
+    }
+    /**
+     * 支付宝登录
+     */
+    /*@ApiOperation(value = "支付宝登录")
+    @PostMapping("login_by_ali")
+    public Object login_by_ali() {
+        JSONObject jsonParam = this.getJsonRequest();
+        String code = "";
+        if (!com.qiniu.util.StringUtils.isNullOrEmpty(jsonParam.getString("code"))) {
+            code = jsonParam.getString("code");
+        }
+        AlipayClient alipayClient = new DefaultAlipayClient(ResourceUtil.getConfigByName("ali.webAccessTokenhttps"), ResourceUtil.getConfigByName("ali.appId"), ResourceUtil.getConfigByName("ali.privateKey"),
+                "json", "UTF-8", ResourceUtil.getConfigByName("ali.pubKey"), "RSA2");
+        AlipaySystemOauthTokenRequest request = new AlipaySystemOauthTokenRequest();
+        request.setCode(code);
+        request.setGrantType("authorization_code");
+        try {
+            //code 换取token
+            AlipaySystemOauthTokenResponse oauthTokenResponse = alipayClient.execute(request);
+            String accessToken = oauthTokenResponse.getAccessToken();
+
+            //根据token获取用户头像、昵称等信息
+            AlipayUserInfoShareRequest userInfoShareRequest = new AlipayUserInfoShareRequest();
+            AlipayUserInfoShareResponse userInfoResponse = alipayClient.execute(userInfoShareRequest, accessToken);
+
+            Date nowTime = new Date();
+            ShopUser userVo = userService.queryByOpenId(userInfoResponse.getUserId());
+            if (null == userVo) {
+                userVo = new ShopUser();
+                userVo.setUsername("支付宝用户" + CharUtil.getRandomString(12));
+                userVo.setPassword(userInfoResponse.getUserId());
+                userVo.setRegisterTime(nowTime);
+                userVo.setRegisterIp(this.getClientIp());
+                userVo.setLastLoginIp(userVo.getRegister_ip());
+                userVo.setLastLoginTime(nowTime);
+                userVo.setWeixinOpenid(userInfoResponse.getUserId());
+                userVo.setAvatar(userInfoResponse.getAvatar());
+                //性别 0：未知、1：男、2：女
+                //F：女性；M：男性
+                userVo.setGender("m".equalsIgnoreCase(userInfoResponse.getGender()) ? 1 : 0);
+                userVo.setNickname(userInfoResponse.getNickName());
+                userService.save(userVo);
+            } else {
+                userVo.setLastLoginIp(this.getClientIp());
+                userVo.setLastLoginTime(nowTime);
+                userService.update(userVo);
+            }
+
+            Map<String, Object> tokenMap = tokenService.createToken(userVo.getId());
+            String token = MapUtils.getString(tokenMap, "token");
+
+            if (com.qiniu.util.StringUtils.isNullOrEmpty(token)) {
+                return toResponsFail("登录失败");
+            }
+
+            Map<String, Object> resultObj = new HashMap<String, Object>();
+            resultObj.put("token", token);
+            resultObj.put("userInfo", userInfoResponse);
+            resultObj.put("userId", userVo.getId());
+            return toResponsSuccess(resultObj);
+        } catch (AlipayApiException e) {
+            return toResponsFail("登录失败");
+        }
     }*/
 }

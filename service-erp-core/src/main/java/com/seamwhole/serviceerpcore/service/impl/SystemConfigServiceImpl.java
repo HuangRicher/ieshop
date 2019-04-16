@@ -41,6 +41,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
     public List<SystemConfig> getSystemConfig() {
         SystemConfigExample example = new SystemConfigExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return systemConfigMapper.selectByExample(example);
     }
     public List<SystemConfig> select(String companyName, int offset, int rows) {

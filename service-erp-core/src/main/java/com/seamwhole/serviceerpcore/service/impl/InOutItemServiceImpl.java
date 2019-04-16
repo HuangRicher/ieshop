@@ -48,6 +48,7 @@ public class InOutItemServiceImpl implements InOutItemService {
 
     public List<InOutItem> getInOutItem() {
         InOutItemExample example = new InOutItemExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return inOutItemMapper.selectByExample(example);
     }
 

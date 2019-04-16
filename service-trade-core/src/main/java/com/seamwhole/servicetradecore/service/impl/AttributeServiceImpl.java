@@ -34,8 +34,7 @@ public class AttributeServiceImpl implements AttributeService {
 
 
     public List<ShopAttribute> queryList(Map<String, Object> map) {
-        //return shopAttributeMapper.queryList(map);
-        return null;
+        return shopAttributeExpMapper.queryList(map);
     }
 
     public int queryTotal(Map<String, Object> map) {

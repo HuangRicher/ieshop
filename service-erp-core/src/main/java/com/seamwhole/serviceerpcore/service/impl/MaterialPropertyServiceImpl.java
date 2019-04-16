@@ -41,6 +41,7 @@ public class MaterialPropertyServiceImpl implements MaterialPropertyService {
 
     public List<MaterialProperty> getMaterialProperty() {
         MaterialPropertyExample example = new MaterialPropertyExample();
+        example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         return materialPropertyMapper.selectByExample(example);
     }
     public List<MaterialProperty> select(String name, int offset, int rows) {

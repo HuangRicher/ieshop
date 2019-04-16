@@ -128,28 +128,29 @@ public class CommentController extends BaseController {
      */
     @ApiOperation(value = "选择评论类型")
     @PostMapping("list")
-    public Object list(@RequestBody CommentModel commentModel) {
+    public Object list(Integer typeId, Integer valueId, Integer showType,
+                       @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
+                       String sort, String order) {
         List<ShopCommentInfo> commentList = new ArrayList();
         Map param = new HashMap();
-        param.put("typeId", commentModel.getTypeId());
-        param.put("valueId", commentModel.getValueId());
-        String order="";
-        if (StringUtils.isNullOrEmpty(commentModel.getOrder())) {
+        param.put("typeId", typeId);
+        param.put("valueId", valueId);
+        if (StringUtils.isNullOrEmpty(order)) {
             order=" id";
         } else {
-            order=" "+commentModel.getOrder();
+            order=" "+order;
         }
-        if (StringUtils.isNullOrEmpty(commentModel.getSort())) {
+        if (StringUtils.isNullOrEmpty(sort)) {
             order+="  desc ";
         } else {
-            order+=" "+commentModel.getSort();
+            order+=" "+sort;
         }
-        if (null != commentModel.getShowType() && commentModel.getShowType() == 1) {
+        if (null != showType && showType == 1) {
             param.put("hasPic", 1);
         }
         //查询列表数据
 
-        PageInfo<ShopComment> pageInfo = commentService.queryByPage(param,commentModel.getPageNum(),commentModel.getPageSize(),order);
+        PageInfo<ShopComment> pageInfo = commentService.queryByPage(param,page,size,order);
 
         for (ShopComment commentItem : pageInfo.getList()) {
             ShopCommentInfo commentInfo=new ShopCommentInfo();
@@ -161,8 +162,9 @@ public class CommentController extends BaseController {
             paramPicture.put("commentId", commentItem.getId());
             List<CommentPicture> commentPictureEntities = commentPictureService.queryList(paramPicture);
             commentInfo.setPicList(commentPictureEntities);
+            commentList.add(commentInfo);
         }
-        PageInfo<ShopCommentInfo> page=new PageInfo<>(commentList);
-        return toResponsSuccess(page);
+        PageInfo<ShopCommentInfo> pages=new PageInfo<>(commentList);
+        return toResponsSuccess(pages);
     }
 }

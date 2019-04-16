@@ -31,7 +31,7 @@ public class GoodsGalleryServiceImpl implements GoodsGalleryService {
         GoodsGalleryExample example=new GoodsGalleryExample();
         if(map.get("goodsId")!=null)
             example.createCriteria().andGoodsIdEqualTo((int)map.get("goodsId"));
-        return goodsGalleryMapper.selectByExample(example);
+        return goodsGalleryMapper.selectByExampleWithBLOBs(example);
     }
 
     @Override
