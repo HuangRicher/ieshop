@@ -26,50 +26,8 @@ zuul:
     api-user:
       path: /api-user/**
       serviceId: user-service
-    api-userGoods:
-      path: /api-goods/**
-      serviceId: goods-service
-    api-message:
-      path: /api-message/**
-      serviceId: message-service
   host:
     connect-timeout-millis: 60000
     socket-timeout-millis: 60000
-user:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-user-goods:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-message:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-hystrix:
-    #  command:
-      #    default:
-      #      execution:
-      #        isolation:
-      #          thread:
-  #            timeoutInMilliseconds: 60000
-  user:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  user-goods:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  message:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
+
 
