@@ -9,6 +9,7 @@ import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.seamwhole.except.CheckException;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.controller.model.UserInfo;
 import com.seamwhole.servicetradecore.controller.model.UserModel;
 import com.seamwhole.servicetradecore.model.ShopUser;
@@ -53,6 +54,7 @@ public class AuthController extends BaseController {
      */
     @PostMapping("login")
     @ApiOperation(value = "登录接口")
+    @IgnoreAuth
     public ResponseObject login(@RequestBody UserModel user) {
         if(StringUtils.isBlank(user.getMobile()))
             throw new CheckException("手机号不能为空");
@@ -73,6 +75,7 @@ public class AuthController extends BaseController {
      */
     @ApiOperation(value = "微信登录")
     @PostMapping("login_by_weixin")
+    @IgnoreAuth
     public Object loginByWeixin(@RequestBody UserModel userModel, HttpServletRequest request) {
         UserInfo fullUserInfo = userModel.getUserInfo();
         String code = userModel.getCode();

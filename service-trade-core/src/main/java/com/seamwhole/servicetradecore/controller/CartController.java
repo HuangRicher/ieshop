@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
 import com.seamwhole.servicetradecore.controller.model.CartModel;
 import com.seamwhole.servicetradecore.domain.BuyGoods;
@@ -11,6 +12,7 @@ import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.Goods;
 import com.seamwhole.servicetradecore.model.ShopAddress;
 import com.seamwhole.servicetradecore.model.ShopCart;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.redis.RedisService;
 import com.seamwhole.servicetradecore.service.*;
 import com.seamwhole.util.StringUtils;
@@ -54,11 +56,11 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "获取购物车中的数据")
     @PostMapping("getCart")
-    public Object getCart(@RequestBody CartModel cartModel) {
+    public Object getCart(@LoginUser ShopUser loginUser) {
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据
 
-        List<ShopCartDO> cartList = cartService.queryList(cartModel.getUserId(), "", null, null,null , "");
+        List<ShopCartDO> cartList = cartService.queryList(loginUser.getId(), "", null, null,null , "");
         //获取购物车统计信息
         Integer goodsCount = 0;
         BigDecimal goodsAmount = new BigDecimal(0.00);
@@ -129,8 +131,8 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "获取购物车信息")
     @PostMapping("index")
-    public Object index(@RequestBody CartModel cartModel) {
-        return toResponsSuccess(getCart(cartModel));
+    public Object index(@LoginUser ShopUser loginUser) {
+        return toResponsSuccess(getCart(loginUser));
     }
 
     private String[] getSpecificationIdsArray(String ids) {
@@ -149,7 +151,7 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "添加商品到购物车")
     @PostMapping("add")
-    public Object add(@RequestBody CartModel cartModel) {
+    public Object add(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
         Integer goodsId = cartModel.getGoodsId();
         Integer productId = cartModel.getProductId();
         Integer number = cartModel.getNumber();
@@ -168,8 +170,8 @@ public class CartController extends BaseController {
         Map cartParam = new HashMap();
         cartParam.put("goods_id", goodsId);
         cartParam.put("product_id", productId);
-        cartParam.put("user_id", cartModel.getUserId());
-        List<ShopCartDO> cartInfoList = cartService.queryList(cartModel.getUserId(), "", goodsId,productId,null,"");
+        cartParam.put("user_id", loginUser.getId());
+        List<ShopCartDO> cartInfoList = cartService.queryList(loginUser.getId(), "", goodsId,productId,null,"");
         ShopCart cartInfo = null != cartInfoList && cartInfoList.size() > 0 ? cartInfoList.get(0) : null;
         if (null == cartInfo) {
             //添加操作
@@ -195,7 +197,7 @@ public class CartController extends BaseController {
             cartInfo.setListPicUrl(goodsInfo.getListPicUrl());
             cartInfo.setNumber(number);
             cartInfo.setSessionId("1");
-            cartInfo.setUserId(cartModel.getUserId());
+            cartInfo.setUserId(loginUser.getId());
             cartInfo.setRetailPrice(productInfo.getRetailPrice());
             cartInfo.setMarketPrice(productInfo.getMarketPrice());
             if (null != goodsSepcifitionValue) {
@@ -212,7 +214,7 @@ public class CartController extends BaseController {
             cartInfo.setNumber(cartInfo.getNumber() + number);
             cartService.update(cartInfo);
         }
-        return toResponsSuccess(getCart(cartModel));
+        return toResponsSuccess(getCart(loginUser));
     }
 
     /**
@@ -246,7 +248,7 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "更新指定的购物车信息")
     @PostMapping("update")
-    public Object update(@RequestBody CartModel cartModel) {
+    public Object update(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
 
         Integer goodsId = cartModel.getGoodsId();
         Integer productId = cartModel.getProductId();
@@ -263,7 +265,7 @@ public class CartController extends BaseController {
         if (cartInfo.getProductId().equals(productId)) {
             cartInfo.setNumber(number);
             cartService.update(cartInfo);
-            return toResponsSuccess(getCart(cartModel));
+            return toResponsSuccess(getCart(loginUser));
         }
 
         List<ShopCartDO> cartInfoList = cartService.queryList(null, "", goodsId,productId,null,"");
@@ -322,7 +324,7 @@ public class CartController extends BaseController {
             cartInfo.setGoodsSpecifitionIds(productInfo.getGoodsSpecificationIds());
             cartService.update(cartInfo);
         }
-        return toResponsSuccess(getCart(cartModel));
+        return toResponsSuccess(getCart(loginUser));
     }
 
     /**
@@ -330,7 +332,7 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "是否选择商品")
     @PostMapping("checked")
-    public Object checked(@RequestBody CartModel cartModel) {
+    public Object checked(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
 
         String productIds = cartModel.getProductIds();
         Integer isChecked = cartModel.getIsChecked();
@@ -338,15 +340,15 @@ public class CartController extends BaseController {
             return this.toResponsFail("删除出错");
         }
         int[] productIdArray =  Arrays.stream(productIds.split(",")).mapToInt(Integer::valueOf).toArray();
-        cartService.updateCheck(ArrayUtils.toObject(productIdArray), isChecked, cartModel.getUserId());
-        return toResponsSuccess(getCart(cartModel));
+        cartService.updateCheck(ArrayUtils.toObject(productIdArray), isChecked, loginUser.getId());
+        return toResponsSuccess(getCart(loginUser));
     }
 
     //删除选中的购物车商品，批量删除
     @ApiOperation(value = "删除商品")
     @PostMapping("delete")
-    public Object delete(@RequestBody CartModel cartModel) {
-        Integer userId = cartModel.getUserId();
+    public Object delete(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
+        Integer userId = loginUser.getId();
 
         String productIds = cartModel.getProductIds();
 
@@ -356,20 +358,19 @@ public class CartController extends BaseController {
         int[] productIdArray =  Arrays.stream(productIds.split(",")).mapToInt(Integer::valueOf).toArray();
         cartService.deleteByUserAndProductIds(userId, ArrayUtils.toObject(productIdArray));
 
-        return toResponsSuccess(getCart(cartModel));
+        return toResponsSuccess(getCart(loginUser));
     }
 
     //  获取购物车商品的总件件数
     @ApiOperation(value = "获取购物车商品的总件件数")
     @PostMapping("goodscount")
-    public Object goodscount() {
-        Integer userId=null;
-        if (null == userId) {
+    public Object goodscount(@LoginUser ShopUser loginUser) {
+        if (null == loginUser || null == loginUser.getId()) {
             return toResponsFail("未登录");
         }
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据
-        List<ShopCartDO> cartList = cartService.queryList(userId, "", null,null,null,"");
+        List<ShopCartDO> cartList = cartService.queryList(loginUser.getId(), "", null,null,null,"");
         //获取购物车统计信息
         Integer goodsCount = 0;
         for (ShopCartDO cartItem : cartList) {
@@ -389,13 +390,13 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "订单提交前的检验和填写相关订单信息")
     @PostMapping("checkout")
-    public Object checkout(@RequestBody CartModel cartModel) {
+    public Object checkout(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
         Map<String, Object> resultObj = new HashMap();
         //根据收货地址计算运费
 
         BigDecimal freightPrice = new BigDecimal(0.00);
         //默认收货地址
-        List<ShopAddress>  addressEntities = addressService.queryListByUserId(cartModel.getUserId());
+        List<ShopAddress>  addressEntities = addressService.queryListByUserId(loginUser.getId());
 
         if (null == addressEntities || addressEntities.size() == 0) {
             resultObj.put("checkedAddress", new ShopAddress());
@@ -406,7 +407,7 @@ public class CartController extends BaseController {
         ArrayList checkedGoodsList = new ArrayList();
         BigDecimal goodsTotalPrice;
         if (cartModel.getType().equals("cart")) {
-            Map<String, Object> cartData = (Map<String, Object>) this.getCart(cartModel);
+            Map<String, Object> cartData = (Map<String, Object>) this.getCart(loginUser);
 
             for (ShopCart cartEntity : (List<ShopCart>) cartData.get("cartList")) {
                 if (cartEntity.getChecked() == 1) {
@@ -415,7 +416,7 @@ public class CartController extends BaseController {
             }
             goodsTotalPrice = (BigDecimal) ((HashMap) cartData.get("cartTotal")).get("checkedGoodsAmount");
         } else { // 是直接购买的
-            BuyGoods goodsVO = (BuyGoods) redisService.get(cartModel.getUserId()+ RedisKeyConstant.BUY_GOODS_CACHE);
+            BuyGoods goodsVO = (BuyGoods) redisService.get(loginUser.getId()+ RedisKeyConstant.BUY_GOODS_CACHE);
             ProductDO productInfo = productService.queryObject(goodsVO.getProductId());
             //计算订单的费用
             //商品总价
@@ -460,14 +461,14 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "选择优惠券列表")
     @PostMapping("checkedCouponList")
-    public Object checkedCouponList(@RequestBody CartModel cartModel) {
+    public Object checkedCouponList(@LoginUser ShopUser loginUser) {
         //
         Map param = new HashMap();
-        param.put("user_id", cartModel.getUserId());
+        param.put("user_id", loginUser.getId());
         List<CouponDO> couponVos = couponService.queryUserCouponList(param);
         if (null != couponVos && couponVos.size() > 0) {
             // 获取要购买的商品
-            Map<String, Object> cartData = (Map<String, Object>) this.getCart(cartModel);
+            Map<String, Object> cartData = (Map<String, Object>) this.getCart(loginUser);
             List<ShopCart> checkedGoodsList = new ArrayList();
             List<Integer> checkedGoodsIds = new ArrayList();
             for (ShopCart cartEntity : (List<ShopCart>) cartData.get("cartList")) {

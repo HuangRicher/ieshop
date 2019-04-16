@@ -11,6 +11,7 @@ import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.ApiKdniaoService;
 import com.seamwhole.servicetradecore.service.OrderGoodsService;
 import com.seamwhole.servicetradecore.service.OrderService;
+import com.seamwhole.servicetradecore.util.PageUtils;
 import com.seamwhole.util.PageObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +62,7 @@ public class OrderController extends BaseController {
         params.put("order", "asc");
         //查询列表数据
 
-        PageInfo<Order> pageInfo=orderService.findByPage(orderModel.getUserId(),orderModel.getPageNum(),orderModel.getPageSize()," id asc ");
+        PageInfo<Order> pageInfo=orderService.findByPage(loginUser.getId(),orderModel.getPageNum(),orderModel.getPageSize()," id asc ");
         List<Order> orderEntityList = pageInfo.getList();
         List<OrderInfo> list=new ArrayList<>();
         //
@@ -78,7 +79,7 @@ public class OrderController extends BaseController {
                 info.setGoodsCount(goodsCount);
             }
         }
-        PageObject<OrderInfo> page=new PageObject<OrderInfo>(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getTotal(),pageInfo.getPages(),list);
+        PageUtils page=new PageUtils(list,pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
         return toResponsSuccess(page);
     }
 

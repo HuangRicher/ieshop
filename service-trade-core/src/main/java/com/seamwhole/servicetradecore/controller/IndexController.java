@@ -2,6 +2,7 @@ package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.controller.model.IndexModel;
 import com.seamwhole.servicetradecore.mapper.model.GoodsDO;
 import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
@@ -48,6 +49,7 @@ public class IndexController extends BaseController {
      * 测试
      */
     @PostMapping(value = "test")
+    @IgnoreAuth
     public Object test() {
         return toResponsMsgSuccess("请求成功yyy");
     }
@@ -57,6 +59,7 @@ public class IndexController extends BaseController {
      */
     @ApiOperation(value = "首页")
     @PostMapping(value = "index")
+    @IgnoreAuth
     public Object index(@RequestBody IndexModel indexModel) {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -148,6 +151,7 @@ public class IndexController extends BaseController {
      */
     @ApiOperation(value = "新商品信息")
     @PostMapping(value = "newGoods")
+    @IgnoreAuth
     public Object newGoods() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -165,6 +169,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "新热门商品信息")
     @PostMapping(value = "hotGoods")
+    @IgnoreAuth
     public Object hotGoods() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -181,6 +186,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "topic")
     @PostMapping(value = "topic")
+    @IgnoreAuth
     public Object topic() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -196,6 +202,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "brand")
     @PostMapping(value = "brand")
+    @IgnoreAuth
     public Object brand() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -210,6 +217,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "category")
     @PostMapping(value = "category")
+    @IgnoreAuth
     public Object category() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -251,6 +259,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "banner")
     @PostMapping(value = "banner")
+    @IgnoreAuth
     public Object banner() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
@@ -265,6 +274,7 @@ public class IndexController extends BaseController {
 
     @ApiOperation(value = "channel")
     @PostMapping(value = "channel")
+    @IgnoreAuth
     public Object channel() {
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //

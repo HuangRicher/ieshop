@@ -67,7 +67,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
-        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId());
+        request.setAttribute(LOGIN_USER_KEY, tokenEntity.getUserId().intValue());
 
         return true;
     }
