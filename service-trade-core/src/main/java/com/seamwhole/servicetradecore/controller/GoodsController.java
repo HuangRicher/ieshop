@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.controller.model.GoodsModel;
 import com.seamwhole.servicetradecore.domain.CategoryInfo;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
@@ -527,6 +528,7 @@ public class GoodsController extends BaseController {
      * 　　在售的商品总数
      */
     @ApiOperation(value = "在售的商品总数")
+    @IgnoreAuth
     @PostMapping(value = "count")
     public Object count() {
         Map<String, Object> resultObj = new HashMap();

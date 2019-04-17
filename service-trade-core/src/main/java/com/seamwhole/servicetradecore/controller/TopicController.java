@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.controller.model.TopicModel;
 import com.seamwhole.servicetradecore.model.ShopTopic;
 import com.seamwhole.servicetradecore.service.TopicService;
@@ -21,6 +22,7 @@ public class TopicController extends BaseController {
     /**
      */
     @PostMapping("list")
+    @IgnoreAuth
     public Object list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Map param = new HashMap();
@@ -35,6 +37,7 @@ public class TopicController extends BaseController {
     /**
      */
     @PostMapping("detail")
+    @IgnoreAuth
     public Object detail(Integer id) {
         ShopTopic topicEntity = topicService.queryObject(id);
         return toResponsSuccess(topicEntity);
@@ -43,6 +46,7 @@ public class TopicController extends BaseController {
     /**
      */
     @PostMapping("related")
+    @IgnoreAuth
     public Object related(Integer id) {
         Map param = new HashMap();
         param.put("limit", 4);

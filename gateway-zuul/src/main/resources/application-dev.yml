@@ -23,9 +23,9 @@ spring:
         max-idle: 0
 zuul:
   routes:
-    api-user:
-      path: /api-user/**
-      serviceId: user-service
+    api-trade-core:
+      path: /api-trade/**
+      serviceId: trade-core-service
   host:
     connect-timeout-millis: 60000
     socket-timeout-millis: 60000
