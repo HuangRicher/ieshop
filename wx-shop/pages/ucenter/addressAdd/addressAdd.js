@@ -9,10 +9,10 @@ Page({
       city_id: 0,
       district_id: 0,
       address: '',
-      full_region: '',
+      fullRegion: '',
       userName: '',
       telNumber: '',
-      is_default: 0
+      isDefault: 0
     },
     addressId: 0,
     openSelectRegion: false,
@@ -48,7 +48,7 @@ Page({
   },
   bindIsDefault(){
     let address = this.data.address;
-    address.is_default = !address.is_default;
+    address.isDefault = !address.isDefault;
     this.setData({
       address: address
     });
@@ -221,7 +221,7 @@ Page({
     address.province_name = selectRegionList[0].name;
     address.city_name = selectRegionList[1].name;
     address.district_name = selectRegionList[2].name;
-    address.full_region = selectRegionList.map(item => {
+    address.fullRegion = selectRegionList.map(item => {
       return item.name;
     }).join('');
 
@@ -296,7 +296,7 @@ Page({
       province_id: address.province_id,
       city_id: address.city_id,
       district_id: address.district_id,
-      is_default: address.is_default,
+      is_default: address.isDefault,
       provinceName: address.province_name,
       cityName: address.city_name,
       countyName: address.district_name,

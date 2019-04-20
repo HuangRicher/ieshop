@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
 import com.seamwhole.servicetradecore.controller.model.CouponModel;
 import com.seamwhole.servicetradecore.domain.BuyGoods;
@@ -53,9 +54,9 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "获取优惠券列表")
     @PostMapping("/list")
-    public Object list(@RequestBody CouponModel couponModel) {
+    public Object list(@LoginUser ShopUser user) {
         Map param = new HashMap();
-        param.put("userId", couponModel.getUserId());
+        param.put("userId", user.getId());
         List<CouponDO> couponVos = couponService.queryUserCoupons(param);
         return toResponsSuccess(couponVos);
     }

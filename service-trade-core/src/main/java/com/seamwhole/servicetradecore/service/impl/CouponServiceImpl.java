@@ -78,14 +78,14 @@ public class CouponServiceImpl implements CouponService {
                 // 检查是否过期
                 if(couponVo.getUse_end_date().before(new Date())) {
                     couponVo.setCoupon_status(3);
-                    couponExtMapper.updateUserCoupon(couponVo);
+                    this.updateUserCoupon(couponVo);
                 }
             }
             if (couponVo.getCoupon_status()==3) {
                 // 检查是否不过期
                 if(couponVo.getUse_end_date().after(new Date())) {
                     couponVo.setCoupon_status(1);
-                    couponExtMapper.updateUserCoupon(couponVo);
+                    this.updateUserCoupon(couponVo);
                 }
             }
         }

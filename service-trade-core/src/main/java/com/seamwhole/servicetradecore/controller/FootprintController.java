@@ -1,9 +1,11 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.controller.model.FootPrintModel;
 import com.seamwhole.servicetradecore.mapper.model.FootPrintDO;
 import com.seamwhole.servicetradecore.model.FootPrint;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.FootPrintService;
 import com.seamwhole.util.DateUtils;
 import io.swagger.annotations.Api;
@@ -51,13 +53,13 @@ public class FootprintController extends BaseController {
      */
     @ApiOperation(value = "获取足迹列表")
     @PostMapping("list")
-    public Object list(@RequestBody FootPrintModel footPrintModel,
+    public Object list(@LoginUser ShopUser user,
                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Map<String, Object> resultObj = new HashMap<String, Object>();
 
         //查询列表数据
-        PageInfo<FootPrintDO> pageInfo=footPrintService.queryByPage(footPrintModel.getUserId(),footPrintModel.getPageNum(),footPrintModel.getPageSize());
+        PageInfo<FootPrintDO> pageInfo=footPrintService.queryByPage(user.getId(),page,size);
         List<FootPrintDO> footprintVos = pageInfo.getList();
         //
         Map<String, List<FootPrintDO>> footPrintMap = new TreeMap<String, List<FootPrintDO>>(new Comparator<String>() {

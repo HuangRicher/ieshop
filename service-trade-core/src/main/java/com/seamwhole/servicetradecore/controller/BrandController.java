@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.model.ShopBrand;
 import com.seamwhole.servicetradecore.service.BrandService;
 import io.swagger.annotations.Api;
@@ -28,6 +29,7 @@ public class BrandController extends BaseController {
      */
     @ApiOperation(value = "分页获取品牌")
     @PostMapping("list")
+    @IgnoreAuth
     public Object list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "size", defaultValue = "10") Integer size) {
         //查询列表数据
@@ -43,6 +45,7 @@ public class BrandController extends BaseController {
      */
     @ApiOperation(value = "品牌详情")
     @PostMapping("detail")
+    @IgnoreAuth
     public Object detail(@RequestParam Integer id) {
         Map<String, Object> resultObj = new HashMap();
         //查询列表数据

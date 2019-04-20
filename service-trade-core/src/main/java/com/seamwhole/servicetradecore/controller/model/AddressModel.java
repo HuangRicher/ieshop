@@ -24,7 +24,7 @@ public class AddressModel implements Serializable {
 
     private String detailInfo;
 
-    private Integer isDefault;
+    private boolean isDefault;
 
     public Integer getId() {
         return id;
@@ -106,11 +106,11 @@ public class AddressModel implements Serializable {
         this.detailInfo = detailInfo;
     }
 
-    public Integer getIsDefault() {
+    public boolean isDefault() {
         return isDefault;
     }
 
-    public void setIsDefault(Integer isDefault) {
-        this.isDefault = isDefault;
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 }

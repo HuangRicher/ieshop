@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.controller.model.CommentModel;
 import com.seamwhole.servicetradecore.domain.ShopCommentInfo;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
@@ -128,6 +129,7 @@ public class CommentController extends BaseController {
      */
     @ApiOperation(value = "选择评论类型")
     @PostMapping("list")
+    @IgnoreAuth
     public Object list(Integer typeId, Integer valueId, Integer showType,
                        @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
                        String sort, String order) {

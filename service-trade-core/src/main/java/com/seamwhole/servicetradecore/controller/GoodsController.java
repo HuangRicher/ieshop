@@ -69,6 +69,7 @@ public class GoodsController extends BaseController {
      */
     @ApiOperation(value = "商品首页")
     @PostMapping(value = "index")
+    @IgnoreAuth
     public Object index() {
         //
         Map param = new HashMap();
@@ -85,6 +86,7 @@ public class GoodsController extends BaseController {
     @ApiOperation(value = " 获取商品规格信息")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "商品id", paramType = "path", required = true)})
     @PostMapping(value = "sku")
+    @IgnoreAuth
     public Object sku(@RequestBody GoodsModel goodsModel) {
         Map<String, Object> resultObj = new HashMap();
         //
@@ -269,6 +271,7 @@ public class GoodsController extends BaseController {
     @ApiOperation(value = " 获取分类下的商品")
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "分类id", paramType = "path", required = true)})
     @PostMapping(value = "category")
+    @IgnoreAuth
     public Object category(Integer id) {
         Map<String, Object> resultObj = new HashMap();
         //
@@ -294,6 +297,7 @@ public class GoodsController extends BaseController {
             @ApiImplicitParam(name = "isNew", value = "新商品", paramType = "path", required = true),
             @ApiImplicitParam(name = "isHot", value = "热卖商品", paramType = "path", required = true)})
     @PostMapping(value = "list")
+    @IgnoreAuth
     public Object list(Integer categoryId,
                        Integer brandId, String keyword, Integer isNew, Integer isHot,
                        @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "10") Integer size,
@@ -409,6 +413,7 @@ public class GoodsController extends BaseController {
      */
     @ApiOperation(value = "商品列表筛选的分类列表")
     @PostMapping(value = "filter")
+    @IgnoreAuth
     public Object filter(@RequestBody GoodsModel goodsModel) {
         Map params = new HashMap();
         params.put("isDelete", 0);
@@ -463,6 +468,7 @@ public class GoodsController extends BaseController {
      */
     @ApiOperation(value = "新品首发")
     @PostMapping(value = "new")
+    @IgnoreAuth
     public Object newAction() {
         Map<String, Object> resultObj = new HashMap();
         Map bannerInfo = new HashMap();
@@ -477,6 +483,7 @@ public class GoodsController extends BaseController {
      * 　　人气推荐
      */
     @ApiOperation(value = "人气推荐")
+    @IgnoreAuth
     @PostMapping(value = "hot")
     public Object hot() {
         Map<String, Object> resultObj = new HashMap();
@@ -492,6 +499,7 @@ public class GoodsController extends BaseController {
      * 　　商品详情页的大家都在看的商品
      */
     @ApiOperation(value = "商品详情页")
+    @IgnoreAuth
     @PostMapping(value = "related")
     public Object related(Integer id) {
         Map<String, Object> resultObj = new HashMap();
@@ -544,6 +552,7 @@ public class GoodsController extends BaseController {
      * 　　获取商品列表
      */
     @ApiOperation(value = "获取商品列表")
+    @IgnoreAuth
     @PostMapping(value = "productlist")
     public Object productlist(@RequestBody GoodsModel goodsModel) {
         Map params = new HashMap();

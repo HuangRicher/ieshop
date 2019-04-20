@@ -1,8 +1,10 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.controller.model.CollectModel;
 import com.seamwhole.servicetradecore.mapper.model.CollectDO;
 import com.seamwhole.servicetradecore.model.ShopCollect;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.CollectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,11 +36,11 @@ public class CollectController extends BaseController {
      */
     @ApiOperation(value = "获取用户收藏")
     @PostMapping("list")
-    public Object list(@RequestBody CollectModel collectModel) {
+    public Object list(@LoginUser ShopUser user, Integer typeId) {
 
         Map param = new HashMap();
-        param.put("user_id", collectModel.getUserId());
-        param.put("type_id", collectModel.getValueId());
+        param.put("user_id", user.getId());
+        param.put("type_id", typeId);
         List<CollectDO> collectEntities = collectService.queryList(param);
 
 //        Query query = new Query(param);

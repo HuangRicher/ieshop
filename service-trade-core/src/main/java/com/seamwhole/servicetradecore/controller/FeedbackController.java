@@ -1,7 +1,9 @@
 package com.seamwhole.servicetradecore.controller;
 
+import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.controller.model.FeedBackModel;
 import com.seamwhole.servicetradecore.model.FeedBack;
+import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.service.FeedBackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,12 +28,12 @@ public class FeedbackController extends BaseController {
      */
     @ApiOperation(value = "添加反馈")
     @PostMapping("save")
-    public Object save(@RequestBody FeedBackModel feedBackModel) {
+    public Object save(@LoginUser ShopUser loginUser, @RequestBody FeedBackModel feedBackModel) {
 
         if (null != feedBackModel) {
             FeedBack feedbackVo = new FeedBack();
-            feedbackVo.setUserId(feedBackModel.getUserId());
-            feedbackVo.setUserName(feedBackModel.getUserName());
+            feedbackVo.setUserId(loginUser.getId());
+            feedbackVo.setUserName(loginUser.getUsername());
             feedbackVo.setMobile(feedBackModel.getMobile());
             feedbackVo.setFeedType(feedBackModel.getIndex());
             feedbackVo.setStatus(1);
