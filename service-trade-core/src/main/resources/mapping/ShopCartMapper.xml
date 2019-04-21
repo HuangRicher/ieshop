@@ -79,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, user_id, session_id, goods_id, goods_sn, product_id, goods_name, market_price, 
-    retail_price, number, goods_specifition_ids, checked, list_pic_url
+    retail_price, `number`, goods_specifition_ids, checked, list_pic_url
   </sql>
   <sql id="Blob_Column_List" >
     goods_specifition_name_value
@@ -177,7 +177,7 @@
         retail_price,
       </if>
       <if test="number != null" >
-        number,
+        `number`,
       </if>
       <if test="goodsSpecifitionIds != null" >
         goods_specifition_ids,
@@ -274,7 +274,7 @@
         retail_price = #{record.retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="record.number != null" >
-        number = #{record.number,jdbcType=INTEGER},
+        `number` = #{record.number,jdbcType=INTEGER},
       </if>
       <if test="record.goodsSpecifitionIds != null" >
         goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      number = #{record.number,jdbcType=INTEGER},
+      `number` = #{record.number,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
       checked = #{record.checked,jdbcType=INTEGER},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
       market_price = #{record.marketPrice,jdbcType=DECIMAL},
       retail_price = #{record.retailPrice,jdbcType=DECIMAL},
-      number = #{record.number,jdbcType=INTEGER},
+      `number` = #{record.number,jdbcType=INTEGER},
       goods_specifition_ids = #{record.goodsSpecifitionIds,jdbcType=VARCHAR},
       checked = #{record.checked,jdbcType=INTEGER},
       list_pic_url = #{record.listPicUrl,jdbcType=VARCHAR}
@@ -360,7 +360,7 @@
         retail_price = #{retailPrice,jdbcType=DECIMAL},
       </if>
       <if test="number != null" >
-        number = #{number,jdbcType=INTEGER},
+        `number` = #{number,jdbcType=INTEGER},
       </if>
       <if test="goodsSpecifitionIds != null" >
         goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
@@ -387,7 +387,7 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      number = #{number,jdbcType=INTEGER},
+      `number` = #{number,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
       checked = #{checked,jdbcType=INTEGER},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR},
@@ -404,7 +404,7 @@
       goods_name = #{goodsName,jdbcType=VARCHAR},
       market_price = #{marketPrice,jdbcType=DECIMAL},
       retail_price = #{retailPrice,jdbcType=DECIMAL},
-      number = #{number,jdbcType=INTEGER},
+      `number` = #{number,jdbcType=INTEGER},
       goods_specifition_ids = #{goodsSpecifitionIds,jdbcType=VARCHAR},
       checked = #{checked,jdbcType=INTEGER},
       list_pic_url = #{listPicUrl,jdbcType=VARCHAR}

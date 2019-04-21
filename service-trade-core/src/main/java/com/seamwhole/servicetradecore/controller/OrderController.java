@@ -152,10 +152,10 @@ public class OrderController extends BaseController {
      */
     @ApiOperation(value = "订单提交")
     @PostMapping("submit")
-    public Object submit(@RequestBody OrderModel orderModel) {
+    public Object submit(@LoginUser ShopUser loginUser,@RequestBody OrderModel orderModel) {
         Map resultObj = null;
         try {
-            resultObj = orderService.submit(orderModel.getCouponId(),orderModel.getType(),orderModel.getPostscript(),orderModel.getAddressId(),orderModel.getUserId());
+            resultObj = orderService.submit(orderModel.getCouponId(),orderModel.getType(),orderModel.getPostscript(),orderModel.getAddressId(),loginUser.getId());
             if (null != resultObj) {
                 return toResponsObject(MapUtils.getInteger(resultObj, "errno"), MapUtils.getString(resultObj, "errmsg"), resultObj.get("data"));
             }

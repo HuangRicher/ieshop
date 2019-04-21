@@ -71,7 +71,7 @@
         <!--<table tableName="ishop_token" domainObjectName="ShopToken"></table>-->
         <!--<table tableName="ishop_user_coupon" domainObjectName="UserCoupon"></table>-->
         <!--<table tableName="ishop_user_level" domainObjectName="UserLevel"></table>-->
-        <!--<table tableName="ishop_user" domainObjectName="ShopUser"></table>-->
+        <table tableName="ishop_user" domainObjectName="ShopUser"></table>
         <!--<table tableName="ishop_shipping" domainObjectName="ShopShipping"></table>-->
         <!--<table tableName="ishop_sms_log" domainObjectName="SmsLog"></table>-->
         <!--<table tableName="sys_config" domainObjectName="SysConfig"></table>-->
@@ -87,7 +87,7 @@
         <!--<table tableName="sys_user" domainObjectName="SysUser"></table>-->
         <!--<table tableName="sys_user_role" domainObjectName="SysUserRole"></table>-->
         <!--<table tableName="sys_oss" domainObjectName="SysOss"></table>-->
-        <table tableName="schedule_job" domainObjectName="ScheduleJob"></table>
-        <table tableName="schedule_job_log" domainObjectName="ScheduleJobLog"></table>
+        <!--<table tableName="schedule_job" domainObjectName="ScheduleJob"></table>-->
+        <!--<table tableName="schedule_job_log" domainObjectName="ScheduleJobLog"></table>-->
     </context>
 </generatorConfiguration>

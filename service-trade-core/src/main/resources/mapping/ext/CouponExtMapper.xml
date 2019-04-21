@@ -53,20 +53,20 @@
         from ishop_coupon a
         left join ishop_user_coupon b on a.id = b.coupon_id
         where 1 = 1
-        <if test="user_id != null">
-            and b.`user_id` = #{user_id}
+        <if test="userId != null">
+            and b.`user_id` = #{userId}
         </if>
-        <if test="send_type != null">
-            and a.send_type = #{send_type}
+        <if test="sendType != null">
+            and a.send_type = #{sendType}
         </if>
-        <if test="coupon_status != null">
-            and b.coupon_status = #{coupon_status}
+        <if test="couponStatus != null">
+            and b.coupon_status = #{couponStatus}
         </if>
-        <if test="coupon_number != null">
-            and b.coupon_number = #{coupon_number}
+        <if test="couponNumber != null">
+            and b.coupon_number = #{couponNumber}
         </if>
-        <if test="source_key != null and source_key != ''">
-            and b.source_key = #{source_key}
+        <if test="sourceKey != null and source_key != ''">
+            and b.source_key = #{sourceKey}
         </if>
         <if test="unUsed != null and unUsed == true">
             and b.used_time is null and (b.order_id  is null or b.order_id =0)

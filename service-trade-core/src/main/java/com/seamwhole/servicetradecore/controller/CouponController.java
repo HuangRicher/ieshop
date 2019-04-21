@@ -66,12 +66,12 @@ public class CouponController extends BaseController {
      */
     @ApiOperation(value = "根据商品获取可用优惠券列表")
     @PostMapping("/listByGoods")
-    public Object listByGoods(@RequestBody CouponModel couponModel) {
+    public Object listByGoods(@LoginUser ShopUser user,@RequestParam(defaultValue = "cart") String type) {
         BigDecimal goodsTotalPrice = new BigDecimal(0.00);
-        if (couponModel.getType().equals("cart")) {
+        if (type.equals("cart")) {
             Map param = new HashMap();
-            param.put("userId", couponModel.getUserId());
-            List<ShopCartDO> cartList = cartService.queryList(couponModel.getUserId(), "", null,null,null,"");
+            param.put("userId", user.getId());
+            List<ShopCartDO> cartList = cartService.queryList(user.getId(), "", null,null,null,"");
             //获取购物车统计信息
             for (ShopCartDO cartItem : cartList) {
                 if (null != cartItem.getChecked() && 1 == cartItem.getChecked()) {
@@ -79,7 +79,7 @@ public class CouponController extends BaseController {
                 }
             }
         } else { // 是直接购买的
-            BuyGoods goodsVo = (BuyGoods) redisService.get(couponModel.getUserId()+RedisKeyConstant.BUY_GOODS_CACHE);
+            BuyGoods goodsVo = (BuyGoods) redisService.get(user.getId()+RedisKeyConstant.BUY_GOODS_CACHE);
             ProductDO productInfo = productService.queryObject(goodsVo.getProductId());
             //商品总价
             goodsTotalPrice = productInfo.getRetailPrice().multiply(new BigDecimal(goodsVo.getNumber()));
@@ -87,7 +87,7 @@ public class CouponController extends BaseController {
 
         // 获取可用优惠券
         Map param = new HashMap();
-        param.put("userId", couponModel.getUserId());
+        param.put("userId", user.getId());
         param.put("couponStatus", 1);
         List<CouponDO> couponVos = couponService.queryUserCoupons(param);
         List<CouponDO> useCoupons = new ArrayList<>();

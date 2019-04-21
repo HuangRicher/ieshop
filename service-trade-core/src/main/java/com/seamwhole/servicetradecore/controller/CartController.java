@@ -3,6 +3,7 @@ package com.seamwhole.servicetradecore.controller;
 import com.seamwhole.servicetradecore.annotation.LoginUser;
 import com.seamwhole.servicetradecore.constant.RedisKeyConstant;
 import com.seamwhole.servicetradecore.controller.model.CartModel;
+import com.seamwhole.servicetradecore.domain.AddressInfo;
 import com.seamwhole.servicetradecore.domain.BuyGoods;
 import com.seamwhole.servicetradecore.domain.CouponInfo;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
@@ -19,11 +20,9 @@ import com.seamwhole.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -390,7 +389,7 @@ public class CartController extends BaseController {
      */
     @ApiOperation(value = "订单提交前的检验和填写相关订单信息")
     @PostMapping("checkout")
-    public Object checkout(@LoginUser ShopUser loginUser,@RequestBody CartModel cartModel) {
+    public Object checkout(@LoginUser ShopUser loginUser,Integer couponId, @RequestParam(defaultValue = "cart") String type) {
         Map<String, Object> resultObj = new HashMap();
         //根据收货地址计算运费
 
@@ -401,12 +400,14 @@ public class CartController extends BaseController {
         if (null == addressEntities || addressEntities.size() == 0) {
             resultObj.put("checkedAddress", new ShopAddress());
         } else {
-            resultObj.put("checkedAddress", addressEntities.get(0));
+            AddressInfo info=new AddressInfo();
+            BeanUtils.copyProperties(addressEntities.get(0),info);
+            resultObj.put("checkedAddress", info);
         }
         // * 获取要购买的商品和总价
         ArrayList checkedGoodsList = new ArrayList();
         BigDecimal goodsTotalPrice;
-        if (cartModel.getType().equals("cart")) {
+        if (type.equals("cart")) {
             Map<String, Object> cartData = (Map<String, Object>) this.getCart(loginUser);
 
             for (ShopCart cartEntity : (List<ShopCart>) cartData.get("cartList")) {
@@ -433,8 +434,8 @@ public class CartController extends BaseController {
 
         //获取可用的优惠券信息
         BigDecimal couponPrice = new BigDecimal(0.00);
-        if (cartModel.getCouponId() != null && cartModel.getCouponId() != 0) {
-            CouponDO couponVo = couponService.getUserCoupon(cartModel.getCouponId());
+        if (couponId != null && couponId != 0) {
+            CouponDO couponVo = couponService.getUserCoupon(couponId);
             if (couponVo != null) {
                 couponPrice = couponVo.getType_money();
             }

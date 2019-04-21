@@ -105,7 +105,7 @@ public class CartServiceImpl implements CartService {
         ShopCartExample example=new ShopCartExample();
         example.createCriteria().andProductIdIn(Arrays.asList(productIds)).andUserIdEqualTo(userId);
         ShopCart cart=new ShopCart();
-        cart.setChecked(1);
+        cart.setChecked(isChecked);
         shopCartMapper.updateByExampleSelective(cart,example);
 
         // 判断购物车中是否存在此规格商品

@@ -5,6 +5,7 @@ import com.seamwhole.servicetradecore.mapper.model.ShopUserDO;
 import com.seamwhole.servicetradecore.model.ShopUser;
 import com.seamwhole.servicetradecore.model.SmsLog;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -40,4 +41,6 @@ public interface ShopUserService {
     int saveSmsCodeLog(SmsLog smsLogVo);
 
     String getUserLevel(ShopUser loginUser);
+
+    boolean subUserWallet(Integer userId, BigDecimal actualPrice);
 }

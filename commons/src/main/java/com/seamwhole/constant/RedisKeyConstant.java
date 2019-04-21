@@ -11,4 +11,8 @@ public class RedisKeyConstant {
      */
     public static final String PERMS_LIST = "permsList";
 
+    /**
+     * 商城业务缓存
+     */
+    public static String SHOP_CACHE_NAME = "shopCache";
 }

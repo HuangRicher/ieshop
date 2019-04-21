@@ -25,7 +25,7 @@ page{
 }
 
 .address-box .l{
-    width: 155rpx;
+    width: 195rpx;
     height: 100%;
 }
 
@@ -146,6 +146,28 @@ page{
     height: auto;
     overflow: hidden;
     background: #fff;
+}
+
+.pay-box{
+    margin-top: 20rpx;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #fff;
+}
+.pay-box .checkbox{
+  padding-left:20px;
+    float: left;
+    height: 34rpx;
+    width: 30%;
+    margin: 20rpx 20rpx 20rpx 26rpx;
+    background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/checkbox-0e09baa37e.png) no-repeat;
+    background-size: 34rpx;
+}
+
+.pay-box .checkbox.checked{
+    background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/checkbox-checked-822e54472a.png) no-repeat;
+    background-size: 34rpx;
 }
 
 .order-box .order-item{

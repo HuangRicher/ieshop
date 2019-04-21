@@ -18,7 +18,7 @@
     <result column="checked" property="checked" jdbcType="BIT" />
     <result column="list_pic_url" property="listPicUrl" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.model.ShopCart" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.seamwhole.servicetradecore.mapper.model.ShopCartDO" extends="BaseResultMap" >
     <result column="goods_specifition_name_value" property="goodsSpecifitionNameValue" jdbcType="LONGVARCHAR" />
   </resultMap>
 

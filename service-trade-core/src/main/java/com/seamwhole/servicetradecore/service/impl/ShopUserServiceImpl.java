@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -147,5 +148,16 @@ public class ShopUserServiceImpl implements ShopUserService {
             result = userLevelVo.getName();
         }
         return result;
+    }
+
+    /**
+     * 扣减钱包金额
+     * @param userId
+     * @param actualPrice
+     * @return
+     */
+    @Override
+    public boolean subUserWallet(Integer userId, BigDecimal actualPrice) {
+        return false;
     }
 }

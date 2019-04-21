@@ -80,7 +80,7 @@ Page({
     //TODO 性能优化，可在wx:for中添加index，可以直接获取点击的属性名和属性值，不用循环
     let _specificationList = this.data.specificationList;
     for (let i = 0; i < _specificationList.length; i++) {
-      if (_specificationList[i].specification_id == specNameId) {
+      if (_specificationList[i].specificationId == specNameId) {
         for (let j = 0; j < _specificationList[i].valueList.length; j++) {
           if (_specificationList[i].valueList[j].id == specValueId) {
             //如果已经选中，则反选
@@ -110,7 +110,7 @@ Page({
     let _specificationList = this.data.specificationList;
     for (let i = 0; i < _specificationList.length; i++) {
       let _checkedObj = {
-        nameId: _specificationList[i].specification_id,
+        nameId: _specificationList[i].specificationId,
         valueId: 0,
         valueText: ''
       };
@@ -171,7 +171,7 @@ Page({
   },
   getCheckedProductItem: function (key) {
     return this.data.productList.filter(function (v) {
-      if (v.goods_specification_ids.indexOf(key) > -1) {
+      if (v.goodsSpecificationIds.indexOf(key) > -1) {
         return true;
       } else {
         return false;

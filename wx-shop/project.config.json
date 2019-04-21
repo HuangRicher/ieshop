@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
@@ -55,6 +55,13 @@
 					"name": "我的订单",
 					"pathName": "pages/ucenter/order/order",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "选择优惠券",
+					"pathName": "pages/goods/goods",
+					"query": "isBuy=false",
+					"scene": null
 				}
 			]
 		}

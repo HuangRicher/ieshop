@@ -34,4 +34,6 @@ public interface OrderService {
     void confirm(Integer id);
 
     void sendGoods(Order order);
+
+    Map<String, Object> payByWallet(Integer couponId, String type, String postscript, Integer addressId, Integer id);
 }
