@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ShopUser {
@@ -30,6 +31,8 @@ public class ShopUser {
     private String avatar;
 
     private String weixinOpenid;
+
+    private BigDecimal wallet;
 
     public Integer getId() {
         return id;
@@ -141,5 +144,13 @@ public class ShopUser {
 
     public void setWeixinOpenid(String weixinOpenid) {
         this.weixinOpenid = weixinOpenid == null ? null : weixinOpenid.trim();
+    }
+
+    public BigDecimal getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(BigDecimal wallet) {
+        this.wallet = wallet;
     }
 }

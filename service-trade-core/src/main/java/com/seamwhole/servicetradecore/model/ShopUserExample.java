@@ -1,5 +1,6 @@
 package com.seamwhole.servicetradecore.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1022,6 +1023,66 @@ public class ShopUserExample {
 
         public Criteria andWeixinOpenidNotBetween(String value1, String value2) {
             addCriterion("weixin_openid not between", value1, value2, "weixinOpenid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletIsNull() {
+            addCriterion("wallet is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletIsNotNull() {
+            addCriterion("wallet is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletEqualTo(BigDecimal value) {
+            addCriterion("wallet =", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletNotEqualTo(BigDecimal value) {
+            addCriterion("wallet <>", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletGreaterThan(BigDecimal value) {
+            addCriterion("wallet >", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("wallet >=", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletLessThan(BigDecimal value) {
+            addCriterion("wallet <", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("wallet <=", value, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletIn(List<BigDecimal> values) {
+            addCriterion("wallet in", values, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletNotIn(List<BigDecimal> values) {
+            addCriterion("wallet not in", values, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("wallet between", value1, value2, "wallet");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("wallet not between", value1, value2, "wallet");
             return (Criteria) this;
         }
     }

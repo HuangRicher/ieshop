@@ -12,6 +12,7 @@
         <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
         <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
         <result column="user_level_id" property="userLevelId" jdbcType="INTEGER" />
+        <result column="wallet" property="wallet" jdbcType="INTEGER" />
         <result column="nickname" property="nickname" jdbcType="VARCHAR" />
         <result column="mobile" property="mobile" jdbcType="VARCHAR" />
         <result column="register_ip" property="registerIp" jdbcType="VARCHAR" />
@@ -36,6 +37,7 @@
         ishop_user.mobile,
         ishop_user.register_ip,
         ishop_user.avatar,
+        ishop_user.wallet,
         ishop_user.weixin_openid,
         ishop_user_level.name level_name
         from ishop_user LEFT JOIN ishop_user_level ON ishop_user.user_level_id=ishop_user_level.id

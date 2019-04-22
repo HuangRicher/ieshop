@@ -16,6 +16,7 @@
     <result column="register_ip" property="registerIp" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR" />
+    <result column="wallet" property="wallet" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, username, password, gender, birthday, register_time, last_login_time, last_login_ip, 
-    user_level_id, nickname, mobile, register_ip, avatar, weixin_openid
+    user_level_id, nickname, mobile, register_ip, avatar, weixin_openid, wallet
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.servicetradecore.model.ShopUserExample" >
     select
@@ -114,12 +115,14 @@
       gender, birthday, register_time, 
       last_login_time, last_login_ip, user_level_id, 
       nickname, mobile, register_ip, 
-      avatar, weixin_openid)
+      avatar, weixin_openid, wallet
+      )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{gender,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, 
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{userLevelId,jdbcType=INTEGER}, 
       #{nickname,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{registerIp,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR})
+      #{avatar,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR}, #{wallet,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.servicetradecore.model.ShopUser" >
     insert into ishop_user
@@ -166,6 +169,9 @@
       <if test="weixinOpenid != null" >
         weixin_openid,
       </if>
+      <if test="wallet != null" >
+        wallet,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -209,6 +215,9 @@
       </if>
       <if test="weixinOpenid != null" >
         #{weixinOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="wallet != null" >
+        #{wallet,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -263,6 +272,9 @@
       <if test="record.weixinOpenid != null" >
         weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR},
       </if>
+      <if test="record.wallet != null" >
+        wallet = #{record.wallet,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -283,7 +295,8 @@
       mobile = #{record.mobile,jdbcType=VARCHAR},
       register_ip = #{record.registerIp,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
-      weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR}
+      weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR},
+      wallet = #{record.wallet,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -330,6 +343,9 @@
       <if test="weixinOpenid != null" >
         weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
       </if>
+      <if test="wallet != null" >
+        wallet = #{wallet,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -347,7 +363,8 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       register_ip = #{registerIp,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
-      weixin_openid = #{weixinOpenid,jdbcType=VARCHAR}
+      weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+      wallet = #{wallet,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
