@@ -24,7 +24,7 @@ public class OrderGoodsServiceImpl implements OrderGoodsService {
         OrderGoodsExample example=new OrderGoodsExample();
         if(map.get("orderId")!=null)
             example.createCriteria().andOrderIdEqualTo((int)map.get("orderId"));
-        return orderGoodsMapper.selectByExample(example);
+        return orderGoodsMapper.selectByExampleWithBLOBs(example);
     }
 
     @Override

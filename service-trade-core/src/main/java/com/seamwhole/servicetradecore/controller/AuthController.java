@@ -76,16 +76,15 @@ public class AuthController extends BaseController {
     @ApiOperation(value = "微信登录")
     @PostMapping("login_by_weixin")
     @IgnoreAuth
-    public Object loginByWeixin(@RequestBody UserModel userModel, HttpServletRequest request) {
-        UserInfo fullUserInfo = userModel.getUserInfo();
-        String code = userModel.getCode();
-        if (null == fullUserInfo) {
-            return toResponsFail("登录失败");
+    public Object loginByWeixin(@RequestBody UserInfo userInfo, HttpServletRequest request) {
+        String code = userInfo.getCode();
+        if (null == userInfo) {
+            return toResponsFail("登录失败1");
         }
 
         Map<String, Object> resultObj = new HashMap<String, Object>();
         //
-        UserInfo.UInfo userInfo = fullUserInfo.getUserInfo();
+        UserInfo.UInfo uInfo = userInfo.getUserInfo();
 
         //获取openid
         String requestUrl = ApiUserUtils.getWebAccess(code);//通过自定义工具类组合出小程序需要的登录凭证 code
@@ -93,12 +92,12 @@ public class AuthController extends BaseController {
         JSONObject sessionData = CommonUtil.httpsRequest(requestUrl, "GET", null);
 
         if (null == sessionData || StringUtils.isBlank(sessionData.getString("openid"))) {
-            return toResponsFail("登录失败");
+            return toResponsFail("登录失败2");
         }
         //验证用户信息完整性
-        String sha1 = CommonUtil.getSha1(fullUserInfo.getRawData() + sessionData.getString("session_key"));
-        if (!fullUserInfo.getSignature().equals(sha1)) {
-            return toResponsFail("登录失败");
+        String sha1 = CommonUtil.getSha1(userInfo.getRawData() + sessionData.getString("session_key"));
+        if (!userInfo.getSignature().equals(sha1)) {
+            return toResponsFail("登录失败3");
         }
         Date nowTime = new Date();
         ShopUser userVo = userService.queryByOpenId(sessionData.getString("openid"));
@@ -111,9 +110,9 @@ public class AuthController extends BaseController {
             userVo.setLastLoginIp(userVo.getRegisterIp());
             userVo.setLastLoginTime(userVo.getRegisterTime());
             userVo.setWeixinOpenid(sessionData.getString("openid"));
-            userVo.setAvatar(userInfo.getAvatarUrl());
-            userVo.setGender(userInfo.getGender()); // //性别 0：未知、1：男、2：女
-            userVo.setNickname(userInfo.getNickName());
+            userVo.setAvatar(uInfo.getAvatarUrl());
+            userVo.setGender(uInfo.getGender()); // //性别 0：未知、1：男、2：女
+            userVo.setNickname(uInfo.getNickName());
             userService.save(userVo);
         } else {
             userVo.setLastLoginIp(this.getClientIp(request));
@@ -125,11 +124,11 @@ public class AuthController extends BaseController {
         String token = MapUtils.getString(tokenMap, "token");
 
         if (null == userInfo || StringUtils.isBlank(token)) {
-            return toResponsFail("登录失败");
+            return toResponsFail("登录失败4");
         }
 
         resultObj.put("token", token);
-        resultObj.put("userInfo", userInfo);
+        resultObj.put("userInfo", uInfo);
         resultObj.put("userId", userVo.getId());
         return toResponsSuccess(resultObj);
     }

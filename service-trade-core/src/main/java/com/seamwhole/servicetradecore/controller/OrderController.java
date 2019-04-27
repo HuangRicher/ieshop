@@ -19,6 +19,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +71,7 @@ public class OrderController extends BaseController {
             OrderInfo info=new OrderInfo();
             BeanUtils.copyProperties(item,info);
             Map orderGoodsParam = new HashMap();
-            orderGoodsParam.put("order_id", item.getId());
+            orderGoodsParam.put("orderId", item.getId());
             //订单的商品
             List<OrderGoods> goodsList = orderGoodsService.queryList(orderGoodsParam);
             Integer goodsCount = 0;
@@ -78,8 +79,10 @@ public class OrderController extends BaseController {
                 goodsCount += orderGoodsEntity.getNumber();
                 info.setGoodsCount(goodsCount);
             }
+            info.setGoodsList(goodsList);
+            list.add(info);
         }
-        PageUtils page=new PageUtils(list,pageInfo.getTotal(),pageInfo.getPageNum(),pageInfo.getPageSize());
+        PageUtils page=new PageUtils(list,pageInfo.getTotal(),pageInfo.getPageSize(),pageInfo.getPageNum());
         return toResponsSuccess(page);
     }
 
@@ -88,15 +91,16 @@ public class OrderController extends BaseController {
      */
     @ApiOperation(value = "获取订单详情")
     @PostMapping("detail")
-    public Object detail(@RequestBody OrderModel orderModel) {
+    public Object detail(@LoginUser ShopUser user,Integer orderId) {
         Map resultObj = new HashMap();
         //
-        OrderDO orderInfo = orderService.queryObject(orderModel.getOrderId());
+        OrderInfo info=new OrderInfo();
+        OrderDO orderInfo = orderService.queryObject(orderId);
         if (null == orderInfo) {
             return toResponsObject(400, "订单不存在", "");
         }
         Map orderGoodsParam = new HashMap();
-        orderGoodsParam.put("orderId", orderModel.getOrderId());
+        orderGoodsParam.put("orderId", orderId);
         //订单的商品
         List<OrderGoods> orderGoods = orderGoodsService.queryList(orderGoodsParam);
         //订单最后支付时间
@@ -111,7 +115,8 @@ public class OrderController extends BaseController {
         //订单可操作的选择,删除，支付，收货，评论，退换货
         Map handleOption = orderInfo.getHandleOption();
         //
-        resultObj.put("orderInfo", orderInfo);
+        BeanUtils.copyProperties(orderInfo,info);
+        resultObj.put("orderInfo", info);
         resultObj.put("orderGoods", orderGoods);
         resultObj.put("handleOption", handleOption);
         if (!StringUtils.isEmpty(orderInfo.getShippingCode()) && !StringUtils.isEmpty(orderInfo.getShippingNo())) {
@@ -196,6 +201,7 @@ public class OrderController extends BaseController {
                 } else {
                     return toResponsObject(400, "取消成失败", "");
                 }*/
+                return toResponsMsgSuccess("取消成功");
             } else {
                 orderVo.setOrderStatus(101);
                 Order order=new Order();
@@ -205,8 +211,8 @@ public class OrderController extends BaseController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return toResponsFail("提交失败");
         }
-        return toResponsFail("提交失败");
     }
 
     /**

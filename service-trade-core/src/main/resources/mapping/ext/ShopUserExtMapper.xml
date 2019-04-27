@@ -55,4 +55,7 @@
         </choose>
     </select>
 
+    <update id="subUserWallet" parameterType="map">
+        UPDATE ishop_user SET wallet=wallet-#{consumeCount} WHERE id=#{userId} AND wallet<![CDATA[ >= ]]> #{consumeCount}
+    </update>
 </mapper>

@@ -51,7 +51,7 @@ page{
 .pay-list .checkbox{
     background: url(http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/sprites/checkbox-sed825af9d3-a6b8540d42.png) 0 -448rpx no-repeat;
     background-size: 38rpx 486rpx;
-    width: 40rpx;
+    width: 60%;
     height: 40rpx;
     display: inline-block;
     vertical-align: middle;
@@ -93,10 +93,11 @@ page{
 }
 
 .pay-list .name{
+    padding-left: 50rpx;
     display: inline-block;
     vertical-align: middle;
-    height: 56.25rpx;
-    line-height: 56.25rpx;
+    height: 40rpx;
+    line-height: 40rpx;
 }
 
 .pay-btn{

@@ -8,9 +8,9 @@ import java.util.Map;
 
 public interface OrderExtMapper {
 
-    OrderDO queryObject(@Param("id") Integer id);
+    OrderDO queryObject(@Param("orderId") Integer orderId);
 
-    OrderDO queryShopOrderObject(@Param("id") Integer id);
+    OrderDO queryShopOrderObject(@Param("orderId") Integer orderId);
 
     List<OrderDO> queryShopOrderList(Map<String,Object> map);
 }

@@ -37,6 +37,7 @@ module.exports = {
     OrderSubmit: API_BASE_URL + 'order/submit', // 提交订单
     PayPrepayId: API_BASE_URL + 'pay/prepay', //获取微信统一下单prepay_id
     OrderPayByWallet: API_BASE_URL +"pay/payByWallet",//使用钱包支付
+    OrderPayByWalletOpen: API_BASE_URL + "pay/payByWalletOpen",//使用钱包支付
     CollectList: API_BASE_URL + 'collect/list',  //收藏列表
     CollectAddOrDelete: API_BASE_URL + 'collect/addordelete',  //添加或取消收藏
 

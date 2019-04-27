@@ -22,7 +22,8 @@ public class MyShiroRealm extends AuthorizingRealm {
     private SysUserRoleMenuService sysUserService;
     @Autowired
     private RedisService redisService;
-
+    @Autowired
+    private SysUserRoleMenuService sysUserRoleMenuService;
 
     /**
      * 授权(验证权限时调用)
@@ -32,8 +33,19 @@ public class MyShiroRealm extends AuthorizingRealm {
         SysUser user = (SysUser) principals.getPrimaryPrincipal();
         Long userId = user.getUserId();
 
-        List<String> permsList = (List<String>) redisService.get(Constant.PERMS_LIST + userId);
+        //List<String> permsList = (List<String>) redisService.get(Constant.PERMS_LIST + userId);
+        List<String> permsList;
 
+        //系统管理员，拥有最高权限
+        if (userId == Constant.SUPER_ADMIN) {
+            List<SysMenuDO> menuList = sysUserRoleMenuService.queryMenuList(new HashMap<>());
+            permsList = new ArrayList<>(menuList.size());
+            for (SysMenuDO menu : menuList) {
+                permsList.add(menu.getPerms());
+            }
+        } else {
+            permsList = sysUserRoleMenuService.queryAllPerms(userId);
+        }
         //用户权限列表
         Set<String> permsSet = new HashSet<String>();
         if (permsList != null && permsList.size() != 0) {

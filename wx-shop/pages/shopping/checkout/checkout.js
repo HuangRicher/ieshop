@@ -176,7 +176,7 @@ Page({
     if(this.data.payType===2){
       util.request(api.OrderPayByWallet, { addressId: this.data.addressId, couponId: this.data.couponId, type: this.data.buyType }, 'POST', 'application/json').then(res => {
         if (res.errno === 0) {
-          const orderId = res.data.orderInfo.id;
+          const orderId = res.data.orderId;
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=1&orderId=' + orderId
           });

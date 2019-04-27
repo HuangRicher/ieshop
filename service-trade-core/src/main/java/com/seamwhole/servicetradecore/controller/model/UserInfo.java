@@ -2,6 +2,7 @@ package com.seamwhole.servicetradecore.controller.model;
 
 public class UserInfo {
 
+    private String code;
     private String encryptedData;
     private String errMsg;
     private String iv;
@@ -57,7 +58,15 @@ public class UserInfo {
         this.userInfo = userInfo;
     }
 
-   public class UInfo{
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public class UInfo{
         private String avatarUrl;
         private String city;
         private String country;

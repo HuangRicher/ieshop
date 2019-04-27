@@ -16,6 +16,7 @@ import com.seamwhole.servicetradecore.wx.WXPayRequest;
 import com.seamwhole.servicetradecore.wx.WXPayUtil;
 import com.seamwhole.servicetradecore.wx.WXPayXmlUtil;
 import com.seamwhole.util.DateUtils;
+import com.seamwhole.util.UUIDUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.MapUtils;
@@ -61,14 +62,12 @@ public class PayController extends BaseController {
     @ApiOperation(value = "获取支付的请求参数")
     @PostMapping("payByWallet")
     public Object payByWallet(@LoginUser ShopUser loginUser,@RequestBody OrderModel orderModel){
-
-
         Map resultObj = null;
         try {
             resultObj =orderService.payByWallet(orderModel.getCouponId(),orderModel.getType(),orderModel.getPostscript(),orderModel.getAddressId(),loginUser.getId());
             //resultObj = orderService.submit(orderModel.getCouponId(),orderModel.getType(),orderModel.getPostscript(),orderModel.getAddressId(),loginUser.getId());
             if (null != resultObj) {
-                return toResponsObject(MapUtils.getInteger(resultObj, "errno"), MapUtils.getString(resultObj, "errmsg"), resultObj.get("data"));
+                return toResponsObject(MapUtils.getInteger(resultObj, "errno"), MapUtils.getString(resultObj, "errmsg"), resultObj);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,6 +75,48 @@ public class PayController extends BaseController {
         return resultObj;
     }
 
+    /**
+     * 使用钱包支付
+     */
+    @ApiOperation(value = "获取支付的请求参数")
+    @PostMapping("payByWalletOpen")
+    public Object payByWalletOpen(@LoginUser ShopUser loginUser,Integer orderId){
+        OrderDO orderInfo = orderService.queryObject(orderId);
+        if (null == orderInfo) {
+            return toResponsObject(400, "订单已取消", "");
+        }
+        if (orderInfo.getPayStatus() == 2) {
+            return toResponsObject(400, "订单已支付，请不要重复操作", "");
+        }
+        // 业务处理
+        orderInfo.setPayId(UUIDUtil.generateUUID());
+        orderInfo.setPayStatus(2);
+        orderInfo.setOrderStatus(201);
+        orderInfo.setShippingStatus(0);
+        orderInfo.setPayTime(new Date());
+        Order order=new Order();
+        BeanUtils.copyProperties(orderInfo,order);
+        orderService.update(order);
+        return toResponsMsgSuccess("支付成功");
+    }
+    /**
+     * 查询订单状态
+     */
+    @ApiOperation(value = "查询订单状态")
+    @PostMapping("query")
+    public Object orderQuery(@LoginUser ShopUser loginUser, Integer orderId) throws Exception {
+        if (orderId == null) {
+            return toResponsFail("订单不存在");
+        }
+
+        OrderDO orderDetail = orderService.queryObject(orderId);
+        if (orderDetail.getOrderStatus().equals(201) && orderDetail.getPayStatus().equals(2)) {
+            return toResponsMsgSuccess("支付成功");
+        } else {
+            // 失败
+            return toResponsFail("查询失败,error=10000");
+        }
+    }
 
 
     /**
@@ -178,6 +219,7 @@ public class PayController extends BaseController {
         }
         return toResponsFail("下单失败");
     }*/
+
 
     /**
      * 微信查询订单状态

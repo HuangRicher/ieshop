@@ -158,6 +158,10 @@ public class ShopUserServiceImpl implements ShopUserService {
      */
     @Override
     public boolean subUserWallet(Integer userId, BigDecimal actualPrice) {
-        return false;
+        int result=shopUserExtMapper.subUserWallet(userId,actualPrice.doubleValue());
+        if(result>0)
+            return true;
+        else
+            return false;
     }
 }

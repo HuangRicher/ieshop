@@ -37,7 +37,6 @@ function request(url, data = {}, method = "POST", header = "application/x-www-fo
             success: function (res) {
                 wx.hideLoading();
                 if (res.statusCode == 200) {
-
                     if (res.data.errno == 401) {
                         wx.navigateTo({
                             url: '/pages/auth/btnAuth/btnAuth',

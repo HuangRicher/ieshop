@@ -37,31 +37,55 @@ Page({
       }
     });
   },
-
-  bindGetUserInfo: function(e) {
+  bindGetUserInfo(e) {
     let that = this;
-    //登录远程服务器
-    if (that.data.code) {
-      util.request(api.AuthLoginByWeixin, {
-        code: that.data.code,
-        userInfo: e.detail
-      }, 'POST', 'application/json').then(res => {
-        if (res.errno === 0) {
-          //存储用户信息
-          wx.setStorageSync('userInfo', res.data.userInfo);
-          wx.setStorageSync('token', res.data.token);
-          wx.setStorageSync('userId', res.data.userId);
-
-        } else {
-          // util.showErrorToast(res.errmsg)
-          wx.showModal({
-            title: '提示',
-            content: res.errmsg,
-            showCancel: false
-          });
-        }
-      });
+    let userInfo = wx.getStorageSync('userInfo');
+    let token = wx.getStorageSync('token');
+    if (userInfo && token) {
+      return;
     }
+    let code = null;
+    wx.login({
+      withCredentials: true,
+      success(res) {
+        if (res.code) {
+          code = res.code;
+          // 必须是在用户已经授权的情况下调用
+          wx.getUserInfo({
+            success(res) {
+              //登录远程服务器
+              let user = {
+                code: code,
+                encryptedData: res.encryptedData,
+                errMsg: res.errMsg,
+                iv: res.iv,
+                rawData: res.rawData,
+                signature: res.signature,
+                userInfo: res.userInfo
+              };
+              util.request(api.AuthLoginByWeixin, user, 'POST', 'application/json').then(res => {
+                if (res.errno === 0) {
+                  //存储用户信息
+                  wx.setStorageSync('userInfo', res.data.userInfo);
+                  wx.setStorageSync('token', res.data.token);
+                  wx.setStorageSync('userId', res.data.userId);
+
+                } else {
+                  // util.showErrorToast(res.errmsg)
+                  wx.showModal({
+                    title: '提示',
+                    content: res.errmsg,
+                    showCancel: false
+                  });
+                }
+              })
+            }
+          });
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
     if (that.data.navUrl && that.data.navUrl == '/pages/index/index') {
       wx.switchTab({
         url: that.data.navUrl,
@@ -72,6 +96,40 @@ Page({
       })
     }
   },
+  // bindGetUserInfo: function(e) {
+  //   let that = this;
+  //   //登录远程服务器
+  //   if (that.data.code) {
+  //     util.request(api.AuthLoginByWeixin, {
+  //       code: that.data.code,
+  //       userInfo: e.detail
+  //     }, 'POST', 'application/json').then(res => {
+  //       if (res.errno === 0) {
+  //         //存储用户信息
+  //         wx.setStorageSync('userInfo', res.data.userInfo);
+  //         wx.setStorageSync('token', res.data.token);
+  //         wx.setStorageSync('userId', res.data.userId);
+
+  //       } else {
+  //         // util.showErrorToast(res.errmsg)
+  //         wx.showModal({
+  //           title: '提示',
+  //           content: res.errmsg,
+  //           showCancel: false
+  //         });
+  //       }
+  //     });
+  //   }
+  //   if (that.data.navUrl && that.data.navUrl == '/pages/index/index') {
+  //     wx.switchTab({
+  //       url: that.data.navUrl,
+  //     })
+  //   } else if (that.data.navUrl) {
+  //     wx.redirectTo({
+  //       url: that.data.navUrl,
+  //     })
+  //   }
+  // },
   onReady: function() {
     // 页面渲染完成
   },

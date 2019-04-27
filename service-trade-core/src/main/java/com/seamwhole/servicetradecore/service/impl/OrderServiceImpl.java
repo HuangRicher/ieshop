@@ -9,12 +9,14 @@ import com.seamwhole.servicetradecore.domain.BuyGoods;
 import com.seamwhole.servicetradecore.mapper.*;
 import com.seamwhole.servicetradecore.mapper.ext.OrderExtMapper;
 import com.seamwhole.servicetradecore.mapper.model.CouponDO;
+import com.seamwhole.servicetradecore.mapper.model.GoodsSpecificationDO;
 import com.seamwhole.servicetradecore.mapper.model.OrderDO;
 import com.seamwhole.servicetradecore.mapper.model.ShopCartDO;
 import com.seamwhole.servicetradecore.model.*;
 import com.seamwhole.servicetradecore.redis.RedisService;
 import com.seamwhole.servicetradecore.service.*;
 import com.seamwhole.util.CommonUtil;
+import com.seamwhole.util.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
     private ShippingService shippingService;
     @Autowired
     private ShopUserService shopUserService;
+    @Autowired
+    private GoodsSpecificationService goodsSpecificationService;
+
 
 
     public OrderDO queryObject(Integer id) {
@@ -81,6 +86,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.deleteByExample(example);
     }
 
+
     @Transactional
     @Override
     public Map<String, Object> payByWallet(Integer couponId, String type, String postscript, Integer addressId, Integer userId) {
@@ -114,12 +120,26 @@ public class OrderServiceImpl implements OrderService {
             //商品总价
             goodsTotalPrice = productInfo.getRetailPrice().multiply(new BigDecimal(goodsVo.getNumber()));
 
+            //添加规格名和值
+            String[] goodsSpecificationValue = null;
+            if (null != productInfo.getGoodsSpecificationIds()) {
+                Map specificationParam = new HashMap();
+                specificationParam.put("ids", productInfo.getGoodsSpecificationIds().split("_"));
+                specificationParam.put("goodsId", goodsVo.getGoodsId());
+                List<GoodsSpecificationDO> specificationEntities = goodsSpecificationService.queryList(specificationParam);
+                goodsSpecificationValue = new String[specificationEntities.size()];
+                for (int i = 0; i < specificationEntities.size(); i++) {
+                    goodsSpecificationValue[i] = specificationEntities.get(i).getValue();
+                }
+            }
+
             ShopCart cartVo = new ShopCart();
             BeanUtils.copyProperties(productInfo, cartVo);
             cartVo.setNumber(goodsVo.getNumber());
             cartVo.setProductId(goodsVo.getProductId());
             ShopCartDO shopCartDO=new ShopCartDO();
             BeanUtils.copyProperties(cartVo,shopCartDO);
+            shopCartDO.setGoodsSpecifitionNameValue(StringUtils.join(goodsSpecificationValue, ";"));
             checkedGoodsList.add(shopCartDO);
         }
 
@@ -226,7 +246,7 @@ public class OrderServiceImpl implements OrderService {
             resultObj.put("errno", 10000);
             resultObj.put("errmsg", "钱包余额不足！");
         }
-        resultObj.put("data", orderInfo.getId());
+        resultObj.put("orderId", orderInfo.getId());
         // 优惠券标记已用
         if (couponVo != null && couponVo.getCoupon_status() == 1) {
             couponVo.setCoupon_status(2);

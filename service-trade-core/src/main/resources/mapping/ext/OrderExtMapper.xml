@@ -47,14 +47,14 @@
 		select a.*,b.code as  shipping_code
 		from ishop_order a
 		left join ishop_shipping b on a.shipping_id = b.id
-		where a.id = #{value}
+		where a.id = #{orderId}
 	</select>
 
     <select id="queryShopOrderObject" resultMap="BaseResultMap">
 		select o.*,u.username as username
         from ishop_order o
         left join ishop_user u on o.user_id = u.id
-        where o.id = #{value}
+        where o.id = #{orderId}
 	</select>
 
 

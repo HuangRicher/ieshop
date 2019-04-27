@@ -1,6 +1,7 @@
 package com.seamwhole.servicetradecore.interceptor;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.except.CheckException;
 import com.seamwhole.servicetradecore.annotation.IgnoreAuth;
 import com.seamwhole.servicetradecore.model.ShopToken;
@@ -13,6 +14,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 权限(Token)验证
@@ -57,13 +61,43 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         //token为空
         if (StringUtils.isBlank(token)) {
-            throw new CheckException("请先登录", 401);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            PrintWriter out = null ;
+            try{
+                JSONObject res = new JSONObject();
+                res.put("errno","401");
+                res.put("errmsg","请先登录");
+                out = response.getWriter();
+                out.append(res.toString());
+                return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(500);
+                return false;
+            }
+            //throw new CheckException("请先登录", 401);
         }
 
         //查询token信息
         ShopToken tokenEntity = tokenService.queryByToken(token);
         if (tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
-            throw new CheckException("token失效，请重新登录", 401);
+            //throw new CheckException("token失效，请重新登录", 401);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json; charset=utf-8");
+            PrintWriter out = null ;
+            try{
+                JSONObject res = new JSONObject();
+                res.put("errno","401");
+                res.put("errmsg","请先登录");
+                out = response.getWriter();
+                out.append(res.toString());
+                return false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(500);
+                return false;
+            }
         }
 
         //设置userId到request里，后续根据userId，获取用户信息

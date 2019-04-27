@@ -17,9 +17,15 @@
                 <view class="name">网易支付</view>
             </view>-->
             <view class="item">
-                <view class="checkbox checked"></view>
-                <image src="/static/images/wxpay.png" class="icon"></image>
+                <view class="checkbox {{payType==1 ? 'checked' : ''}}" data-paytype="1" bindtap="checkedItem">
+                <!-- <image src="/static/images/wxpay.png" class="icon"></image> -->
                 <view class="name">微信支付</view>
+                </view>
+            </view>
+            <view class="item">
+                <view class="checkbox {{payType==2 ? 'checked' : ''}}" data-paytype="2" bindtap="checkedItem">
+                <view class="name">钱包支付</view>
+                </view>
             </view>
         </view>
     </view>
