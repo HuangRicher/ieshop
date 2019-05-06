@@ -40,10 +40,9 @@ public class MyZuulFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+        StringBuffer method=request.getRequestURL();
         //log.info("{} >>> {}", request.getMethod(), request.getRequestURL());
         /*try {
-            StringBuffer method=request.getRequestURL();
-
             if(method.indexOf("/api-user/wxLogin/wxLogin")!=-1 ||
                     method.indexOf("/api-user/wxLogin/testLogin")!=-1 ||
                     method.indexOf("/api-user/userRole/addUserRole")!=-1||

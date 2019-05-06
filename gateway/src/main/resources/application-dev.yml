@@ -1,0 +1,42 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+server:
+  port: 9999
+spring:
+  application:
+    name: gateway
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    lettuce:
+      shutdown-timeout: 30000ms
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 0
+  cloud:
+    gateway:
+      routes:
+      - id: user-one-service
+        uri: lb://user-one-service
+        predicates:
+        - Query=userId, 10.*.
+        - Path=/api-user/**
+        filters:
+        - StripPrefix=1
+      - id: user-two-service
+        uri: lb://user-two-service
+        predicates:
+        - Query=userId, 20.*.
+        - Path=/api-user/**
+        filters:
+        - StripPrefix=1
+
+

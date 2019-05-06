@@ -24,8 +24,17 @@ spring:
 zuul:
   routes:
     api-trade-core:
-      path: /api-trade/**
-      serviceId: trade-core-service
+      path: /api-user/1.1/**
+      serviceId: user-one-service
+    api-user:
+      path: /api-user/**
+      serviceId: user-one-service
+    api-user-one:
+      path: /api-user/10/**
+      serviceId: user-one-service
+    api-user-two:
+      path: /api-user/20/**
+      serviceId: user-two-service
   host:
     connect-timeout-millis: 60000
     socket-timeout-millis: 60000
