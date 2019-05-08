@@ -13,25 +13,25 @@ import java.util.List;
 public interface AccountService {
 
 
-    Account getAccount(long id);
+    Account getAccount(long id) throws Exception;
 
-    List<Account> getAccount() ;
+    List<Account> getAccount()  throws Exception;
 
-    List<AccountVo4List> select(String name, String serialNo, String remark, int offset, int rows);
+    List<AccountVo4List> select(String name, String serialNo, String remark, int offset, int rows) throws Exception;
 
-    Long countAccount(String name, String serialNo, String remark);
+    Long countAccount(String name, String serialNo, String remark) throws Exception;
 
-    int insertAccount(String beanJson, HttpServletRequest request);
+    int insertAccount(String beanJson, HttpServletRequest request) throws Exception;
 
-    int updateAccount(String beanJson, Long id) ;
+    int updateAccount(String beanJson, Long id) throws Exception ;
 
-    int deleteAccount(Long id);
+    int deleteAccount(Long id) throws Exception;
 
-    int batchDeleteAccount(String ids);
+    int batchDeleteAccount(String ids) throws Exception;
 
-    int checkIsNameExist(Long id, String name) ;
+    int checkIsNameExist(Long id, String name) throws Exception ;
 
-    List<Account> findBySelect();
+    List<Account> findBySelect() throws Exception;
 
     /**
      * 单个账户的金额求和-入库和出库
@@ -39,7 +39,7 @@ public interface AccountService {
      * @param id
      * @return
      */
-    BigDecimal getAccountSum(Long id, String timeStr, String type);
+    BigDecimal getAccountSum(Long id, String timeStr, String type) throws Exception;
 
     /**
      * 单个账户的金额求和-收入、支出、转账的单据表头的合计
@@ -47,7 +47,7 @@ public interface AccountService {
      * @param id
      * @return
      */
-    BigDecimal getAccountSumByHead(Long id, String timeStr, String type);
+    BigDecimal getAccountSumByHead(Long id, String timeStr, String type) throws Exception;
 
     /**
      * 单个账户的金额求和-收款、付款、转账、收预付款的单据明细的合计
@@ -55,7 +55,7 @@ public interface AccountService {
      * @param id
      * @return
      */
-    BigDecimal getAccountSumByDetail(Long id, String timeStr, String type) ;
+    BigDecimal getAccountSumByDetail(Long id, String timeStr, String type)  throws Exception;
 
     /**
      * 单个账户的金额求和-多账户的明细合计
@@ -63,15 +63,15 @@ public interface AccountService {
      * @param id
      * @return
      */
-    BigDecimal getManyAccountSum(Long id, String timeStr, String type) ;
+    BigDecimal getManyAccountSum(Long id, String timeStr, String type)  throws Exception;
 
-    List<AccountVo4InOutList> findAccountInOutList(Long accountId, Integer offset, Integer rows);
+    List<AccountVo4InOutList> findAccountInOutList(Long accountId, Integer offset, Integer rows) throws Exception;
 
-    int findAccountInOutListCount(Long accountId);
+    int findAccountInOutListCount(Long accountId) throws Exception;
 
-    int updateAmountIsDefault(Boolean isDefault, Long accountId) ;
+    int updateAmountIsDefault(Boolean isDefault, Long accountId)  throws Exception;
 
-    int batchDeleteAccountByIds(String ids) ;
+    int batchDeleteAccountByIds(String ids)  throws Exception;
 
 
     /**

@@ -14,93 +14,82 @@ import java.util.Map;
 public interface UserService {
 
 
-    public User getUser(long id);
+    User getUser(long id)throws Exception;
 
-    public List<User> getUser();
+    List<User> getUser()throws Exception;
 
-    public List<User> select(String userName, String loginName, int offset, int rows);
+    List<User> select(String userName, String loginName, int offset, int rows)throws Exception;
 
-    public Long countUser(String userName, String loginName);
+    Long countUser(String userName, String loginName)throws Exception;
+
+
     /**
-     * create by: cjl
-     * description:
      * 添加事务控制
-     * create time: 2019/1/11 14:30
      * @Param: beanJson
-     * @Param: request
+     * @Param: request
      * @return int
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertUser(String beanJson, HttpServletRequest request);
+    int insertUser(String beanJson, HttpServletRequest request)throws Exception;
+
+
     /**
-     * create by: cjl
-     * description:
      * 添加事务控制
-     * create time: 2019/1/11 14:31
      * @Param: beanJson
-     * @Param: id
+     * @Param: id
      * @return int
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateUser(String beanJson, Long id) ;
+    int updateUser(String beanJson, Long id) throws Exception;
+
+
     /**
-     * create by: cjl
-     * description:
      * 添加事务控制
      * create time: 2019/1/11 14:32
      * @Param: user
      * @return int
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateUserByObj(User user) ;
+    int updateUserByObj(User user) throws Exception;
+
     /**
-     * create by: cjl
-     * description:
      *  添加事务控制
-     * create time: 2019/1/11 14:33
      * @Param: md5Pwd
-     * @Param: id
+     * * @Param: id
      * @return int
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int resetPwd(String md5Pwd, Long id) ;
+    int resetPwd(String md5Pwd, Long id) throws Exception;
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteUser(Long id);
 
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteUser(String ids);
+    int deleteUser(Long id)throws Exception;
 
-    public int validateUser(String username, String password) throws JshException ;
+    int batchDeleteUser(String ids)throws Exception;
 
-    public User getUserByUserName(String username);
+    int validateUser(String username, String password) throws JshException ;
 
-    public int checkIsNameExist(Long id, String name);
+    User getUserByUserName(String username)throws Exception;
+
+    int checkIsNameExist(Long id, String name)throws Exception;
+
     /**
-     * create by: cjl
-     * description:
      *  获取当前用户信息
-     * create time: 2019/1/24 10:01
      * @Param:
      * @return com.jsh.erp.datasource.entities.User
      */
-    public User getCurrentUser();
+    User getCurrentUser()throws Exception;
 
-    public List<UserEx> getUserList(Map<String, Object> parameterMap) throws Exception;
+    List<UserEx> getUserList(Map<String, Object> parameterMap) throws Exception;
 
-    public void addUserAndOrgUserRel(UserEx ue) throws Exception;
-
-
-    public UserEx addUser(UserEx ue) throws Exception;
-
-    public UserEx registerUser(UserEx ue, Integer manageRoleId) throws Exception;
-
-    public void updateUserTenant(User user) throws Exception;
-
-    public void updateUserAndOrgUserRel(UserEx ue) throws Exception;
+    void addUserAndOrgUserRel(UserEx ue) throws Exception;
 
 
-    public UserEx updateUser(UserEx ue);
+    UserEx addUser(UserEx ue) throws Exception;
+
+    UserEx registerUser(UserEx ue, Integer manageRoleId) throws Exception;
+
+    void updateUserTenant(User user) throws Exception;
+
+    void updateUserAndOrgUserRel(UserEx ue) throws Exception;
+
+
+    UserEx updateUser(UserEx ue)throws Exception;
 
 
     /**
@@ -109,24 +98,24 @@ public interface UserService {
      * @Param: userEx
      * @return void
      */
-    public void checkUserNameAndLoginName(UserEx userEx);
+    void checkUserNameAndLoginName(UserEx userEx)throws Exception;
 
 
     /**
      * 通过用户名获取用户列表
      * */
-    public List<User> getUserListByUserName(String userName);
+    List<User> getUserListByUserName(String userName)throws Exception;
 
 
     /**
      * 通过登录名获取用户列表
      * */
-    public List<User> getUserListByloginName(String loginName);
+    List<User> getUserListByloginName(String loginName)throws Exception;
 
     /**
      * 批量删除用户
      * */
-    public void batDeleteUser(String ids);
+    void batDeleteUser(String ids)throws Exception;
 
-    public List<TreeNodeEx> getOrganizationUserTree();
+    List<TreeNodeEx> getOrganizationUserTree()throws Exception;
 }

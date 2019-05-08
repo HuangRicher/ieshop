@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.vo.AccountVo4InOutList;
 import com.seamwhole.serviceerpcore.model.Account;
+import com.seamwhole.serviceerpcore.mapper.vo.AccountVo4InOutList;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.AccountService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.ErpInfo;
@@ -23,7 +23,9 @@ import java.util.Map;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-
+/**
+ * @author jishenghua 75271*8920
+ */
 @RestController
 @RequestMapping(value = "/account")
 public class AccountController {
@@ -38,7 +40,7 @@ public class AccountController {
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public String findBySelect(HttpServletRequest request) {
+    public String findBySelect(HttpServletRequest request) throws Exception {
         String res = null;
         try {
             List<Account> dataList = accountService.findBySelect();
@@ -67,7 +69,7 @@ public class AccountController {
      * @return
      */
     @GetMapping(value = "/getAccount")
-    public BaseResponseInfo getAccount(HttpServletRequest request) {
+    public BaseResponseInfo getAccount(HttpServletRequest request) throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -97,7 +99,7 @@ public class AccountController {
                                                  @RequestParam("pageSize") Integer pageSize,
                                                  @RequestParam("accountId") Long accountId,
                                                  @RequestParam("initialAmount") BigDecimal initialAmount,
-                                                 HttpServletRequest request) {
+                                                 HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -130,7 +132,7 @@ public class AccountController {
     @PostMapping(value = "/updateAmountIsDefault")
     public String updateAmountIsDefault(@RequestParam("isDefault") Boolean isDefault,
                                  @RequestParam("accountId") Long accountId,
-                                 HttpServletRequest request) {
+                                 HttpServletRequest request) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = accountService.updateAmountIsDefault(isDefault, accountId);
         if(res > 0) {
@@ -150,7 +152,7 @@ public class AccountController {
      */
     @RequestMapping(value = "/batchDeleteAccountByIds")
     public Object batchDeleteAccountByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+            required =false,defaultValue=BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
 
         JSONObject result = ExceptionConstants.standardSuccess();
         /**

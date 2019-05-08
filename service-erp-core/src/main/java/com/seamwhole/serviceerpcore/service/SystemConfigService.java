@@ -9,23 +9,23 @@ import java.util.List;
 public interface SystemConfigService {
 
 
-    SystemConfig getSystemConfig(long id);
+    SystemConfig getSystemConfig(long id)throws Exception;
 
-    List<SystemConfig> getSystemConfig();
+    List<SystemConfig> getSystemConfig()throws Exception;
     
-    List<SystemConfig> select(String companyName, int offset, int rows);
+    List<SystemConfig> select(String companyName, int offset, int rows)throws Exception;
 
-    Long countSystemConfig(String companyName);
+    Long countSystemConfig(String companyName)throws Exception;
 
-    int insertSystemConfig(String beanJson, HttpServletRequest request) ;
+    int insertSystemConfig(String beanJson, HttpServletRequest request)throws Exception ;
 
-    int updateSystemConfig(String beanJson, Long id);
+    int updateSystemConfig(String beanJson, Long id)throws Exception;
 
-    int deleteSystemConfig(Long id);
+    int deleteSystemConfig(Long id)throws Exception;
 
-    int batchDeleteSystemConfig(String ids);
+    int batchDeleteSystemConfig(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name) ;
+    int checkIsNameExist(Long id, String name)throws Exception ;
     
-    int batchDeleteSystemConfigByIds(String ids);
+    int batchDeleteSystemConfigByIds(String ids)throws Exception;
 }

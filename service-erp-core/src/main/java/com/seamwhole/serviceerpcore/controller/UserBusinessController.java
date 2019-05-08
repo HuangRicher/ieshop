@@ -2,10 +2,10 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.UserBusiness;
-import com.seamwhole.serviceerpcore.service.UserBusinessService;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.UserService;
+import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.ErpInfo;
 import org.slf4j.Logger;
@@ -21,9 +21,6 @@ import java.util.Map;
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
 
-/**
- * @author ji_sheng_hua 华夏ERP
- */
 @RestController
 @RequestMapping(value = "/userBusiness")
 public class UserBusinessController {
@@ -37,7 +34,7 @@ public class UserBusinessController {
     @GetMapping(value = "/getBasicData")
     public BaseResponseInfo getBasicData(@RequestParam(value = "KeyId") String keyId,
                                          @RequestParam(value = "Type") String type,
-                                         HttpServletRequest request) {
+                                         HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<UserBusiness> list = userBusinessService.getBasicData(keyId, type);
@@ -56,7 +53,7 @@ public class UserBusinessController {
     @GetMapping(value = "/checkIsValueExist")
     public String checkIsValueExist(@RequestParam(value ="type", required = false) String type,
                                    @RequestParam(value ="keyId", required = false) String keyId,
-                                   HttpServletRequest request) {
+                                   HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         Long id = userBusinessService.checkIsValueExist(type, keyId);
         if(id != null) {
@@ -77,7 +74,7 @@ public class UserBusinessController {
     @PostMapping(value = "/updateBtnStr")
     public BaseResponseInfo updateBtnStr(@RequestParam(value ="userBusinessId", required = false) Long userBusinessId,
                                     @RequestParam(value ="btnStr", required = false) String btnStr,
-                                    HttpServletRequest request) {
+                                    HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             int back = userBusinessService.updateBtnStr(userBusinessId, btnStr);

@@ -13,44 +13,44 @@ import java.util.Map;
 public interface MaterialService {
     
 
-    Material getMaterial(long id);
+    Material getMaterial(long id)throws Exception;
 
-    List<Material> getMaterial();
+    List<Material> getMaterial()throws Exception;
 
-    List<MaterialVo4Unit> select(String name, String model, Long categoryId, String categoryIds, String mpList, int offset, int rows);
+    List<MaterialVo4Unit> select(String name, String model, Long categoryId, String categoryIds, String mpList, int offset, int rows)throws Exception;
 
-    Long countMaterial(String name, String model,Long categoryId, String categoryIds,String mpList);
+    Long countMaterial(String name, String model,Long categoryId, String categoryIds,String mpList)throws Exception;
 
-    int insertMaterial(String beanJson, HttpServletRequest request) ;
+    int insertMaterial(String beanJson, HttpServletRequest request) throws Exception;
 
-    int updateMaterial(String beanJson, Long id);
+    int updateMaterial(String beanJson, Long id)throws Exception;
 
-    int deleteMaterial(Long id);
+    int deleteMaterial(Long id)throws Exception;
 
-    int batchDeleteMaterial(String ids);
+    int batchDeleteMaterial(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
     int checkIsExist(Long id, String name, String model, String color, String standard, String mfrs,
-                            String otherField1, String otherField2, String otherField3, String unit, Long unitId);
+                            String otherField1, String otherField2, String otherField3, String unit, Long unitId)throws Exception;
 
-    int batchSetEnable(Boolean enabled, String materialIDs);
+    int batchSetEnable(Boolean enabled, String materialIDs)throws Exception;
 
-    String findUnitName(Long mId);
+    String findUnitName(Long mId)throws Exception;
 
-    List<MaterialVo4Unit> findById(Long id);
+    List<MaterialVo4Unit> findById(Long id)throws Exception;
 
-    List<MaterialVo4Unit> findBySelect();
+    List<MaterialVo4Unit> findBySelect()throws Exception;
 
-    List<Material> findByOrder();
+    List<Material> findByOrder()throws Exception;
 
-    List<MaterialVo4Unit> findByAll(String name, String model, Long categoryId, String categoryIds);
+    List<MaterialVo4Unit> findByAll(String name, String model, Long categoryId, String categoryIds)throws Exception;
     
     BaseResponseInfo importExcel(List<Material> mList) throws Exception;
 
-    List<Material> getMaterialEnableSerialNumberList(Map<String, Object> parameterMap);
+    List<Material> getMaterialEnableSerialNumberList(Map<String, Object> parameterMap)throws Exception;
     
-    int batchDeleteMaterialByIds(String ids);
+    int batchDeleteMaterialByIds(String ids)throws Exception;
     
     /**
      *  正常删除，要考虑数据完整性，进行完整性校验

@@ -13,6 +13,7 @@
     <result column="principal" property="principal" jdbcType="BIGINT" />
     <result column="tenant_id" property="tenantId" jdbcType="BIGINT" />
     <result column="delete_Flag" property="deleteFlag" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, address, warehousing, truckage, type, sort, remark, principal, tenant_id, 
-    delete_Flag
+    delete_Flag, is_default
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.DepotExample" >
     select
@@ -110,11 +111,13 @@
     insert into erp_depot (id, name, address, 
       warehousing, truckage, type, 
       sort, remark, principal, 
-      tenant_id, delete_Flag)
+      tenant_id, delete_Flag, is_default
+      )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{warehousing,jdbcType=DECIMAL}, #{truckage,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER}, 
       #{sort,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{principal,jdbcType=BIGINT}, 
-      #{tenantId,jdbcType=BIGINT}, #{deleteFlag,jdbcType=VARCHAR})
+      #{tenantId,jdbcType=BIGINT}, #{deleteFlag,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.seamwhole.serviceerpcore.model.Depot" >
     insert into erp_depot
@@ -152,6 +155,9 @@
       <if test="deleteFlag != null" >
         delete_Flag,
       </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -186,6 +192,9 @@
       </if>
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -231,6 +240,9 @@
       <if test="record.deleteFlag != null" >
         delete_Flag = #{record.deleteFlag,jdbcType=VARCHAR},
       </if>
+      <if test="record.isDefault != null" >
+        is_default = #{record.isDefault,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +260,8 @@
       remark = #{record.remark,jdbcType=VARCHAR},
       principal = #{record.principal,jdbcType=BIGINT},
       tenant_id = #{record.tenantId,jdbcType=BIGINT},
-      delete_Flag = #{record.deleteFlag,jdbcType=VARCHAR}
+      delete_Flag = #{record.deleteFlag,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +299,9 @@
       <if test="deleteFlag != null" >
         delete_Flag = #{deleteFlag,jdbcType=VARCHAR},
       </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -300,7 +316,8 @@
       remark = #{remark,jdbcType=VARCHAR},
       principal = #{principal,jdbcType=BIGINT},
       tenant_id = #{tenantId,jdbcType=BIGINT},
-      delete_Flag = #{deleteFlag,jdbcType=VARCHAR}
+      delete_Flag = #{deleteFlag,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

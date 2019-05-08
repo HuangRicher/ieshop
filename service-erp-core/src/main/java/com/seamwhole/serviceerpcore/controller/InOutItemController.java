@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.InOutItem;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.InOutItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class InOutItemController {
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public String findBySelect(@RequestParam("type") String type, HttpServletRequest request) {
+    public String findBySelect(@RequestParam("type") String type, HttpServletRequest request) throws Exception{
         String res = null;
         try {
             List<InOutItem> dataList = inOutItemService.findBySelect(type);
@@ -55,10 +55,14 @@ public class InOutItemController {
         }
         return res;
     }
-
-
     /**
+     * create by: qiankunpingtai
+     * website：https://qiankunpingtai.cn
+     * description:
      *  批量删除收支项目信息
+     * create time: 2019/3/29 11:15
+     * @Param: ids
+     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteInOutItemByIds")
     public Object batchDeleteInOutItemByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",

@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface OrganizationService {
     
-    int insertOrganization(String beanJson, HttpServletRequest request);
+    int insertOrganization(String beanJson, HttpServletRequest request)throws Exception;
     
-    int updateOrganization(String beanJson, Long id);
+    int updateOrganization(String beanJson, Long id)throws Exception;
     
-    int deleteOrganization(Long id);
+    int deleteOrganization(Long id)throws Exception;
     
-    int batchDeleteOrganization(String ids);
+    int batchDeleteOrganization(String ids)throws Exception;
     
     int addOrganization(Organization org) throws Exception;
     

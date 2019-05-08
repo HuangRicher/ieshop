@@ -3,8 +3,8 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.Role;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.RoleService;
 import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class RoleController {
      */
     @PostMapping(value = "/findUserRole")
     public JSONArray findUserRole(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                  HttpServletRequest request) {
+                                  HttpServletRequest request)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Role> dataList = roleService.findUserRole();
@@ -78,7 +78,7 @@ public class RoleController {
     }
 
     @PostMapping(value = "/list")
-    public List<Role> list(HttpServletRequest request) {
+    public List<Role> list(HttpServletRequest request)throws Exception {
         return roleService.getRole();
     }
 

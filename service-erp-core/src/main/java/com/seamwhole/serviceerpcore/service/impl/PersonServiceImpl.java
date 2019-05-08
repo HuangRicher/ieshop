@@ -3,13 +3,15 @@ package com.seamwhole.serviceerpcore.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.PersonMapper;
+import com.seamwhole.serviceerpcore.model.*;
 import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.PersonMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.PersonExtMapper;
-import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.PersonService;
+import com.seamwhole.serviceerpcore.service.LogService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,73 +34,161 @@ public class PersonServiceImpl implements PersonService {
     private PersonMapper personMapper;
 
     @Resource
-    private PersonExtMapper personExtMapper;
+    private PersonExtMapper personMapperEx;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
     @Resource
-    private AccountHeadExtMapper accountHeadExtMapper;
+    private AccountHeadExtMapper accountHeadMapperEx;
     @Resource
-    private DepotHeadExtMapper depotHeadExtMapper;
+    private DepotHeadExtMapper depotHeadMapperEx;
 
-    public Person getPerson(long id) {
-        return personMapper.selectByPrimaryKey(id);
+    public Person getPerson(long id)throws Exception {
+        Person result=null;
+        try{
+            result=personMapper.selectByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Person> getPerson() {
+    public List<Person> getPerson()throws Exception {
         PersonExample example = new PersonExample();
         example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        return personMapper.selectByExample(example);
+        List<Person> list=null;
+        try{
+            list=personMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Person> select(String name, String type, int offset, int rows) {
-        return personExtMapper.selectByConditionPerson(name, type, offset, rows);
+    public List<Person> select(String name, String type, int offset, int rows)throws Exception {
+        List<Person> list=null;
+        try{
+            list=personMapperEx.selectByConditionPerson(name, type, offset, rows);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public Long countPerson(String name, String type) {
-        return personExtMapper.countsByPerson(name, type);
+    public Long countPerson(String name, String type)throws Exception {
+        Long result=null;
+        try{
+            result=personMapperEx.countsByPerson(name, type);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertPerson(String beanJson, HttpServletRequest request) {
+    public int insertPerson(String beanJson, HttpServletRequest request)throws Exception {
         Person person = JSONObject.parseObject(beanJson, Person.class);
-        return personMapper.insertSelective(person);
+        int result=0;
+        try{
+            result=personMapper.insertSelective(person);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updatePerson(String beanJson, Long id) {
+    public int updatePerson(String beanJson, Long id)throws Exception {
         Person person = JSONObject.parseObject(beanJson, Person.class);
         person.setId(id);
-        return personMapper.updateByPrimaryKeySelective(person);
+        int result=0;
+        try{
+            result=personMapper.updateByPrimaryKeySelective(person);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deletePerson(Long id) {
-        return personMapper.deleteByPrimaryKey(id);
+    public int deletePerson(Long id)throws Exception {
+        int result=0;
+        try{
+            result=personMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeletePerson(String ids) {
+    public int batchDeletePerson(String ids) throws Exception{
         List<Long> idList = StringUtil.strToLongList(ids);
         PersonExample example = new PersonExample();
         example.createCriteria().andIdIn(idList);
-        return personMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=personMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public int checkIsNameExist(Long id, String name) {
+    public int checkIsNameExist(Long id, String name) throws Exception{
         PersonExample example = new PersonExample();
         example.createCriteria().andIdNotEqualTo(id).andNameEqualTo(name).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        List<Person> list = personMapper.selectByExample(example);
-        return list.size();
+        List<Person> list =null;
+        try{
+            list=personMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list==null?0:list.size();
     }
 
-    public String getPersonByIds(String personIDs) {
+    public String getPersonByIds(String personIDs)throws Exception {
         List<Long> ids = StringUtil.strToLongList(personIDs);
         PersonExample example = new PersonExample();
         example.createCriteria().andIdIn(ids).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("Id asc");
-        List<Person> list = personMapper.selectByExample(example);
+        List<Person> list =null;
+        try{
+            list=personMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         StringBuffer sb = new StringBuffer();
         if (null != list) {
             for (Person person : list) {
@@ -108,21 +198,39 @@ public class PersonServiceImpl implements PersonService {
         return  sb.toString();
     }
 
-    public List<Person> getPersonByType(String type) {
+    public List<Person> getPersonByType(String type)throws Exception {
         PersonExample example = new PersonExample();
         example.createCriteria().andTypeEqualTo(type).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("Id asc");
-        return personMapper.selectByExample(example);
+        List<Person> list =null;
+        try{
+            list=personMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeletePersonByIds(String ids) {
+    public int batchDeletePersonByIds(String ids)throws Exception {
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_PERSON,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(ids).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return personExtMapper.batchDeletePersonByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        int result =0;
+        try{
+            result=personMapperEx.batchDeletePersonByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     /**
      * create by: qiankunpingtai
@@ -149,7 +257,15 @@ public class PersonServiceImpl implements PersonService {
         /**
          * 校验财务主表	jsh_accounthead
          * */
-        List<AccountHead> accountHeadList=accountHeadExtMapper.getAccountHeadListByHandsPersonIds(idArray);
+        List<AccountHead> accountHeadList =null;
+        try{
+            accountHeadList=accountHeadMapperEx.getAccountHeadListByHandsPersonIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(accountHeadList!=null&&accountHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,HandsPersonIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -159,7 +275,15 @@ public class PersonServiceImpl implements PersonService {
         /**
          * 校验单据主表	jsh_depothead
          * */
-        List<DepotHead> depotHeadList=depotHeadExtMapper.getDepotHeadListByHandsPersonIds(idArray);
+        List<DepotHead> depotHeadList =null;
+        try{
+            depotHeadList=depotHeadMapperEx.getDepotHeadListByHandsPersonIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(depotHeadList!=null&&depotHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,HandsPersonIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

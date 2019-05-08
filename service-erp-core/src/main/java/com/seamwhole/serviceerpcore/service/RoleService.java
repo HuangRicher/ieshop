@@ -9,26 +9,26 @@ import java.util.List;
 public interface RoleService {
 
 
-    Role getRole(long id);
+    Role getRole(long id)throws Exception;
 
-    List<Role> getRole();
+    List<Role> getRole()throws Exception;
 
-    List<Role> select(String name, int offset, int rows);
+    List<Role> select(String name, int offset, int rows)throws Exception;
 
-    Long countRole(String name);
+    Long countRole(String name)throws Exception;
 
-    int insertRole(String beanJson, HttpServletRequest request);
+    int insertRole(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateRole(String beanJson, Long id);
+    int updateRole(String beanJson, Long id)throws Exception;
 
-    int deleteRole(Long id);
+    int deleteRole(Long id)throws Exception;
 
-    int batchDeleteRole(String ids);
+    int batchDeleteRole(String ids)throws Exception;
 
-    List<Role> findUserRole();
+    List<Role> findUserRole()throws Exception;
     
     /**
      *  逻辑删除角色信息
      */
-    int batchDeleteRoleByIds(String ids);
+    int batchDeleteRoleByIds(String ids)throws Exception;
 }

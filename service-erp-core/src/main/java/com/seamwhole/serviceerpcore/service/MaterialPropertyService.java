@@ -9,23 +9,23 @@ import java.util.List;
 public interface MaterialPropertyService {
 
 
-    MaterialProperty getMaterialProperty(long id);
+    MaterialProperty getMaterialProperty(long id)throws Exception;
 
-    List<MaterialProperty> getMaterialProperty() ;
+    List<MaterialProperty> getMaterialProperty()throws Exception ;
 
-    List<MaterialProperty> select(String name, int offset, int rows);
+    List<MaterialProperty> select(String name, int offset, int rows)throws Exception;
 
-    Long countMaterialProperty(String name);
+    Long countMaterialProperty(String name)throws Exception;
 
-    int insertMaterialProperty(String beanJson, HttpServletRequest request);
+    int insertMaterialProperty(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateMaterialProperty(String beanJson, Long id);
+    int updateMaterialProperty(String beanJson, Long id)throws Exception;
 
-    int deleteMaterialProperty(Long id);
+    int deleteMaterialProperty(Long id)throws Exception;
 
-    int batchDeleteMaterialProperty(String ids);
+    int batchDeleteMaterialProperty(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
-    int batchDeleteMaterialPropertyByIds(String ids);
+    int batchDeleteMaterialPropertyByIds(String ids)throws Exception;
 }

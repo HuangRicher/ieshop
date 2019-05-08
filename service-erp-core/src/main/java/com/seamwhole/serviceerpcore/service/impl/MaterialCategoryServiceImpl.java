@@ -3,16 +3,15 @@ package com.seamwhole.serviceerpcore.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.*;
 import com.seamwhole.serviceerpcore.mapper.MaterialCategoryMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.MaterialCategoryExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.MaterialExtMapper;
 import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
-import com.seamwhole.serviceerpcore.model.Material;
-import com.seamwhole.serviceerpcore.model.MaterialCategory;
-import com.seamwhole.serviceerpcore.model.MaterialCategoryExample;
-import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.MaterialCategoryService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,72 +33,162 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     @Resource
     private MaterialCategoryMapper materialCategoryMapper;
     @Resource
-    private MaterialCategoryExtMapper materialCategoryExtMapper;
+    private MaterialCategoryExtMapper materialCategoryMapperEx;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
     @Resource
-    private MaterialExtMapper materialExtMapper;
+    private MaterialExtMapper materialMapperEx;
 
-    public MaterialCategory getMaterialCategory(long id) {
-        return materialCategoryMapper.selectByPrimaryKey(id);
+    public MaterialCategory getMaterialCategory(long id)throws Exception {
+        MaterialCategory result=null;
+        try{
+            result=materialCategoryMapper.selectByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<MaterialCategory> getMaterialCategory() {
+    public List<MaterialCategory> getMaterialCategory()throws Exception {
         MaterialCategoryExample example = new MaterialCategoryExample();
-        return materialCategoryMapper.selectByExample(example);
+        List<MaterialCategory> list=null;
+        try{
+            list=materialCategoryMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<MaterialCategory> getAllList(Long parentId) {
+    public List<MaterialCategory> getAllList(Long parentId)throws Exception {
         MaterialCategoryExample example = new MaterialCategoryExample();
         example.createCriteria().andParentidEqualTo(parentId).andIdNotEqualTo(1l);
         example.setOrderByClause("id");
-        return materialCategoryMapper.selectByExample(example);
+        List<MaterialCategory> list=null;
+        try{
+            list=materialCategoryMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<MaterialCategory> select(String name, Integer parentId, int offset, int rows) {
-        return materialCategoryExtMapper.selectByConditionMaterialCategory(name, parentId, offset, rows);
+    public List<MaterialCategory> select(String name, Integer parentId, int offset, int rows) throws Exception{
+        List<MaterialCategory> list=null;
+        try{
+            list=materialCategoryMapperEx.selectByConditionMaterialCategory(name, parentId, offset, rows);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public Long countMaterialCategory(String name, Integer parentId) {
-        return materialCategoryExtMapper.countsByMaterialCategory(name, parentId);
+    public Long countMaterialCategory(String name, Integer parentId) throws Exception{
+        Long result=null;
+        try{
+            result=materialCategoryMapperEx.countsByMaterialCategory(name, parentId);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertMaterialCategory(String beanJson, HttpServletRequest request) {
+    public int insertMaterialCategory(String beanJson, HttpServletRequest request)throws Exception {
         MaterialCategory materialCategory = JSONObject.parseObject(beanJson, MaterialCategory.class);
-        return materialCategoryMapper.insertSelective(materialCategory);
+        int result=0;
+        try{
+            result=materialCategoryMapper.insertSelective(materialCategory);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateMaterialCategory(String beanJson, Long id) {
+    public int updateMaterialCategory(String beanJson, Long id) throws Exception{
         MaterialCategory materialCategory = JSONObject.parseObject(beanJson, MaterialCategory.class);
         materialCategory.setId(id);
-        return materialCategoryMapper.updateByPrimaryKeySelective(materialCategory);
+        int result=0;
+        try{
+            result=materialCategoryMapper.updateByPrimaryKeySelective(materialCategory);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteMaterialCategory(Long id) {
-        return materialCategoryMapper.deleteByPrimaryKey(id);
+    public int deleteMaterialCategory(Long id)throws Exception {
+        int result=0;
+        try{
+            result=materialCategoryMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteMaterialCategory(String ids) {
+    public int batchDeleteMaterialCategory(String ids)throws Exception {
         List<Long> idList = StringUtil.strToLongList(ids);
         MaterialCategoryExample example = new MaterialCategoryExample();
         example.createCriteria().andIdIn(idList);
-        return materialCategoryMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=materialCategoryMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public int checkIsNameExist(Long id, String name) {
+    public int checkIsNameExist(Long id, String name)throws Exception {
         return 0;
     }
 
-    public List<MaterialCategory> findById(Long id) {
+    public List<MaterialCategory> findById(Long id)throws Exception {
         MaterialCategoryExample example = new MaterialCategoryExample();
         example.createCriteria().andIdEqualTo(id);
-        return materialCategoryMapper.selectByExample(example);
+        List<MaterialCategory> list=null;
+        try{
+            list=materialCategoryMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
     /**
      * create by: cjl
@@ -107,10 +196,19 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
      *获取商品类别树数据
      * create time: 2019/2/19 14:30
      * @Param:
-     * @return java.util.List<com.jsh.erp.datasource.vo.TreeNode>
+     * @return java.util.List<com.seamwhole.serviceerpcore.datasource.vo.TreeNode>
      */
     public List<TreeNode> getMaterialCategoryTree(Long id) throws Exception{
-       return materialCategoryExtMapper.getNodeTree(id);
+        List<TreeNode> list=null;
+        try{
+            list=materialCategoryMapperEx.getNodeTree(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+       return list;
     }
     /**
      * create by: cjl
@@ -146,7 +244,16 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
         mc.setUpdateTime(date);
         //更新人
         mc.setUpdater(userInfo==null?null:userInfo.getId());
-        return materialCategoryExtMapper.addMaterialCategory(mc);
+        int result=0;
+        try{
+            result=materialCategoryMapperEx.addMaterialCategory(mc);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int batchDeleteMaterialCategoryByIds(String ids) throws Exception {
@@ -162,11 +269,19 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
         if(strArray.length<1){
             return 0;
         }
-
-       return materialCategoryExtMapper.batchDeleteMaterialCategoryByIds(updateDate,updater,strArray);
+        int result=0;
+        try{
+            result=materialCategoryMapperEx.batchDeleteMaterialCategoryByIds(updateDate,updater,strArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+       return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int editMaterialCategory(MaterialCategory mc) {
+    public int editMaterialCategory(MaterialCategory mc) throws Exception{
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_MATERIAL_CATEGORY,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(mc.getId()).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
@@ -182,12 +297,21 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
         //更新人
         User userInfo=userService.getCurrentUser();
         mc.setUpdater(userInfo==null?null:userInfo.getId());
-        return materialCategoryExtMapper.editMaterialCategory(mc);
+        int result=0;
+        try{
+            result= materialCategoryMapperEx.editMaterialCategory(mc);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     /**
      * 根据商品类别编号判断商品类别是否已存在
      * */
-    public void  checkMaterialCategorySerialNo(MaterialCategory mc) {
+    public void  checkMaterialCategorySerialNo(MaterialCategory mc)throws Exception {
         if(mc==null){
             return;
         }
@@ -195,7 +319,15 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
             return;
         }
         //根据商品类别编号查询商品类别
-        List<MaterialCategory> mList=materialCategoryExtMapper.getMaterialCategoryBySerialNo(mc.getSerialNo());
+        List<MaterialCategory> mList=null;
+        try{
+            mList= materialCategoryMapperEx.getMaterialCategoryBySerialNo(mc.getSerialNo());
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(mList==null||mList.size()<1){
             //未查询到对应数据，编号可用
             return;
@@ -245,7 +377,15 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
         /**
          * 校验产品表	jsh_material
          * */
-        List<Material> materialList=materialExtMapper.getMaterialListByCategoryIds(idArray);
+        List<Material> materialList=null;
+        try{
+            materialList= materialMapperEx.getMaterialListByCategoryIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(materialList!=null&&materialList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,CategoryIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -255,7 +395,15 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
         /**
          * 校验产品类型表	jsh_materialcategory
          * */
-        List<MaterialCategory> materialCategoryList=materialCategoryExtMapper.getMaterialCategoryListByCategoryIds(idArray);
+        List<MaterialCategory> materialCategoryList=null;
+        try{
+            materialCategoryList= materialCategoryMapperEx.getMaterialCategoryListByCategoryIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(materialCategoryList!=null&&materialCategoryList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,CategoryIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

@@ -10,35 +10,35 @@ import java.util.List;
 
 public interface AccountItemService {
 
-    AccountItem getAccountItem(long id);
+    AccountItem getAccountItem(long id)throws Exception;
 
-    List<AccountItem> getAccountItem();
+    List<AccountItem> getAccountItem()throws Exception;
 
-    List<AccountItem> select(String name, Integer type, String remark, int offset, int rows) ;
+    List<AccountItem> select(String name, Integer type, String remark, int offset, int rows) throws Exception;
 
-    Long countAccountItem(String name, Integer type, String remark) ;
+    Long countAccountItem(String name, Integer type, String remark) throws Exception;
 
-    int insertAccountItem(String beanJson, HttpServletRequest request);
+    int insertAccountItem(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateAccountItem(String beanJson, Long id);
+    int updateAccountItem(String beanJson, Long id)throws Exception;
 
-    int deleteAccountItem(Long id);
-
-
-    int batchDeleteAccountItem(String ids) ;
-
-    int checkIsNameExist(Long id, String name);
-
-    int insertAccountItemWithObj(AccountItem accountItem);
+    int deleteAccountItem(Long id)throws Exception;
 
 
-    int updateAccountItemWithObj(AccountItem accountItem);
+    int batchDeleteAccountItem(String ids) throws Exception;
 
-    List<AccountItemVo4List> getDetailList(Long headerId);
+    int checkIsNameExist(Long id, String name)throws Exception;
+
+    int insertAccountItemWithObj(AccountItem accountItem)throws Exception;
 
 
-    String saveDetials(String inserted, String deleted, String updated, Long headerId, String listType) throws DataAccessException ;
+    int updateAccountItemWithObj(AccountItem accountItem)throws Exception;
+
+    List<AccountItemVo4List> getDetailList(Long headerId)throws Exception;
 
 
-    int batchDeleteAccountItemByIds(String ids);
+    String saveDetials(String inserted, String deleted, String updated, Long headerId, String listType) throws Exception ;
+
+
+    int batchDeleteAccountItemByIds(String ids)throws Exception;
 }

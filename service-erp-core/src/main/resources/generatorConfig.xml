@@ -36,7 +36,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.seamwhole.serviceerpcore.mapper" targetProject="src/main/java" >
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-        <table tableName="databasechangelog" domainObjectName="DataBaseChangeLog"></table>
+        <!--<table tableName="databasechangelog" domainObjectName="DataBaseChangeLog"></table>
         <table tableName="databasechangeloglock" domainObjectName="dataBaseChangeLogLock"></table>
         <table tableName="erp_account" domainObjectName="Account"></table>
         <table tableName="erp_accounthead" domainObjectName="AccountHead"></table>
@@ -44,9 +44,9 @@
         <table tableName="erp_app" domainObjectName="App"></table>
         <table tableName="erp_asset" domainObjectName="Asset"></table>
         <table tableName="erp_assetcategory" domainObjectName="AssetCategory"></table>
-        <table tableName="erp_assetname" domainObjectName="AssetName"></table>
+        <table tableName="erp_assetname" domainObjectName="AssetName"></table>-->
         <table tableName="erp_depot" domainObjectName="Depot"></table>
-        <table tableName="erp_depothead" domainObjectName="DepotHead"></table>
+        <!--<table tableName="erp_depothead" domainObjectName="DepotHead"></table>
         <table tableName="erp_depotitem" domainObjectName="DepotItem"></table>
         <table tableName="erp_functions" domainObjectName="Functions"></table>
         <table tableName="erp_inoutitem" domainObjectName="InOutItem"></table>
@@ -64,6 +64,6 @@
         <table tableName="erp_unit" domainObjectName="Unit"></table>
         <table tableName="erp_user" domainObjectName="User"></table>
         <table tableName="erp_userbusiness" domainObjectName="UserBusiness"></table>
-        <table tableName="tbl_sequence" domainObjectName="TblSequence"></table>
+        <table tableName="tbl_sequence" domainObjectName="TblSequence"></table>-->
     </context>
 </generatorConfiguration>

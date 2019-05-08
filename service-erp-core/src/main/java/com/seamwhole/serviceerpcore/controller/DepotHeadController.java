@@ -2,12 +2,12 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
+import com.seamwhole.serviceerpcore.model.DepotHead;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InDetail;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InOutMCount;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4List;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4StatementAccount;
-import com.seamwhole.serviceerpcore.model.DepotHead;
+import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
 import com.seamwhole.serviceerpcore.service.DepotHeadService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.ErpInfo;
@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
-
 
 /**
  * @author ji-sheng-hua 752*718*920
@@ -52,7 +51,7 @@ public class DepotHeadController {
     @PostMapping(value = "/batchSetStatus")
     public String batchSetStatus(@RequestParam("status") String status,
                                  @RequestParam("depotHeadIDs") String depotHeadIDs,
-                                 HttpServletRequest request) {
+                                 HttpServletRequest request) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = depotHeadService.batchSetStatus(status, depotHeadIDs);
         if(res > 0) {
@@ -68,7 +67,7 @@ public class DepotHeadController {
      * @return
      */
     @GetMapping(value = "/buildNumber")
-    public BaseResponseInfo buildNumber(HttpServletRequest request) {
+    public BaseResponseInfo buildNumber(HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -90,7 +89,7 @@ public class DepotHeadController {
      * @return
      */
     @GetMapping(value = "/getMaxId")
-    public BaseResponseInfo getMaxId(HttpServletRequest request) {
+    public BaseResponseInfo getMaxId(HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -114,7 +113,7 @@ public class DepotHeadController {
      */
     @GetMapping(value = "/findByMonth")
     public BaseResponseInfo findByMonth(@RequestParam("monthTime") String monthTime,
-                                        HttpServletRequest request) {
+                                        HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -161,7 +160,7 @@ public class DepotHeadController {
                                         @RequestParam("beginTime") String beginTime,
                                         @RequestParam("endTime") String endTime,
                                         @RequestParam("type") String type,
-                                        HttpServletRequest request) {
+                                        HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -208,7 +207,7 @@ public class DepotHeadController {
                                          @RequestParam("beginTime") String beginTime,
                                          @RequestParam("endTime") String endTime,
                                          @RequestParam("type") String type,
-                                         HttpServletRequest request) {
+                                         HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -251,7 +250,7 @@ public class DepotHeadController {
                                                    @RequestParam("endTime") String endTime,
                                                    @RequestParam("organId") Integer organId,
                                                    @RequestParam("supType") String supType,
-                                                   HttpServletRequest request) {
+                                                   HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -335,7 +334,7 @@ public class DepotHeadController {
     public BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
                                                  @RequestParam("endTime") String endTime,
                                                  @RequestParam("supType") String supType,
-                                                 HttpServletRequest request) {
+                                                 HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -373,7 +372,7 @@ public class DepotHeadController {
      */
     @GetMapping(value = "/getDetailByNumber")
     public BaseResponseInfo getDetailByNumber(@RequestParam("number") String number,
-                                         HttpServletRequest request) {
+                                         HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         DepotHeadVo4List dhl = new DepotHeadVo4List();
         try {
@@ -400,7 +399,7 @@ public class DepotHeadController {
      * @param mode 合计或者金额
      * @return
      */
-    public BigDecimal allMoney(String getS, String type, String subType, String mode, String endTime) {
+    public BigDecimal allMoney(String getS, String type, String subType, String mode, String endTime)throws Exception {
         BigDecimal allMoney = BigDecimal.ZERO;
         try {
             Integer supplierId = Integer.valueOf(getS);

@@ -3,15 +3,14 @@ package com.seamwhole.serviceerpcore.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.UnitMapper;
+import com.seamwhole.serviceerpcore.model.*;
 import com.seamwhole.serviceerpcore.mapper.ext.MaterialExtMapper;
+import com.seamwhole.serviceerpcore.mapper.UnitMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.UnitExtMapper;
-import com.seamwhole.serviceerpcore.model.Material;
-import com.seamwhole.serviceerpcore.model.Unit;
-import com.seamwhole.serviceerpcore.model.UnitExample;
-import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.UnitService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,72 +33,161 @@ public class UnitServiceImpl implements UnitService {
     private UnitMapper unitMapper;
 
     @Resource
-    private UnitExtMapper unitExtMapper;
+    private UnitExtMapper unitMapperEx;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
     @Resource
-    private MaterialExtMapper materialExtMapper;
+    private MaterialExtMapper materialMapperEx;
 
-    public Unit getUnit(long id) {
-        return unitMapper.selectByPrimaryKey(id);
+    public Unit getUnit(long id)throws Exception {
+        Unit result=null;
+        try{
+            result=unitMapper.selectByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Unit> getUnit() {
+    public List<Unit> getUnit()throws Exception {
         UnitExample example = new UnitExample();
         example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        return unitMapper.selectByExample(example);
+        List<Unit> list=null;
+        try{
+            list=unitMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Unit> select(String name, int offset, int rows) {
-        return unitExtMapper.selectByConditionUnit(name, offset, rows);
+    public List<Unit> select(String name, int offset, int rows)throws Exception {
+        List<Unit> list=null;
+        try{
+            list=unitMapperEx.selectByConditionUnit(name, offset, rows);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public Long countUnit(String name) {
-        return unitExtMapper.countsByUnit(name);
+    public Long countUnit(String name)throws Exception {
+        Long result=null;
+        try{
+            result=unitMapperEx.countsByUnit(name);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertUnit(String beanJson, HttpServletRequest request) {
+    public int insertUnit(String beanJson, HttpServletRequest request)throws Exception {
         Unit unit = JSONObject.parseObject(beanJson, Unit.class);
-        return unitMapper.insertSelective(unit);
+        int result=0;
+        try{
+            result=unitMapper.insertSelective(unit);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateUnit(String beanJson, Long id) {
+    public int updateUnit(String beanJson, Long id)throws Exception {
         Unit unit = JSONObject.parseObject(beanJson, Unit.class);
         unit.setId(id);
-        return unitMapper.updateByPrimaryKeySelective(unit);
+        int result=0;
+        try{
+            result=unitMapper.updateByPrimaryKeySelective(unit);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteUnit(Long id) {
-        return unitMapper.deleteByPrimaryKey(id);
+    public int deleteUnit(Long id)throws Exception {
+        int result=0;
+        try{
+            result=unitMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteUnit(String ids) {
+    public int batchDeleteUnit(String ids) throws Exception{
         List<Long> idList = StringUtil.strToLongList(ids);
         UnitExample example = new UnitExample();
         example.createCriteria().andIdIn(idList);
-        return unitMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=unitMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public int checkIsNameExist(Long id, String name) {
+    public int checkIsNameExist(Long id, String name)throws Exception {
         UnitExample example = new UnitExample();
         example.createCriteria().andIdNotEqualTo(id).andUnameEqualTo(name).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        List<Unit> list = unitMapper.selectByExample(example);
-        return list.size();
+        List<Unit> list=null;
+        try{
+            list=unitMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list==null?0:list.size();
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteUnitByIds(String ids) {
+    public int batchDeleteUnitByIds(String ids)throws Exception {
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_UNIT,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(ids).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return unitExtMapper.batchDeleteUnitByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        int result=0;
+        try{
+            result=unitMapperEx.batchDeleteUnitByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     /**
@@ -126,7 +214,15 @@ public class UnitServiceImpl implements UnitService {
         /**
          * 校验产品表	jsh_material
          * */
-        List<Material> materialList=materialExtMapper.getMaterialListByUnitIds(idArray);
+        List<Material> materialList=null;
+        try{
+            materialList=materialMapperEx.getMaterialListByUnitIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(materialList!=null&&materialList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,UnitIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

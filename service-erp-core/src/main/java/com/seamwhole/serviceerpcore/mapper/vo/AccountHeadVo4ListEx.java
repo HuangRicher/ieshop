@@ -123,6 +123,14 @@ public class AccountHeadVo4ListEx {
         this.tenantId = tenantId;
     }
 
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
     public String getOrganname() {
         return organname;
     }
@@ -145,13 +153,5 @@ public class AccountHeadVo4ListEx {
 
     public void setAccountname(String accountname) {
         this.accountname = accountname;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag;
     }
 }

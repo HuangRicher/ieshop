@@ -25,6 +25,8 @@ public class Depot {
 
     private String deleteFlag;
 
+    private Boolean isDefault;
+
     public Long getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class Depot {
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    }
+
+    public Boolean getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
     }
 }

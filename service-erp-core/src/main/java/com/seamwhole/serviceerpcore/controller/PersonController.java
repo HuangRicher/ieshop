@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.Person;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.PersonService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
@@ -18,9 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author ji|sheng|hua 华夏erp
- */
+
 @RestController
 @RequestMapping(value = "/person")
 public class PersonController {
@@ -30,7 +28,7 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(HttpServletRequest request) {
+    public BaseResponseInfo getAllList(HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -53,7 +51,8 @@ public class PersonController {
      * @return
      */
     @GetMapping(value = "/getPersonByIds")
-    public BaseResponseInfo getPersonByIds(@RequestParam("personIDs") String personIDs, HttpServletRequest request) {
+    public BaseResponseInfo getPersonByIds(@RequestParam("personIDs") String personIDs,
+                                           HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -76,7 +75,8 @@ public class PersonController {
      * @return
      */
     @GetMapping(value = "/getPersonByType")
-    public BaseResponseInfo getPersonByType(@RequestParam("type") String type, HttpServletRequest request) {
+    public BaseResponseInfo getPersonByType(@RequestParam("type") String type,
+                                            HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -99,7 +99,8 @@ public class PersonController {
      * @return
      */
     @PostMapping(value = "/getPersonByNumType")
-    public JSONArray getPersonByNumType(@RequestParam("type") String typeNum, HttpServletRequest request) {
+    public JSONArray getPersonByNumType(@RequestParam("type") String typeNum,
+                                        HttpServletRequest request)throws Exception {
         JSONArray dataArray = new JSONArray();
         try {
             String type = "";

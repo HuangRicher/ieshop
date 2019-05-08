@@ -13,44 +13,44 @@ public interface SerialNumberService {
 
 
 
-    SerialNumber getSerialNumber(long id) ;
+    SerialNumber getSerialNumber(long id) throws Exception;
 
-    List<SerialNumber> getSerialNumber();
+    List<SerialNumber> getSerialNumber()throws Exception;
 
-    List<SerialNumberEx> select(String serialNumber, String materialName, Integer offset, Integer rows) ;
+    List<SerialNumberEx> select(String serialNumber, String materialName, Integer offset, Integer rows) throws Exception;
 
-    Long countSerialNumber(String serialNumber,String materialName);
+    Long countSerialNumber(String serialNumber,String materialName)throws Exception;
 
-    int insertSerialNumber(String beanJson, HttpServletRequest request);
+    int insertSerialNumber(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateSerialNumber(String beanJson, Long id);
+    int updateSerialNumber(String beanJson, Long id)throws Exception;
 
-    int deleteSerialNumber(Long id);
+    int deleteSerialNumber(Long id)throws Exception;
 
-    int batchDeleteSerialNumber(String ids);
+    int batchDeleteSerialNumber(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String serialNumber);
+    int checkIsNameExist(Long id, String serialNumber)throws Exception;
     
-    int batchSetEnable(Boolean enabled, String materialIDs);
+    int batchSetEnable(Boolean enabled, String materialIDs)throws Exception;
     
-    List<SerialNumberEx> findById(Long id);
+    List<SerialNumberEx> findById(Long id)throws Exception;
     
-    void checkIsExist(Long id, String materialName, String serialNumber);
+    void checkIsExist(Long id, String materialName, String serialNumber)throws Exception;
 
     /**
      * 新增序列号信息
      * */
-    SerialNumberEx addSerialNumber(SerialNumberEx serialNumberEx);
+    SerialNumberEx addSerialNumber(SerialNumberEx serialNumberEx)throws Exception;
     
     
-    SerialNumberEx updateSerialNumber(SerialNumberEx serialNumberEx);
+    SerialNumberEx updateSerialNumber(SerialNumberEx serialNumberEx)throws Exception;
     
     /**
      *  根据商品名称判断商品名称是否有效
      * @Param: materialName
      * @return Long 满足使用条件的商品的id
      */
-    Long checkMaterialName(String materialName);
+    Long checkMaterialName(String materialName)throws Exception;
     
     
     /**
@@ -62,7 +62,7 @@ public interface SerialNumberService {
      * @Param: materialName
      * @return Long 满足使用条件的商品的id
      */
-    Long getSerialNumberMaterialIdByMaterialName(String materialName);
+    Long getSerialNumberMaterialIdByMaterialName(String materialName)throws Exception;
 
     /**
      * 出库时判断序列号库存是否足够，
@@ -89,11 +89,11 @@ public interface SerialNumberService {
     /**
      * 批量添加序列号
      */
-    void batAddSerialNumber(String materialName, String serialNumberPrefix, Integer batAddTotal, String remark);
+    void batAddSerialNumber(String materialName, String serialNumberPrefix, Integer batAddTotal, String remark)throws Exception;
     
     
     /**
      *  逻辑删除序列号信息
      */
-    int batchDeleteSerialNumberByIds(String ids);
+    int batchDeleteSerialNumberByIds(String ids)throws Exception;
 }

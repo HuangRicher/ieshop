@@ -10,27 +10,27 @@ import java.util.List;
 public interface MaterialCategoryService {
 
 
-    MaterialCategory getMaterialCategory(long id);
+    MaterialCategory getMaterialCategory(long id)throws Exception;
 
-    List<MaterialCategory> getMaterialCategory();
+    List<MaterialCategory> getMaterialCategory()throws Exception;
 
-    List<MaterialCategory> getAllList(Long parentId) ;
+    List<MaterialCategory> getAllList(Long parentId) throws Exception;
 
-    List<MaterialCategory> select(String name, Integer parentId, int offset, int rows);
+    List<MaterialCategory> select(String name, Integer parentId, int offset, int rows)throws Exception;
 
-    Long countMaterialCategory(String name, Integer parentId);
+    Long countMaterialCategory(String name, Integer parentId)throws Exception;
 
-    int insertMaterialCategory(String beanJson, HttpServletRequest request) ;
+    int insertMaterialCategory(String beanJson, HttpServletRequest request) throws Exception;
 
-    int updateMaterialCategory(String beanJson, Long id);
+    int updateMaterialCategory(String beanJson, Long id)throws Exception;
 
-    int deleteMaterialCategory(Long id);
+    int deleteMaterialCategory(Long id)throws Exception;
 
-    int batchDeleteMaterialCategory(String ids);
+    int batchDeleteMaterialCategory(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
-    List<MaterialCategory> findById(Long id) ;
+    List<MaterialCategory> findById(Long id) throws Exception;
 
 
     /**
@@ -46,12 +46,12 @@ public interface MaterialCategoryService {
 
     int batchDeleteMaterialCategoryByIds(String ids) throws Exception;
 
-    int editMaterialCategory(MaterialCategory mc) ;
+    int editMaterialCategory(MaterialCategory mc)throws Exception ;
 
     /**
      * 根据商品类别编号判断商品类别是否已存在
      * */
-    void  checkMaterialCategorySerialNo(MaterialCategory mc);
+    void  checkMaterialCategorySerialNo(MaterialCategory mc)throws Exception;
 
     /**
      *  正常删除，要考虑数据完整性，进行完整性校验

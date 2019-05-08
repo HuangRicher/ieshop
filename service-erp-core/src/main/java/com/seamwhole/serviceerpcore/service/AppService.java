@@ -9,44 +9,44 @@ import java.util.List;
 public interface AppService {
 
 
-    List<App> findDock();
+    List<App> findDock()throws Exception;
     /**
      * description:
      *  桌面功能菜单初始化列表
      * @Param: null
      * @return
      */
-    List<App> findDesk();
+    List<App> findDesk()throws Exception;
 
-    App getApp(long id);
+    App getApp(long id)throws Exception;
 
-    List<App> getApp();
+    List<App> getApp()throws Exception;
 
-    List<App> select(String name, String type, int offset, int rows) ;
+    List<App> select(String name, String type, int offset, int rows) throws Exception;
 
-    Long countApp(String name, String type);
+    Long countApp(String name, String type)throws Exception;
 
-    int insertApp(String beanJson, HttpServletRequest request) ;
+    int insertApp(String beanJson, HttpServletRequest request) throws Exception;
 
-    int updateApp(String beanJson, Long id) ;
+    int updateApp(String beanJson, Long id) throws Exception;
 
-    int deleteApp(Long id);
+    int deleteApp(Long id)throws Exception;
 
-    int batchDeleteApp(String ids);
+    int batchDeleteApp(String ids)throws Exception;
 
-    List<App> findRoleAPP();
+    List<App> findRoleAPP()throws Exception;
 
-    List<App> findAppInIds(String ids, String type);
+    List<App> findAppInIds(String ids, String type)throws Exception;
 
 
-    int batchDeleteAppByIds(String ids);
+    int batchDeleteAppByIds(String ids)throws Exception;
 
-    List<App> findAppByUserId(String userId);
+    List<App> findAppByUserId(String userId)throws Exception;
 
     /**
      * 通过number列表查询app list
      * @param numberList
      * @return
      */
-    List<App> findAppByNumber(List<String> numberList);
+    List<App> findAppByNumber(List<String> numberList)throws Exception;
 }

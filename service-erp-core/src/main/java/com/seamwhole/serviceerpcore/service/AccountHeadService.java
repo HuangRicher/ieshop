@@ -11,31 +11,31 @@ import java.util.List;
 public interface AccountHeadService {
 
 
-    AccountHead getAccountHead(long id);
+    AccountHead getAccountHead(long id)throws Exception;
 
-    List<AccountHead> getAccountHead();
+    List<AccountHead> getAccountHead()throws Exception;
 
-    List<AccountHeadVo4ListEx> select(String type, String billNo, String beginTime, String endTime, int offset, int rows) ;
+    List<AccountHeadVo4ListEx> select(String type, String billNo, String beginTime, String endTime, int offset, int rows)throws Exception;
 
-    Long countAccountHead(String type, String billNo, String beginTime, String endTime);
+    Long countAccountHead(String type, String billNo, String beginTime, String endTime)throws Exception;
 
-    int insertAccountHead(String beanJson, HttpServletRequest request);
+    int insertAccountHead(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateAccountHead(String beanJson, Long id);
+    int updateAccountHead(String beanJson, Long id)throws Exception;
 
-    int deleteAccountHead(Long id);
+    int deleteAccountHead(Long id)throws Exception;
 
-    int batchDeleteAccountHead(String ids);
+    int batchDeleteAccountHead(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name) ;
+    int checkIsNameExist(Long id, String name) throws Exception;
 
-    Long getMaxId();
+    Long getMaxId()throws Exception;
 
-    BigDecimal findAllMoney(Integer supplierId, String type, String mode, String endTime);
+    BigDecimal findAllMoney(Integer supplierId, String type, String mode, String endTime)throws Exception;
 
-    List<AccountHeadVo4ListEx> getDetailByNumber(String billNo) ;
+    List<AccountHeadVo4ListEx> getDetailByNumber(String billNo) throws Exception;
 
-    int batchDeleteAccountHeadByIds(String ids);
+    int batchDeleteAccountHeadByIds(String ids)throws Exception;
     /**
      * description:
      *  正常删除，要考虑数据完整性，进行完整性校验

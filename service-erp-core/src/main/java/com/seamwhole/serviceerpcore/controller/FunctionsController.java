@@ -3,9 +3,9 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.Functions;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.FunctionsService;
 import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author ji-sheng-hua  华夏ERP
+ */
 @RestController
 @RequestMapping(value = "/functions")
 public class FunctionsController {
@@ -37,8 +39,8 @@ public class FunctionsController {
 
     @PostMapping(value = "/findMenu")
     public JSONArray findMenu(@RequestParam(value="pNumber") String pNumber,
-                              @RequestParam(value="hasFunctions") String hasFunctions,
-                              HttpServletRequest request) {
+                            @RequestParam(value="hasFunctions") String hasFunctions,
+                            HttpServletRequest request)throws Exception {
         //存放数据json数组
         JSONArray dataArray = new JSONArray();
         try {
@@ -121,7 +123,7 @@ public class FunctionsController {
      */
     @PostMapping(value = "/findRoleFunctions")
     public JSONArray findRoleFunctions(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                       HttpServletRequest request) {
+                                       HttpServletRequest request)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Functions> dataListFun = functionsService.findRoleFunctions("0");
@@ -274,7 +276,7 @@ public class FunctionsController {
      */
     @GetMapping(value = "/findByIds")
     public BaseResponseInfo findByIds(@RequestParam("functionsIds") String functionsIds,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<Functions> dataList = functionsService.findByIds(functionsIds);

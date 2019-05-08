@@ -90,6 +90,18 @@
     </update>
     <select id="getAccountHeadListByAccountIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
         select
+        <include refid="com.jsh.erp.datasource.mappers.AccountHeadMapper.Base_Column_List" />
+        from jsh_accounthead
+        where 1=1
+        and accountId in (
+        <foreach collection="accountIds" item="accountId" separator=",">
+            #{accountId}
+        </foreach>
+        )
+        and ifnull(delete_Flag,'0') !='1'
+    </select>
+    <select id="getAccountHeadListByAccountIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
+        select
         <include refid="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.Base_Column_List" />
         from jsh_accounthead
         where 1=1

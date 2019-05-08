@@ -3,14 +3,16 @@ package com.seamwhole.serviceerpcore.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.OrganizationMapper;
-import com.seamwhole.serviceerpcore.mapper.ext.OrganizationExtMapper;
-import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
 import com.seamwhole.serviceerpcore.model.Organization;
 import com.seamwhole.serviceerpcore.model.OrganizationExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.mapper.OrganizationMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.OrganizationExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.OrganizationService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
     private Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
@@ -32,32 +33,68 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Resource
     private OrganizationMapper organizationMapper;
     @Resource
-    private OrganizationExtMapper organizationExtMapper;
+    private OrganizationExtMapper organizationMapperEx;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertOrganization(String beanJson, HttpServletRequest request) {
+    public int insertOrganization(String beanJson, HttpServletRequest request)throws Exception {
         Organization organization = JSONObject.parseObject(beanJson, Organization.class);
-        return organizationMapper.insertSelective(organization);
+        int result=0;
+        try{
+            result=organizationMapper.insertSelective(organization);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateOrganization(String beanJson, Long id) {
+    public int updateOrganization(String beanJson, Long id)throws Exception {
         Organization organization = JSONObject.parseObject(beanJson, Organization.class);
         organization.setId(id);
-        return organizationMapper.updateByPrimaryKeySelective(organization);
+        int result=0;
+        try{
+            result=organizationMapper.updateByPrimaryKeySelective(organization);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteOrganization(Long id) {
-        return organizationMapper.deleteByPrimaryKey(id);
+    public int deleteOrganization(Long id)throws Exception {
+        int result=0;
+        try{
+            result=organizationMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteOrganization(String ids) {
+    public int batchDeleteOrganization(String ids)throws Exception {
         List<Long> idList = StringUtil.strToLongList(ids);
         OrganizationExample example = new OrganizationExample();
         example.createCriteria().andIdIn(idList);
-        return organizationMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=organizationMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int addOrganization(Organization org) throws Exception{
@@ -86,7 +123,16 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(StringUtil.isEmpty(org.getOrgParentNo())){
             org.setOrgParentNo(BusinessConstants.ORGANIZATION_ROOT_PARENT_NO);
         }
-        return organizationExtMapper.addOrganization(org);
+        int result=0;
+        try{
+            result=organizationMapperEx.addOrganization(org);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int editOrganization(Organization org)throws Exception {
@@ -110,23 +156,59 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(StringUtil.isEmpty(org.getOrgParentNo())){
             org.setOrgParentNo(BusinessConstants.ORGANIZATION_ROOT_PARENT_NO);
         }
-        return organizationExtMapper.editOrganization(org);
+        int result=0;
+        try{
+            result=organizationMapperEx.editOrganization(org);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     public List<TreeNode> getOrganizationTree(Long id)throws Exception {
-        return organizationExtMapper.getNodeTree(id);
+        List<TreeNode> list=null;
+        try{
+            list=organizationMapperEx.getNodeTree(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     public List<Organization> findById(Long id) throws Exception{
         OrganizationExample example = new OrganizationExample();
         example.createCriteria().andIdEqualTo(id);
-        return organizationMapper.selectByExample(example);
+        List<Organization> list=null;
+        try{
+            list=organizationMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     public List<Organization> findByOrgNo(String orgNo)throws Exception {
         OrganizationExample example = new OrganizationExample();
         example.createCriteria().andOrgNoEqualTo(orgNo).andOrgStcdNotEqualTo(BusinessConstants.ORGANIZATION_STCD_REMOVED);
-        return organizationMapper.selectByExample(example);
+        List<Organization> list=null;
+        try{
+            list=organizationMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
     /**
      * create by: cjl
@@ -171,6 +253,16 @@ public class OrganizationServiceImpl implements OrganizationService {
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return organizationExtMapper.batchDeleteOrganizationByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        int result=0;
+        try{
+            result=organizationMapperEx.batchDeleteOrganizationByIds(
+                    new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 }

@@ -14,60 +14,60 @@ import java.util.List;
 public interface DepotHeadService {
 
 
-    DepotHead getDepotHead(long id);
+    DepotHead getDepotHead(long id)throws Exception;
 
-    List<DepotHead> getDepotHead();
+    List<DepotHead> getDepotHead()throws Exception;
 
-    List<DepotHeadVo4List> select(String type, String subType, String number, String beginTime, String endTime, String dhIds, int offset, int rows);
+    List<DepotHeadVo4List> select(String type, String subType, String number, String beginTime, String endTime, String dhIds, int offset, int rows)throws Exception;
 
-    Long countDepotHead(String type, String subType, String number, String beginTime, String endTime, String dhIds) ;
+    Long countDepotHead(String type, String subType, String number, String beginTime, String endTime, String dhIds)throws Exception ;
 
-    int insertDepotHead(String beanJson, HttpServletRequest request);
+    int insertDepotHead(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateDepotHead(String beanJson, Long id) ;
+    int updateDepotHead(String beanJson, Long id)throws Exception ;
 
-    int deleteDepotHead(Long id);
+    int deleteDepotHead(Long id)throws Exception;
 
-    int batchDeleteDepotHead(String ids);
+    int batchDeleteDepotHead(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
-    int batchSetStatus(String status, String depotHeadIDs);
+    int batchSetStatus(String status, String depotHeadIDs)throws Exception;
     /**
      * 创建一个唯一的序列号
      * */
-    String buildOnlyNumber();
+    String buildOnlyNumber()throws Exception;
 
-    Long getMaxId();
+    Long getMaxId()throws Exception;
 
-    String findMaterialsListByHeaderId(Long id) ;
+    String findMaterialsListByHeaderId(Long id)throws Exception ;
 
-    List<DepotHead> findByMonth(String monthTime);
+    List<DepotHead> findByMonth(String monthTime)throws Exception;
 
-    List<DepotHead> getDepotHeadGiftOut(String projectId);
+    List<DepotHead> getDepotHeadGiftOut(String projectId)throws Exception;
 
     List<DepotHeadVo4InDetail> findByAll(String beginTime, String endTime, String type, Integer pid, String dids,
-                                         Integer oId, Integer offset, Integer rows);
+                                         Integer oId, Integer offset, Integer rows)throws Exception;
 
-    int findByAllCount(String beginTime, String endTime, String type, Integer pid, String dids, Integer oId);
+    int findByAllCount(String beginTime, String endTime, String type, Integer pid, String dids, Integer oId)throws Exception;
 
 
     List<DepotHeadVo4InOutMCount> findInOutMaterialCount(String beginTime, String endTime, String type,
-                                                                Integer pid, String dids, Integer oId, Integer offset, Integer rows) ;
+                                                                Integer pid, String dids, Integer oId, Integer offset, Integer rows)throws Exception ;
 
 
-    int findInOutMaterialCountTotal(String beginTime, String endTime, String type, Integer pid, String dids, Integer oId);
+    int findInOutMaterialCountTotal(String beginTime, String endTime, String type, Integer pid, String dids, Integer oId)throws Exception;
 
 
     List<DepotHeadVo4StatementAccount> findStatementAccount(String beginTime, String endTime, Integer organId,
-                                                            String supType, Integer offset, Integer rows);
+                                                            String supType, Integer offset, Integer rows)throws Exception;
 
 
-    int findStatementAccountCount(String beginTime, String endTime, Integer organId, String supType);
+    int findStatementAccountCount(String beginTime, String endTime, Integer organId, String supType)throws Exception;
 
-    BigDecimal findAllMoney(Integer supplierId, String type, String subType, String mode, String endTime);
+    BigDecimal findAllMoney(Integer supplierId, String type, String subType, String mode, String endTime)throws Exception;
 
-    List<DepotHeadVo4List> getDetailByNumber(String number);
+    List<DepotHeadVo4List> getDetailByNumber(String number)throws Exception;
 
     /**
      * description:
@@ -101,5 +101,5 @@ public interface DepotHeadService {
      */
     void batchDeleteDepotHeadAndDetail(String ids) throws Exception;
 
-    int batchDeleteDepotHeadByIds(String ids);
+    int batchDeleteDepotHeadByIds(String ids)throws Exception;
 }

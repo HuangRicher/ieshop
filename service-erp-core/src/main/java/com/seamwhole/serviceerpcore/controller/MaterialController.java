@@ -7,9 +7,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.vo.MaterialVo4Unit;
 import com.seamwhole.serviceerpcore.model.Material;
+import com.seamwhole.serviceerpcore.mapper.vo.MaterialVo4Unit;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.MaterialService;
 import com.seamwhole.serviceerpcore.utils.*;
 import jxl.Sheet;
@@ -43,7 +43,7 @@ public class MaterialController {
                                @RequestParam("standard") String standard, @RequestParam("mfrs") String mfrs,
                                @RequestParam("otherField1") String otherField1, @RequestParam("otherField2") String otherField2,
                                @RequestParam("otherField3") String otherField3, @RequestParam("unit") String unit, @RequestParam("unitId") Long unitId,
-                               HttpServletRequest request) {
+                               HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int exist = materialService.checkIsExist(id, name, model, color, standard, mfrs,
                 otherField1, otherField2, otherField3, unit, unitId);
@@ -65,7 +65,7 @@ public class MaterialController {
     @PostMapping(value = "/batchSetEnable")
     public String batchSetEnable(@RequestParam("enabled") Boolean enabled,
                                  @RequestParam("materialIDs") String materialIDs,
-                                 HttpServletRequest request) {
+                                 HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = materialService.batchSetEnable(enabled, materialIDs);
         if(res > 0) {
@@ -82,7 +82,7 @@ public class MaterialController {
      * @return
      */
     @GetMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) {
+    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialVo4Unit> list = materialService.findById(id);
@@ -103,7 +103,7 @@ public class MaterialController {
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public JSONArray findBySelect(@RequestParam("mpList") String mpList, HttpServletRequest request) {
+    public JSONArray findBySelect(@RequestParam("mpList") String mpList, HttpServletRequest request) throws Exception{
         JSONArray dataArray = new JSONArray();
         try {
             List<MaterialVo4Unit> dataList = materialService.findBySelect();
@@ -160,7 +160,7 @@ public class MaterialController {
      * @return
      */
     @GetMapping(value = "/findByOrder")
-    public BaseResponseInfo findByOrder(HttpServletRequest request) {
+    public BaseResponseInfo findByOrder(HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -200,7 +200,7 @@ public class MaterialController {
                                         @RequestParam("model") String model,
                                         @RequestParam("categoryId") Long categoryId,
                                         @RequestParam("categoryIds") String categoryIds,
-                                        HttpServletRequest request, HttpServletResponse response) {
+                                        HttpServletRequest request, HttpServletResponse response)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         String message = "成功";
@@ -300,7 +300,7 @@ public class MaterialController {
         response.sendRedirect("../pages/materials/material.html");
     }
 
-    public BigDecimal parseBigDecimalEx(String str){
+    public BigDecimal parseBigDecimalEx(String str)throws Exception{
         if(!StringUtil.isEmpty(str)) {
             return  new BigDecimal(str);
         } else {
@@ -310,10 +310,10 @@ public class MaterialController {
     @RequestMapping(value = "/getMaterialEnableSerialNumberList")
     public String getMaterialEnableSerialNumberList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                               @RequestParam(value = Constants.SEARCH, required = false) String search) {
+                               @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         //查询参数
-        JSONObject obj= JSON.parseObject(search);
+        JSONObject obj=JSON.parseObject(search);
         Set<String> key= obj.keySet();
         for(String keyEach: key){
             parameterMap.put(keyEach,obj.getString(keyEach));

@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
 import com.seamwhole.serviceerpcore.model.MaterialCategory;
+import com.seamwhole.serviceerpcore.mapper.vo.TreeNode;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.MaterialCategoryService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class MaterialCategoryController {
     private MaterialCategoryService materialCategoryService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(@RequestParam("parentId") Long parentId, HttpServletRequest request) {
+    public BaseResponseInfo getAllList(@RequestParam("parentId") Long parentId, HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialCategory> materialCategoryList = materialCategoryService.getAllList(parentId);
@@ -54,7 +54,7 @@ public class MaterialCategoryController {
      * @return
      */
     @RequestMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) {
+    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialCategory> dataList = materialCategoryService.findById(id);
@@ -96,8 +96,8 @@ public class MaterialCategoryController {
        List<TreeNode> materialCategoryTree = materialCategoryService.getMaterialCategoryTree(id);
        if(materialCategoryTree!=null&&materialCategoryTree.size()>0){
            for(TreeNode node:materialCategoryTree){
-               String str= JSON.toJSONString(node);
-               JSONObject obj= JSON.parseObject(str);
+               String str=JSON.toJSONString(node);
+               JSONObject obj=JSON.parseObject(str);
                arr.add(obj) ;
            }
        }

@@ -3,8 +3,8 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.mapper.vo.AccountHeadVo4ListEx;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.AccountHeadService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @author jishenghua 752*718*920
+ */
 @RestController
 @RequestMapping(value = "/accountHead")
 public class AccountHeadController {
@@ -36,7 +38,7 @@ public class AccountHeadController {
      * @return
      */
     @GetMapping(value = "/getMaxId")
-    public BaseResponseInfo getMaxId(HttpServletRequest request) {
+    public BaseResponseInfo getMaxId(HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -64,7 +66,7 @@ public class AccountHeadController {
     public BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
                                          @RequestParam("endTime") String endTime,
                                          @RequestParam("supType") String supType,
-                                         HttpServletRequest request) {
+                                         HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -102,7 +104,7 @@ public class AccountHeadController {
      */
     @GetMapping(value = "/getDetailByNumber")
     public BaseResponseInfo getDetailByNumber(@RequestParam("billNo") String billNo,
-                                              HttpServletRequest request) {
+                                              HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         AccountHeadVo4ListEx ahl = new AccountHeadVo4ListEx();
         try {
@@ -128,7 +130,7 @@ public class AccountHeadController {
      * @param endTime
      * @return
      */
-    public BigDecimal allMoney(String getS, String type, String mode, String endTime) {
+    public BigDecimal allMoney(String getS, String type, String mode, String endTime)throws Exception {
         BigDecimal allMoney = BigDecimal.ZERO;
         try {
             Integer supplierId = Integer.valueOf(getS);
@@ -146,8 +148,11 @@ public class AccountHeadController {
         return allMoney;
     }
     /**
+     * create by: qiankunpingtai
+     * website：https://qiankunpingtai.cn
      * description:
      *  批量删除账户信息
+     * create time: 2019/3/29 10:49
      * @Param: ids
      * @return java.lang.Object
      */

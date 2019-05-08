@@ -3,13 +3,15 @@ package com.seamwhole.serviceerpcore.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.SupplierMapper;
+import com.seamwhole.serviceerpcore.model.*;
 import com.seamwhole.serviceerpcore.mapper.ext.AccountHeadExtMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.DepotHeadExtMapper;
+import com.seamwhole.serviceerpcore.mapper.SupplierMapper;
 import com.seamwhole.serviceerpcore.mapper.ext.SupplierExtMapper;
-import com.seamwhole.serviceerpcore.model.*;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.SupplierService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -36,115 +38,252 @@ public class SupplierServiceImpl implements SupplierService {
     private SupplierMapper supplierMapper;
 
     @Resource
-    private SupplierExtMapper supplierExtMapper;
+    private SupplierExtMapper supplierMapperEx;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private AccountHeadExtMapper accountHeadExtMapper;
+    private AccountHeadExtMapper accountHeadMapperEx;
     @Resource
-    private DepotHeadExtMapper depotHeadExtMapper;
+    private DepotHeadExtMapper depotHeadMapperEx;
 
-    public Supplier getSupplier(long id) {
-        return supplierMapper.selectByPrimaryKey(id);
+    public Supplier getSupplier(long id)throws Exception {
+        Supplier result=null;
+        try{
+            result=supplierMapper.selectByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Supplier> getSupplier() {
+    public List<Supplier> getSupplier()throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        return supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list=supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Supplier> select(String supplier, String type, String phonenum, String telephone, String description, int offset, int rows) {
-        return supplierExtMapper.selectByConditionSupplier(supplier, type, phonenum, telephone, description, offset, rows);
+    public List<Supplier> select(String supplier, String type, String phonenum,
+                                 String telephone, String description, int offset, int rows) throws Exception{
+        List<Supplier> list=null;
+        try{
+            list=supplierMapperEx.selectByConditionSupplier(supplier, type, phonenum, telephone, description, offset, rows);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public Long countSupplier(String supplier, String type, String phonenum, String telephone, String description) {
-        return supplierExtMapper.countsBySupplier(supplier, type, phonenum, telephone, description);
+    public Long countSupplier(String supplier, String type, String phonenum, String telephone, String description) throws Exception{
+        Long result=null;
+        try{
+            result=supplierMapperEx.countsBySupplier(supplier, type, phonenum, telephone, description);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertSupplier(String beanJson, HttpServletRequest request) {
+    public int insertSupplier(String beanJson, HttpServletRequest request)throws Exception {
         Supplier supplier = JSONObject.parseObject(beanJson, Supplier.class);
-        return supplierMapper.insertSelective(supplier);
+        int result=0;
+        try{
+            result=supplierMapper.insertSelective(supplier);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateSupplier(String beanJson, Long id) {
+    public int updateSupplier(String beanJson, Long id)throws Exception {
         Supplier supplier = JSONObject.parseObject(beanJson, Supplier.class);
+        if(supplier.getBeginneedpay() == null) {
+            supplier.setBeginneedpay(BigDecimal.ZERO);
+        }
+        if(supplier.getBeginneedget() == null) {
+            supplier.setBeginneedget(BigDecimal.ZERO);
+        }
         supplier.setId(id);
-        return supplierMapper.updateByPrimaryKeySelective(supplier);
+        int result=0;
+        try{
+            result=supplierMapper.updateByPrimaryKeySelective(supplier);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteSupplier(Long id) {
+    public int deleteSupplier(Long id)throws Exception {
+        int result=0;
+        try{
+            result=supplierMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
         return supplierMapper.deleteByPrimaryKey(id);
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteSupplier(String ids) {
+    public int batchDeleteSupplier(String ids) throws Exception{
         List<Long> idList = StringUtil.strToLongList(ids);
         SupplierExample example = new SupplierExample();
         example.createCriteria().andIdIn(idList);
-        return supplierMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=supplierMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public int checkIsNameExist(Long id, String name) {
+    public int checkIsNameExist(Long id, String name)throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andIdNotEqualTo(id).andSupplierEqualTo(name).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
-        List<Supplier> list = supplierMapper.selectByExample(example);
-        return list.size();
+        List<Supplier> list=null;
+        try{
+            list= supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return list==null?0:list.size();
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateAdvanceIn(Long supplierId, BigDecimal advanceIn){
+    public int updateAdvanceIn(Long supplierId, BigDecimal advanceIn)throws Exception{
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_SUPPLIER,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(supplierId).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
-        Supplier supplier = supplierMapper.selectByPrimaryKey(supplierId);
-        if(supplier!=null){
-            supplier.setAdvancein(supplier.getAdvancein().add(advanceIn));  //增加预收款的金额，可能增加的是负值
-            return supplierMapper.updateByPrimaryKeySelective(supplier);
-        }else{
-            return 0;
+        Supplier supplier=null;
+        try{
+            supplier = supplierMapper.selectByPrimaryKey(supplierId);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
         }
-
+        int result=0;
+        try{
+            if(supplier!=null){
+                supplier.setAdvancein(supplier.getAdvancein().add(advanceIn));  //增加预收款的金额，可能增加的是负值
+                 result=supplierMapper.updateByPrimaryKeySelective(supplier);
+            }
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Supplier> findBySelectCus() {
+    public List<Supplier> findBySelectCus()throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andTypeLike("客户").andEnabledEqualTo(true).andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
-        return supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list = supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Supplier> findBySelectSup() {
+    public List<Supplier> findBySelectSup()throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andTypeLike("供应商").andEnabledEqualTo(true)
                 .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
-        return supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list = supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Supplier> findBySelectRetail() {
+    public List<Supplier> findBySelectRetail()throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andTypeLike("会员").andEnabledEqualTo(true)
                 .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
-        return supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list = supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
-    public List<Supplier> findById(Long supplierId) {
+    public List<Supplier> findById(Long supplierId)throws Exception {
         SupplierExample example = new SupplierExample();
         example.createCriteria().andIdEqualTo(supplierId)
                 .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
-        return supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list = supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchSetEnable(Boolean enabled, String supplierIDs) {
+    public int batchSetEnable(Boolean enabled, String supplierIDs)throws Exception {
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_SUPPLIER,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(supplierIDs).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
@@ -153,20 +292,47 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setEnabled(enabled);
         SupplierExample example = new SupplierExample();
         example.createCriteria().andIdIn(ids);
-        return supplierMapper.updateByExampleSelective(supplier, example);
+        int result=0;
+        try{
+            result = supplierMapper.updateByExampleSelective(supplier, example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Supplier> findUserCustomer(){
+    public List<Supplier> findUserCustomer()throws Exception{
         SupplierExample example = new SupplierExample();
         example.createCriteria().andTypeEqualTo("客户")
                 .andDeleteFlagNotEqualTo(BusinessConstants.DELETE_FLAG_DELETED);
         example.setOrderByClause("id desc");
-        List<Supplier> list = supplierMapper.selectByExample(example);
+        List<Supplier> list=null;
+        try{
+            list = supplierMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         return list;
     }
 
-    public List<Supplier> findByAll(String supplier, String type, String phonenum, String telephone, String description) {
-        return supplierExtMapper.findByAll(supplier, type, phonenum, telephone, description);
+    public List<Supplier> findByAll(String supplier, String type, String phonenum,
+                                    String telephone, String description) throws Exception{
+        List<Supplier> list=null;
+        try{
+            list = supplierMapperEx.findByAll(supplier, type, phonenum, telephone, description);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public BaseResponseInfo importExcel(List<Supplier> mList) throws Exception {
@@ -182,6 +348,8 @@ public class SupplierServiceImpl implements SupplierService {
             info.code = 200;
             data.put("message", "成功");
         } catch (Exception e) {
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
             e.printStackTrace();
             info.code = 500;
             data.put("message", e.getMessage());
@@ -190,13 +358,22 @@ public class SupplierServiceImpl implements SupplierService {
         return info;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteSupplierByIds(String ids) {
+    public int batchDeleteSupplierByIds(String ids)throws Exception {
         logService.insertLog(BusinessConstants.LOG_INTERFACE_NAME_SUPPLIER,
                 new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(ids).toString(),
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
         User userInfo=userService.getCurrentUser();
         String [] idArray=ids.split(",");
-        return supplierExtMapper.batchDeleteSupplierByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        int result=0;
+        try{
+            result = supplierMapperEx.batchDeleteSupplierByIds(new Date(),userInfo==null?null:userInfo.getId(),idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     /**
      * create by: qiankunpingtai
@@ -223,7 +400,15 @@ public class SupplierServiceImpl implements SupplierService {
         /**
          * 校验财务主表	jsh_accounthead
          * */
-        List<AccountHead> accountHeadList=accountHeadExtMapper.getAccountHeadListByOrganIds(idArray);
+        List<AccountHead> accountHeadList=null;
+        try{
+            accountHeadList = accountHeadMapperEx.getAccountHeadListByOrganIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(accountHeadList!=null&&accountHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,OrganIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);
@@ -233,7 +418,15 @@ public class SupplierServiceImpl implements SupplierService {
         /**
          * 校验单据主表	jsh_depothead
          * */
-        List<DepotHead> depotHeadList=depotHeadExtMapper.getDepotHeadListByOrganIds(idArray);
+        List<DepotHead> depotHeadList=null;
+        try{
+            depotHeadList = depotHeadMapperEx.getDepotHeadListByOrganIds(idArray);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
         if(depotHeadList!=null&&depotHeadList.size()>0){
             logger.error("异常码[{}],异常提示[{}],参数,OrganIds[{}]",
                     ExceptionConstants.DELETE_FORCE_CONFIRM_CODE,ExceptionConstants.DELETE_FORCE_CONFIRM_MSG,ids);

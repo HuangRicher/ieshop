@@ -9,25 +9,25 @@ import java.util.List;
 public interface UnitService {
 
 
-    Unit getUnit(long id);
+    Unit getUnit(long id)throws Exception;
 
-    List<Unit> getUnit();
+    List<Unit> getUnit()throws Exception;
 
-    List<Unit> select(String name, int offset, int rows);
+    List<Unit> select(String name, int offset, int rows)throws Exception;
 
-    Long countUnit(String name);
+    Long countUnit(String name)throws Exception;
 
-    int insertUnit(String beanJson, HttpServletRequest request);
+    int insertUnit(String beanJson, HttpServletRequest request)throws Exception;
 
-    int updateUnit(String beanJson, Long id);
+    int updateUnit(String beanJson, Long id)throws Exception;
 
-    int deleteUnit(Long id);
+    int deleteUnit(Long id)throws Exception;
 
-    int batchDeleteUnit(String ids);
+    int batchDeleteUnit(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
-    int batchDeleteUnitByIds(String ids);
+    int batchDeleteUnitByIds(String ids)throws Exception;
 
     /**
      *  正常删除，要考虑数据完整性，进行完整性校验

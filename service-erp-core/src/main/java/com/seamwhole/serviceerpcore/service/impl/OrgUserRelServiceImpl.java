@@ -2,12 +2,17 @@ package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
-import com.seamwhole.serviceerpcore.mapper.OrgUserRelMapper;
-import com.seamwhole.serviceerpcore.mapper.ext.OrgUserRelExtMapper;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
 import com.seamwhole.serviceerpcore.model.OrgUserRel;
 import com.seamwhole.serviceerpcore.model.OrgUserRelExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.mapper.OrgUserRelMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.OrgUserRelExtMapper;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.service.OrgUserRelService;
+import com.seamwhole.serviceerpcore.service.OrganizationService;
+import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,78 +24,118 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Description
- *
- * @Author: cjl
- * @Date: 2019/3/11 18:11
- */
+
 @Service
 public class OrgUserRelServiceImpl implements OrgUserRelService {
-    private Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(OrgUserRelServiceImpl.class);
 
     @Resource
-    private OrgUserRelMapper orgUserRelMapper;
+    private OrgUserRelMapper orgaUserRelMapper;
     @Resource
-    private OrgUserRelExtMapper orgUserRelExtMapper;
+    private OrgUserRelExtMapper orgaUserRelMapperEx;
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
     @Resource
-    private LogServiceImpl logService;
+    private LogService logService;
+
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertOrgUserRel(String beanJson, HttpServletRequest request) {
-        OrgUserRel OrgUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);
-        return orgUserRelMapper.insertSelective(OrgUserRel);
+    public int insertOrgUserRel(String beanJson, HttpServletRequest request) throws Exception{
+        OrgUserRel orgaUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);
+        int result=0;
+        try{
+            result=orgaUserRelMapper.insertSelective(orgaUserRel);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateOrgUserRel(String beanJson, Long id) {
-        OrgUserRel OrgUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);
-        OrgUserRel.setId(id);
-        return orgUserRelMapper.updateByPrimaryKeySelective(OrgUserRel);
+    public int updateOrgUserRel(String beanJson, Long id) throws Exception{
+        OrgUserRel orgaUserRel = JSONObject.parseObject(beanJson, OrgUserRel.class);
+        orgaUserRel.setId(id);
+        int result=0;
+        try{
+            result=orgaUserRelMapper.updateByPrimaryKeySelective(orgaUserRel);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteOrgUserRel(Long id) {
-        return orgUserRelMapper.deleteByPrimaryKey(id);
+    public int deleteOrgUserRel(Long id)throws Exception {
+        int result=0;
+        try{
+            result=orgaUserRelMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteOrgUserRel(String ids) {
+    public int batchDeleteOrgUserRel(String ids)throws Exception {
         List<Long> idList = StringUtil.strToLongList(ids);
         OrgUserRelExample example = new OrgUserRelExample();
         example.createCriteria().andIdIn(idList);
-        return orgUserRelMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=orgaUserRelMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
     /**
      * create by: cjl
      * description:
      *  新增机构用户关联关系,反显id
      * create time: 2019/3/12 9:40
-     * @Param: OrgUserRel
+     * @Param: orgaUserRel
      * @return void
      */
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public OrgUserRel addOrgUserRel(OrgUserRel OrgUserRel) throws Exception{
+    public OrgUserRel addOrgUserRel(OrgUserRel orgaUserRel) throws Exception{
         Date date = new Date();
         User userInfo=userService.getCurrentUser();
         //创建时间
-        if(OrgUserRel.getCreateTime()==null){
-            OrgUserRel.setCreateTime(date);
+        if(orgaUserRel.getCreateTime()==null){
+            orgaUserRel.setCreateTime(date);
         }
         //创建人
-        if(OrgUserRel.getCreator()==null){
-            OrgUserRel.setCreator(userInfo==null?null:userInfo.getId());
+        if(orgaUserRel.getCreator()==null){
+            orgaUserRel.setCreator(userInfo==null?null:userInfo.getId());
         }
         //更新时间
-        if(OrgUserRel.getUpdateTime()==null){
-            OrgUserRel.setUpdateTime(date);
+        if(orgaUserRel.getUpdateTime()==null){
+            orgaUserRel.setUpdateTime(date);
         }
         //更新人
-        if(OrgUserRel.getUpdater()==null){
-            OrgUserRel.setUpdater(userInfo==null?null:userInfo.getId());
+        if(orgaUserRel.getUpdater()==null){
+            orgaUserRel.setUpdater(userInfo==null?null:userInfo.getId());
         }
-        OrgUserRel.setDeleteFlag(BusinessConstants.DELETE_FLAG_EXISTS);
-        int i=orgUserRelExtMapper.addOrgaUserRel(OrgUserRel);
-        if(i>0){
-            return OrgUserRel;
+        orgaUserRel.setDeleteFlag(BusinessConstants.DELETE_FLAG_EXISTS);
+        int result=0;
+        try{
+            result=orgaUserRelMapperEx.addOrgaUserRel(orgaUserRel);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        if(result>0){
+            return orgaUserRel;
         }
         return null;
     }
@@ -99,23 +144,31 @@ public class OrgUserRelServiceImpl implements OrgUserRelService {
      * description:
      *  更新机构用户关联关系
      * create time: 2019/3/12 9:40
-     * @Param: OrgUserRel
+     * @Param: orgaUserRel
      * @return void
      */
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public OrgUserRel updateOrgUserRel(OrgUserRel OrgUserRel) {
+    public OrgUserRel updateOrgUserRel(OrgUserRel orgUserRel) throws Exception{
         User userInfo=userService.getCurrentUser();
         //更新时间
-        if(OrgUserRel.getUpdateTime()==null){
-            OrgUserRel.setUpdateTime(new Date());
+        if(orgUserRel.getUpdateTime()==null){
+            orgUserRel.setUpdateTime(new Date());
         }
         //更新人
-        if(OrgUserRel.getUpdater()==null){
-            OrgUserRel.setUpdater(userInfo==null?null:userInfo.getId());
+        if(orgUserRel.getUpdater()==null){
+            orgUserRel.setUpdater(userInfo==null?null:userInfo.getId());
         }
-       int i= orgUserRelExtMapper.updateOrgaUserRel(OrgUserRel);
-        if(i>0){
-            return OrgUserRel;
+        int result=0;
+        try{
+            result=orgaUserRelMapperEx.updateOrgaUserRel(orgUserRel);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        if(result>0){
+            return orgUserRel;
         }
         return null;
     }

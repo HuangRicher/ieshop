@@ -3,10 +3,10 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.model.App;
 import com.seamwhole.serviceerpcore.model.User;
 import com.seamwhole.serviceerpcore.model.UserBusiness;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.AppService;
 import com.seamwhole.serviceerpcore.service.UserBusinessService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
+/**
+ * @author ji_sheng_hua 752*718*920
+ */
 @RestController
 @RequestMapping(value = "/app")
 public class AppController {
@@ -47,7 +49,7 @@ public class AppController {
      * @return
      */
     @GetMapping(value = "/findAppByUserId")
-    public JSONObject findAppByUserId(@RequestParam("userId") String userId, HttpServletRequest request) {
+    public JSONObject findAppByUserId(@RequestParam("userId") String userId, HttpServletRequest request)throws Exception {
         List<UserBusiness> roleList = userBusinessService.findRoleByUserId(userId);
         String roles = null;
         if(roleList!=null && roleList.size()>0 && roleList.get(0)!=null){
@@ -108,7 +110,7 @@ public class AppController {
     }
 
     @GetMapping(value = "/findDesk")
-    public JSONObject findDesk(HttpServletRequest request) {
+    public JSONObject findDesk(HttpServletRequest request)throws Exception {
         JSONObject obj = new JSONObject();
         List<App> dockList = appService.findDock();
         JSONArray dockArray = new JSONArray();
@@ -159,7 +161,7 @@ public class AppController {
      */
     @PostMapping(value = "/findRoleAPP")
     public JSONArray findRoleAPP(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                 HttpServletRequest request) {
+                                 HttpServletRequest request)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<App> dataListApp = appService.findRoleAPP();
@@ -228,7 +230,7 @@ public class AppController {
      */
     @PostMapping(value = "/uploadImg")
     public BaseResponseInfo uploadImg(MultipartFile fileInfo, @RequestParam("fileInfoName") String fileName,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             if (fileInfo != null) {
@@ -254,10 +256,14 @@ public class AppController {
         }
         return res;
     }
-
-
     /**
+     * create by: qiankunpingtai
+     * website：https://qiankunpingtai.cn
+     * description:
      *  批量删除应用信息
+     * create time: 2019/3/29 11:15
+     * @Param: ids
+     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteAppByIds")
     public Object batchDeleteAppByIds(@RequestParam("ids") String ids) throws Exception {

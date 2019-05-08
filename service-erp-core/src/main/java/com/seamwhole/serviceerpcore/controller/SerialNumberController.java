@@ -3,9 +3,9 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.mapper.vo.SerialNumberEx;
 import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.vo.SerialNumberEx;
 import com.seamwhole.serviceerpcore.service.SerialNumberService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
@@ -15,12 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Description
- *
- * @Author: cjl
- * @Date: 2019/1/22 10:29
- */
+
 @RestController
 public class SerialNumberController {
     private Logger logger = LoggerFactory.getLogger(SerialNumberController.class);
@@ -61,7 +56,7 @@ public class SerialNumberController {
      */
     @PostMapping("/serialNumber/addSerialNumber")
     @ResponseBody
-    public Object addSerialNumber(@RequestParam("info") String beanJson){
+    public Object addSerialNumber(@RequestParam("info") String beanJson)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         SerialNumberEx sne= JSON.parseObject(beanJson, SerialNumberEx.class);
         serialNumberService.addSerialNumber(sne);
@@ -78,7 +73,7 @@ public class SerialNumberController {
      */
     @PostMapping("/serialNumber/updateSerialNumber")
     @ResponseBody
-    public Object updateSerialNumber(@RequestParam("info") String beanJson){
+    public Object updateSerialNumber(@RequestParam("info") String beanJson)throws Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
         SerialNumberEx sne= JSON.parseObject(beanJson, SerialNumberEx.class);
@@ -100,7 +95,7 @@ public class SerialNumberController {
     @PostMapping("/serialNumber/batAddSerialNumber")
     @ResponseBody
     public Object batAddSerialNumber(@RequestParam("materialName") String materialName, @RequestParam("serialNumberPrefix") String serialNumberPrefix,
-                                     @RequestParam("batAddTotal") Integer batAddTotal, @RequestParam("remark") String remark){
+                                     @RequestParam("batAddTotal") Integer batAddTotal, @RequestParam("remark") String remark)throws Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
         serialNumberService.batAddSerialNumber(materialName,serialNumberPrefix,batAddTotal,remark);

@@ -2,12 +2,14 @@ package com.seamwhole.serviceerpcore.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
-import com.seamwhole.serviceerpcore.mapper.LogMapper;
-import com.seamwhole.serviceerpcore.mapper.ext.LogExtMapper;
-import com.seamwhole.serviceerpcore.mapper.vo.LogVo4List;
+import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
 import com.seamwhole.serviceerpcore.model.Log;
 import com.seamwhole.serviceerpcore.model.LogExample;
 import com.seamwhole.serviceerpcore.model.User;
+import com.seamwhole.serviceerpcore.mapper.LogMapper;
+import com.seamwhole.serviceerpcore.mapper.ext.LogExtMapper;
+import com.seamwhole.serviceerpcore.mapper.vo.LogVo4List;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.LogService;
 import com.seamwhole.serviceerpcore.utils.StringUtil;
 import org.slf4j.Logger;
@@ -29,52 +31,124 @@ public class LogServiceImpl implements LogService {
     private LogMapper logMapper;
 
     @Resource
-    private LogExtMapper logExtMapper;
+    private LogExtMapper logMapperEx;
 
-    public Log getLog(long id) {
-        return logMapper.selectByPrimaryKey(id);
+    public Log getLog(long id)throws Exception {
+        Log result=null;
+        try{
+            result=logMapper.selectByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
-    public List<Log> getLog() {
+    public List<Log> getLog()throws Exception {
         LogExample example = new LogExample();
-        return logMapper.selectByExample(example);
+        List<Log> list=null;
+        try{
+            list=logMapper.selectByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     public List<LogVo4List> select(String operation, Integer usernameID, String clientIp, Integer status, String beginTime, String endTime,
-                                   String contentdetails, int offset, int rows) {
-        return logExtMapper.selectByConditionLog(operation, usernameID, clientIp, status, beginTime, endTime,
-                            contentdetails, offset, rows);
+                                   String contentdetails, int offset, int rows)throws Exception {
+        List<LogVo4List> list=null;
+        try{
+            list=logMapperEx.selectByConditionLog(operation, usernameID, clientIp, status, beginTime, endTime,
+                    contentdetails, offset, rows);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return list;
     }
 
     public Long countLog(String operation, Integer usernameID, String clientIp, Integer status, String beginTime, String endTime,
-                        String contentdetails) {
-        return logExtMapper.countsByLog(operation, usernameID, clientIp, status, beginTime, endTime, contentdetails);
+                        String contentdetails)throws Exception {
+        Long result=null;
+        try{
+            result=logMapperEx.countsByLog(operation, usernameID, clientIp, status, beginTime, endTime, contentdetails);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_READ_FAIL_CODE,ExceptionConstants.DATA_READ_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_READ_FAIL_CODE,
+                    ExceptionConstants.DATA_READ_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insertLog(String beanJson, HttpServletRequest request) {
+    public int insertLog(String beanJson, HttpServletRequest request) throws Exception{
         Log log = JSONObject.parseObject(beanJson, Log.class);
-        return logMapper.insertSelective(log);
+        int result=0;
+        try{
+            result=logMapper.insertSelective(log);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int updateLog(String beanJson, Long id) {
+    public int updateLog(String beanJson, Long id)throws Exception {
         Log log = JSONObject.parseObject(beanJson, Log.class);
         log.setId(id);
-        return logMapper.updateByPrimaryKeySelective(log);
+        int result=0;
+        try{
+            result=logMapper.updateByPrimaryKeySelective(log);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int deleteLog(Long id) {
-        return logMapper.deleteByPrimaryKey(id);
+    public int deleteLog(Long id)throws Exception {
+        int result=0;
+        try{
+            result=logMapper.deleteByPrimaryKey(id);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDeleteLog(String ids) {
+    public int batchDeleteLog(String ids)throws Exception {
         List<Long> idList = StringUtil.strToLongList(ids);
         LogExample example = new LogExample();
         example.createCriteria().andIdIn(idList);
-        return logMapper.deleteByExample(example);
+        int result=0;
+        try{
+            result=logMapper.deleteByExample(example);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+        return result;
     }
 
     /**
@@ -82,7 +156,7 @@ public class LogServiceImpl implements LogService {
      * @param request
      * @return
      */
-    public Long getUserId(HttpServletRequest request) {
+    public Long getUserId(HttpServletRequest request) throws Exception{
         Object userInfo = request.getSession().getAttribute("user");
         if(userInfo!=null) {
             User user = (User) userInfo;
@@ -92,7 +166,7 @@ public class LogServiceImpl implements LogService {
         }
     }
 
-    public String getModule(String apiName){
+    public String getModule(String apiName)throws Exception{
         String moduleName = null;
         switch (apiName) {
             case BusinessConstants.LOG_INTERFACE_NAME_USER:
@@ -141,7 +215,7 @@ public class LogServiceImpl implements LogService {
         return moduleName;
     }
 
-    public void insertLog(String apiName, String type, HttpServletRequest request){
+    public void insertLog(String apiName, String type, HttpServletRequest request)throws Exception{
         Log log = new Log();
         log.setUserid(getUserId(request));
         log.setOperation(getModule(apiName));
@@ -151,7 +225,15 @@ public class LogServiceImpl implements LogService {
         log.setStatus(status);
         log.setContentdetails(type + getModule(apiName));
         log.setRemark(type + getModule(apiName));
-        logMapper.insertSelective(log);
+        try{
+            logMapper.insertSelective(log);
+        }catch(Exception e){
+            logger.error("异常码[{}],异常提示[{}],异常[{}]",
+                    ExceptionConstants.DATA_WRITE_FAIL_CODE,ExceptionConstants.DATA_WRITE_FAIL_MSG,e);
+            throw new BusinessRunTimeException(ExceptionConstants.DATA_WRITE_FAIL_CODE,
+                    ExceptionConstants.DATA_WRITE_FAIL_MSG);
+        }
+
     }
 
 }

@@ -9,34 +9,30 @@ import java.util.List;
 public interface InOutItemService {
 
 
-    InOutItem getInOutItem(long id);
+    InOutItem getInOutItem(long id)throws Exception;
 
-    List<InOutItem> getInOutItem();
+    List<InOutItem> getInOutItem()throws Exception;
 
-    List<InOutItem> select(String name, String type, String remark, int offset, int rows);
+    List<InOutItem> select(String name, String type, String remark, int offset, int rows)throws Exception;
 
-    Long countInOutItem(String name, String type, String remark) ;
+    Long countInOutItem(String name, String type, String remark)throws Exception ;
 
-    int insertInOutItem(String beanJson, HttpServletRequest request) ;
+    int insertInOutItem(String beanJson, HttpServletRequest request)throws Exception ;
 
-    int updateInOutItem(String beanJson, Long id);
+    int updateInOutItem(String beanJson, Long id)throws Exception;
 
-    int deleteInOutItem(Long id);
+    int deleteInOutItem(Long id)throws Exception;
 
-    int batchDeleteInOutItem(String ids);
+    int batchDeleteInOutItem(String ids)throws Exception;
 
-    int checkIsNameExist(Long id, String name);
+    int checkIsNameExist(Long id, String name)throws Exception;
 
-    List<InOutItem> findBySelect(String type);
+    List<InOutItem> findBySelect(String type)throws Exception;
 
-    int batchDeleteInOutItemByIds(String ids) ;
+    int batchDeleteInOutItemByIds(String ids)throws Exception ;
 
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  正常删除，要考虑数据完整性，进行完整性校验
-     * create time: 2019/4/10 16:23
      * @Param: ids
      * @return int
      */

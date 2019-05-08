@@ -7,15 +7,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
-import com.seamwhole.serviceerpcore.mapper.vo.DepotEx;
 import com.seamwhole.serviceerpcore.model.Depot;
+import com.seamwhole.serviceerpcore.mapper.vo.DepotEx;
+import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.DepotService;
 import com.seamwhole.serviceerpcore.service.UserBusinessService;
-import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
-import com.seamwhole.serviceerpcore.utils.Constants;
-import com.seamwhole.serviceerpcore.utils.ErpInfo;
-import com.seamwhole.serviceerpcore.utils.PageQueryInfo;
+import com.seamwhole.serviceerpcore.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -26,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
-
 
 @RestController
 @RequestMapping(value = "/depot")
@@ -40,7 +36,7 @@ public class DepotController {
     private UserBusinessService userBusinessService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(HttpServletRequest request) {
+    public BaseResponseInfo getAllList(HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<Depot> depotList = depotService.getAllList();
@@ -63,7 +59,7 @@ public class DepotController {
      */
     @PostMapping(value = "/findUserDepot")
     public JSONArray findUserDepot(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                   HttpServletRequest request) {
+                                   HttpServletRequest request) throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Depot> dataList = depotService.findUserDepot();
@@ -103,7 +99,7 @@ public class DepotController {
 
     @RequestMapping(value = "/findDepotByUserId")
     public JSONArray findDepotByUserId(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                       HttpServletRequest request) {
+                                       HttpServletRequest request) throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Depot> dataList = depotService.findUserDepot();
@@ -130,19 +126,24 @@ public class DepotController {
         }
         return arr;
     }
-
-
     /**
+     * create by: cjl
+     * description:
      * 查询仓库列表信息
+     * create time: 2019/2/25 14:32
+     * @Param: pageSize
+     * @Param: currentPage
+     * @Param: search
+     * @return java.lang.String
      */
     @RequestMapping(value = "/getDepotList")
     public String getDepotList(
             @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-            @RequestParam(value = Constants.SEARCH, required = false) String search) {
+            @RequestParam(value = Constants.SEARCH, required = false) String search) throws Exception{
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         //查询参数
-        JSONObject obj= JSON.parseObject(search);
+        JSONObject obj=JSON.parseObject(search);
         Set<String> key= obj.keySet();
         for(String keyEach: key){
             parameterMap.put(keyEach,obj.getString(keyEach));
@@ -169,10 +170,14 @@ public class DepotController {
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
-
-
     /**
+     * create by: qiankunpingtai
+     * website：https://qiankunpingtai.cn
+     * description:
      *  批量删除仓库信息
+     * create time: 2019/3/29 11:15
+     * @Param: ids
+     * @return java.lang.Object
      */
     @RequestMapping(value = "/batchDeleteDepotByIds")
     public Object batchDeleteDepotByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
@@ -197,5 +202,16 @@ public class DepotController {
         }
         return result;
     }
-
+    @PostMapping(value = "/updateDepotIsDefault")
+    public String updateDepotIsDefault(@RequestParam("isDefault") Boolean isDefault,
+                                        @RequestParam("depotID") Long depotID,
+                                        HttpServletRequest request) throws Exception{
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        int res = depotService.updateDepotIsDefault(isDefault, depotID);
+        if(res > 0) {
+            return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+        } else {
+            return returnJson(objectMap, ErpInfo.ERROR.name, ErpInfo.ERROR.code);
+        }
+    }
 }
