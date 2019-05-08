@@ -1,15 +1,15 @@
 package com.seamwhole.nettyserver.protocol;
 
 import io.netty.buffer.ByteBuf;
-import the.flash.protocol.request.*;
-import the.flash.protocol.response.*;
-import the.flash.serialize.Serializer;
-import the.flash.serialize.impl.JSONSerializer;
+import com.seamwhole.nettyserver.protocol.request.*;
+import com.seamwhole.nettyserver.protocol.response.*;
+import com.seamwhole.nettyserver.serialize.Serializer;
+import com.seamwhole.nettyserver.serialize.impl.JSONSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static the.flash.protocol.command.Command.*;
+import static com.seamwhole.nettyserver.protocol.command.Command.*;
 
 public class PacketCodec {
 

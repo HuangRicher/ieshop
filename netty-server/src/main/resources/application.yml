@@ -1,0 +1,30 @@
+server:
+  port: 10011
+netty:
+  server:
+    port: 19099
+spring:
+  application:
+    name: netty-server
+  redis:
+    database: 4
+    host: 120.78.170.118 #120.55.167.171 120.78.170.118
+    port: 6379
+    password: 123456
+    lettuce:
+      shutdown-timeout: 30000ms
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 0
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+  SocketTimeout: 60000

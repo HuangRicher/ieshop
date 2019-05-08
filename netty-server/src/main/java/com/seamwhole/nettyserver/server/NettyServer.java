@@ -13,17 +13,21 @@ import com.seamwhole.nettyserver.server.handler.AuthHandler;
 import com.seamwhole.nettyserver.server.handler.HeartBeatRequestHandler;
 import com.seamwhole.nettyserver.server.handler.IMHandler;
 import com.seamwhole.nettyserver.server.handler.LoginRequestHandler;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 
+@Component
 public class NettyServer {
 
-    private static final int PORT = 8000;
+    @Value("${netty.server.port}")
+    private Integer port;
 
-    public static void main(String[] args) {
+    private void startServer() {
         NioEventLoopGroup boosGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-
         final ServerBootstrap serverBootstrap = new ServerBootstrap();
         serverBootstrap
                 .group(boosGroup, workerGroup)
@@ -43,9 +47,7 @@ public class NettyServer {
                         ch.pipeline().addLast(IMHandler.INSTANCE);
                     }
                 });
-
-
-        bind(serverBootstrap, PORT);
+        bind(serverBootstrap, port);
     }
 
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
@@ -56,5 +58,15 @@ public class NettyServer {
                 System.err.println("端口[" + port + "]绑定失败!");
             }
         });
+    }
+
+    @PostConstruct()
+    public void init(){
+        //需要开启一个新的线程来执行netty server 服务器
+        new Thread(new Runnable() {
+            public void run() {
+                startServer();
+            }
+        }).start();
     }
 }

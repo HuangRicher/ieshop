@@ -2,7 +2,7 @@ package com.seamwhole.nettyserver.client.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import the.flash.protocol.response.JoinGroupResponsePacket;
+import com.seamwhole.nettyserver.protocol.response.JoinGroupResponsePacket;
 
 public class JoinGroupResponseHandler extends SimpleChannelInboundHandler<JoinGroupResponsePacket> {
 
