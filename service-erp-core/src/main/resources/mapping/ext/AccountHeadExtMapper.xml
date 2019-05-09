@@ -10,10 +10,10 @@
 
     <select id="selectByConditionAccountHead" parameterType="com.seamwhole.serviceerpcore.model.AccountHeadExample" resultMap="ResultMapEx">
         select ah.*, s.supplier OrganName, p.Name HandsPersonName, a.Name AccountName
-        from jsh_accounthead ah
-        left join jsh_supplier s on ah.OrganId=s.id and ifnull(s.delete_Flag,'0') !='1'
-        left join jsh_person p on ah.HandsPersonId=p.id and ifnull(p.delete_Flag,'0') !='1'
-        left join jsh_account a on ah.AccountId=a.id and ifnull(a.delete_Flag,'0') !='1'
+        from erp_accounthead ah
+        left join erp_supplier s on ah.OrganId=s.id and ifnull(s.delete_Flag,'0') !='1'
+        left join erp_person p on ah.HandsPersonId=p.id and ifnull(p.delete_Flag,'0') !='1'
+        left join erp_account a on ah.AccountId=a.id and ifnull(a.delete_Flag,'0') !='1'
         where 1=1
         <if test="billNo != null">
             and ah.BillNo like '%${billNo}%'
@@ -38,7 +38,7 @@
     <select id="countsByAccountHead" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_accounthead
+        FROM erp_accounthead
         WHERE 1=1
         <if test="billNo != null">
             and BillNo like '%${billNo}%'
@@ -56,11 +56,11 @@
     </select>
 
     <select id="getMaxId" resultType="java.lang.Long">
-        select max(Id) as Id from jsh_accounthead
+        select max(Id) as Id from erp_accounthead
     </select>
 
     <select id="findAllMoney" resultType="java.math.BigDecimal">
-        select sum(${modeName}) as allMoney from jsh_accounthead
+        select sum(${modeName}) as allMoney from erp_accounthead
         where Type='${type}'
         and OrganId =${supplierId} and BillTime <![CDATA[ <='${endTime}']]>
         and ifnull(delete_Flag,'0') !='1'
@@ -68,10 +68,10 @@
 
     <select id="getDetailByNumber" parameterType="com.seamwhole.serviceerpcore.model.AccountHeadExample" resultMap="ResultMapEx">
         select ah.*, s.supplier OrganName, p.Name HandsPersonName, a.Name AccountName
-        from jsh_accounthead ah
-        left join jsh_supplier s on ah.OrganId=s.id and ifnull(s.delete_Flag,'0') !='1'
-        left join jsh_person p on ah.HandsPersonId=p.id and ifnull(p.delete_Flag,'0') !='1'
-        left join jsh_account a on ah.AccountId=a.id and ifnull(a.delete_Flag,'0') !='1'
+        from erp_accounthead ah
+        left join erp_supplier s on ah.OrganId=s.id and ifnull(s.delete_Flag,'0') !='1'
+        left join erp_person p on ah.HandsPersonId=p.id and ifnull(p.delete_Flag,'0') !='1'
+        left join erp_account a on ah.AccountId=a.id and ifnull(a.delete_Flag,'0') !='1'
         where 1=1
         <if test="billNo != null">
             and ah.BillNo = '${billNo}'
@@ -79,7 +79,7 @@
         and ifnull(ah.delete_Flag,'0') !='1'
     </select>
     <update id="batchDeleteAccountHeadByIds">
-        update jsh_accounthead
+        update erp_accounthead
         set delete_Flag='1'
         where 1=1
         and id in (
@@ -90,20 +90,8 @@
     </update>
     <select id="getAccountHeadListByAccountIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
         select
-        <include refid="com.jsh.erp.datasource.mappers.AccountHeadMapper.Base_Column_List" />
-        from jsh_accounthead
-        where 1=1
-        and accountId in (
-        <foreach collection="accountIds" item="accountId" separator=",">
-            #{accountId}
-        </foreach>
-        )
-        and ifnull(delete_Flag,'0') !='1'
-    </select>
-    <select id="getAccountHeadListByAccountIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
-        select
         <include refid="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.Base_Column_List" />
-        from jsh_accounthead
+        from erp_accounthead
         where 1=1
         and accountId in (
         <foreach collection="accountIds" item="accountId" separator=",">
@@ -112,10 +100,11 @@
         )
         and ifnull(delete_Flag,'0') !='1'
     </select>
+
     <select id="getAccountHeadListByOrganIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.Base_Column_List" />
-        from jsh_accounthead
+        from erp_accounthead
         where 1=1
         and organId in (
         <foreach collection="organIds" item="organId" separator=",">
@@ -127,7 +116,7 @@
     <select id="getAccountHeadListByHandsPersonIds"  resultMap="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.AccountHeadMapper.Base_Column_List" />
-        from jsh_accounthead
+        from erp_accounthead
         where 1=1
         and handsPersonId in (
         <foreach collection="handsPersonIds" item="handsPersonId" separator=",">

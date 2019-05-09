@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    Id, Name, SerialNo, InitialAmount, CurrentAmount, Remark, IsDefault, tenant_id, delete_Flag
+    Id, `Name`, SerialNo, InitialAmount, CurrentAmount, Remark, IsDefault, tenant_id, delete_Flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seamwhole.serviceerpcore.model.AccountExample" >
     select

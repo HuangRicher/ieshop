@@ -96,7 +96,7 @@ public class AppController {
                 item.put("title", app.getName());
                 item.put("type", app.getType());
                 item.put("icon", "../../upload/images/deskIcon/" + app.getIcon());
-                item.put("url", "../../pages/common/menu.html?appID=" + app.getNumber() + "&id=" + app.getId());
+                item.put("url", "/common/menu?appID=" + app.getNumber() + "&id=" + app.getId());
                 item.put("width", app.getWidth());
                 item.put("height", app.getHeight());
                 item.put("isresize", app.getResize());
@@ -257,15 +257,11 @@ public class AppController {
         return res;
     }
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除应用信息
-     * create time: 2019/3/29 11:15
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteAppByIds")
+    @PostMapping(value = "/batchDeleteAppByIds")
     public Object batchDeleteAppByIds(@RequestParam("ids") String ids) throws Exception {
 
         JSONObject result = ExceptionConstants.standardSuccess();

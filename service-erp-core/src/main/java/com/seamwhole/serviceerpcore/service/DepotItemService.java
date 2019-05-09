@@ -1,9 +1,6 @@
 package com.seamwhole.serviceerpcore.service;
 
-import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4DetailByTypeAndMId;
-import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4HeaderId;
-import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4Material;
-import com.seamwhole.serviceerpcore.mapper.vo.DepotItemVo4WithInfoEx;
+import com.seamwhole.serviceerpcore.mapper.vo.*;
 import com.seamwhole.serviceerpcore.model.DepotItem;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,4 +80,8 @@ public interface DepotItemService {
     int getCurrentInStock(Long materialId)throws Exception;
 
     int batchDeleteDepotItemByIds(String ids)throws Exception;
+
+    List<DepotItemStockWarningCount> findStockWarningCount(int offset, Integer rows, Integer pid);
+
+    int findStockWarningCountTotal(Integer pid);
 }

@@ -4,10 +4,6 @@ spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
-  thymeleaf:
-    prefix: classpath:/templates/
-    cache: false
-    suffix: .html
   ##数据库连接信息
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

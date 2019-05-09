@@ -11,9 +11,7 @@ import com.seamwhole.serviceerpcore.service.OrganizationService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +32,7 @@ public class OrganizationController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -81,7 +79,7 @@ public class OrganizationController {
     /**
      * 获取机构树数据
      */
-    @RequestMapping(value = "/getOrganizationTree")
+    @GetMapping(value = "/getOrganizationTree")
     public JSONArray getOrganizationTree(@RequestParam("id") Long id) throws Exception{
        JSONArray arr=new JSONArray();
        List<TreeNode> organizationTree= organizationService.getOrganizationTree(id);
@@ -99,7 +97,7 @@ public class OrganizationController {
     /**
      *  新增机构信息
      */
-    @RequestMapping(value = "/addOrganization")
+    @PostMapping(value = "/addOrganization")
     public Object addOrganization(@RequestParam("info") String beanJson) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         Organization org= JSON.parseObject(beanJson, Organization.class);
@@ -115,7 +113,7 @@ public class OrganizationController {
     /**
      *  修改机构信息
      */
-    @RequestMapping(value = "/editOrganization")
+    @PostMapping(value = "/editOrganization")
     public Object editOrganization(@RequestParam("info") String beanJson) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         Organization org= JSON.parseObject(beanJson, Organization.class);
@@ -131,7 +129,7 @@ public class OrganizationController {
     /**
      *  批量删除机构信息
      */
-    @RequestMapping(value = "/batchDeleteOrganization")
+    @PostMapping(value = "/batchDeleteOrganization")
     public Object batchDeleteOrganization(@RequestParam("ids") String ids) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= organizationService.batchDeleteOrganizationByIds(ids);

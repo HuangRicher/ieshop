@@ -97,7 +97,7 @@ public class DepotController {
         return arr;
     }
 
-    @RequestMapping(value = "/findDepotByUserId")
+    @GetMapping(value = "/findDepotByUserId")
     public JSONArray findDepotByUserId(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
                                        HttpServletRequest request) throws Exception{
         JSONArray arr = new JSONArray();
@@ -126,17 +126,15 @@ public class DepotController {
         }
         return arr;
     }
+
     /**
-     * create by: cjl
-     * description:
      * 查询仓库列表信息
-     * create time: 2019/2/25 14:32
      * @Param: pageSize
-     * @Param: currentPage
-     * @Param: search
+     * @Param: currentPage
+     * @Param: search
      * @return java.lang.String
      */
-    @RequestMapping(value = "/getDepotList")
+    @GetMapping(value = "/getDepotList")
     public String getDepotList(
             @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
@@ -171,15 +169,11 @@ public class DepotController {
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除仓库信息
-     * create time: 2019/3/29 11:15
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteDepotByIds")
+    @PostMapping(value = "/batchDeleteDepotByIds")
     public Object batchDeleteDepotByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
             required =false,defaultValue=BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();

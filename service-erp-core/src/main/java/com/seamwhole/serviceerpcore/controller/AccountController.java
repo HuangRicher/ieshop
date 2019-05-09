@@ -23,9 +23,7 @@ import java.util.Map;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author jishenghua 75271*8920
- */
+
 @RestController
 @RequestMapping(value = "/account")
 public class AccountController {
@@ -141,16 +139,15 @@ public class AccountController {
             return returnJson(objectMap, ErpInfo.ERROR.name, ErpInfo.ERROR.code);
         }
     }
+
+    
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除账户信息
      * create time: 2019/3/29 10:49
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteAccountByIds")
+    @PostMapping(value = "/batchDeleteAccountByIds")
     public Object batchDeleteAccountByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
             required =false,defaultValue=BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
 

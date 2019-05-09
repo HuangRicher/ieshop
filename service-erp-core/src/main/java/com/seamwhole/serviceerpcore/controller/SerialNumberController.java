@@ -22,19 +22,16 @@ public class SerialNumberController {
 
     @Resource
     private SerialNumberService serialNumberService;
+
     /**
-     * create by: cjl
-     * description:
      *  检查序列号是否存在
-     * create time: 2019/1/22 11:02
      * @Param: id
-     * @Param: materialName
-     * @Param: serialNumber
-     * @Param: request
+     * @Param: materialName
+     * @Param: serialNumber
+     * @Param: request
      * @return java.lang.Object
      */
     @PostMapping("/serialNumber/checkIsExist")
-    @ResponseBody
     public Object checkIsExist(@RequestParam("id") Long id, @RequestParam("materialName") String materialName,
                                @RequestParam("serialNumber") String serialNumber, HttpServletRequest request) throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
@@ -45,17 +42,15 @@ public class SerialNumberController {
         serialNumberService.checkIsExist(id, materialName, serialNumber);
         return result;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  新增序列号信息
-     * create time: 2019/1/22 17:10
      * @Param: beanJson
-     * @Param: request
+     * @Param: request
      * @return java.lang.Object
      */
     @PostMapping("/serialNumber/addSerialNumber")
-    @ResponseBody
     public Object addSerialNumber(@RequestParam("info") String beanJson)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         SerialNumberEx sne= JSON.parseObject(beanJson, SerialNumberEx.class);
@@ -63,16 +58,13 @@ public class SerialNumberController {
         return result;
 
     }
+
     /**
-     * create by: cjl
-     * description:
      *  修改序列号信息
-     * create time: 2019/1/23 13:56
      * @Param: beanJson
      * @return java.lang.Object
      */
     @PostMapping("/serialNumber/updateSerialNumber")
-    @ResponseBody
     public Object updateSerialNumber(@RequestParam("info") String beanJson)throws Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
@@ -81,19 +73,17 @@ public class SerialNumberController {
         return result;
 
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *批量添加序列号
-     * create time: 2019/1/29 15:11
      * @Param: materialName
-     * @Param: serialNumberPrefix
-     * @Param: batAddTotal
-     * @Param: remark
+     * @Param: serialNumberPrefix
+     * @Param: batAddTotal
+     * @Param: remark
      * @return java.lang.Object
      */
     @PostMapping("/serialNumber/batAddSerialNumber")
-    @ResponseBody
     public Object batAddSerialNumber(@RequestParam("materialName") String materialName, @RequestParam("serialNumberPrefix") String serialNumberPrefix,
                                      @RequestParam("batAddTotal") Integer batAddTotal, @RequestParam("remark") String remark)throws Exception{
 
@@ -102,16 +92,13 @@ public class SerialNumberController {
         return result;
 
     }
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  逻辑删除序列号信息
-     * create time: 2019/3/27 17:43
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/serialNumber/batchDeleteSerialNumberByIds")
+    @PostMapping(value = "/serialNumber/batchDeleteSerialNumberByIds")
     public Object batchDeleteSerialNumberByIds(@RequestParam("ids") String ids) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= serialNumberService.batchDeleteSerialNumberByIds(ids);

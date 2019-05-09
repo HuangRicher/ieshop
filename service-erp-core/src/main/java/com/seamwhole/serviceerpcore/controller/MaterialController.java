@@ -307,7 +307,7 @@ public class MaterialController {
             return null;
         }
     }
-    @RequestMapping(value = "/getMaterialEnableSerialNumberList")
+    @GetMapping(value = "/getMaterialEnableSerialNumberList")
     public String getMaterialEnableSerialNumberList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
                                @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                                @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
@@ -340,16 +340,13 @@ public class MaterialController {
         queryInfo.setTotal(pageInfo.getTotal());
         return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
     }
+
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除商品信息
-     * create time: 2019/3/29 11:15
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteMaterialByIds")
+    @PostMapping(value = "/batchDeleteMaterialByIds")
     public Object batchDeleteMaterialByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
             required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();

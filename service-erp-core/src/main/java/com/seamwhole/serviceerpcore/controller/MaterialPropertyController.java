@@ -6,6 +6,7 @@ import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.MaterialPropertyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class MaterialPropertyController {
     /**
      *  批量删除商品扩展信息
      */
-    @RequestMapping(value = "/batchDeleteMaterialPropertyByIds")
+    @PostMapping(value = "/batchDeleteMaterialPropertyByIds")
     public Object batchDeleteMaterialPropertyByIds(@RequestParam("ids") String ids) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= materialPropertyService.batchDeleteMaterialPropertyByIds(ids);

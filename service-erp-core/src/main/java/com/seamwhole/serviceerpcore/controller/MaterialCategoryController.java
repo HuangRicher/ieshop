@@ -12,10 +12,7 @@ import com.seamwhole.serviceerpcore.service.MaterialCategoryService;
 import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +50,7 @@ public class MaterialCategoryController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/findById")
+    @GetMapping(value = "/findById")
     public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
@@ -83,14 +80,11 @@ public class MaterialCategoryController {
         return res;
     }
     /**
-     * create by: cjl
-     * description:
      * 获取商品类别树数据
-     * create time: 2019/2/19 11:49
      * @Param:
      * @return com.alibaba.fastjson.JSONArray
      */
-    @RequestMapping(value = "/getMaterialCategoryTree")
+    @GetMapping(value = "/getMaterialCategoryTree")
     public JSONArray getMaterialCategoryTree(@RequestParam("id") Long id) throws Exception{
        JSONArray arr=new JSONArray();
        List<TreeNode> materialCategoryTree = materialCategoryService.getMaterialCategoryTree(id);
@@ -104,14 +98,11 @@ public class MaterialCategoryController {
         return arr;
     }
     /**
-     * create by: cjl
-     * description:
      *  新增商品类别数据
-     * create time: 2019/2/19 17:17
      * @Param: beanJson
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/addMaterialCategory")
+    @PostMapping(value = "/addMaterialCategory")
     public Object addMaterialCategory(@RequestParam("info") String beanJson) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         MaterialCategory mc= JSON.parseObject(beanJson, MaterialCategory.class);
@@ -122,15 +113,13 @@ public class MaterialCategoryController {
         }
         return result;
     }
+
     /**
-     * create by: cjl
-     * description:
      *  修改商品类别数据
-     * create time: 2019/2/20 9:30
      * @Param: beanJson
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/editMaterialCategory")
+    @PostMapping(value = "/editMaterialCategory")
     public Object editMaterialCategory(@RequestParam("info") String beanJson) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         MaterialCategory mc= JSON.parseObject(beanJson, MaterialCategory.class);
@@ -141,15 +130,13 @@ public class MaterialCategoryController {
         }
         return result;
     }
+
     /**
-     * create by: cjl
-     * description:
      *  批量删除商品类别信息
-     * create time: 2019/2/19 17:26
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteMaterialCategory")
+    @PostMapping(value = "/batchDeleteMaterialCategory")
     public Object batchDeleteMaterialCategory(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
             required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();

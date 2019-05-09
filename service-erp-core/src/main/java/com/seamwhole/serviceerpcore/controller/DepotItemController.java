@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.mapper.vo.*;
 import com.seamwhole.serviceerpcore.model.*;
-import com.seamwhole.serviceerpcore.mapper.vo.DepotItemStockWarningCount;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.DepotItemService;
 import com.seamwhole.serviceerpcore.service.MaterialService;
@@ -806,15 +806,11 @@ public class DepotItemController {
         return sumPrice;
     }
     /**
-     * create by: qiankunpingtai
-     * website：https://qiankunpingtai.cn
-     * description:
      *  批量删除单据明细信息
-     * create time: 2019/3/29 11:15
      * @Param: ids
      * @return java.lang.Object
      */
-    @RequestMapping(value = "/batchDeleteDepotItemByIds")
+    @PostMapping(value = "/batchDeleteDepotItemByIds")
     public Object batchDeleteDepotItemByIds(@RequestParam("ids") String ids) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i= depotItemService.batchDeleteDepotItemByIds(ids);
@@ -826,6 +822,8 @@ public class DepotItemController {
         }
         return result;
     }
+
+
     /**
      * 库存预警报表
      * @param currentPage

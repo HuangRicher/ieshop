@@ -28,9 +28,7 @@ import java.util.concurrent.Executors;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji_sheng_hua 华夏erp
- */
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -258,14 +256,13 @@ public class UserController {
         }
         return res;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  查询分页用户列表
-     * create time: 2019/3/8 15:08
      * @Param: pageSize
-     * @Param: currentPage
-     * @Param: search
+     * @Param: currentPage
+     * @Param: search
      * @return java.lang.String
      */
     @GetMapping(value = "/getUserList")
@@ -304,15 +301,11 @@ public class UserController {
     }
 
     /**
-     * create by: cjl
-     * description:
      *  新增用户及机构和用户关系
-     * create time: 2019/3/8 16:06
      * @Param: beanJson
      * @return java.lang.Object
      */
     @PostMapping("/addUser")
-    @ResponseBody
     public Object addUser(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         if(("open").equals(mybatisPlusStatus)) {
@@ -379,16 +372,14 @@ public class UserController {
 
         return result;
     }
+
+
     /**
-     * create by: cjl
-     * description:
      *  修改用户及机构和用户关系
-     * create time: 2019/3/8 16:06
      * @Param: beanJson
      * @return java.lang.Object
      */
     @PostMapping("/updateUser")
-    @ResponseBody
     public Object updateUser(@RequestParam("info") String beanJson, @RequestParam("id") Long id)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         UserEx ue= JSON.parseObject(beanJson, UserEx.class);
@@ -396,20 +387,23 @@ public class UserController {
         userService.updateUserAndOrgUserRel(ue);
         return result;
     }
+
+
     @PostMapping("/deleteUser")
-    @ResponseBody
     public Object deleteUser(@RequestParam("ids") String ids)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         userService.batDeleteUser(ids);
         return result;
     }
+
+
     @PostMapping("/batchDeleteUser")
-    @ResponseBody
     public Object batchDeleteUser(@RequestParam("ids") String ids)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         userService.batDeleteUser(ids);
         return result;
     }
+
     @RequestMapping("/getOrganizationUserTree")
     public JSONArray getOrganizationUserTree()throws Exception{
         JSONArray arr=new JSONArray();

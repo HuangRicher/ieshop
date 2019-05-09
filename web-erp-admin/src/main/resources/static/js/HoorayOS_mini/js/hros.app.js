@@ -16,16 +16,13 @@ HROS.app = (function(){
 		get : function(){
 			var userId = sessionStorage.getItem("userId");
             /**
-             * create by: qiankunpingtai
-             * create time: 2019/3/20 16:26
-             * description:
              *如果用户的id没有获取到，跳转到登录页面
              */
             if(userId==undefined||userId==null){
-                top.location.href = "http://" + location.host + "/login.html";
+                top.location.href = "http://" + location.host + "/login";
                 return;
             }
-		    $.getJSON('../../app/findAppByUserId?userId=' + userId, function (sc) {
+		    $.getJSON('/app/findAppByUserId?userId=' + userId, function (sc) {
 				HROS.VAR.dock = sc['dock'];
 				HROS.VAR.desk = sc['desk'];
 				//输出桌面应用

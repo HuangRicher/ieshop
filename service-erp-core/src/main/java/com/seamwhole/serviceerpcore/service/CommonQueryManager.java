@@ -1,27 +1,12 @@
 package com.seamwhole.serviceerpcore.service;
 
-import com.seamwhole.serviceerpcore.constants.BusinessConstants;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author jishenghua 752718920 2018-10-7 15:25:58
- */
-@Service
-public class CommonQueryManager {
 
-    @Resource
-    private InterfaceContainer container;
+public interface CommonQueryManager {
 
-    @Resource
-    private LogService logService;
 
     /**
      * 查询单条
@@ -29,12 +14,7 @@ public class CommonQueryManager {
      * @param apiName 接口名称
      * @param id      ID
      */
-    public Object selectOne(String apiName, String id) throws Exception{
-        if (StringUtils.isNotEmpty(apiName) && StringUtils.isNotEmpty(id)) {
-            return container.getCommonQuery(apiName).selectOne(id);
-        }
-        return null;
-    }
+    Object selectOne(String apiName, String id) throws Exception;
 
     /**
      * 查询
@@ -42,12 +22,7 @@ public class CommonQueryManager {
      * @param parameterMap
      * @return
      */
-    public List<?> select(String apiName, Map<String, String> parameterMap)throws Exception {
-        if (StringUtils.isNotEmpty(apiName)) {
-            return container.getCommonQuery(apiName).select(parameterMap);
-        }
-        return new ArrayList<Object>();
-    }
+    List<?> select(String apiName, Map<String, String> parameterMap)throws Exception;
 
     /**
      * 计数
@@ -55,12 +30,7 @@ public class CommonQueryManager {
      * @param parameterMap
      * @return
      */
-    public Long counts(String apiName, Map<String, String> parameterMap)throws Exception {
-        if (StringUtils.isNotEmpty(apiName)) {
-            return container.getCommonQuery(apiName).counts(parameterMap);
-        }
-        return BusinessConstants.DEFAULT_LIST_NULL_NUMBER;
-    }
+    Long counts(String apiName, Map<String, String> parameterMap)throws Exception;
 
     /**
      * 插入
@@ -68,14 +38,7 @@ public class CommonQueryManager {
      * @param beanJson
      * @return
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int insert(String apiName, String beanJson, HttpServletRequest request) throws Exception{
-        if (StringUtils.isNotEmpty(apiName)) {
-            logService.insertLog(apiName, BusinessConstants.LOG_OPERATION_TYPE_ADD, request);
-            return container.getCommonQuery(apiName).insert(beanJson, request);
-        }
-        return 0;
-    }
+    int insert(String apiName, String beanJson, HttpServletRequest request) throws Exception;
 
     /**
      * 更新
@@ -84,15 +47,7 @@ public class CommonQueryManager {
      * @param id
      * @return
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int update(String apiName, String beanJson, Long id, HttpServletRequest request)throws Exception {
-        if (StringUtils.isNotEmpty(apiName)) {
-            logService.insertLog(apiName,
-                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_EDIT).append(id).toString(), request);
-            return container.getCommonQuery(apiName).update(beanJson, id);
-        }
-        return 0;
-    }
+    int update(String apiName, String beanJson, Long id, HttpServletRequest request)throws Exception;
 
     /**
      * 删除
@@ -100,15 +55,7 @@ public class CommonQueryManager {
      * @param id
      * @return
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int delete(String apiName, Long id, HttpServletRequest request)throws Exception {
-        if (StringUtils.isNotEmpty(apiName)) {
-            logService.insertLog(apiName,
-                    new StringBuffer(BusinessConstants.LOG_OPERATION_TYPE_DELETE).append(id).toString(), request);
-            return container.getCommonQuery(apiName).delete(id);
-        }
-        return 0;
-    }
+    int delete(String apiName, Long id, HttpServletRequest request)throws Exception;
 
     /**
      * 批量删除
@@ -116,14 +63,7 @@ public class CommonQueryManager {
      * @param ids
      * @return
      */
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
-    public int batchDelete(String apiName, String ids, HttpServletRequest request)throws Exception {
-        if (StringUtils.isNotEmpty(apiName)) {
-            logService.insertLog(apiName, "批量删除,id集:" + ids, request);
-            return container.getCommonQuery(apiName).batchDelete(ids);
-        }
-        return 0;
-    }
+    int batchDelete(String apiName, String ids, HttpServletRequest request)throws Exception;
 
     /**
      * 判断是否存在
@@ -132,16 +72,7 @@ public class CommonQueryManager {
      * @param name
      * @return
      */
-    public int checkIsNameExist(String apiName, Long id, String name) throws Exception{
-        if (StringUtils.isNotEmpty(apiName)) {
-            return container.getCommonQuery(apiName).checkIsNameExist(id, name);
-        }
-        return 0;
-    }
-
-
-
-
+    int checkIsNameExist(String apiName, Long id, String name) throws Exception;
 
 
 }
