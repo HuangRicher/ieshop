@@ -60,6 +60,7 @@ public class PathController {
     public String toUser(){
         return "/manage/user.html";
     }
+
     @RequestMapping("/manage/log")
     public String toLog(){
         return "/manage/log.html";

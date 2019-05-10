@@ -44,8 +44,8 @@ public class AccountItemController {
      * @Param: request
      * @return java.lang.String
      */
-    @PostMapping(value = "/saveDetials")
-    public String saveDetials(@RequestParam("inserted") String inserted,
+    @PostMapping(value = "/saveDetails")
+    public String saveDetails(@RequestParam("inserted") String inserted,
                               @RequestParam("deleted") String deleted,
                               @RequestParam("updated") String updated,
                               @RequestParam("headerId") Long headerId,

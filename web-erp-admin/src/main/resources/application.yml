@@ -5,3 +5,10 @@ spring:
     prefix: classpath:/templates/
     cache: false
     suffix: .html
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/

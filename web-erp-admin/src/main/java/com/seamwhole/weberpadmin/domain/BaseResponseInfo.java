@@ -1,4 +1,4 @@
-package com.seamwhole.serviceerpcore.utils;
+package com.seamwhole.weberpadmin.domain;
 
 public class BaseResponseInfo {
 	public int code;
