@@ -5,6 +5,7 @@ import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,12 +17,12 @@ public interface AccountItemClient {
     /**
      *  业务逻辑操作放在service层，controller只做参数解析和视图封装
      */
-    @PostMapping(value = "/accountItem/saveDetails")
-    String saveDetails(@RequestParam("inserted") String inserted,
-                              @RequestParam("deleted") String deleted,
-                              @RequestParam("updated") String updated,
-                              @RequestParam("headerId") Long headerId,
-                              @RequestParam("listType") String listType);
+    @PostMapping(value = "/accountItem/saveDetails/{inserted}/{deleted}/{updated}/{headerId}/{listType}")
+    String saveDetails(@PathVariable("inserted") String inserted,
+                              @PathVariable("deleted") String deleted,
+                              @PathVariable("updated") String updated,
+                              @PathVariable("headerId") Long headerId,
+                              @PathVariable("listType") String listType);
 
     @GetMapping(value = "/accountItem/getDetailList")
     BaseResponseInfo getDetailList(@RequestParam("headerId") Long headerId);

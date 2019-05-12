@@ -7,9 +7,9 @@ spring:
   ##数据库连接信息
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://bj-cdb-kkucszns.sql.tencentcdb.com:62815/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
     username: root
-    password: rP3Za18k3Mw18gDJ
+    password: root
     hikari:
       data-source-properties:
         cachePrepStmts: true

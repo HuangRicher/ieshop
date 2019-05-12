@@ -54,14 +54,12 @@ public class AccountHeadController {
      * @param supplierId
      * @param endTime
      * @param supType
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findTotalPay")
-    public BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
-                                         @RequestParam("endTime") String endTime,
-                                         @RequestParam("supType") String supType,
-                                         HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findTotalPay/{supplierId}/{endTime}/{supType}")
+    public BaseResponseInfo findTotalPay(@PathVariable("supplierId") Integer supplierId,
+                                         @PathVariable("endTime") String endTime,
+                                         @PathVariable("supType") String supType)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -98,8 +96,7 @@ public class AccountHeadController {
      * @return
      */
     @GetMapping(value = "/getDetailByNumber")
-    public BaseResponseInfo getDetailByNumber(@RequestParam("billNo") String billNo,
-                                              HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getDetailByNumber(@RequestParam("billNo") String billNo)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         AccountHeadVo4ListEx ahl = new AccountHeadVo4ListEx();
         try {

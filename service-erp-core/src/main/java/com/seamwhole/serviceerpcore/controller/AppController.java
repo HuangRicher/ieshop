@@ -45,11 +45,10 @@ public class AppController {
     /**
      * 根据用户查询有权限的app
      * @param userId
-     * @param request
      * @return
      */
     @GetMapping(value = "/findAppByUserId")
-    public JSONObject findAppByUserId(@RequestParam("userId") String userId, HttpServletRequest request)throws Exception {
+    public JSONObject findAppByUserId(@RequestParam("userId") String userId)throws Exception {
         List<UserBusiness> roleList = userBusinessService.findRoleByUserId(userId);
         String roles = null;
         if(roleList!=null && roleList.size()>0 && roleList.get(0)!=null){
@@ -110,7 +109,7 @@ public class AppController {
     }
 
     @GetMapping(value = "/findDesk")
-    public JSONObject findDesk(HttpServletRequest request)throws Exception {
+    public JSONObject findDesk()throws Exception {
         JSONObject obj = new JSONObject();
         List<App> dockList = appService.findDock();
         JSONArray dockArray = new JSONArray();
@@ -156,12 +155,11 @@ public class AppController {
 
     /**
      * 角色对应应用显示
-     * @param request
      * @return
      */
-    @PostMapping(value = "/findRoleAPP")
-    public JSONArray findRoleAPP(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                 HttpServletRequest request)throws Exception {
+    @PostMapping(value = "/findRoleAPP/{type}/{keyId}/{loginName}")
+    public JSONArray findRoleAPP(@PathVariable("type") String type, @PathVariable("keyId") String keyId,
+                                 @PathVariable("loginName")String loginName)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<App> dataListApp = appService.findRoleAPP();
@@ -177,13 +175,6 @@ public class AppController {
                 List<App> dataList = new ArrayList<App>();
                 for (App appOne : dataListApp) {
                     if(("open").equals(mybatisPlusStatus)){
-                        //从session中获取租户id
-                        String loginName = null;
-                        Object userInfo = request.getSession().getAttribute("user");
-                        if(userInfo != null) {
-                            User user = (User) userInfo;
-                            loginName = user.getLoginame();
-                        }
                         if(("admin").equals(loginName)) {
                             dataList.add(appOne);
                         } else {
@@ -226,20 +217,17 @@ public class AppController {
     /**
      * 上传图片
      * @param fileInfo
-     * @param request
      */
     @PostMapping(value = "/uploadImg")
-    public BaseResponseInfo uploadImg(MultipartFile fileInfo, @RequestParam("fileInfoName") String fileName,
-                                      HttpServletRequest request)throws Exception {
+    public BaseResponseInfo uploadImg(MultipartFile fileInfo, @RequestParam("fileInfoName") String fileName)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             if (fileInfo != null) {
-                String basePath = request.getSession().getServletContext().getRealPath("/"); //默认windows文件路径，linux环境下生成的目录与项目同级，而不是下级
-                String path = basePath + "upload/images/deskIcon/"; //windows环境下的路径
+                String path = "D:/upload/images/deskIcon/"; //windows环境下的路径
                 Properties pro = System.getProperties();
                 String osName = pro.getProperty("os.name");//获得当前操作系统的名称
                 if("Linux".equals(osName) || "linux".equals(osName) || "LINUX".equals(osName)){
-                    path = basePath + "/upload/images/deskIcon/"; //linux环境下的路径
+                    path =  "/mnt/upload/images/deskIcon/"; //linux环境下的路径
                 }
                 FileUtils.SaveFileFromInputStream(fileInfo.getInputStream(), path, fileName);
                 res.code = 200;

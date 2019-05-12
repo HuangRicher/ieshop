@@ -146,50 +146,9 @@ public class UserController {
         return res;
     }
 
-    @GetMapping(value = "/getUserSession")
-    public BaseResponseInfo getSessionUser(HttpServletRequest request)throws Exception {
-        BaseResponseInfo res = new BaseResponseInfo();
-        try {
-            Map<String, Object> data = new HashMap<String, Object>();
-            Object userInfo = request.getSession().getAttribute("user");
-            if(userInfo!=null) {
-                User user = (User) userInfo;
-                user.setPassword(null);
-                data.put("user", user);
-            }
-            res.code = 200;
-            res.data = data;
-        } catch(Exception e){
-            e.printStackTrace();
-            res.code = 500;
-            res.data = "获取session失败";
-        }
-        return res;
-    }
-
-    @GetMapping(value = "/logout")
-    public BaseResponseInfo logout(HttpServletRequest request, HttpServletResponse response)throws Exception {
-        BaseResponseInfo res = new BaseResponseInfo();
-        try {
-            request.getSession().removeAttribute("user");
-            request.getSession().removeAttribute("mybatisPlusStatus");
-            if(("open").equals(mybatisPlusStatus)) {
-                request.getSession().removeAttribute("tenantId");
-                request.getSession().removeAttribute("userNumLimit");
-                request.getSession().removeAttribute("billsNumLimit");
-            }
-            response.sendRedirect("/login.html");
-        } catch(Exception e){
-            e.printStackTrace();
-            res.code = 500;
-            res.data = "退出失败";
-        }
-        return res;
-    }
 
     @PostMapping(value = "/resetPwd")
-    public String resetPwd(@RequestParam("id") Long id,
-                                     HttpServletRequest request) throws Exception {
+    public String resetPwd(@RequestParam("id") Long id) throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         String password = "123456";
         String md5Pwd = Tools.md5Encryp(password);
@@ -201,9 +160,10 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/updatePwd")
-    public String updatePwd(@RequestParam("userId") Long userId, @RequestParam("password") String password,
-                            @RequestParam("oldpwd") String oldpwd, HttpServletRequest request)throws Exception {
+    @PostMapping(value = "/updatePwd/{userId}/{password}/{oldpwd}")
+    public String updatePwd(@PathVariable("userId") Long userId,
+                            @PathVariable("password") String password,
+                            @PathVariable("oldpwd") String oldpwd)throws Exception {
         Integer flag = 0;
         Map<String, Object> objectMap = new HashMap<String, Object>();
         try {
@@ -235,11 +195,10 @@ public class UserController {
 
     /**
      * 获取全部用户数据列表
-     * @param request
      * @return
      */
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getAllList()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             Map<String, Object> data = new HashMap<String, Object>();
@@ -265,10 +224,10 @@ public class UserController {
      * @Param: search
      * @return java.lang.String
      */
-    @GetMapping(value = "/getUserList")
-    public String getUserList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-                                       @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                                       @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+    @GetMapping(value = "/getUserList/{pageSize}/{currentPage}/{search}")
+    public String getUserList(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                              @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                              @PathVariable(value = Constants.SEARCH, required = false) String search)throws Exception {
 
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         //查询参数
@@ -306,10 +265,10 @@ public class UserController {
      * @return java.lang.Object
      */
     @PostMapping("/addUser")
-    public Object addUser(@RequestParam("info") String beanJson, HttpServletRequest request)throws Exception{
+    public Object addUser(@RequestParam("info") String beanJson)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         if(("open").equals(mybatisPlusStatus)) {
-            Long userNumLimit = Long.parseLong(request.getSession().getAttribute("userNumLimit").toString());
+            Long userNumLimit = 10000000L; //Long.parseLong(request.getSession().getAttribute("userNumLimit").toString());
             Long count = userService.countUser(null,null);
             if(count>= userNumLimit) {
                 throw new BusinessParamCheckingException(ExceptionConstants.USER_OVER_LIMIT_FAILED_CODE,
@@ -335,8 +294,7 @@ public class UserController {
      */
     @PostMapping(value = "/registerUser")
     public Object registerUser(@RequestParam(value = "loginame", required = false) String loginame,
-                               @RequestParam(value = "password", required = false) String password,
-                               HttpServletRequest request)throws Exception{
+                               @RequestParam(value = "password", required = false) String password)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         UserEx ue= new UserEx();
         ue.setUsername(loginame);
@@ -380,7 +338,8 @@ public class UserController {
      * @return java.lang.Object
      */
     @PostMapping("/updateUser")
-    public Object updateUser(@RequestParam("info") String beanJson, @RequestParam("id") Long id)throws Exception{
+    public Object updateUser(@RequestParam("info") String beanJson,
+                             @RequestParam("id") Long id)throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         UserEx ue= JSON.parseObject(beanJson, UserEx.class);
         ue.setId(id);
@@ -419,7 +378,7 @@ public class UserController {
     }
 
     @GetMapping("/getTenantStatus")
-    public BaseResponseInfo getTenantStatus(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getTenantStatus()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             Map<String, Object> data = new HashMap<String, Object>();

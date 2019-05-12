@@ -5,6 +5,7 @@ import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,10 +21,10 @@ public interface AccountHeadClient {
     /**
      * 查询单位的累计应收和累计应付，收预付款不计入此处
      */
-    @GetMapping(value = "/accountHead/findTotalPay")
-    BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
-                                         @RequestParam("endTime") String endTime,
-                                         @RequestParam("supType") String supType);
+    @GetMapping(value = "/accountHead/findTotalPay/{supplierId}/{endTime}/{supType}")
+    BaseResponseInfo findTotalPay(@PathVariable("supplierId") Integer supplierId,
+                                         @PathVariable("endTime") String endTime,
+                                         @PathVariable("supType") String supType);
 
     /**
      * 根据编号查询单据信息

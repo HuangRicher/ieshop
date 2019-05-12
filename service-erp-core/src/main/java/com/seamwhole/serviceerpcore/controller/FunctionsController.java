@@ -39,8 +39,7 @@ public class FunctionsController {
 
     @PostMapping(value = "/findMenu")
     public JSONArray findMenu(@RequestParam(value="pNumber") String pNumber,
-                            @RequestParam(value="hasFunctions") String hasFunctions,
-                            HttpServletRequest request)throws Exception {
+                              @RequestParam(value="hasFunctions") String hasFunctions)throws Exception {
         //存放数据json数组
         JSONArray dataArray = new JSONArray();
         try {
@@ -118,12 +117,12 @@ public class FunctionsController {
 
     /**
      * 角色对应功能显示
-     * @param request
      * @return
      */
-    @PostMapping(value = "/findRoleFunctions")
-    public JSONArray findRoleFunctions(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                       HttpServletRequest request)throws Exception {
+    @PostMapping(value = "/findRoleFunctions/{type}/{keyId}/{loginName}")
+    public JSONArray findRoleFunctions(@PathVariable("type") String type,
+                                       @PathVariable("keyId") String keyId,
+                                       @PathVariable("loginName") String loginName)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Functions> dataListFun = functionsService.findRoleFunctions("0");
@@ -139,13 +138,6 @@ public class FunctionsController {
                 List<Functions> dataList = new ArrayList<Functions>();
                 for (Functions fun : dataListFun) {
                     if(("open").equals(mybatisPlusStatus)){
-                        //从session中获取租户id
-                        String loginName = null;
-                        Object userInfo = request.getSession().getAttribute("user");
-                        if(userInfo != null) {
-                            User user = (User) userInfo;
-                            loginName = user.getLoginame();
-                        }
                         if(("admin").equals(loginName)) {
                             dataList.add(fun);
                         } else {
@@ -271,12 +263,10 @@ public class FunctionsController {
     /**
      * 根据id列表查找功能信息
      * @param functionsIds
-     * @param request
      * @return
      */
     @GetMapping(value = "/findByIds")
-    public BaseResponseInfo findByIds(@RequestParam("functionsIds") String functionsIds,
-                                      HttpServletRequest request)throws Exception {
+    public BaseResponseInfo findByIds(@RequestParam("functionsIds") String functionsIds)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<Functions> dataList = functionsService.findByIds(functionsIds);

@@ -84,11 +84,10 @@ public class DepotItemController {
      * @param request
      * @return
      */
-    @GetMapping(value = "/findDetailByTypeAndMaterialId")
-    public String findDetailByTypeAndMaterialId(
-            @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-            @RequestParam("materialId") String mId, HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findDetailByTypeAndMaterialId/{pageSize}/{currentPage}/{materialId}")
+    public String findDetailByTypeAndMaterialId(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                                @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                                @PathVariable("materialId") String mId, HttpServletRequest request)throws Exception {
         Map<String, String> parameterMap = ParamUtils.requestToMap(request);
         parameterMap.put("mId", mId);
         PageQueryInfo queryInfo = new PageQueryInfo();
@@ -128,18 +127,15 @@ public class DepotItemController {
      * @param pageSize
      * @param currentPage
      * @param mId
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findStockNumById")
-    public String findStockNumById(
-            @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-            @RequestParam("projectId") Integer pid,
-            @RequestParam("materialId") String mId,
-            @RequestParam("monthTime") String monthTime,
-            HttpServletRequest request) throws Exception{
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+    @GetMapping(value = "/findStockNumById/{pageSize}/{currentPage}/{projectId}/{materialId}/{monthTime}")
+    public String findStockNumById(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                   @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                   @PathVariable("projectId") Integer pid,
+                                   @PathVariable("materialId") String mId,
+                                   @PathVariable("monthTime") String monthTime) throws Exception{
+        Map<String, String> parameterMap = new HashMap<>();
         parameterMap.put("mId", mId);
         parameterMap.put("monthTime", monthTime);
         PageQueryInfo queryInfo = new PageQueryInfo();
@@ -193,17 +189,14 @@ public class DepotItemController {
      * @param pageSize
      * @param currentPage
      * @param mId
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findStockNumByMaterialId")
-    public String findStockNumByMaterialId(
-            @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-            @RequestParam("materialId") String mId,
-            @RequestParam("monthTime") String monthTime,
-            HttpServletRequest request)  throws Exception{
-        Map<String, String> parameterMap = ParamUtils.requestToMap(request);
+    @GetMapping(value = "/findStockNumByMaterialId/{pageSize}/{currentPage}/{materialId}/{monthTime}")
+    public String findStockNumByMaterialId(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                           @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                           @PathVariable("materialId") String mId,
+                                           @PathVariable("monthTime") String monthTime)  throws Exception{
+        Map<String, String> parameterMap = new HashMap<>();
         parameterMap.put("mId", mId);
         parameterMap.put("monthTime", monthTime);
         PageQueryInfo queryInfo = new PageQueryInfo();
@@ -265,15 +258,13 @@ public class DepotItemController {
      * @param deleted
      * @param updated
      * @param headerId
-     * @param request
      * @return
      */
-    @PostMapping(value = "/saveDetials")
-    public String saveDetials(@RequestParam("inserted") String inserted,
-                              @RequestParam("deleted") String deleted,
-                              @RequestParam("updated") String updated,
-                              @RequestParam("headerId") Long headerId,
-                              HttpServletRequest request) throws Exception{
+    @PostMapping(value = "/saveDetails/{inserted}/{deleted}/{updated}/{headerId}")
+    public String saveDetails(@PathVariable("inserted") String inserted,
+                              @PathVariable("deleted") String deleted,
+                              @PathVariable("updated") String updated,
+                              @PathVariable("headerId") Long headerId) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         try {
             depotItemService.saveDetials(inserted,deleted,updated,headerId);
@@ -308,8 +299,7 @@ public class DepotItemController {
 
     @GetMapping(value = "/getDetailList")
     public BaseResponseInfo getDetailList(@RequestParam("headerId") Long headerId,
-                              @RequestParam("mpList") String mpList,
-                              HttpServletRequest request)throws Exception {
+                                          @RequestParam("mpList") String mpList)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -415,18 +405,16 @@ public class DepotItemController {
      * @param headIds
      * @param materialIds
      * @param mpList
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findByAll")
-    public BaseResponseInfo findByAll(@RequestParam("currentPage") Integer currentPage,
-                                      @RequestParam("pageSize") Integer pageSize,
-                                      @RequestParam("projectId") Integer projectId,
-                                      @RequestParam("monthTime") String monthTime,
-                                      @RequestParam("headIds") String headIds,
-                                      @RequestParam("materialIds") String materialIds,
-                                      @RequestParam("mpList") String mpList,
-                                      HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findByAll/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}/{mpList}")
+    public BaseResponseInfo findByAll(@PathVariable("currentPage") Integer currentPage,
+                                      @PathVariable("pageSize") Integer pageSize,
+                                      @PathVariable("projectId") Integer projectId,
+                                      @PathVariable("monthTime") String monthTime,
+                                      @PathVariable("headIds") String headIds,
+                                      @PathVariable("materialIds") String materialIds,
+                                      @PathVariable("mpList") String mpList)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -488,15 +476,13 @@ public class DepotItemController {
      * @param monthTime
      * @param headIds
      * @param materialIds
-     * @param request
      * @return
      */
-    @GetMapping(value = "/totalCountMoney")
-    public BaseResponseInfo totalCountMoney(@RequestParam("projectId") Integer pid,
-                                                        @RequestParam("monthTime") String monthTime,
-                                                        @RequestParam("headIds") String headIds,
-                                                        @RequestParam("materialIds") String materialIds,
-                                                        HttpServletRequest request) throws Exception{
+    @GetMapping(value = "/totalCountMoney/{projectId}/{monthTime}/{headIds}/{materialIds}")
+    public BaseResponseInfo totalCountMoney(@PathVariable("projectId") Integer pid,
+                                            @PathVariable("monthTime") String monthTime,
+                                            @PathVariable("headIds") String headIds,
+                                            @PathVariable("materialIds") String materialIds) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -529,17 +515,15 @@ public class DepotItemController {
      * @param headIds
      * @param materialIds
      * @param mpList
-     * @param request
      * @return
      */
-    @GetMapping(value = "/buyIn")
-    public BaseResponseInfo buyIn(@RequestParam("currentPage") Integer currentPage,
-                                      @RequestParam("pageSize") Integer pageSize,
-                                      @RequestParam("monthTime") String monthTime,
-                                      @RequestParam("headIds") String headIds,
-                                      @RequestParam("materialIds") String materialIds,
-                                      @RequestParam("mpList") String mpList,
-                                      HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/buyIn/{currentPage}/{pageSize}/{monthTime}/{headIds}/{materialIds}/{mpList}")
+    public BaseResponseInfo buyIn(@PathVariable("currentPage") Integer currentPage,
+                                  @PathVariable("pageSize") Integer pageSize,
+                                  @PathVariable("monthTime") String monthTime,
+                                  @PathVariable("headIds") String headIds,
+                                  @PathVariable("materialIds") String materialIds,
+                                  @PathVariable("mpList") String mpList)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -589,17 +573,15 @@ public class DepotItemController {
      * @param headIds
      * @param materialIds
      * @param mpList
-     * @param request
      * @return
      */
-    @GetMapping(value = "/saleOut")
-    public BaseResponseInfo saleOut(@RequestParam("currentPage") Integer currentPage,
-                                  @RequestParam("pageSize") Integer pageSize,
-                                  @RequestParam("monthTime") String monthTime,
-                                  @RequestParam("headIds") String headIds,
-                                  @RequestParam("materialIds") String materialIds,
-                                  @RequestParam("mpList") String mpList,
-                                  HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/saleOut/{currentPage}/{pageSize}/{monthTime}/{headIds}/{materialIds}/{mpList}")
+    public BaseResponseInfo saleOut(@PathVariable("currentPage") Integer currentPage,
+                                    @PathVariable("pageSize") Integer pageSize,
+                                    @PathVariable("monthTime") String monthTime,
+                                    @PathVariable("headIds") String headIds,
+                                    @PathVariable("materialIds") String materialIds,
+                                    @PathVariable("mpList") String mpList)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -653,18 +635,15 @@ public class DepotItemController {
      * @param monthTime
      * @param headIds
      * @param materialIds
-     * @param request
-     * @param response
      * @return
      */
-    @GetMapping(value = "/exportExcel")
-    public BaseResponseInfo exportExcel(@RequestParam("currentPage") Integer currentPage,
-                                        @RequestParam("pageSize") Integer pageSize,
-                                        @RequestParam("projectId") Integer projectId,
-                                        @RequestParam("monthTime") String monthTime,
-                                        @RequestParam("headIds") String headIds,
-                                        @RequestParam("materialIds") String materialIds,
-                                        HttpServletRequest request, HttpServletResponse response)throws Exception {
+    @GetMapping(value = "/exportExcel/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}")
+    public BaseResponseInfo exportExcel(@PathVariable("currentPage") Integer currentPage,
+                                        @PathVariable("pageSize") Integer pageSize,
+                                        @PathVariable("projectId") Integer projectId,
+                                        @PathVariable("monthTime") String monthTime,
+                                        @PathVariable("headIds") String headIds,
+                                        @PathVariable("materialIds") String materialIds)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         String message = "成功";
@@ -708,7 +687,7 @@ public class DepotItemController {
                 }
             }
             File file = ExcelUtils.exportObjectsWithoutTitle(title, names, title, objects);
-            ExportExecUtil.showExec(file, file.getName() + "-" + monthTime, response);
+            //ExportExecUtil.showExec(file, file.getName() + "-" + monthTime, response);
             res.code = 200;
         } catch (Exception e) {
             e.printStackTrace();
@@ -830,9 +809,10 @@ public class DepotItemController {
      * @param pageSize
      * @return
      */
-    @GetMapping(value = "/findStockWarningCount")
-    public BaseResponseInfo findStockWarningCount(@RequestParam("currentPage") Integer currentPage,
-                                                  @RequestParam("pageSize") Integer pageSize, @RequestParam("projectId") Integer pid )throws Exception {
+    @GetMapping(value = "/findStockWarningCount/{currentPage}/{pageSize}/{projectId}")
+    public BaseResponseInfo findStockWarningCount(@PathVariable("currentPage") Integer currentPage,
+                                                  @PathVariable("pageSize") Integer pageSize,
+                                                  @PathVariable("projectId") Integer pid )throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -855,16 +835,12 @@ public class DepotItemController {
      * @param currentPage
      * @param pageSize
      * @param projectId
-     * @param monthTime
-     * @param request
-     * @param response
      * @return
      */
-    @GetMapping(value = "/exportWarningExcel")
+    @GetMapping(value = "/exportWarningExcel/{currentPage}/{pageSize}/{projectId}")
     public BaseResponseInfo exportWarningExcel(@RequestParam("currentPage") Integer currentPage,
                                                @RequestParam("pageSize") Integer pageSize,
-                                               @RequestParam("projectId") Integer projectId,
-                                               HttpServletRequest request, HttpServletResponse response)throws Exception {
+                                               @RequestParam("projectId") Integer projectId)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         String message = "成功";
@@ -892,7 +868,7 @@ public class DepotItemController {
                 }
             }
             File file = ExcelUtils.exportObjectsWithoutTitle(title+pid, names, title, objects);
-            ExportExecUtil.showExec(file, file.getName(), response);
+            //ExportExecUtil.showExec(file, file.getName(), response);
             res.code = 200;
         } catch (Exception e) {
             e.printStackTrace();

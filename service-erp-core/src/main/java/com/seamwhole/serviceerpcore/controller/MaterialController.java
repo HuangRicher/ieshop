@@ -37,13 +37,18 @@ public class MaterialController {
     @Resource
     private MaterialService materialService;
 
-    @GetMapping(value = "/checkIsExist")
-    public String checkIsExist(@RequestParam("id") Long id, @RequestParam("name") String name,
-                               @RequestParam("model") String model, @RequestParam("color") String color,
-                               @RequestParam("standard") String standard, @RequestParam("mfrs") String mfrs,
-                               @RequestParam("otherField1") String otherField1, @RequestParam("otherField2") String otherField2,
-                               @RequestParam("otherField3") String otherField3, @RequestParam("unit") String unit, @RequestParam("unitId") Long unitId,
-                               HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/checkIsExist/{id}/{name}/{model}/{color}/{standard}/{mfrs}/{otherField1}/{otherField2}/{otherField3}/{unit}/{unitId}")
+    public String checkIsExist(@PathVariable("id") Long id,
+                               @PathVariable("name") String name,
+                               @PathVariable("model") String model,
+                               @PathVariable("color") String color,
+                               @PathVariable("standard") String standard,
+                               @PathVariable("mfrs") String mfrs,
+                               @PathVariable("otherField1") String otherField1,
+                               @PathVariable("otherField2") String otherField2,
+                               @PathVariable("otherField3") String otherField3,
+                               @PathVariable("unit") String unit,
+                               @PathVariable("unitId") Long unitId)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int exist = materialService.checkIsExist(id, name, model, color, standard, mfrs,
                 otherField1, otherField2, otherField3, unit, unitId);
@@ -59,13 +64,11 @@ public class MaterialController {
      * 批量设置状态-启用或者禁用
      * @param enabled
      * @param materialIDs
-     * @param request
      * @return
      */
     @PostMapping(value = "/batchSetEnable")
     public String batchSetEnable(@RequestParam("enabled") Boolean enabled,
-                                 @RequestParam("materialIDs") String materialIDs,
-                                 HttpServletRequest request)throws Exception {
+                                 @RequestParam("materialIDs") String materialIDs)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = materialService.batchSetEnable(enabled, materialIDs);
         if(res > 0) {
@@ -78,11 +81,10 @@ public class MaterialController {
     /**
      * 根据id来查询商品名称
      * @param id
-     * @param request
      * @return
      */
     @GetMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) throws Exception{
+    public BaseResponseInfo findById(@RequestParam("id") Long id) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialVo4Unit> list = materialService.findById(id);
@@ -99,11 +101,10 @@ public class MaterialController {
     /**
      * 查找商品信息-下拉框
      * @param mpList
-     * @param request
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public JSONArray findBySelect(@RequestParam("mpList") String mpList, HttpServletRequest request) throws Exception{
+    public JSONArray findBySelect(@RequestParam("mpList") String mpList) throws Exception{
         JSONArray dataArray = new JSONArray();
         try {
             List<MaterialVo4Unit> dataList = materialService.findBySelect();
@@ -156,11 +157,10 @@ public class MaterialController {
 
     /**
      * 查找商品信息-统计排序
-     * @param request
      * @return
      */
     @GetMapping(value = "/findByOrder")
-    public BaseResponseInfo findByOrder(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo findByOrder()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -191,16 +191,13 @@ public class MaterialController {
      * @param model
      * @param categoryId
      * @param categoryIds
-     * @param request
-     * @param response
      * @return
      */
-    @GetMapping(value = "/exportExcel")
-    public BaseResponseInfo exportExcel(@RequestParam("name") String name,
-                                        @RequestParam("model") String model,
-                                        @RequestParam("categoryId") Long categoryId,
-                                        @RequestParam("categoryIds") String categoryIds,
-                                        HttpServletRequest request, HttpServletResponse response)throws Exception {
+    @GetMapping(value = "/exportExcel/{name}/{model}/{categoryId}/{categoryIds}")
+    public BaseResponseInfo exportExcel(@PathVariable("name") String name,
+                                        @PathVariable("model") String model,
+                                        @PathVariable("categoryId") Long categoryId,
+                                        @PathVariable("categoryIds") String categoryIds)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         String message = "成功";
@@ -227,7 +224,7 @@ public class MaterialController {
                 }
             }
             File file = ExcelUtils.exportObjectsWithoutTitle(title, names, title, objects);
-            ExportExecUtil.showExec(file, file.getName(), response);
+            //ExportExecUtil.showExec(file, file.getName(), response);
             res.code = 200;
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,13 +240,10 @@ public class MaterialController {
     /**
      * excel表格导入
      * @param materialFile
-     * @param request
-     * @param response
      * @return
      */
     @PostMapping(value = "/importExcel")
-    public void importExcel(MultipartFile materialFile,
-                            HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void importExcel(@RequestParam("file")MultipartFile materialFile) throws Exception{
         BaseResponseInfo info = new BaseResponseInfo();
         Map<String, Object> data = new HashMap<String, Object>();
         String message = "成功";
@@ -297,7 +291,7 @@ public class MaterialController {
             data.put("message", message);
             info.data = data;
         }
-        response.sendRedirect("../pages/materials/material.html");
+        //response.sendRedirect("../pages/materials/material.html");
     }
 
     public BigDecimal parseBigDecimalEx(String str)throws Exception{
@@ -307,10 +301,10 @@ public class MaterialController {
             return null;
         }
     }
-    @GetMapping(value = "/getMaterialEnableSerialNumberList")
-    public String getMaterialEnableSerialNumberList(@RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-                               @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-                               @RequestParam(value = Constants.SEARCH, required = false) String search)throws Exception {
+    @GetMapping(value = "/getMaterialEnableSerialNumberList/{pageSize}/{currentPage}/{search}")
+    public String getMaterialEnableSerialNumberList(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                                    @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+                                                    @PathVariable(value = Constants.SEARCH, required = false) String search)throws Exception {
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         //查询参数
         JSONObject obj=JSON.parseObject(search);
@@ -347,8 +341,9 @@ public class MaterialController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteMaterialByIds")
-    public Object batchDeleteMaterialByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeleteMaterialByIds(@RequestParam("ids") String ids,
+                                           @RequestParam(value="deleteType", required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                                   String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

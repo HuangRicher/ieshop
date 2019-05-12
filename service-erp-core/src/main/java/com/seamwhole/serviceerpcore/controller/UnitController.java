@@ -33,8 +33,9 @@ public class UnitController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteUnitByIds")
-    public Object batchDeleteUnitByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeleteUnitByIds(@RequestParam("ids") String ids,
+                                       @RequestParam(value="deleteType", required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                               String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

@@ -34,12 +34,11 @@ public class RoleController {
 
     /**
      * 角色对应应用显示
-     * @param request
      * @return
      */
     @PostMapping(value = "/findUserRole")
-    public JSONArray findUserRole(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                  HttpServletRequest request)throws Exception {
+    public JSONArray findUserRole(@RequestParam("UBType") String type,
+                                  @RequestParam("UBKeyId") String keyId)throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Role> dataList = roleService.findUserRole();
@@ -78,7 +77,7 @@ public class RoleController {
     }
 
     @PostMapping(value = "/list")
-    public List<Role> list(HttpServletRequest request)throws Exception {
+    public List<Role> list()throws Exception {
         return roleService.getRole();
     }
 

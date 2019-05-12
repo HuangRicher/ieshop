@@ -29,11 +29,10 @@ public class OrganizationController {
     /**
      * 根据id来查询机构信息
      * @param id
-     * @param request
      * @return
      */
     @GetMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request) throws Exception {
+    public BaseResponseInfo findById(@RequestParam("id") Long id) throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {

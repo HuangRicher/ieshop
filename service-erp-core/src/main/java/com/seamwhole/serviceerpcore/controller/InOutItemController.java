@@ -26,11 +26,10 @@ public class InOutItemController {
 
     /**
      * 查找收支项目信息-下拉框
-     * @param request
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public String findBySelect(@RequestParam("type") String type, HttpServletRequest request) throws Exception{
+    public String findBySelect(@RequestParam("type") String type) throws Exception{
         String res = null;
         try {
             List<InOutItem> dataList = inOutItemService.findBySelect(type);
@@ -58,8 +57,9 @@ public class InOutItemController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteInOutItemByIds")
-    public Object batchDeleteInOutItemByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeleteInOutItemByIds(@RequestParam("ids") String ids,
+                                            @RequestParam(value="deleteType", required =false, defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                                    String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

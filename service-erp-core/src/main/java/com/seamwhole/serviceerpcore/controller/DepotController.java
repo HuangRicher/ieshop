@@ -36,7 +36,7 @@ public class DepotController {
     private UserBusinessService userBusinessService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(HttpServletRequest request) throws Exception{
+    public BaseResponseInfo getAllList() throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<Depot> depotList = depotService.getAllList();
@@ -58,8 +58,7 @@ public class DepotController {
      * @return
      */
     @PostMapping(value = "/findUserDepot")
-    public JSONArray findUserDepot(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                   HttpServletRequest request) throws Exception{
+    public JSONArray findUserDepot(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId) throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Depot> dataList = depotService.findUserDepot();
@@ -98,8 +97,7 @@ public class DepotController {
     }
 
     @GetMapping(value = "/findDepotByUserId")
-    public JSONArray findDepotByUserId(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                       HttpServletRequest request) throws Exception{
+    public JSONArray findDepotByUserId(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId) throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Depot> dataList = depotService.findUserDepot();
@@ -134,11 +132,10 @@ public class DepotController {
      * @Param: search
      * @return java.lang.String
      */
-    @GetMapping(value = "/getDepotList")
-    public String getDepotList(
-            @RequestParam(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
-            @RequestParam(value = Constants.SEARCH, required = false) String search) throws Exception{
+    @GetMapping(value = "/getDepotList/{pageSize}/{currentPage}/{search}")
+    public String getDepotList(@PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+            @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
+            @PathVariable(value = Constants.SEARCH, required = false) String search) throws Exception{
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         //查询参数
         JSONObject obj=JSON.parseObject(search);
@@ -198,8 +195,7 @@ public class DepotController {
     }
     @PostMapping(value = "/updateDepotIsDefault")
     public String updateDepotIsDefault(@RequestParam("isDefault") Boolean isDefault,
-                                        @RequestParam("depotID") Long depotID,
-                                        HttpServletRequest request) throws Exception{
+                                        @RequestParam("depotID") Long depotID) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = depotService.updateDepotIsDefault(isDefault, depotID);
         if(res > 0) {

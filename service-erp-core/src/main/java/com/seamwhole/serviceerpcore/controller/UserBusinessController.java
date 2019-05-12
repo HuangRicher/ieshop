@@ -33,8 +33,7 @@ public class UserBusinessController {
 
     @GetMapping(value = "/getBasicData")
     public BaseResponseInfo getBasicData(@RequestParam(value = "KeyId") String keyId,
-                                         @RequestParam(value = "Type") String type,
-                                         HttpServletRequest request)throws Exception {
+                                         @RequestParam(value = "Type") String type)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<UserBusiness> list = userBusinessService.getBasicData(keyId, type);
@@ -52,8 +51,7 @@ public class UserBusinessController {
 
     @GetMapping(value = "/checkIsValueExist")
     public String checkIsValueExist(@RequestParam(value ="type", required = false) String type,
-                                   @RequestParam(value ="keyId", required = false) String keyId,
-                                   HttpServletRequest request)throws Exception {
+                                   @RequestParam(value ="keyId", required = false) String keyId)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         Long id = userBusinessService.checkIsValueExist(type, keyId);
         if(id != null) {
@@ -68,13 +66,11 @@ public class UserBusinessController {
      * 更新角色的按钮权限
      * @param userBusinessId
      * @param btnStr
-     * @param request
      * @return
      */
     @PostMapping(value = "/updateBtnStr")
     public BaseResponseInfo updateBtnStr(@RequestParam(value ="userBusinessId", required = false) Long userBusinessId,
-                                    @RequestParam(value ="btnStr", required = false) String btnStr,
-                                    HttpServletRequest request)throws Exception {
+                                         @RequestParam(value ="btnStr", required = false) String btnStr)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             int back = userBusinessService.updateBtnStr(userBusinessId, btnStr);

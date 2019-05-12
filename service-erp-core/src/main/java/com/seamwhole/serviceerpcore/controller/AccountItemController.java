@@ -22,9 +22,7 @@ import java.util.Map;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji sheng hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/accountItem")
 public class AccountItemController {

@@ -27,9 +27,7 @@ import java.util.Map;
 
 import static com.seamwhole.serviceerpcore.utils.ResponseJsonUtil.returnJson;
 
-/**
- * @author ji-sheng-hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/depotHead")
 public class DepotHeadController {
@@ -45,13 +43,11 @@ public class DepotHeadController {
      * 批量设置状态-审核或者反审核
      * @param status
      * @param depotHeadIDs
-     * @param request
      * @return
      */
     @PostMapping(value = "/batchSetStatus")
     public String batchSetStatus(@RequestParam("status") String status,
-                                 @RequestParam("depotHeadIDs") String depotHeadIDs,
-                                 HttpServletRequest request) throws Exception{
+                                 @RequestParam("depotHeadIDs") String depotHeadIDs) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = depotHeadService.batchSetStatus(status, depotHeadIDs);
         if(res > 0) {
@@ -63,11 +59,10 @@ public class DepotHeadController {
 
     /**
      * 单据编号生成接口
-     * @param request
      * @return
      */
     @GetMapping(value = "/buildNumber")
-    public BaseResponseInfo buildNumber(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo buildNumber()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -85,11 +80,10 @@ public class DepotHeadController {
 
     /**
      * 获取最大的id
-     * @param request
      * @return
      */
     @GetMapping(value = "/getMaxId")
-    public BaseResponseInfo getMaxId(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getMaxId()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -108,12 +102,10 @@ public class DepotHeadController {
     /**
      * 查找单据_根据月份(报表)
      * @param monthTime
-     * @param request
      * @return
      */
     @GetMapping(value = "/findByMonth")
-    public BaseResponseInfo findByMonth(@RequestParam("monthTime") String monthTime,
-                                        HttpServletRequest request)throws Exception {
+    public BaseResponseInfo findByMonth(@RequestParam("monthTime") String monthTime)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -148,19 +140,17 @@ public class DepotHeadController {
      * @param beginTime
      * @param endTime
      * @param type
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findInDetail")
-    public BaseResponseInfo findInDetail(@RequestParam("currentPage") Integer currentPage,
-                                        @RequestParam("pageSize") Integer pageSize,
-                                        @RequestParam("organId") Integer oId,
-                                        @RequestParam("projectId") Integer pid,
-                                        @RequestParam("depotIds") String dids,
-                                        @RequestParam("beginTime") String beginTime,
-                                        @RequestParam("endTime") String endTime,
-                                        @RequestParam("type") String type,
-                                        HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findInDetail/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
+    public BaseResponseInfo findInDetail(@PathVariable("currentPage") Integer currentPage,
+                                         @PathVariable("pageSize") Integer pageSize,
+                                         @PathVariable("organId") Integer oId,
+                                         @PathVariable("projectId") Integer pid,
+                                         @PathVariable("depotIds") String dids,
+                                         @PathVariable("beginTime") String beginTime,
+                                         @PathVariable("endTime") String endTime,
+                                         @PathVariable("type") String type)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -195,19 +185,17 @@ public class DepotHeadController {
      * @param beginTime
      * @param endTime
      * @param type
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findInOutMaterialCount")
-    public BaseResponseInfo findInOutMaterialCount(@RequestParam("currentPage") Integer currentPage,
-                                         @RequestParam("pageSize") Integer pageSize,
-                                         @RequestParam("organId") Integer oId,
-                                         @RequestParam("projectId") Integer pid,
-                                         @RequestParam("depotIds") String dids,
-                                         @RequestParam("beginTime") String beginTime,
-                                         @RequestParam("endTime") String endTime,
-                                         @RequestParam("type") String type,
-                                         HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findInOutMaterialCount/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
+    public BaseResponseInfo findInOutMaterialCount(@PathVariable("currentPage") Integer currentPage,
+                                                   @PathVariable("pageSize") Integer pageSize,
+                                                   @PathVariable("organId") Integer oId,
+                                                   @PathVariable("projectId") Integer pid,
+                                                   @PathVariable("depotIds") String dids,
+                                                   @PathVariable("beginTime") String beginTime,
+                                                   @PathVariable("endTime") String endTime,
+                                                   @PathVariable("type") String type)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -240,17 +228,15 @@ public class DepotHeadController {
      * @param endTime
      * @param organId
      * @param supType
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findStatementAccount")
-    public BaseResponseInfo findStatementAccount(@RequestParam("currentPage") Integer currentPage,
-                                                   @RequestParam("pageSize") Integer pageSize,
-                                                   @RequestParam("beginTime") String beginTime,
-                                                   @RequestParam("endTime") String endTime,
-                                                   @RequestParam("organId") Integer organId,
-                                                   @RequestParam("supType") String supType,
-                                                   HttpServletRequest request) throws Exception{
+    @GetMapping(value = "/findStatementAccount/{currentPage}/{pageSize}/{beginTime}/{endTime}/{organId}/{supType}")
+    public BaseResponseInfo findStatementAccount(@PathVariable("currentPage") Integer currentPage,
+                                                 @PathVariable("pageSize") Integer pageSize,
+                                                 @PathVariable("beginTime") String beginTime,
+                                                 @PathVariable("endTime") String endTime,
+                                                 @PathVariable("organId") Integer organId,
+                                                 @PathVariable("supType") String supType) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -327,14 +313,12 @@ public class DepotHeadController {
      * @param supplierId
      * @param endTime
      * @param supType
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findTotalPay")
-    public BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
-                                                 @RequestParam("endTime") String endTime,
-                                                 @RequestParam("supType") String supType,
-                                                 HttpServletRequest request)throws Exception {
+    @GetMapping(value = "/findTotalPay/{supplierId}/{endTime}/{supType}")
+    public BaseResponseInfo findTotalPay(@PathVariable("supplierId") Integer supplierId,
+                                         @PathVariable("endTime") String endTime,
+                                         @PathVariable("supType") String supType)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -367,12 +351,10 @@ public class DepotHeadController {
     /**
      * 根据编号查询单据信息
      * @param number
-     * @param request
      * @return
      */
     @GetMapping(value = "/getDetailByNumber")
-    public BaseResponseInfo getDetailByNumber(@RequestParam("number") String number,
-                                         HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getDetailByNumber(@RequestParam("number") String number)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         DepotHeadVo4List dhl = new DepotHeadVo4List();
         try {
@@ -425,13 +407,15 @@ public class DepotHeadController {
      * @Param: updated
      * @return java.lang.String
      */
-    @PostMapping(value = "/addDepotHeadAndDetail")
-    public Object addDepotHeadAndDetail(@RequestParam("info") String beanJson, @RequestParam("inserted") String inserted,
-                                        @RequestParam("deleted") String deleted,
-                                        @RequestParam("updated") String updated, HttpServletRequest request) throws  Exception{
+    @PostMapping(value = "/addDepotHeadAndDetail/{info}/{inserted}/{deleted}/{updated}")
+    public Object addDepotHeadAndDetail(@PathVariable("info") String beanJson,
+                                        @PathVariable("inserted") String inserted,
+                                        @PathVariable("deleted") String deleted,
+                                        @PathVariable("updated") String updated) throws  Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         if(("open").equals(mybatisPlusStatus)) {
-            Long billsNumLimit = Long.parseLong(request.getSession().getAttribute("billsNumLimit").toString());
+            //Long billsNumLimit = Long.parseLong(request.getSession().getAttribute("billsNumLimit").toString());
+            Long billsNumLimit=100000000L;
             Long count = depotHeadService.countDepotHead(null,null,null,null,null,null);
             if(count>= billsNumLimit) {
                 throw new BusinessParamCheckingException(ExceptionConstants.DEPOT_HEAD_OVER_LIMIT_FAILED_CODE,
@@ -455,10 +439,13 @@ public class DepotHeadController {
      * @Param: preTotalPrice
      * @return java.lang.Object
      */
-    @PostMapping(value = "/updateDepotHeadAndDetail")
-    public Object updateDepotHeadAndDetail(@RequestParam("id") Long id, @RequestParam("info") String beanJson, @RequestParam("inserted") String inserted,
-                                           @RequestParam("deleted") String deleted,
-                                           @RequestParam("updated") String updated, @RequestParam("preTotalPrice") BigDecimal preTotalPrice) throws  Exception{
+    @PostMapping(value = "/updateDepotHeadAndDetail/{id}/{info}/{inserted}/{deleted}/{updated}/{preTotalPrice}")
+    public Object updateDepotHeadAndDetail(@PathVariable("id") Long id,
+                                           @PathVariable("info") String beanJson,
+                                           @PathVariable("inserted") String inserted,
+                                           @PathVariable("deleted") String deleted,
+                                           @PathVariable("updated") String updated,
+                                           @PathVariable("preTotalPrice") BigDecimal preTotalPrice) throws  Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
         depotHeadService.updateDepotHeadAndDetail(id,beanJson,inserted,deleted,updated,preTotalPrice);

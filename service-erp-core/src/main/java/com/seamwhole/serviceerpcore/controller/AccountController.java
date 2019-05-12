@@ -34,11 +34,10 @@ public class AccountController {
 
     /**
      * 查找结算账户信息-下拉框
-     * @param request
      * @return
      */
     @GetMapping(value = "/findBySelect")
-    public String findBySelect(HttpServletRequest request) throws Exception {
+    public String findBySelect() throws Exception {
         String res = null;
         try {
             List<Account> dataList = accountService.findBySelect();
@@ -63,11 +62,10 @@ public class AccountController {
 
     /**
      * 获取所有结算账户
-     * @param request
      * @return
      */
     @GetMapping(value = "/getAccount")
-    public BaseResponseInfo getAccount(HttpServletRequest request) throws Exception {
+    public BaseResponseInfo getAccount() throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -89,15 +87,13 @@ public class AccountController {
      * @param pageSize
      * @param accountId
      * @param initialAmount
-     * @param request
      * @return
      */
-    @GetMapping(value = "/findAccountInOutList")
-    public BaseResponseInfo findAccountInOutList(@RequestParam("currentPage") Integer currentPage,
-                                                 @RequestParam("pageSize") Integer pageSize,
-                                                 @RequestParam("accountId") Long accountId,
-                                                 @RequestParam("initialAmount") BigDecimal initialAmount,
-                                                 HttpServletRequest request) throws Exception{
+    @GetMapping(value = "/findAccountInOutList/{currentPage}/{pageSize}/{accountId}/{initialAmount}")
+    public BaseResponseInfo findAccountInOutList(@PathVariable("currentPage") Integer currentPage,
+                                                 @PathVariable("pageSize") Integer pageSize,
+                                                 @PathVariable("accountId") Long accountId,
+                                                 @PathVariable("initialAmount") BigDecimal initialAmount) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -129,8 +125,7 @@ public class AccountController {
 
     @PostMapping(value = "/updateAmountIsDefault")
     public String updateAmountIsDefault(@RequestParam("isDefault") Boolean isDefault,
-                                 @RequestParam("accountId") Long accountId,
-                                 HttpServletRequest request) throws Exception{
+                                 @RequestParam("accountId") Long accountId) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = accountService.updateAmountIsDefault(isDefault, accountId);
         if(res > 0) {
@@ -143,20 +138,14 @@ public class AccountController {
     
     /**
      *  批量删除账户信息
-     * create time: 2019/3/29 10:49
-     * @Param: ids
-     * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteAccountByIds")
     public Object batchDeleteAccountByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
             required =false,defaultValue=BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
 
         JSONObject result = ExceptionConstants.standardSuccess();
+
         /**
-         * create by: qiankunpingtai
-         * create time: 2019/4/10 10:19
-         * website：https://qiankunpingtai.cn
-         * description:
          *  出于兼容性考虑，没有传递删除类型时，默认为正常删除
          */
         int i=0;

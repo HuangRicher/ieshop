@@ -48,13 +48,11 @@ public class SupplierController {
      * 更新供应商-只更新预付款，其余用原来的值
      * @param supplierId
      * @param advanceIn
-     * @param request
      * @return
      */
     @PostMapping(value = "/updateAdvanceIn")
     public String updateAdvanceIn(@RequestParam("supplierId") Long supplierId,
-                                            @RequestParam("advanceIn") BigDecimal advanceIn,
-                                            HttpServletRequest request)throws Exception {
+                                  @RequestParam("advanceIn") BigDecimal advanceIn)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = supplierService.updateAdvanceIn(supplierId, advanceIn);
         if(res > 0) {
@@ -70,7 +68,7 @@ public class SupplierController {
      * @return
      */
     @PostMapping(value = "/findBySelect_cus")
-    public JSONArray findBySelectCus(HttpServletRequest request)throws Exception {
+    public JSONArray findBySelectCus()throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Supplier> supplierList = supplierService.findBySelectCus();
@@ -101,11 +99,10 @@ public class SupplierController {
 
     /**
      * 查找供应商信息-下拉框
-     * @param request
      * @return
      */
     @PostMapping(value = "/findBySelect_sup")
-    public JSONArray findBySelectSup(HttpServletRequest request) throws Exception{
+    public JSONArray findBySelectSup() throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Supplier> supplierList = supplierService.findBySelectSup();
@@ -128,11 +125,10 @@ public class SupplierController {
 
     /**
      * 查找会员信息-下拉框
-     * @param request
      * @return
      */
     @PostMapping(value = "/findBySelect_retail")
-    public JSONArray findBySelectRetail(HttpServletRequest request)throws Exception {
+    public JSONArray findBySelectRetail()throws Exception {
         JSONArray arr = new JSONArray();
         try {
             List<Supplier> supplierList = supplierService.findBySelectRetail();
@@ -157,12 +153,10 @@ public class SupplierController {
     /**
      * 根据id查找信息
      * @param supplierId
-     * @param request
      * @return
      */
     @GetMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("supplierId") Long supplierId,
-                              HttpServletRequest request)throws Exception {
+    public BaseResponseInfo findById(@RequestParam("supplierId") Long supplierId)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             JSONArray dataArray = new JSONArray();
@@ -212,13 +206,11 @@ public class SupplierController {
      * 批量设置状态-启用或者禁用
      * @param enabled
      * @param supplierIDs
-     * @param request
      * @return
      */
     @PostMapping(value = "/batchSetEnable")
     public String batchSetEnable(@RequestParam("enabled") Boolean enabled,
-                                 @RequestParam("supplierIDs") String supplierIDs,
-                                 HttpServletRequest request)throws Exception {
+                                 @RequestParam("supplierIDs") String supplierIDs)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = supplierService.batchSetEnable(enabled, supplierIDs);
         if(res > 0) {
@@ -232,12 +224,11 @@ public class SupplierController {
      * 用户对应客户显示
      * @param type
      * @param keyId
-     * @param request
      * @return
      */
     @PostMapping(value = "/findUserCustomer")
-    public JSONArray findUserCustomer(@RequestParam("UBType") String type, @RequestParam("UBKeyId") String keyId,
-                                      HttpServletRequest request) throws Exception{
+    public JSONArray findUserCustomer(@RequestParam("UBType") String type,
+                                      @RequestParam("UBKeyId") String keyId) throws Exception{
         JSONArray arr = new JSONArray();
         try {
             List<Supplier> dataList = supplierService.findUserCustomer();
@@ -282,17 +273,14 @@ public class SupplierController {
      * @param phonenum
      * @param telephone
      * @param description
-     * @param request
-     * @param response
      * @return
      */
-    @GetMapping(value = "/exportExcel")
-    public BaseResponseInfo exportExcel(@RequestParam("supplier") String supplier,
-                                        @RequestParam("type") String type,
-                                        @RequestParam("phonenum") String phonenum,
-                                        @RequestParam("telephone") String telephone,
-                                        @RequestParam("description") String description,
-                                        HttpServletRequest request, HttpServletResponse response)throws Exception {
+    @GetMapping(value = "/exportExcel/{supplier}/{type}/{phonenum}/{telephone}/{description}")
+    public BaseResponseInfo exportExcel(@PathVariable("supplier") String supplier,
+                                        @PathVariable("type") String type,
+                                        @PathVariable("phonenum") String phonenum,
+                                        @PathVariable("telephone") String telephone,
+                                        @PathVariable("description") String description)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         String message = "成功";
@@ -325,7 +313,7 @@ public class SupplierController {
                 }
             }
             File file = ExcelUtils.exportObjectsWithoutTitle(title, names, title, objects);
-            ExportExecUtil.showExec(file, file.getName(), response);
+            //ExportExecUtil.showExec(file, file.getName(), response);
             res.code = 200;
         } catch (Exception e) {
             e.printStackTrace();
@@ -341,44 +329,34 @@ public class SupplierController {
     /**
      * 导入excel表格-供应商
      * @param supplierFile
-     * @param request
-     * @param response
      * @return
      */
     @PostMapping(value = "/importExcelVendor")
-    public void importExcelVendor(MultipartFile supplierFile,
-                                  HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void importExcelVendor(@RequestParam("file") MultipartFile supplierFile) throws Exception{
         importFun(supplierFile);
-        response.sendRedirect("../pages/manage/vendor.html");
     }
 
     /**
      * 导入excel表格-客户
      * @param supplierFile
-     * @param request
-     * @param response
      * @return
      */
     @PostMapping(value = "/importExcelCustomer")
-    public void importExcelCustomer(MultipartFile supplierFile,
-                                    HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void importExcelCustomer(@RequestParam("file")MultipartFile supplierFile) throws Exception{
         importFun(supplierFile);
-        response.sendRedirect("../pages/manage/customer.html");
     }
 
     /**
      * 导入excel表格-会员
      * @param supplierFile
-     * @param request
-     * @param response
      * @return
      */
     @PostMapping(value = "/importExcelMember")
-    public void importExcelMember(MultipartFile supplierFile,
-                                  HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void importExcelMember(@RequestParam("file")MultipartFile supplierFile) throws Exception{
         importFun(supplierFile);
-        response.sendRedirect("../pages/manage/member.html");
     }
+
+
     public String importFun(MultipartFile supplierFile)throws Exception{
 
         BaseResponseInfo info = new BaseResponseInfo();
@@ -446,8 +424,9 @@ public class SupplierController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteSupplierByIds")
-    public Object batchDeleteSupplierByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeleteSupplierByIds(@RequestParam("ids") String ids,
+                                           @RequestParam(value="deleteType", required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                                   String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

@@ -28,7 +28,7 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getAllList()throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -47,12 +47,10 @@ public class PersonController {
     /**
      * 根据Id获取经手人信息
      * @param personIDs
-     * @param request
      * @return
      */
     @GetMapping(value = "/getPersonByIds")
-    public BaseResponseInfo getPersonByIds(@RequestParam("personIDs") String personIDs,
-                                           HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getPersonByIds(@RequestParam("personIDs") String personIDs)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -71,12 +69,10 @@ public class PersonController {
     /**
      * 根据类型获取经手人信息
      * @param type
-     * @param request
      * @return
      */
     @GetMapping(value = "/getPersonByType")
-    public BaseResponseInfo getPersonByType(@RequestParam("type") String type,
-                                            HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getPersonByType(@RequestParam("type") String type)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -95,12 +91,10 @@ public class PersonController {
     /**
      * 根据类型获取经手人信息 1-业务员，2-仓管员，3-财务员
      * @param typeNum
-     * @param request
      * @return
      */
     @PostMapping(value = "/getPersonByNumType")
-    public JSONArray getPersonByNumType(@RequestParam("type") String typeNum,
-                                        HttpServletRequest request)throws Exception {
+    public JSONArray getPersonByNumType(@RequestParam("type") String typeNum)throws Exception {
         JSONArray dataArray = new JSONArray();
         try {
             String type = "";
@@ -131,8 +125,9 @@ public class PersonController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeletePersonByIds")
-    public Object batchDeletePersonByIds(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeletePersonByIds(@RequestParam("ids") String ids,
+                                         @RequestParam(value="deleteType", required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                                 String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

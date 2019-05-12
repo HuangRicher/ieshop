@@ -30,7 +30,7 @@ public class MaterialCategoryController {
     private MaterialCategoryService materialCategoryService;
 
     @GetMapping(value = "/getAllList")
-    public BaseResponseInfo getAllList(@RequestParam("parentId") Long parentId, HttpServletRequest request) throws Exception{
+    public BaseResponseInfo getAllList(@RequestParam("parentId") Long parentId) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialCategory> materialCategoryList = materialCategoryService.getAllList(parentId);
@@ -51,7 +51,7 @@ public class MaterialCategoryController {
      * @return
      */
     @GetMapping(value = "/findById")
-    public BaseResponseInfo findById(@RequestParam("id") Long id, HttpServletRequest request)throws Exception {
+    public BaseResponseInfo findById(@RequestParam("id") Long id)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<MaterialCategory> dataList = materialCategoryService.findById(id);
@@ -137,8 +137,9 @@ public class MaterialCategoryController {
      * @return java.lang.Object
      */
     @PostMapping(value = "/batchDeleteMaterialCategory")
-    public Object batchDeleteMaterialCategory(@RequestParam("ids") String ids, @RequestParam(value="deleteType",
-            required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)String deleteType) throws Exception {
+    public Object batchDeleteMaterialCategory(@RequestParam("ids") String ids,
+                                              @RequestParam(value="deleteType", required =false,defaultValue= BusinessConstants.DELETE_TYPE_NORMAL)
+                                                      String deleteType) throws Exception {
         JSONObject result = ExceptionConstants.standardSuccess();
         int i=0;
         if(BusinessConstants.DELETE_TYPE_NORMAL.equals(deleteType)){

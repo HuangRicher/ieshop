@@ -1,11 +1,7 @@
 package com.seamwhole.weberpadmin.constants;
 
 /**
- * @ClassName:BusinessConstants
- * @Description 业务字典类
- * @Author qiankunpingtai
- * @Date 2019-3-6 17:58
- * @Version 1.0
+ * 业务字典类
  **/
 public class BusinessConstants {
 

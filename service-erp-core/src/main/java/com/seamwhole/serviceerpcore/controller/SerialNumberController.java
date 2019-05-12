@@ -31,9 +31,10 @@ public class SerialNumberController {
      * @Param: request
      * @return java.lang.Object
      */
-    @PostMapping("/serialNumber/checkIsExist")
-    public Object checkIsExist(@RequestParam("id") Long id, @RequestParam("materialName") String materialName,
-                               @RequestParam("serialNumber") String serialNumber, HttpServletRequest request) throws Exception{
+    @PostMapping("/serialNumber/checkIsExist/{id}/{materialName}/{serialNumber}")
+    public Object checkIsExist(@PathVariable("id") Long id,
+                               @PathVariable("materialName") String materialName,
+                               @PathVariable("serialNumber") String serialNumber) throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
         if(StringUtil.isEmpty(serialNumber)){
             throw new BusinessParamCheckingException(ExceptionConstants.SERIAL_NUMBERE_NOT_BE_EMPTY_CODE,
@@ -83,9 +84,11 @@ public class SerialNumberController {
      * @Param: remark
      * @return java.lang.Object
      */
-    @PostMapping("/serialNumber/batAddSerialNumber")
-    public Object batAddSerialNumber(@RequestParam("materialName") String materialName, @RequestParam("serialNumberPrefix") String serialNumberPrefix,
-                                     @RequestParam("batAddTotal") Integer batAddTotal, @RequestParam("remark") String remark)throws Exception{
+    @PostMapping("/serialNumber/batAddSerialNumber/{materialName}/{serialNumberPrefix}/{batAddTotal}/{remark}")
+    public Object batAddSerialNumber(@PathVariable("materialName") String materialName,
+                                     @PathVariable("serialNumberPrefix") String serialNumberPrefix,
+                                     @PathVariable("batAddTotal") Integer batAddTotal,
+                                     @PathVariable("remark") String remark)throws Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
         serialNumberService.batAddSerialNumber(materialName,serialNumberPrefix,batAddTotal,remark);
