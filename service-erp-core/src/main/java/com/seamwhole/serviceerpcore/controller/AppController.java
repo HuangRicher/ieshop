@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * @author ji_sheng_hua 752*718*920
- */
+
 @RestController
 @RequestMapping(value = "/app")
 public class AppController {

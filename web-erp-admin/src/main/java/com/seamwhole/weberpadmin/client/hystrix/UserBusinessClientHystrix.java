@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class UserBusinessClientHystrix implements UserBusinessClient{
     @Override
-    public BaseResponseInfo getBasicData(String keyId, String type, HttpServletRequest request) {
+    public BaseResponseInfo getBasicData(String keyId, String type) {
         return null;
     }
 
     @Override
-    public String checkIsValueExist(String type, String keyId, HttpServletRequest request) {
+    public String checkIsValueExist(String type, String keyId) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo updateBtnStr(Long userBusinessId, String btnStr, HttpServletRequest request) {
+    public BaseResponseInfo updateBtnStr(Long userBusinessId, String btnStr) {
         return null;
     }
 

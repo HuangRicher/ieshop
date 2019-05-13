@@ -3,8 +3,10 @@
 <head>
     <title>ERP系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=8" >
-    <meta name="referrer" content="Webkit">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=8" >-->
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" rel="stylesheet" href="/css/css.css"/>
     <script type="text/javascript" src="/js/jquery-1.8.0.min.js"></script>
@@ -136,50 +138,9 @@
                 }),
                 success: function (res) {
                     if(res) {
-                        var loginInfoTip = res.data.msgTip;
-                        //用户名不存在，清空输入框并定位到用户名输入框
-                        if (loginInfoTip.indexOf("user is not exist") != -1) {
-                            $("#user_pwd").val("");
-                            $("#user_name").val("").focus();
-                            $("#tip_userpwd").hide();
-                            $("#tip_username").empty().append('<span class="error_input">用户名不存在</span>').show();
-                            return;
-                        }
-                        else if (loginInfoTip.indexOf("user password error") != -1) {
-                            $("#user_pwd").val("").focus();
-                            $("#tip_userpwd").empty().append('<span class="error_input">用户密码错误</span>').show();
-                            return;
-                        }
-                        else if (loginInfoTip.indexOf("access service error") != -1) {
-                            //$("#user_name").val("").focus();
-                            $("#tip_userpwd").hide();
-                            $("#tip_username").empty().append('<span class="error_input">后台访问错误</span>').show();
-                            return;
-                        }
-                        //跳转到用户管理界面
-                        else if (loginInfoTip.indexOf("user can login") != -1 || loginInfoTip == "user already login") {
-                            console.log("user can login");
-                            $.ajax({
-                                type: "get",
-                                url: "/user/getUserSession",
-                                dataType: "json",
-                                success: function (res) {
-                                    if(res && res.code === 200) {
-                                        if(res.data.user) {
-                                            console.log("user");
-                                            var user = res.data.user;
-                                            sessionStorage.setItem("userId", user.id);
-                                            console.log("http://" + location.host + "/index");
-                                            top.location.href = "http://" + location.host + "/index";
-                                        }
-                                    }
-                                },
-                                //此处添加错误处理
-                                error: function () {
-                                    alert("后台访问错误，请联系管理员！");
-                                }
-                            });
-                        }
+                        sessionStorage.setItem("userId", 63);
+                        console.log("http://" + location.host + "/index");
+                        top.location.href = "http://" + location.host + "/index";
                     }
                 },
                 //此处添加错误处理

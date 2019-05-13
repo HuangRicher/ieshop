@@ -10,52 +10,52 @@ import java.math.BigDecimal;
 @Component
 public class DepotHeadClientHystrix implements DepotHeadClient{
     @Override
-    public String batchSetStatus(String status, String depotHeadIDs, HttpServletRequest request) {
+    public String batchSetStatus(String status, String depotHeadIDs) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo buildNumber(HttpServletRequest request) {
+    public BaseResponseInfo buildNumber() {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getMaxId(HttpServletRequest request) {
+    public BaseResponseInfo getMaxId() {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findByMonth(String monthTime, HttpServletRequest request) {
+    public BaseResponseInfo findByMonth(String monthTime) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findInDetail(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type, HttpServletRequest request) {
+    public BaseResponseInfo findInDetail(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findInOutMaterialCount(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type, HttpServletRequest request) {
+    public BaseResponseInfo findInOutMaterialCount(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findStatementAccount(Integer currentPage, Integer pageSize, String beginTime, String endTime, Integer organId, String supType, HttpServletRequest request) {
+    public BaseResponseInfo findStatementAccount(Integer currentPage, Integer pageSize, String beginTime, String endTime, Integer organId, String supType) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findTotalPay(Integer supplierId, String endTime, String supType, HttpServletRequest request) {
+    public BaseResponseInfo findTotalPay(Integer supplierId, String endTime, String supType) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getDetailByNumber(String number, HttpServletRequest request) {
+    public BaseResponseInfo getDetailByNumber(String number) {
         return null;
     }
 
     @Override
-    public Object addDepotHeadAndDetail(String beanJson, String inserted, String deleted, String updated, HttpServletRequest request) {
+    public Object addDepotHeadAndDetail(String beanJson, String inserted, String deleted, String updated) {
         return null;
     }
 

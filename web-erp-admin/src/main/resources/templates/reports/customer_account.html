@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>客户对账</title>
     <meta charset="utf-8">
@@ -59,7 +59,7 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     var uid = sessionStorage.getItem("userId");
     var cusUrl = "/supplier/findBySelect_cus?UBType=UserCustomer&UBKeyId=" + uid; //客户接口
     //初始化界面

@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class PersonClientHystrix implements PersonClient{
     @Override
-    public BaseResponseInfo getAllList(HttpServletRequest request) {
+    public BaseResponseInfo getAllList() {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getPersonByIds(String personIDs, HttpServletRequest request) {
+    public BaseResponseInfo getPersonByIds(String personIDs) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getPersonByType(String type, HttpServletRequest request) {
+    public BaseResponseInfo getPersonByType(String type) {
         return null;
     }
 
     @Override
-    public JSONArray getPersonByNumType(String typeNum, HttpServletRequest request) {
+    public JSONArray getPersonByNumType(String typeNum) {
         return null;
     }
 

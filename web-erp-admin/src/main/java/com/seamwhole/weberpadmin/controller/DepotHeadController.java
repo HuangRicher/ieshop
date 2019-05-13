@@ -16,8 +16,6 @@ import java.math.BigDecimal;
 public class DepotHeadController {
     private Logger logger = LoggerFactory.getLogger(DepotHeadController.class);
 
-    @Value("${mybatis-plus.status}")
-    private String mybatisPlusStatus;
 
     @Autowired
     private DepotHeadClient depotHeadClient;

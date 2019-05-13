@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class OrganizationClientHystrix implements OrganizationClient{
     @Override
-    public BaseResponseInfo findById(Long id, HttpServletRequest request) {
+    public BaseResponseInfo findById(Long id) {
         return null;
     }
 

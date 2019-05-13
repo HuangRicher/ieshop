@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class SerialNumberClientHystrix implements SerialNumberClient{
     @Override
-    public Object checkIsExist(Long id, String materialName, String serialNumber, HttpServletRequest request) {
+    public Object checkIsExist(Long id, String materialName, String serialNumber) {
         return null;
     }
 

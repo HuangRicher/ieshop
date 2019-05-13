@@ -6,7 +6,6 @@ import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,17 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Value("${mybatis-plus.status}")
-    private String mybatisPlusStatus;
-
-    @Value("${manage.ip}")
-    private String manageIp;
-
-    @Value("${manage.port}")
-    private Integer managePort;
-
-    @Value("${manage.roleId}")
-    private Integer manageRoleId;
 
     @Resource
     private UserClient userClient;

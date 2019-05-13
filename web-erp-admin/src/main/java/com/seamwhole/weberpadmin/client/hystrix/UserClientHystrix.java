@@ -11,32 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class UserClientHystrix implements UserClient {
     @Override
-    public BaseResponseInfo login(String loginame, String password, HttpServletRequest request) {
+    public BaseResponseInfo login(String loginame, String password) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getSessionUser(HttpServletRequest request) {
+    public String resetPwd(Long id) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo logout(HttpServletRequest request, HttpServletResponse response) {
+    public String updatePwd(Long userId, String password, String oldpwd) {
         return null;
     }
 
     @Override
-    public String resetPwd(Long id, HttpServletRequest request) {
-        return null;
-    }
-
-    @Override
-    public String updatePwd(Long userId, String password, String oldpwd, HttpServletRequest request) {
-        return null;
-    }
-
-    @Override
-    public BaseResponseInfo getAllList(HttpServletRequest request) {
+    public BaseResponseInfo getAllList() {
         return null;
     }
 
@@ -46,12 +36,12 @@ public class UserClientHystrix implements UserClient {
     }
 
     @Override
-    public Object addUser(String beanJson, HttpServletRequest request) {
+    public Object addUser(String beanJson) {
         return null;
     }
 
     @Override
-    public Object registerUser(String loginame, String password, HttpServletRequest request) {
+    public Object registerUser(String loginame, String password) {
         return null;
     }
 
@@ -76,7 +66,7 @@ public class UserClientHystrix implements UserClient {
     }
 
     @Override
-    public BaseResponseInfo getTenantStatus(HttpServletRequest request) {
+    public BaseResponseInfo getTenantStatus() {
         return null;
     }
 }

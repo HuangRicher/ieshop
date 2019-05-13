@@ -5,6 +5,8 @@ spring:
     prefix: classpath:/templates/
     cache: false
     suffix: .html
+  main:
+      allow-bean-definition-overriding: true
 eureka:
   instance:
     prefer-ip-address: true

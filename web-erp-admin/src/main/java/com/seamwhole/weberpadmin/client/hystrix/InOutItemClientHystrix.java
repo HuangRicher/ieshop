@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class InOutItemClientHystrix implements InOutItemClient{
     @Override
-    public String findBySelect(String type, HttpServletRequest request) {
+    public String findBySelect(String type) {
         return null;
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>入库汇总</title>
     <meta charset="utf-8">
@@ -58,7 +58,7 @@
     <table id="tableData" style="top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     var depotList = null;
     var depotID = null;
     var depotString = ""; //仓库列表

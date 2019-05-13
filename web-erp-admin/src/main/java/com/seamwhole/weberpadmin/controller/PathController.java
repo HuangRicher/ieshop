@@ -1,6 +1,7 @@
 package com.seamwhole.weberpadmin.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,6 +25,13 @@ public class PathController {
     @RequestMapping("/common/main")
     public String toMain(){
         return "/common/main.html";
+    }
+
+    @RequestMapping("/common/menu")
+    public String toMenu(String appID,Integer id,Model model){
+        model.addAttribute("appId",appID);
+        model.addAttribute("id",id);
+        return "/common/menu";
     }
 
     @RequestMapping("/user/password")
@@ -148,7 +156,7 @@ public class PathController {
 
     @RequestMapping("/reports/in_out_stock_report")
     public String toInOutStockReport(){
-        return "/reports/in_out_stock_report.html";
+        return "reports/in_out_stock_report";
     }
 
     @RequestMapping("/reports/account_report")

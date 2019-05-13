@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 @Component
 public class AccountClientHystrix implements AccountClient {
     @Override
-    public String findBySelect(HttpServletRequest request) {
+    public String findBySelect() {
         return null;
     }
 
     @Override
-    public BaseResponseInfo getAccount(HttpServletRequest request) {
+    public BaseResponseInfo getAccount() {
         return null;
     }
 

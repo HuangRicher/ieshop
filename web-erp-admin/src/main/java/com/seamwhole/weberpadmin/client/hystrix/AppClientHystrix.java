@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AppClientHystrix  implements AppClient{
     @Override
-    public JSONObject findAppByUserId(String userId, HttpServletRequest request) {
+    public JSONObject findAppByUserId(String userId) {
         return null;
     }
 
     @Override
-    public JSONObject findDesk(HttpServletRequest request) {
+    public JSONObject findDesk() {
         return null;
     }
 
     @Override
-    public JSONArray findRoleAPP(String type, String keyId, HttpServletRequest request) {
+    public JSONArray findRoleAPP(String type, String keyId, String loginName) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo uploadImg(MultipartFile fileInfo, String fileName, HttpServletRequest request) {
+    public BaseResponseInfo uploadImg(MultipartFile fileInfo, String fileName) {
         return null;
     }
 

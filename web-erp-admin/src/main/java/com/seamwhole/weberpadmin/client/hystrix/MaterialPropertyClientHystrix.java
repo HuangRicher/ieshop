@@ -1,41 +1,12 @@
 package com.seamwhole.weberpadmin.client.hystrix;
 
-import com.alibaba.fastjson.JSONArray;
-import com.seamwhole.weberpadmin.client.MaterialCategoryClient;
-import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.client.MaterialPropertyClient;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Component
-public class MaterialPropertyClientHystrix implements MaterialCategoryClient{
+public class MaterialPropertyClientHystrix implements MaterialPropertyClient{
     @Override
-    public BaseResponseInfo getAllList(Long parentId, HttpServletRequest request) {
-        return null;
-    }
-
-    @Override
-    public BaseResponseInfo findById(Long id, HttpServletRequest request) {
-        return null;
-    }
-
-    @Override
-    public JSONArray getMaterialCategoryTree(Long id) {
-        return null;
-    }
-
-    @Override
-    public Object addMaterialCategory(String beanJson) {
-        return null;
-    }
-
-    @Override
-    public Object editMaterialCategory(String beanJson) {
-        return null;
-    }
-
-    @Override
-    public Object batchDeleteMaterialCategory(String ids, String deleteType) {
+    public Object batchDeleteMaterialPropertyByIds(String ids) {
         return null;
     }
 }

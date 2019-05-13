@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class DepotClientHystrix implements DepotClient{
     @Override
-    public BaseResponseInfo getAllList(HttpServletRequest request) {
+    public BaseResponseInfo getAllList() {
         return null;
     }
 
     @Override
-    public JSONArray findUserDepot(String type, String keyId, HttpServletRequest request) {
+    public JSONArray findUserDepot(String type, String keyId) {
         return null;
     }
 
     @Override
-    public JSONArray findDepotByUserId(String type, String keyId, HttpServletRequest request) {
+    public JSONArray findDepotByUserId(String type, String keyId) {
         return null;
     }
 
@@ -35,7 +35,7 @@ public class DepotClientHystrix implements DepotClient{
     }
 
     @Override
-    public String updateDepotIsDefault(Boolean isDefault, Long depotID, HttpServletRequest request) {
+    public String updateDepotIsDefault(Boolean isDefault, Long depotID) {
         return null;
     }
 }

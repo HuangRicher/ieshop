@@ -11,12 +11,12 @@ import java.util.List;
 @Component
 public class RoleClientHystrix implements RoleClient{
     @Override
-    public JSONArray findUserRole(String type, String keyId, HttpServletRequest request) {
+    public JSONArray findUserRole(String type, String keyId) {
         return null;
     }
 
     @Override
-    public List<Role> list(HttpServletRequest request) {
+    public List<Role> list() {
         return null;
     }
 

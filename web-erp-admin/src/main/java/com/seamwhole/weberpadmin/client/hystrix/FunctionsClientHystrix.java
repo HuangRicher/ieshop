@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class FunctionsClientHystrix implements FunctionsClient{
     @Override
-    public JSONArray findMenu(String pNumber, String hasFunctions, HttpServletRequest request) {
+    public JSONArray findMenu(String pNumber, String hasFunctions) {
         return null;
     }
 
     @Override
-    public JSONArray findRoleFunctions(String type, String keyId, HttpServletRequest request) {
+    public JSONArray findRoleFunctions(String type, String keyId, String loginName) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findByIds(String functionsIds, HttpServletRequest request) {
+    public BaseResponseInfo findByIds(String functionsIds) {
         return null;
     }
 

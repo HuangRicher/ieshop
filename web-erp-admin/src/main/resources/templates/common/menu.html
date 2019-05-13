@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title></title>
     <meta charset="utf-8">
@@ -22,8 +22,8 @@
     </script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden" scroll="no">
-<script>
-    var pageid = getUrlParam('id');  //获取传值id
+<script th:inline="javascript">
+    var pageid = [[${id}]];  //获取传值id
     var id =sessionStorage.getItem("userId");
     //alert(pageid);
 
@@ -144,11 +144,11 @@
         <!--  导航内容 -->
         <div>
             <ul id="tt"></ul>
-            <script>
-                var pNumber = getUrlParam('appID');  //获取传值appid
+            <script th:inline="javascript">
+                var pNumber = [[${appId}]];  //获取传值appid
                 $(function () {
                     $('#tt').tree({
-                        url: '/functions/findMenu?pNumber=' + pNumber + '&hasFunctions=' + functions,
+                        url: '/functions/findMenu?pNumber=' + pNumber + '&hasFunctions=' +encodeURIComponent(functions),
                         animate: true
                     });
                 });

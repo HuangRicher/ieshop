@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class AppController {
     private Logger logger = LoggerFactory.getLogger(AppController.class);
 
-    @Value("${mybatis-plus.status}")
-    private String mybatisPlusStatus;
 
     @Autowired
     private AppClient appClient;

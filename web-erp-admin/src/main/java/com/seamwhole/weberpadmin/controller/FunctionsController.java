@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class FunctionsController {
     private Logger logger = LoggerFactory.getLogger(FunctionsController.class);
 
-    @Value("${mybatis-plus.status}")
-    private String mybatisPlusStatus;
 
     @Autowired
     private FunctionsClient functionsClient;
 
 
-    @PostMapping(value = "/findMenu")
+    @RequestMapping(value = "/findMenu")
     public JSONArray findMenu(@RequestParam(value="pNumber") String pNumber,
                             @RequestParam(value="hasFunctions") String hasFunctions)throws Exception {
         //存放数据json数组
@@ -34,18 +32,18 @@ public class FunctionsController {
     /**
      * 角色对应功能显示
      */
-    @PostMapping(value = "/findRoleFunctions")
+    @RequestMapping(value = "/findRoleFunctions")
     public JSONArray findRoleFunctions(@RequestParam("UBType") String type,
                                        @RequestParam("UBKeyId") String keyId)throws Exception {
 
-        JSONArray arr = functionsClient.findRoleFunctions(type,keyId,"");
+        JSONArray arr = functionsClient.findRoleFunctions(type,keyId,"jsh");
         return arr;
     }
 
     /**
      * 根据id列表查找功能信息
      */
-    @GetMapping(value = "/findByIds")
+    @RequestMapping(value = "/findByIds")
     public BaseResponseInfo findByIds(@RequestParam("functionsIds") String functionsIds)throws Exception {
 
         BaseResponseInfo res = functionsClient.findByIds(functionsIds);

@@ -888,7 +888,7 @@ public class DepotItemController {
         return res;
     }
 
-    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    @GetMapping(value = "/findByType/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
     public BigDecimal findByType(@PathVariable("type")String type,
                           @PathVariable("projectId")Integer projectId,
                           @PathVariable("mId")Long mId,
@@ -900,7 +900,7 @@ public class DepotItemController {
 
 
 
-    @GetMapping(value = "/depotItem/findByAll/{subType}/{mType}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    @GetMapping(value = "/findAssembleByType/{subType}/{mType}/{projectId}/{mId}/{monthTime}/{isPrev}")
     public BigDecimal findAssembleByType(@PathVariable("subType")String subType,
                                   @PathVariable("mType")String mType,
                                   @PathVariable("projectId")Integer projectId,
@@ -911,7 +911,7 @@ public class DepotItemController {
     }
 
 
-    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    @GetMapping(value = "/findPriceByType/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
     public BigDecimal findPriceByType(@PathVariable("type")String type,
                                @PathVariable("projectId")Integer projectId,
                                @PathVariable("mId")Long mId,
@@ -921,7 +921,7 @@ public class DepotItemController {
     }
 
 
-    @GetMapping(value = "/depotItem/findByAll/{type}/{subType}/{mId}/{monthTime}/{sumType}")
+    @GetMapping(value = "/buyOrSale/{type}/{subType}/{mId}/{monthTime}/{sumType}")
     public BigDecimal buyOrSale(@PathVariable("type")String type,
                          @PathVariable("subType")String subType,
                          @PathVariable("mId")Long mId,
@@ -932,7 +932,7 @@ public class DepotItemController {
     }
 
 
-    @GetMapping(value = "/depotItem/findByAll/{count}/{pageSize}/{projectId}")
+    @GetMapping(value = "/findStockWarningCount/{count}/{pageSize}/{projectId}")
     public List<DepotItemStockWarningCount> findStockWarningCount(@PathVariable("count") Integer count,
                                                            @PathVariable("pageSize")Integer pageSize,
                                                            @PathVariable("projectId")Integer projectId) throws Exception{

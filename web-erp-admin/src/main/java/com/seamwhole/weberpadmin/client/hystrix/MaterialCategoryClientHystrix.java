@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class MaterialCategoryClientHystrix  implements MaterialCategoryClient{
     @Override
-    public BaseResponseInfo getAllList(Long parentId, HttpServletRequest request) {
+    public BaseResponseInfo getAllList(Long parentId) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findById(Long id, HttpServletRequest request) {
+    public BaseResponseInfo findById(Long id) {
         return null;
     }
 
