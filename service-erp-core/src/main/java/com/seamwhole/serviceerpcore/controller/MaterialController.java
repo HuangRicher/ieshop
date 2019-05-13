@@ -185,6 +185,16 @@ public class MaterialController {
         return res;
     }
 
+    @GetMapping(value = "/findByAll/{name}/{model}/{categoryId}/{categoryIds}")
+    List<MaterialVo4Unit> findByAll(@PathVariable("name") String name,
+                                    @PathVariable("model")String model,
+                                    @PathVariable("categoryId")Long categoryId,
+                                    @PathVariable("categoryIds")String categoryIds) throws Exception{
+
+        return materialService.findByAll(name, model, categoryId, categoryIds);
+    }
+
+
     /**
      * 生成excel表格
      * @param name

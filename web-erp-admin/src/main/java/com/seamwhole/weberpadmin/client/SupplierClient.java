@@ -5,6 +5,7 @@ import com.seamwhole.weberpadmin.client.hystrix.SupplierClientHystrix;
 import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.constants.BusinessConstants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.Supplier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @FeignClient(serviceId = "erp-core-service" ,configuration = FeignConfig.class,fallback = SupplierClientHystrix.class)
@@ -98,4 +100,10 @@ public interface SupplierClient {
     Object batchDeleteSupplierByIds(@RequestParam("ids") String ids,
                                     @RequestParam("deleteType")String deleteType);
 
+    @GetMapping(value = "/supplier/findByAll/{supplier}/{type}/{phonenum}/{telephone}/{description}")
+    List<Supplier> findByAll(@PathVariable("supplier") String supplier,
+                             @PathVariable("type") String type,
+                             @PathVariable("phonenum") String phonenum,
+                             @PathVariable("telephone") String telephone,
+                             @PathVariable("description") String description);
 }

@@ -4,11 +4,15 @@ import com.seamwhole.weberpadmin.client.hystrix.DepotItemClientHystrix;
 import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.DepotItemStockWarningCount;
+import com.seamwhole.weberpadmin.domain.DepotItemVo4WithInfoEx;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.List;
 
 
 @FeignClient(serviceId = "erp-core-service" ,configuration = FeignConfig.class,fallback = DepotItemClientHystrix.class)
@@ -69,8 +73,8 @@ public interface DepotItemClient {
     /**
      * 查找所有的明细
      */
-    @GetMapping(value = "/depotItem/findByAll/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}/{mpList}")
-    BaseResponseInfo findByAll(@PathVariable("currentPage") Integer currentPage,
+    @GetMapping(value = "/depotItem/findByAllByPage/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}/{mpList}")
+    BaseResponseInfo findByAllByPage(@PathVariable("currentPage") Integer currentPage,
                                @PathVariable("pageSize") Integer pageSize,
                                @PathVariable("projectId") Integer projectId,
                                @PathVariable("monthTime") String monthTime,
@@ -131,8 +135,8 @@ public interface DepotItemClient {
     /**
      * 库存预警报表
      */
-    @GetMapping(value = "/depotItem/findStockWarningCount/{currentPage}/{pageSize}/{projectId}")
-   BaseResponseInfo findStockWarningCount(@PathVariable("currentPage") Integer currentPage,
+    @GetMapping(value = "/depotItem/findStockWarningCountByPage/{currentPage}/{pageSize}/{projectId}")
+   BaseResponseInfo findStockWarningCountByPage(@PathVariable("currentPage") Integer currentPage,
                                           @PathVariable("pageSize") Integer pageSize,
                                           @PathVariable("projectId") Integer pid );
     /**
@@ -142,4 +146,50 @@ public interface DepotItemClient {
     BaseResponseInfo exportWarningExcel(@PathVariable("currentPage") Integer currentPage,
                                         @PathVariable("pageSize") Integer pageSize,
                                         @PathVariable("projectId") Integer projectId);
-    }
+
+
+    @GetMapping(value = "/depotItem/findByAll/{headIds}/{materialIds}/{count}/{pageSize}")
+    List<DepotItemVo4WithInfoEx> findByAll(@PathVariable("headIds") String headIds,
+                                           @PathVariable("materialIds")String materialIds,
+                                           @PathVariable("count")Integer count,
+                                           @PathVariable("pageSize")Integer pageSize);
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    BigDecimal findByType(@PathVariable("type")String type,
+                          @PathVariable("projectId")Integer projectId,
+                          @PathVariable("mId")Long mId,
+                          @PathVariable("monthTime")String monthTime,
+                          @PathVariable("isPrev")Boolean isPrev);
+
+
+
+    @GetMapping(value = "/depotItem/findByAll/{subType}/{mType}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    BigDecimal findAssembleByType(@PathVariable("subType")String subType,
+                                  @PathVariable("mType")String mType,
+                                  @PathVariable("projectId")Integer projectId,
+                                  @PathVariable("mId")Long mId,
+                                  @PathVariable("monthTime")String monthTime,
+                                  @PathVariable("isPrev")Boolean isPrev);
+
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    BigDecimal findPriceByType(@PathVariable("type")String type,
+                               @PathVariable("projectId")Integer projectId,
+                               @PathVariable("mId")Long mId,
+                               @PathVariable("monthTime")String monthTime,
+                               @PathVariable("isPrev")Boolean isPrev);
+
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{subType}/{mId}/{monthTime}/{sumType}")
+    BigDecimal buyOrSale(@PathVariable("type")String type,
+                         @PathVariable("subType")String subType,
+                         @PathVariable("mId")Long mId,
+                         @PathVariable("monthTime")String monthTime,
+                         @PathVariable("sumType")String sumType);
+
+
+    @GetMapping(value = "/depotItem/findByAll/{count}/{pageSize}/{projectId}")
+    List<DepotItemStockWarningCount> findStockWarningCount(@PathVariable("count") Integer count,
+                                                           @PathVariable("pageSize")Integer pageSize,
+                                                           @PathVariable("projectId")Integer projectId);
+}

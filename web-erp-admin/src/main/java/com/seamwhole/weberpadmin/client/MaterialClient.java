@@ -6,12 +6,14 @@ import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.constants.BusinessConstants;
 import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.MaterialVo4Unit;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 @FeignClient(serviceId = "erp-core-service" ,configuration = FeignConfig.class,fallback = MaterialClientHystrix.class)
@@ -83,4 +85,10 @@ public interface MaterialClient {
     @PostMapping(value = "/material/batchDeleteMaterialByIds")
     Object batchDeleteMaterialByIds(@RequestParam("ids") String ids,
                                     @RequestParam(value="deleteType")String deleteType);
+
+    @GetMapping(value = "/material/findByAll/{name}/{model}/{categoryId}/{categoryIds}")
+    List<MaterialVo4Unit> findByAll(@PathVariable("name") String name,
+                                    @PathVariable("model")String model,
+                                    @PathVariable("categoryId")Long categoryId,
+                                    @PathVariable("categoryIds")String categoryIds);
 }

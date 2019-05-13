@@ -18,19 +18,19 @@ public interface DepotHeadClient {
      */
     @PostMapping(value = "/depotHead/batchSetStatus")
     String batchSetStatus(@RequestParam("status") String status,
-                                 @RequestParam("depotHeadIDs") String depotHeadIDs);
+                          @RequestParam("depotHeadIDs") String depotHeadIDs);
 
     /**
      * 单据编号生成接口
      */
     @GetMapping(value = "/depotHead/buildNumber")
-    BaseResponseInfo buildNumber(HttpServletRequest request);
+    BaseResponseInfo buildNumber();
 
     /**
      * 获取最大的id
      */
     @GetMapping(value = "/depotHead/getMaxId")
-    BaseResponseInfo getMaxId(HttpServletRequest request);
+    BaseResponseInfo getMaxId();
 
     /**
      * 查找单据_根据月份(报表)

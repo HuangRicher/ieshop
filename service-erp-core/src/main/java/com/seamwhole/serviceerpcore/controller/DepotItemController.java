@@ -407,8 +407,8 @@ public class DepotItemController {
      * @param mpList
      * @return
      */
-    @GetMapping(value = "/findByAll/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}/{mpList}")
-    public BaseResponseInfo findByAll(@PathVariable("currentPage") Integer currentPage,
+    @GetMapping(value = "/findByAllByPage/{currentPage}/{pageSize}/{projectId}/{monthTime}/{headIds}/{materialIds}/{mpList}")
+    public BaseResponseInfo findByAllByPage(@PathVariable("currentPage") Integer currentPage,
                                       @PathVariable("pageSize") Integer pageSize,
                                       @PathVariable("projectId") Integer projectId,
                                       @PathVariable("monthTime") String monthTime,
@@ -627,6 +627,16 @@ public class DepotItemController {
         return res;
     }
 
+    @GetMapping(value = "/depotItem/findByAll/{headIds}/{materialIds}/{count}/{pageSize}")
+    public List<DepotItemVo4WithInfoEx> findByAll(@PathVariable("headIds") String headIds,
+                                                  @PathVariable("materialIds")String materialIds,
+                                                  @PathVariable("count")Integer count,
+                                                  @PathVariable("pageSize")Integer pageSize) throws Exception{
+
+        return depotItemService.findByAll(headIds, materialIds, count, pageSize);
+    }
+
+
     /**
      * 导出excel表格
      * @param currentPage
@@ -809,8 +819,8 @@ public class DepotItemController {
      * @param pageSize
      * @return
      */
-    @GetMapping(value = "/findStockWarningCount/{currentPage}/{pageSize}/{projectId}")
-    public BaseResponseInfo findStockWarningCount(@PathVariable("currentPage") Integer currentPage,
+    @GetMapping(value = "/findStockWarningCountByPage/{currentPage}/{pageSize}/{projectId}")
+    public BaseResponseInfo findStockWarningCountByPage(@PathVariable("currentPage") Integer currentPage,
                                                   @PathVariable("pageSize") Integer pageSize,
                                                   @PathVariable("projectId") Integer pid )throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
@@ -877,4 +887,56 @@ public class DepotItemController {
         }
         return res;
     }
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    public BigDecimal findByType(@PathVariable("type")String type,
+                          @PathVariable("projectId")Integer projectId,
+                          @PathVariable("mId")Long mId,
+                          @PathVariable("monthTime")String monthTime,
+                          @PathVariable("isPrev")Boolean isPrev) throws Exception{
+
+        return depotItemService.findByType(type,projectId,mId,monthTime,isPrev);
+    }
+
+
+
+    @GetMapping(value = "/depotItem/findByAll/{subType}/{mType}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    public BigDecimal findAssembleByType(@PathVariable("subType")String subType,
+                                  @PathVariable("mType")String mType,
+                                  @PathVariable("projectId")Integer projectId,
+                                  @PathVariable("mId")Long mId,
+                                  @PathVariable("monthTime")String monthTime,
+                                  @PathVariable("isPrev")Boolean isPrev) throws Exception{
+        return depotItemService.findAssembleByType(subType,mType,projectId,mId,monthTime,isPrev);
+    }
+
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{projectId}/{mId}/{monthTime}/{isPrev}")
+    public BigDecimal findPriceByType(@PathVariable("type")String type,
+                               @PathVariable("projectId")Integer projectId,
+                               @PathVariable("mId")Long mId,
+                               @PathVariable("monthTime")String monthTime,
+                               @PathVariable("isPrev")Boolean isPrev)throws Exception{
+        return depotItemService.findPriceByType(type,projectId,mId,monthTime,isPrev);
+    }
+
+
+    @GetMapping(value = "/depotItem/findByAll/{type}/{subType}/{mId}/{monthTime}/{sumType}")
+    public BigDecimal buyOrSale(@PathVariable("type")String type,
+                         @PathVariable("subType")String subType,
+                         @PathVariable("mId")Long mId,
+                         @PathVariable("monthTime")String monthTime,
+                         @PathVariable("sumType")String sumType) throws Exception{
+
+        return depotItemService.buyOrSale(type,subType,mId,monthTime,sumType);
+    }
+
+
+    @GetMapping(value = "/depotItem/findByAll/{count}/{pageSize}/{projectId}")
+    public List<DepotItemStockWarningCount> findStockWarningCount(@PathVariable("count") Integer count,
+                                                           @PathVariable("pageSize")Integer pageSize,
+                                                           @PathVariable("projectId")Integer projectId) throws Exception{
+        return depotItemService.findStockWarningCount(count,pageSize,projectId);
+    }
+
     }

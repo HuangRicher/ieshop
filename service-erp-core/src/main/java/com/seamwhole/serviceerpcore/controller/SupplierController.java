@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
-import com.seamwhole.serviceerpcore.model.Supplier;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
+import com.seamwhole.serviceerpcore.model.Supplier;
 import com.seamwhole.serviceerpcore.service.SupplierService;
-import com.seamwhole.serviceerpcore.service.UserService;
 import com.seamwhole.serviceerpcore.service.UserBusinessService;
-import com.seamwhole.serviceerpcore.utils.*;
+import com.seamwhole.serviceerpcore.service.UserService;
+import com.seamwhole.serviceerpcore.utils.BaseResponseInfo;
+import com.seamwhole.serviceerpcore.utils.ErpInfo;
+import com.seamwhole.serviceerpcore.utils.ExcelUtils;
+import com.seamwhole.serviceerpcore.utils.StringUtil;
 import jxl.Sheet;
 import jxl.Workbook;
 import org.slf4j.Logger;
@@ -19,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -265,6 +266,17 @@ public class SupplierController {
         }
         return arr;
     }
+
+    @GetMapping(value = "/findByAll/{supplier}/{type}/{phonenum}/{telephone}/{description}")
+    public List<Supplier> findByAll(@PathVariable("supplier") String supplier,
+                             @PathVariable("type") String type,
+                             @PathVariable("phonenum") String phonenum,
+                             @PathVariable("telephone") String telephone,
+                             @PathVariable("description") String description) throws Exception{
+
+        return supplierService.findByAll(supplier,type,phonenum,telephone,description);
+    }
+
 
     /**
      * 生成excel表格
