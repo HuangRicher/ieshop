@@ -65,11 +65,10 @@ public class SupplierController {
 
     /**
      * 查找客户信息-下拉框
-     * @param request
-     * @return
      */
     @PostMapping(value = "/findBySelect_cus")
-    public JSONArray findBySelectCus()throws Exception {
+    public JSONArray findBySelectCus(@RequestParam(value = "UBType", required = false)  String ubType,
+                                     @RequestParam(value = "UBKeyId", required = false)  String ubKeyId) {
         JSONArray arr = new JSONArray();
         try {
             List<Supplier> supplierList = supplierService.findBySelectCus();
@@ -80,7 +79,7 @@ public class SupplierController {
                     //勾选判断1
                     Boolean flag = false;
                     try {
-                        flag = userBusinessService.checkIsUserBusinessExist(null, null, "[" + supplier.getId().toString() + "]");
+                        flag = userBusinessService.checkIsUserBusinessExist(ubType, ubKeyId, "[" + supplier.getId().toString() + "]");
                     } catch (DataAccessException e) {
                         logger.error(">>>>>>>>>>>>>>>>>查询用户对应的客户：存在异常！");
                     }

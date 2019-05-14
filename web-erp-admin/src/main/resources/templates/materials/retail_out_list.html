@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>零售出库</title>
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
     <script src="/js/easyui-1.3.5/locale/easyui-lang-zh_CN.js"></script>
     <script src="/js/My97DatePicker/WdatePicker.js"></script>
     <script src="/js/common/common.js"></script>
-    <script src="/js/pages/materials/in_out.js"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/pages/materials/in_out.js}"></script>
 </head>
 <body>
 <!-- 查询 -->

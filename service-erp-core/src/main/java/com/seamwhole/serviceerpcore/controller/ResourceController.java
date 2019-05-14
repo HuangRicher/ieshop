@@ -36,6 +36,12 @@ public class ResourceController {
                         @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage,
                         @PathVariable(value = Constants.SEARCH, required = false) String search)throws Exception {
         Map<String, String> parameterMap = new HashMap<>();//ParamUtils.requestToMap(request);
+        if(pageSize!=null){
+            parameterMap.put(Constants.PAGE_SIZE,pageSize+"");
+        }
+        if(currentPage!=null){
+            parameterMap.put(Constants.CURRENT_PAGE,currentPage+"");
+        }
         parameterMap.put(Constants.SEARCH, search);
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
