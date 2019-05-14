@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>用户管理</title>
     <meta charset="utf-8">
@@ -110,7 +110,7 @@
 <div id="forSelectOrganizationDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
      closed="true" modal="true" cache="false" collapsible="false" closable="true">
 </div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     //初始化界面
     $(function () {
         initTableData();

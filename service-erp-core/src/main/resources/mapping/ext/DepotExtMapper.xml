@@ -7,7 +7,7 @@
 
     <select id="selectByConditionDepot" parameterType="com.seamwhole.serviceerpcore.model.DepotExample" resultMap="com.seamwhole.serviceerpcore.mapper.DepotMapper.BaseResultMap">
         select *
-        FROM jsh_depot
+        FROM erp_depot
         where 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -27,7 +27,7 @@
     <select id="countsByDepot" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_depot
+        FROM erp_depot
         WHERE 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -42,8 +42,8 @@
     </select>
     <select id="getDepotList" parameterType="java.util.Map" resultMap="ResultMapEx">
         select dep.*,usr.username as principalName
-        FROM jsh_depot dep
-        left join jsh_user usr on usr.id=dep.principal and ifnull(usr.status,'0') not in('1','2')
+        FROM erp_depot dep
+        left join erp_user usr on usr.id=dep.principal and ifnull(usr.status,'0') not in('1','2')
         where 1=1
         <if test="name != null and name != ''">
             <bind name="name" value="'%' + _parameter.name + '%'" />
@@ -60,7 +60,7 @@
         order by dep.sort asc
     </select>
     <update id="batchDeleteDepotByIds">
-        update jsh_depot
+        update erp_depot
         set delete_Flag='1'
         where 1=1
         and id in (

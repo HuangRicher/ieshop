@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>经手人管理</title>
     <meta charset="utf-8">
@@ -81,7 +81,7 @@
        onclick="javascript:$('#personDlg').dialog('close')">取消</a>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     var depotList = null;
     var depotID = null;
     //初始化界面

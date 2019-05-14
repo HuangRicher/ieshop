@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>角色分配按钮</title>
     <meta charset="utf-8">
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     var keyId = getUrlParam('id');  //获取传值id（角色id）
     var pushBtnJSON;
     var userBusinessId = 0; //关系id

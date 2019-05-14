@@ -1,77 +1,57 @@
 server:
-    port: 9095
+  port: 10007
 spring:
   jackson:
     serialization:
       write-dates-as-timestamps: true
   ##数据库连接信息
   datasource:
-    url: jdbc:mysql://10.66.225.229:3306/tongzhu_treehouse_dev?useUnicode=true&characterEncoding=utf8&useSSL=false
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://bj-cdb-kkucszns.sql.tencentcdb.com:62815/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
     username: root
     password: rP3Za18k3Mw18gDJ
-    driver-class-name: com.mysql.jdbc.Driver
-    ###################以下为druid增加的配置###########################
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 下面为连接池的补充设置，应用到上面所有数据源中
-    # 初始化大小，最小，最大
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    # 打开PSCache，并且指定每个连接上PSCache的大小
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙，此处是filter修改的地方
-    filters:
-      commons-log.connection-logger-name: stat,wall,log4j
-    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    # 合并多个DruidDataSource的监控数据
-    useGlobalDataSourceStat: true
-    connectionInitSqls: set names utf8mb4
-    ###############以上为配置druid添加的配置########################################
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        maxLifetime: 1800000
+        idleTimeout: 600000
   application:
-      name: user
+    name: erp-core-service
   redis:
-      database: 4
-      host: 10.141.78.42 #120.55.167.171
-      port: 16379
-      password: tongzhutreehousetime
-      lettuce:
-        shutdown-timeout: 30000ms
-        pool:
-          max-active: 10
-          max-wait: -1ms
-          max-idle: 0
+    database: 0
+    #120.78.170.118
+    host: 120.78.170.118
+    port: 6379
+    password: 123456
+    lettuce:
+      shutdown-timeout: 30000ms
+      pool:
+        max-active: 10
+        max-wait: -1ms
+        max-idle: 0
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
     use-generated-keys: true
-  type-aliases-package: com.tongzhu.user.model
+  type-aliases-package: com.seamwhole.serviceerpcore.model
   mapper-locations: classpath:mapping/**/*Mapper.xml
 
 #pagehelper分页工具
 pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 eureka:
   instance:
     prefer-ip-address: true
-    ip-address: 10.141.78.42
+    ip-address: 127.0.0.1
   client:
     serviceUrl:
-      defaultZone: http://10.141.78.42:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
 #logging:
 #  level:
 #    com.tongzhu.user.mapper : debug
@@ -79,43 +59,7 @@ eureka:
 ## tx-manager 配置
 tx-lcn:
   client:
-    manager-address: 10.141.78.42:8070
-
-user:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-friend:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-user-goods:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-tree-house:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-message:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-fishing:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
-welfare:
-  ribbon:
-    ReadTimeout: 60000
-    ConnectTimeout: 60000
-    SocketTimeout: 60000
+    manager-address: 127.0.0.1:8070
 hystrix:
   command:
     default:
@@ -123,38 +67,13 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000
-  user:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  friend:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  user-goods:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  tree-house:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  message:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  fishing:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
-  welfare:
-    execution:
-      isolation:
-        thread:
-          timeoutInMilliseconds: 60000
+
+#mybatis-plus配置
+#open开启 close关闭
+mybatis-plus:
+  status: close
+#获取管理系统信息
+manage:
+  ip: 127.0.0.1
+  port: 8090
+  roleId: 10

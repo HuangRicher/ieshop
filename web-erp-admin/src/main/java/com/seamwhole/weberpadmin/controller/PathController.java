@@ -9,22 +9,22 @@ public class PathController {
 
     @RequestMapping("/login")
     public String toLogin(){
-        return "/login.html";
+        return "/login";
     }
 
     @RequestMapping("/register")
     public String toRegister(){
-        return "/register.html";
+        return "/register";
     }
 
     @RequestMapping("/index")
     public String toIndex(){
-        return "/index.html";
+        return "/index";
     }
 
     @RequestMapping("/common/main")
     public String toMain(){
-        return "/common/main.html";
+        return "/common/main";
     }
 
     @RequestMapping("/common/menu")
@@ -36,122 +36,122 @@ public class PathController {
 
     @RequestMapping("/user/password")
     public String toPassword(){
-        return "/user/password.html";
+        return "/user/password";
     }
 
     @RequestMapping("/user/userCustomer")
     public String toUserCustomer(){
-        return "/user/userCustomer.html";
+        return "/user/userCustomer";
     }
 
     @RequestMapping("/user/userDepot")
     public String toUserDepot(){
-        return "/user/userDepot.html";
+        return "/user/userDepot";
     }
 
     @RequestMapping("/user/userRole")
     public String toUserRole(){
-        return "/user/userRole.html";
+        return "/user/userRole";
     }
 
     @RequestMapping("/manage/app")
     public String toApp(){
-        return "/manage/app.html";
+        return "/manage/app";
     }
 
     @RequestMapping("/manage/role")
     public String toRole(){
-        return "/manage/role.html";
+        return "/manage/role";
     }
 
     @RequestMapping("/manage/user")
     public String toUser(){
-        return "/manage/user.html";
+        return "/manage/user";
     }
 
     @RequestMapping("/manage/log")
     public String toLog(){
-        return "/manage/log.html";
+        return "/manage/log";
     }
 
     @RequestMapping("/manage/functions")
     public String toFunctions(){
-        return "/manage/functions.html";
+        return "/manage/functions";
     }
 
     @RequestMapping("/asset/asset")
     public String toAsset(){
-        return "/asset/asset.html";
+        return "/asset/asset";
     }
 
     @RequestMapping("/manage/systemConfig")
     public String toSystemConfig(){
-        return "/manage/systemConfig.html";
+        return "/manage/systemConfig";
     }
 
     @RequestMapping("/materials/materialProperty")
     public String toMaterialProperty(){
-        return "/materials/materialProperty.html";
+        return "/materials/materialProperty";
     }
 
     @RequestMapping("/manage/organization")
     public String toOrganization(){
-        return "/manage/organization.html";
+        return "/manage/organization";
     }
 
     @RequestMapping("/materials/materialcategory")
     public String toMaterialcategory(){
-        return "/materials/materialcategory.html";
+        return "/materials/materialcategory";
     }
 
     @RequestMapping("/materials/material")
     public String toMaterial(){
-        return "/materials/material.html";
+        return "/materials/material";
     }
 
     @RequestMapping("/manage/unit")
     public String toUnit(){
-        return "/manage/unit.html";
+        return "/manage/unit";
     }
 
     @RequestMapping("/manage/serialNumber")
     public String toSerialNumber(){
-        return "/manage/serialNumber.html";
+        return "/manage/serialNumber";
     }
 
     @RequestMapping("/manage/vendor")
     public String toVendor(){
-        return "/manage/vendor.html";
+        return "/manage/vendor";
     }
 
     @RequestMapping("/manage/depot")
     public String toDepot(){
-        return "/manage/depot.html";
+        return "/manage/depot";
     }
 
     @RequestMapping("/materials/person")
     public String toPerson(){
-        return "/materials/person.html";
+        return "/materials/person";
     }
 
     @RequestMapping("/manage/inOutItem")
     public String toInOutItem(){
-        return "/manage/inOutItem.html";
+        return "/manage/inOutItem";
     }
 
     @RequestMapping("/manage/account")
     public String toAccount(){
-        return "/manage/account.html";
+        return "/manage/account";
     }
 
     @RequestMapping("/manage/customer")
     public String toCustomer(){
-        return "/manage/customer.html";
+        return "/manage/customer";
     }
 
     @RequestMapping("/manage/member")
     public String toMember(){
-        return "/manage/member.html";
+        return "/manage/member";
     }
 
     @RequestMapping("/reports/in_out_stock_report")
@@ -161,146 +161,146 @@ public class PathController {
 
     @RequestMapping("/reports/account_report")
     public String toAccountReport(){
-        return "/reports/account_report.html";
+        return "/reports/account_report";
     }
 
     @RequestMapping("/reports/buy_in_report")
     public String toBuyInReport(){
-        return "/reports/buy_in_report.html";
+        return "/reports/buy_in_report";
     }
 
     @RequestMapping("/reports/sale_out_report")
     public String toSaleOutReport(){
-        return "/reports/sale_out_report.html";
+        return "/reports/sale_out_report";
     }
 
     @RequestMapping("/reports/in_detail")
     public String toInDetail(){
-        return "/reports/in_detail.html";
+        return "/reports/in_detail";
     }
 
     @RequestMapping("/reports/out_detail")
     public String toOutDetail(){
-        return "/reports/out_detail.html";
+        return "/reports/out_detail";
     }
 
     @RequestMapping("/reports/in_material_count")
     public String toInMaterialCount(){
-        return "/reports/in_material_count.html";
+        return "/reports/in_material_count";
     }
 
     @RequestMapping("/reports/out_material_count")
     public String toOutMaterialCount(){
-        return "/reports/out_material_count.html";
+        return "/reports/out_material_count";
     }
 
     @RequestMapping("/reports/customer_account")
     public String toCustomerAccount(){
-        return "/reports/customer_account.html";
+        return "/reports/customer_account";
     }
 
     @RequestMapping("/reports/vendor_account")
     public String toVendorAccount(){
-        return "/reports/vendor_account.html";
+        return "/reports/vendor_account";
     }
 
     @RequestMapping("/reports/stock_warning_report")
     public String toStockWarningReport(){
-        return "/reports/stock_warning_report.html";
+        return "/reports/stock_warning_report";
     }
 
     @RequestMapping("/materials/retail_out_list")
     public String toRetailOutList(){
-        return "/materials/retail_out_list.html";
+        return "/materials/retail_out_list";
     }
 
     @RequestMapping("/materials/retail_back_list")
     public String toRetailBackList(){
-        return "/materials/retail_back_list.html";
+        return "/materials/retail_back_list";
     }
 
     @RequestMapping("/materials/purchase_in_list")
     public String toPurchaseInList(){
-        return "/materials/purchase_in_list.html";
+        return "/materials/purchase_in_list";
     }
 
     @RequestMapping("/materials/purchase_back_list")
     public String toPurchaseBackList(){
-        return "/materials/purchase_back_list.html";
+        return "/materials/purchase_back_list";
     }
 
     @RequestMapping("/materials/purchase_orders_list")
     public String toPurchaseOrdersList(){
-        return "/materials/purchase_orders_list.html";
+        return "/materials/purchase_orders_list";
     }
 
     @RequestMapping("/materials/sale_out_list")
     public String toSaleOutList(){
-        return "/materials/sale_out_list.html";
+        return "/materials/sale_out_list";
     }
 
     @RequestMapping("/materials/sale_back_list")
     public String toSaleBackList(){
-        return "/materials/sale_back_list.html";
+        return "/materials/sale_back_list";
     }
 
     @RequestMapping("/materials/sale_orders_list")
     public String toSaleOrdersList(){
-        return "/materials/sale_orders_list.html";
+        return "/materials/sale_orders_list";
     }
 
     @RequestMapping("/financial/item_in")
     public String toItemIn(){
-        return "/financial/item_in.html";
+        return "/financial/item_in";
     }
 
     @RequestMapping("/financial/item_out")
     public String toItemOut(){
-        return "/financial/item_out.html";
+        return "/financial/item_out";
     }
 
     @RequestMapping("/financial/money_in")
     public String toMoneyIn(){
-        return "/financial/money_in.html";
+        return "/financial/money_in";
     }
 
     @RequestMapping("/financial/money_out")
     public String toMoneyOut(){
-        return "/financial/money_out.html";
+        return "/financial/money_out";
     }
 
     @RequestMapping("/financial/giro")
     public String toGiro(){
-        return "/financial/giro.html";
+        return "/financial/giro";
     }
 
     @RequestMapping("/financial/advance_in")
     public String toAdvanceIn(){
-        return "/financial/advance_in.html";
+        return "/financial/advance_in";
     }
 
     @RequestMapping("/materials/allocation_out_list")
     public String toAllocationOutList(){
-        return "/materials/allocation_out_list.html";
+        return "/materials/allocation_out_list";
     }
 
     @RequestMapping("/materials/other_in_list")
     public String toOtherInList(){
-        return "/materials/other_in_list.html";
+        return "/materials/other_in_list";
     }
 
     @RequestMapping("/materials/other_out_list")
     public String toOtherOutList(){
-        return "/materials/other_out_list.html";
+        return "/materials/other_out_list";
     }
 
     @RequestMapping("/materials/assemble_list")
     public String toAssembleList(){
-        return "/materials/assemble_list.html";
+        return "/materials/assemble_list";
     }
 
     @RequestMapping("/materials/disassemble_list")
     public String toDisassembleList(){
-        return "/materials/disassemble_list.html";
+        return "/materials/disassemble_list";
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>功能管理</title>
     <meta charset="utf-8">
@@ -113,7 +113,7 @@
        onclick="javascript:$('#functionsDlg').dialog('close')">取消</a>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     //初始化界面
     $(function () {
         initTableData();

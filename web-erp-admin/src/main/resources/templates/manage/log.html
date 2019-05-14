@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>日志列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -80,7 +80,7 @@
      collapsible="true" closable="false">
     <table id="tableData" style="height:340px;top:300px;border-bottom-color:#FFFFFF"></table>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="none">
     var userList = null;
     //初始化界面
     $(function () {
