@@ -3,6 +3,7 @@ package com.seamwhole.weberpadmin.client.hystrix;
 import com.alibaba.fastjson.JSONArray;
 import com.seamwhole.weberpadmin.client.UserClient;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.User;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,16 @@ public class UserClientHystrix implements UserClient {
 
     @Override
     public BaseResponseInfo getTenantStatus() {
+        return null;
+    }
+
+    @Override
+    public User getUserByUserName(String username) {
+        return null;
+    }
+
+    @Override
+    public Integer validateUser(String username, String password) {
         return null;
     }
 }

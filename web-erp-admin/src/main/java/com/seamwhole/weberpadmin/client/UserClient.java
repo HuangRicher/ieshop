@@ -5,6 +5,7 @@ import com.seamwhole.weberpadmin.client.hystrix.UserClientHystrix;
 import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,4 +84,10 @@ public interface UserClient {
 
     @GetMapping("/user/getTenantStatus")
     BaseResponseInfo getTenantStatus();
+
+    @GetMapping("/user/getUserByUserName")
+    User getUserByUserName(@RequestParam("username") String username);
+
+    @GetMapping("/user/validateUser")
+    Integer validateUser(@RequestParam("username") String username, @RequestParam("password") String password);
 }

@@ -392,4 +392,14 @@ public class UserController {
         }
         return res;
     }
+
+    @GetMapping("/getUserByUserName")
+    public User getUserByUserName(@RequestParam("username") String username) throws Exception{
+        return userService.getUserByUserName(username);
+    }
+
+    @GetMapping("/validateUser")
+    public Integer validateUser(@RequestParam("username") String username, @RequestParam("password") String password) throws Exception{
+        return userService.validateUser(username,password);
+    }
 }
