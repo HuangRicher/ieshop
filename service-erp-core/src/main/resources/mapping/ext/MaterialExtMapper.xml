@@ -12,9 +12,9 @@
 
     <select id="selectByConditionMaterial" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultMapList">
         select m.*,u.uname unitName, mc.name categoryName
-        FROM jsh_material m
-        left JOIN jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
-        left JOIN jsh_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
+        FROM erp_material m
+        left JOIN erp_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
+        left JOIN erp_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
         where 1=1
         <if test="name != null">
             and m.name like '%${name}%'
@@ -35,9 +35,9 @@
     <select id="countsByMaterial" resultType="java.lang.Long">
         SELECT
         COUNT(m.id)
-        FROM jsh_material m
-        left JOIN jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
-        left JOIN jsh_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
+        FROM erp_material m
+        left JOIN erp_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
+        left JOIN erp_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
         WHERE 1=1
         <if test="name != null">
             and m.name like '%${name}%'
@@ -52,29 +52,29 @@
     </select>
 
     <select id="findUnitName" resultType="java.lang.String">
-        select u.UName  from jsh_unit u
-        left join jsh_material m on m.UnitId=u.id and ifnull(m.delete_Flag,'0') !='1'
+        select u.UName  from erp_unit u
+        left join erp_material m on m.UnitId=u.id and ifnull(m.delete_Flag,'0') !='1'
         where m.id = ${mId}
         and ifnull(u.delete_Flag,'0') !='1'
     </select>
 
     <select id="findById" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultAndUnitMap">
-        select m.*,u.UName from jsh_material m
-        left join jsh_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
+        select m.*,u.UName from erp_material m
+        left join erp_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
         where m.id = ${id}
         and ifnull(m.delete_Flag,'0') !='1'
     </select>
 
     <select id="findBySelect" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultAndUnitMap">
-        select m.*,u.UName from jsh_material m
-        left join jsh_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
+        select m.*,u.UName from erp_material m
+        left join erp_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
         where m.enabled=1
         and ifnull(m.delete_Flag,'0') !='1'
         ORDER BY Id asc
     </select>
 
     <update id="updatePriceNullByPrimaryKey" parameterType="java.lang.Long">
-        update jsh_material
+        update erp_material
         set
         RetailPrice = null,
         LowPrice = null,
@@ -84,7 +84,7 @@
     </update>
 
     <update id="updateUnitIdNullByPrimaryKey" parameterType="java.lang.Long">
-        update jsh_material
+        update erp_material
         set
         UnitId = null
         where Id = #{id,jdbcType=BIGINT}
@@ -92,9 +92,9 @@
 
     <select id="findByAll" parameterType="com.seamwhole.serviceerpcore.model.MaterialExample" resultMap="ResultMapList">
         select m.*,u.uname unitName, mc.name categoryName
-        FROM jsh_material m
-        left JOIN jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
-        left JOIN jsh_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
+        FROM erp_material m
+        left JOIN erp_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
+        left JOIN erp_materialcategory mc on m.CategoryId = mc.id and ifnull(mc.status,'0') !='2'
         where 1=1
         <if test="name != null">
             and m.name like '%${name}%'
@@ -110,7 +110,7 @@
     </select>
     <select id="findByMaterialName"  resultType="com.seamwhole.serviceerpcore.model.Material">
         select m.*
-        FROM jsh_material m
+        FROM erp_material m
         where 1=1
         <if test="name != null">
             and m.name =#{name}
@@ -123,7 +123,7 @@
         Id, CategoryId, name, Mfrs, Packing, SafetyStock, Model, Standard, Color, Unit, Remark,
         RetailPrice, LowPrice, PresetPriceOne, PresetPriceTwo, UnitId, FirstOutUnit, FirstInUnit,
         PriceStrategy, Enabled,enableSerialNumber
-        FROM jsh_material
+        FROM erp_material
         where 1=1
         and enabled ='1'
         and enableSerialNumber ='1'
@@ -139,7 +139,7 @@
         order by id desc
     </select>
     <update id="batchDeleteMaterialByIds">
-        update jsh_material
+        update erp_material
         set delete_Flag='1'
         where 1=1
         and ifnull(delete_Flag,'0') !='1'
@@ -152,7 +152,7 @@
     <select id="getMaterialListByCategoryIds"  resultMap="com.seamwhole.serviceerpcore.mapper.MaterialMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.MaterialMapper.Base_Column_List" />
-        from jsh_material
+        from erp_material
         where 1=1
         and categoryId in (
         <foreach collection="categoryIds" item="categoryId" separator=",">
@@ -164,7 +164,7 @@
     <select id="getMaterialListByUnitIds"  resultMap="com.seamwhole.serviceerpcore.mapper.MaterialMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.MaterialMapper.Base_Column_List" />
-        from jsh_material
+        from erp_material
         where 1=1
         and unitId in (
         <foreach collection="unitIds" item="unitId" separator=",">

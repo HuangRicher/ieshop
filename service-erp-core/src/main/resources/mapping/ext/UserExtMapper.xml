@@ -9,7 +9,7 @@
     </resultMap>
     <select id="selectByConditionUser" parameterType="com.seamwhole.serviceerpcore.model.UserExample" resultMap="com.seamwhole.serviceerpcore.mapper.UserMapper.BaseResultMap">
         select *
-        FROM jsh_user
+        FROM erp_user
         where 1=1
         and ifnull(status,'0') not in('1','2')
         <if test="userName != null">
@@ -25,7 +25,7 @@
     <select id="countsByUser" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_user
+        FROM erp_user
         WHERE 1=1
         and ifnull(status,'0') not in('1','2')
         <if test="userName != null">
@@ -39,9 +39,9 @@
         select user.id, user.username, user.loginame, user.position, user.email, user.phonenum,
         user.description, user.remark,user.isystem,org.id as orgaId,user.tenant_id,org.org_abr,rel.user_blng_orga_dspl_seq,
         rel.id as orgaUserRelId
-        FROM jsh_user user
-        left join jsh_orga_user_rel rel on user.id=rel.user_id and ifnull(rel.delete_flag,'0') !='1'
-        left join jsh_organization org on rel.orga_id=org.id and  ifnull(org.org_stcd,'0') !='5'
+        FROM erp_user user
+        left join erp_orga_user_rel rel on user.id=rel.user_id and ifnull(rel.delete_flag,'0') !='1'
+        left join erp_organization org on rel.orga_id=org.id and  ifnull(org.org_stcd,'0') !='5'
         where 1=1
         and ifnull(user.status,'0') not in('1','2')
         <if test="userName != null and userName != ''">
@@ -56,7 +56,7 @@
     </select>
     <insert id="addUser" parameterType="com.seamwhole.serviceerpcore.mapper.vo.UserEx"
         useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into jsh_user (username, loginame,
+        insert into erp_user (username, loginame,
         password, position,
         email, phonenum, ismanager,
         isystem, status, description,
@@ -68,7 +68,7 @@
         #{remark,jdbcType=VARCHAR})
     </insert>
     <update id="updateUser" parameterType="com.seamwhole.serviceerpcore.mapper.vo.UserEx">
-        update jsh_user
+        update erp_user
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
@@ -112,7 +112,7 @@
     <select id="getUserListByUserNameOrLoginName" resultMap="com.seamwhole.serviceerpcore.mapper.UserMapper.BaseResultMap">
         select user.id, user.username, user.loginame, user.position, user.email, user.phonenum,
         user.description, user.remark,user.isystem
-        FROM jsh_user user
+        FROM erp_user user
         where 1=1
         and ifnull(user.status,'0') not in('1','2')
         <if test="userName != null and userName != ''">
@@ -124,7 +124,7 @@
         order by user.id desc
     </select>
     <update id="batDeleteOrUpdateUser">
-        update jsh_user
+        update erp_user
         set status=#{status}
         where id in (
         <foreach collection="ids" item="id" separator=",">
@@ -159,13 +159,13 @@
         select id ,	text,orgNo,sort ,iconCls,type from (
             SELECT
             org.id, org.org_abr as text,org.org_no as orgNo,org.sort as sort,null as iconCls,'0' as type
-            FROM jsh_organization org
+            FROM erp_organization org
             WHERE org.org_parent_no = #{orgNo}
             and ifnull(org.org_stcd,'0') !='5'
             union all
             select
             user.id,user.username as text, null as orgNo,rel.user_blng_orga_dspl_seq as sort,'icon-user' as iconCls,'1' as type
-            from jsh_user user,jsh_orga_user_rel rel
+            from erp_user user,erp_orga_user_rel rel
             where
             1=1
             and user.id=rel.user_id
@@ -179,7 +179,7 @@
     <select id="getNodeTree" resultMap="BaseTreeResultMap">
         SELECT
          id, org_abr as text,org_no as orgNo,'0' as type
-        FROM jsh_organization
+        FROM erp_organization
         WHERE org_parent_no = -1
         and ifnull(org_stcd,'0') !='5'
         order by sort asc

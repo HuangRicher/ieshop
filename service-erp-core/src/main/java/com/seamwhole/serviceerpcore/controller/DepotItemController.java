@@ -44,13 +44,11 @@ public class DepotItemController {
      * 根据材料信息获取
      * @param materialParam  商品参数
      * @param depotIds  拥有的仓库信息
-     * @param request
      * @return
      */
     @GetMapping(value = "/getHeaderIdByMaterial")
-    public BaseResponseInfo getHeaderIdByMaterial(@RequestParam("materialParam") String materialParam,
-                                                  @RequestParam("depotIds") String depotIds,
-                                                  HttpServletRequest request)throws Exception {
+    public BaseResponseInfo getHeaderIdByMaterial(@RequestParam(value = "materialParam",defaultValue = "",required = false) String materialParam,
+                                                  @RequestParam("depotIds") String depotIds)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         try {
             List<DepotItemVo4HeaderId> depotItemList = depotItemService.getHeaderIdByMaterial(materialParam, depotIds);
@@ -147,6 +145,8 @@ public class DepotItemController {
         if (StringUtil.isNotEmpty(offset)) {
             parameterMap.put(Constants.OFFSET, offset);
         }
+        parameterMap.put(Constants.PAGE_SIZE, pageSize+"");
+        parameterMap.put(Constants.CURRENT_PAGE, currentPage+"");
         List<DepotItemVo4Material> list = depotItemService.findStockNumByMaterialIdList(parameterMap);
         //存放数据json数组
         Long materialId = Long.parseLong(mId);

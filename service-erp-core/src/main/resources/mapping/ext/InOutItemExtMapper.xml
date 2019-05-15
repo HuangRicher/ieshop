@@ -3,7 +3,7 @@
 <mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.InOutItemExtMapper">
     <select id="selectByConditionInOutItem" parameterType="com.seamwhole.serviceerpcore.model.InOutItemExample" resultMap="com.seamwhole.serviceerpcore.mapper.InOutItemMapper.BaseResultMap">
         select *
-        FROM jsh_inoutitem
+        FROM erp_inoutitem
         where 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -22,7 +22,7 @@
     <select id="countsByInOutItem" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_inoutitem
+        FROM erp_inoutitem
         WHERE 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -36,7 +36,7 @@
         and ifnull(delete_Flag,'0') !='1'
     </select>
     <update id="batchDeleteInOutItemByIds">
-        update jsh_inoutitem
+        update erp_inoutitem
         set delete_Flag='1'
         where 1=1
         and id in (

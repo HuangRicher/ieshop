@@ -25,7 +25,7 @@
     <select id="getNextNodeTree" resultMap="NextTreeResultMap">
         SELECT
         <include refid="Base_Column_List"/>,#{currentId} as currentId
-        FROM jsh_organization
+        FROM erp_organization
         WHERE org_parent_no = #{org_no}
         <if test="currentId != null">
             and id !=#{currentId}
@@ -37,7 +37,7 @@
     <select id="getNodeTree" resultMap="BaseTreeResultMap">
         SELECT
         <include refid="Base_Column_List"/>,#{currentId} as currentId
-        FROM jsh_organization
+        FROM erp_organization
         WHERE org_parent_no = -1
         <if test="currentId != null">
             and id !=#{currentId}
@@ -47,7 +47,7 @@
     </select>
     <insert id="addOrganization" parameterType="com.seamwhole.serviceerpcore.model.Organization"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into jsh_organization
+        insert into erp_organization
         (org_no, org_full_name,
       org_abr, org_tpcd, org_stcd,
       org_parent_no, sort, remark,
@@ -62,7 +62,7 @@
         )
     </insert>
     <update id="batchDeleteOrganizationByIds">
-        update jsh_organization
+        update erp_organization
         set update_Time=#{updateTime},updater=#{updater},org_stcd='5'
         where id in (
         <foreach collection="ids" item="id" separator=",">
@@ -71,7 +71,7 @@
         )
     </update>
     <update id="editOrganization">
-      update jsh_organization
+      update erp_organization
       set update_time=#{updateTime},updater=#{updater},
       org_no = #{orgNo},org_full_name = #{orgFullName},
       org_abr = #{orgAbr},org_tpcd = #{orgTpcd},
@@ -82,7 +82,7 @@
     </update>
 
     <select id="getOrganizationRootByIds" resultMap="com.seamwhole.serviceerpcore.mapper.OrganizationMapper.BaseResultMap">
-        select * from  jsh_organization
+        select * from  erp_organization
         where
         1=1
         and ifnull(org_stcd,'0') !='5'

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.seamwhole.serviceerpcore.mapper.MaterialPropertyExtMapper">
+<mapper namespace="com.seamwhole.serviceerpcore.mapper.ext.MaterialPropertyExtMapper">
     <select id="selectByConditionMaterialProperty" parameterType="com.seamwhole.serviceerpcore.model.MaterialPropertyExample" resultMap="com.seamwhole.serviceerpcore.mapper.MaterialPropertyMapper.BaseResultMap">
         select *
-        FROM jsh_materialproperty
+        FROM erp_materialproperty
         where 1=1
         <if test="name != null">
             and nativeName like '%${name}%'
@@ -16,7 +16,7 @@
     <select id="countsByMaterialProperty" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_materialproperty
+        FROM erp_materialproperty
         WHERE 1=1
         <if test="name != null">
             and nativeName like '%${name}%'
@@ -24,7 +24,7 @@
         and ifnull(delete_Flag,'0') !='1'
     </select>
     <update id="batchDeleteMaterialPropertyByIds">
-        update jsh_materialproperty
+        update erp_materialproperty
         set delete_Flag='1'
         where 1=1
         and id in (

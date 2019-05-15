@@ -7,8 +7,8 @@
 
     <select id="selectByConditionLog" parameterType="com.seamwhole.serviceerpcore.model.LogExample" resultMap="ResultExMap">
         select l.*,u.username userName
-        FROM jsh_log l
-        left join jsh_user u on l.userID = u.id and ifnull(u.status,'0') not in('1','2')
+        FROM erp_log l
+        left join erp_user u on l.userID = u.id and ifnull(u.status,'0') not in('1','2')
         where 1=1
         <if test="operation != null">
             and l.operation like '%${operation}%'
@@ -39,7 +39,7 @@
     <select id="countsByLog" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_log
+        FROM erp_log
         WHERE 1=1
         <if test="operation != null">
             and operation like '%${operation}%'

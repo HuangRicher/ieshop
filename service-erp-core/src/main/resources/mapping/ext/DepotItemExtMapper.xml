@@ -55,7 +55,7 @@
     </resultMap>
     <select id="selectByConditionDepotItem" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="com.seamwhole.serviceerpcore.mapper.DepotItemMapper.BaseResultMap">
         select *
-        FROM jsh_depotitem
+        FROM erp_depotitem
         where 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -74,7 +74,7 @@
     <select id="countsByDepotItem" resultType="java.lang.Long">
         SELECT
         COUNT(id)
-        FROM jsh_depotitem
+        FROM erp_depotitem
         WHERE 1=1
         <if test="name != null">
             and name like '%${name}%'
@@ -88,8 +88,8 @@
         and ifnull(delete_Flag,'0') !='1'
     </select>
     <select id="getHeaderIdByMaterial" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="HeaderIdResultMap">
-        select dt.HeaderId from jsh_depotitem dt
-        INNER JOIN jsh_material m on dt.MaterialId = m.Id and ifnull(m.delete_Flag,'0') !='1'
+        select dt.HeaderId from erp_depotitem dt
+        INNER JOIN erp_material m on dt.MaterialId = m.Id and ifnull(m.delete_Flag,'0') !='1'
         where (m.`Name` like '%${materialParam}%' or m.Model like '%${materialParam}%')
         <if test="depotIds != null">
             and dt.DepotId in (${depotIds})
@@ -101,8 +101,8 @@
         select dh.Number,concat(dh.SubType,dh.Type) as newType,
         case when type='入库' then di.BasicNumber when type='出库' then 0-di.BasicNumber else 0 end as b_num,
         date_format(dh.OperTime,'%Y-%m-%d %H:%i:%S') as oTime
-        from jsh_depothead dh
-        INNER JOIN jsh_depotitem di on dh.id=di.HeaderId and ifnull(di.delete_Flag,'0') !='1'
+        from erp_depothead dh
+        INNER JOIN erp_depotitem di on dh.id=di.HeaderId and ifnull(di.delete_Flag,'0') !='1'
         where dh.type!='其它'
         and dh.SubType!='调拨'
         and di.MaterialId =${mId}
@@ -114,8 +114,8 @@
     </select>
     <select id="findDetailByTypeAndMaterialIdCounts" resultType="java.lang.Long">
         select count(1)
-        from jsh_depothead dh
-        INNER JOIN jsh_depotitem di on dh.id=di.HeaderId and ifnull(di.delete_Flag,'0') !='1'
+        from erp_depothead dh
+        INNER JOIN erp_depotitem di on dh.id=di.HeaderId and ifnull(di.delete_Flag,'0') !='1'
         where dh.type!='其它'
         and dh.SubType!='调拨'
         and di.MaterialId =${mId}
@@ -124,8 +124,8 @@
 
 
     <select id="findStockNumByMaterialIdList" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="ResultAndMaterialMap">
-        select di.*,m.Name mName,m.Model mModel from jsh_depotitem di
-        inner join jsh_material m on di.MaterialId=m.Id  and ifnull(m.delete_Flag,'0') !='1'
+        select di.*,m.Name mName,m.Model mModel from erp_depotitem di
+        inner join erp_material m on di.MaterialId=m.Id  and ifnull(m.delete_Flag,'0') !='1'
         where 1=1
         <if test="mId != null">
             and di.MaterialId=${mId}
@@ -136,7 +136,7 @@
         </if>
     </select>
     <select id="findStockNumByMaterialIdCounts" resultType="java.lang.Long">
-        select count(*) from jsh_depotitem where 1=1
+        select count(*) from erp_depotitem where 1=1
         <if test="mId != null">
             and MaterialId=${mId}
         </if>
@@ -144,16 +144,16 @@
     </select>
 
     <select id="findByTypeAndMaterialIdIn" resultType="java.lang.Integer">
-        select ifnull(sum(BasicNumber),0) as BasicNumber from jsh_depothead dh
-          INNER JOIN jsh_depotitem di on dh.id=di.HeaderId  and ifnull(di.delete_Flag,'0') !='1'
+        select ifnull(sum(BasicNumber),0) as BasicNumber from erp_depothead dh
+          INNER JOIN erp_depotitem di on dh.id=di.HeaderId  and ifnull(di.delete_Flag,'0') !='1'
           where dh.type='入库'
           and di.MaterialId = ${mId}
           and ifnull(dh.delete_Flag,'0') !='1'
     </select>
 
     <select id="findByTypeAndMaterialIdOut" resultType="java.lang.Integer">
-        select ifnull(sum(BasicNumber),0) as BasicNumber from jsh_depothead dh
-        INNER JOIN jsh_depotitem di on dh.id=di.HeaderId  and ifnull(di.delete_Flag,'0') !='1'
+        select ifnull(sum(BasicNumber),0) as BasicNumber from erp_depothead dh
+        INNER JOIN erp_depotitem di on dh.id=di.HeaderId  and ifnull(di.delete_Flag,'0') !='1'
         where dh.type='出库'
         and dh.SubType!='调拨'
         and di.MaterialId = ${mId}
@@ -164,11 +164,11 @@
         select di.*,m.Name MName,m.Model MModel,m.Unit MaterialUnit,m.Color MColor,m.Standard MStandard,m.Mfrs MMfrs,
         m.OtherField1 MOtherField1,m.OtherField2 MOtherField2,m.OtherField3 MOtherField3,
         dp1.name DepotName,dp2.name AnotherDepotName, u.id UnitId, u.UName
-        from jsh_depotitem di
-        left join jsh_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
-        left join jsh_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
-        left join jsh_depot dp1 on di.DepotId=dp1.id and ifnull(dp1.delete_Flag,'0') !='1'
-        left join jsh_depot dp2 on di.AnotherDepotId=dp2.id and ifnull(dp2.delete_Flag,'0') !='1'
+        from erp_depotitem di
+        left join erp_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
+        left join erp_unit u on m.UnitId = u.id and ifnull(u.delete_Flag,'0') !='1'
+        left join erp_depot dp1 on di.DepotId=dp1.id and ifnull(dp1.delete_Flag,'0') !='1'
+        left join erp_depot dp2 on di.AnotherDepotId=dp2.id and ifnull(dp2.delete_Flag,'0') !='1'
         where di.HeaderId = ${headerId}
         and ifnull(di.delete_Flag,'0') !='1'
         order by di.id asc
@@ -176,8 +176,8 @@
 
     <select id="findByAll" parameterType="com.seamwhole.serviceerpcore.model.DepotItemExample" resultMap="ResultByMaterial">
         select m.id MId, m.Name MName, m.Model MModel, m.Unit MaterialUnit, m.Color MColor
-        from jsh_depotitem di
-        inner join jsh_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
+        from erp_depotitem di
+        inner join erp_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
         where 1=1
         <if test="headIds != null">
             and di.HeaderId in (${headIds})
@@ -194,8 +194,8 @@
 
     <select id="findByAllCount" resultType="java.lang.Integer">
         select count(1) from (select m.id
-        from jsh_depotitem di
-        inner join jsh_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
+        from erp_depotitem di
+        inner join erp_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
         where 1=1
         <if test="headIds != null">
             and di.HeaderId in (${headIds})
@@ -208,7 +208,7 @@
     </select>
 
     <select id="findByTypeInIsPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and
         ((dh.type='入库' and di.DepotId=${ProjectId})
         or
@@ -222,7 +222,7 @@
     </select>
 
     <select id="findByTypeInIsNotPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and
         ((dh.type='入库' and di.DepotId=${ProjectId})
         or
@@ -236,7 +236,7 @@
     </select>
 
     <select id="findByTypeOutIsPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.type='出库'
         and di.DepotId= ${ProjectId}
@@ -247,7 +247,7 @@
     </select>
 
     <select id="findByTypeOutIsNotPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and dh.type='出库'
         and di.DepotId= ${ProjectId}
         and di.MaterialId = ${MId}
@@ -259,7 +259,7 @@
 
 
     <select id="findPriceByTypeInIsPrev" resultType="java.math.BigDecimal">
-        select sum(AllPrice) as AllPrice from jsh_depotitem di,jsh_depothead dh
+        select sum(AllPrice) as AllPrice from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and
         ((dh.type='入库' and di.DepotId=${ProjectId})
         or
@@ -273,7 +273,7 @@
     </select>
 
     <select id="findPriceByTypeInIsNotPrev" resultType="java.math.BigDecimal">
-        select sum(AllPrice) as AllPrice from jsh_depotitem di,jsh_depothead dh
+        select sum(AllPrice) as AllPrice from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and
         ((dh.type='入库' and di.DepotId=${ProjectId})
         or
@@ -287,7 +287,7 @@
     </select>
 
     <select id="findPriceByTypeOutIsPrev" resultType="java.math.BigDecimal">
-        select sum(AllPrice) as AllPrice from jsh_depotitem di,jsh_depothead dh
+        select sum(AllPrice) as AllPrice from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and dh.type='出库'
         and di.DepotId= ${ProjectId}
         and di.MaterialId = ${MId}
@@ -297,7 +297,7 @@
     </select>
 
     <select id="findPriceByTypeOutIsNotPrev" resultType="java.math.BigDecimal">
-        select sum(AllPrice) as AllPrice from jsh_depotitem di,jsh_depothead dh
+        select sum(AllPrice) as AllPrice from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id and dh.type='出库'
         and di.DepotId= ${ProjectId}
         and di.MaterialId = ${MId}
@@ -307,7 +307,7 @@
         and ifnull(di.delete_Flag,'0') !='1'
     </select>
     <select id="findAssembleIsPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.SubType= '${subType}'
         and di.MType= '${mType}'
@@ -318,7 +318,7 @@
     </select>
 
     <select id="findAssembleIsNotPrev" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.SubType= '${subType}'
         and di.MType= '${mType}'
@@ -329,7 +329,7 @@
         and ifnull(di.delete_Flag,'0') !='1'
     </select>
     <select id="buyOrSaleNumber" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.type='${type}' and dh.subType='${subType}'
         and di.MaterialId =${MId}
@@ -340,7 +340,7 @@
     </select>
 
     <select id="buyOrSalePrice" resultType="java.math.BigDecimal">
-        select sum(AllPrice) as AllPrice from jsh_depotitem di,jsh_depothead dh
+        select sum(AllPrice) as AllPrice from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.type='${type}' and dh.subType='${subType}'
         and di.MaterialId =${MId}
@@ -351,7 +351,7 @@
     </select>
 
     <select id="findGiftByTypeIn" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.SubType='${subType}'
         and di.AnotherDepotId=${ProjectId}
@@ -361,7 +361,7 @@
     </select>
 
     <select id="findGiftByTypeOut" resultType="java.math.BigDecimal">
-        select sum(BasicNumber) as BasicNumber from jsh_depotitem di,jsh_depothead dh
+        select sum(BasicNumber) as BasicNumber from erp_depotitem di,erp_depothead dh
         where di.HeaderId = dh.id
         and dh.SubType='${subType}'
         and di.DepotId=${ProjectId}
@@ -377,7 +377,7 @@
         dep.img,dep.incidentals,dep.depotid,dep.anotherdepotid,dep.taxrate,
         dep.taxmoney,dep.taxlastmoney,dep.otherfield1,dep.otherfield2,dep.otherfield3,
         dep.otherfield4,dep.otherfield5,dep.mtype
-        from jsh_depotitem dep,jsh_material mat
+        from erp_depotitem dep,erp_material mat
         where 1=1
         <if test="depotheadId != null">
            and dep.HeaderId = #{depotheadId}
@@ -390,7 +390,7 @@
         and ifnull(mat.delete_Flag,'0') !='1'
     </select>
     <delete id="deleteDepotItemByDepotHeadIds">
-        delete from jsh_depotitem
+        delete from erp_depotitem
         where 1=1
         and HeaderId in
         (
@@ -400,7 +400,7 @@
         )
     </delete>
     <update id="batchDeleteDepotItemByDepotHeadIds">
-        update jsh_depotitem
+        update erp_depotitem
         set delete_Flag='1'
         where 1=1
         and HeaderId in
@@ -411,7 +411,7 @@
         )
     </update>
     <update id="batchDeleteDepotItemByIds">
-        update jsh_depotitem
+        update erp_depotitem
         set delete_Flag='1'
         where 1=1
         and id in (
@@ -423,7 +423,7 @@
     <select id="getDepotItemListListByDepotIds" resultMap="com.seamwhole.serviceerpcore.mapper.DepotItemMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.DepotItemMapper.Base_Column_List" />
-        from jsh_depotitem
+        from erp_depotitem
         where 1=1
         and DepotId in (
         <foreach collection="depotIds" item="depotId" separator=",">
@@ -435,7 +435,7 @@
     <select id="getDepotItemListListByMaterialIds" resultMap="com.seamwhole.serviceerpcore.mapper.DepotItemMapper.BaseResultMap">
         select
         <include refid="com.seamwhole.serviceerpcore.mapper.DepotItemMapper.Base_Column_List" />
-        from jsh_depotitem
+        from erp_depotitem
         where 1=1
         and materialId in (
         <foreach collection="materialIds" item="materialId" separator=",">
@@ -466,15 +466,15 @@
         ) BasicNumber,
         (IFNULL(intype.BasicInNumber ,0) - IFNULL(outtype.BasicOutNumber ,0) - ifnull(m.safetystock,0)) BasicLinjieNumber
         FROM
-        jsh_material m
-        LEFT JOIN jsh_materialcategory mc ON mc.Id = m.CategoryId
+        erp_material m
+        LEFT JOIN erp_materialcategory mc ON mc.Id = m.CategoryId
         LEFT JOIN (
         SELECT
         di.MaterialId,
         ifnull(sum(BasicNumber), 0) AS BasicInNumber
         FROM
-        jsh_depothead dh
-        INNER JOIN jsh_depotitem di ON dh.id = di.HeaderId
+        erp_depothead dh
+        INNER JOIN erp_depotitem di ON dh.id = di.HeaderId
         AND ifnull(di.delete_Flag, '0') != '1'
         WHERE
         dh.type = '入库'
@@ -488,8 +488,8 @@
         di.MaterialId,
         ifnull(sum(BasicNumber), 0) AS BasicOutNumber
         FROM
-        jsh_depothead dh
-        INNER JOIN jsh_depotitem di ON dh.id = di.HeaderId
+        erp_depothead dh
+        INNER JOIN erp_depotitem di ON dh.id = di.HeaderId
         AND ifnull(di.delete_Flag, '0') != '1'
         WHERE
         dh.type = '出库'
@@ -512,14 +512,14 @@
 
     <select id="findStockWarningCountTotal" resultType="java.lang.Integer">
         select count(1) from
-        jsh_material m
+        erp_material m
         LEFT JOIN (
         SELECT
         di.MaterialId,
         ifnull(sum(BasicNumber), 0) AS BasicInNumber
         FROM
-        jsh_depothead dh
-        INNER JOIN jsh_depotitem di ON dh.id = di.HeaderId
+        erp_depothead dh
+        INNER JOIN erp_depotitem di ON dh.id = di.HeaderId
         AND ifnull(di.delete_Flag, '0') != '1'
         WHERE
         dh.type = '入库'
