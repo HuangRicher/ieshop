@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.domain.MaterialInfo;
 import com.seamwhole.serviceerpcore.model.Material;
 import com.seamwhole.serviceerpcore.mapper.vo.MaterialVo4Unit;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
@@ -37,21 +38,11 @@ public class MaterialController {
     @Resource
     private MaterialService materialService;
 
-    @GetMapping(value = "/checkIsExist/{id}/{name}/{model}/{color}/{standard}/{mfrs}/{otherField1}/{otherField2}/{otherField3}/{unit}/{unitId}")
-    public String checkIsExist(@PathVariable("id") Long id,
-                               @PathVariable("name") String name,
-                               @PathVariable("model") String model,
-                               @PathVariable("color") String color,
-                               @PathVariable("standard") String standard,
-                               @PathVariable("mfrs") String mfrs,
-                               @PathVariable("otherField1") String otherField1,
-                               @PathVariable("otherField2") String otherField2,
-                               @PathVariable("otherField3") String otherField3,
-                               @PathVariable("unit") String unit,
-                               @PathVariable("unitId") Long unitId)throws Exception {
+    @PostMapping(value = "/checkIsExist")
+    public String checkIsExist(@RequestBody MaterialInfo materialInfo)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        int exist = materialService.checkIsExist(id, name, model, color, standard, mfrs,
-                otherField1, otherField2, otherField3, unit, unitId);
+        int exist = materialService.checkIsExist(materialInfo.getId(), materialInfo.getName(), materialInfo.getModel(), materialInfo.getColor(), materialInfo.getStandard(), materialInfo.getMfrs(),
+                materialInfo.getOtherField1(), materialInfo.getOtherField2(), materialInfo.getOtherField3(), materialInfo.getUnit(), materialInfo.getUnitId());
         if(exist > 0) {
             objectMap.put("status", true);
         } else {

@@ -321,16 +321,13 @@ public class UserServiceImpl implements UserService{
         return list==null?0:list.size();
     }
     /**
-     * create by: cjl
-     * description:
      *  获取当前用户信息
-     * create time: 2019/1/24 10:01
-     * @Param:
-     * @return com.seamwhole.serviceerpcore.datasource.entities.User
      */
     public User getCurrentUser()throws Exception{
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        return (User)request.getSession().getAttribute("user");
+        String userJson=request.getHeader("user");
+        User user=JSONObject.parseObject(userJson, User.class);
+        return user;
     }
 
     public List<UserEx> getUserList(Map<String, Object> parameterMap) throws Exception{

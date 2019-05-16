@@ -534,7 +534,7 @@
             $.messager.alert('提示',"不能给自己配置角色！",'warning');
             return false;
         }
-        this.href = "/pages/user/userRole.html?id=" + currentRow.id;
+        this.href = "/user/userRole?id=" + currentRow.id;
     });
 
     //分配部门
@@ -544,7 +544,7 @@
             $.messager.alert('提示',"请选择一条数据再操作！",'warning');
             return false;
         }
-        this.href = "/pages/user/userDepot.html?id=" + currentRow.id;
+        this.href = "/user/userDepot?id=" + currentRow.id;
     });
 
     //分配客户
@@ -554,7 +554,7 @@
             $.messager.alert('提示',"请选择一条数据再操作！",'warning');
             return false;
         }
-        this.href = "/pages/user/userCustomer.html?id=" + currentRow.id;
+        this.href = "/user/userCustomer?id=" + currentRow.id;
     });
     /**
      * 用户选择机构
@@ -566,7 +566,7 @@
             height: webH/2,
             closed: false,
             cache: false,
-            href: '/pages/manage/organization_forselect.html',
+            href: '/manage/organization_forselect',
             modal: true,
             resizable:true
         });

@@ -199,6 +199,12 @@ public class DepotItemController {
         Map<String, String> parameterMap = new HashMap<>();
         parameterMap.put("mId", mId);
         parameterMap.put("monthTime", monthTime);
+        if(pageSize!=null){
+            parameterMap.put(Constants.PAGE_SIZE,pageSize+"");
+        }
+        if(currentPage!=null){
+            parameterMap.put(Constants.CURRENT_PAGE,currentPage+"");
+        }
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize != null && pageSize <= 0) {

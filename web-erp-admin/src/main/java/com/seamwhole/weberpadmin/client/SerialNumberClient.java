@@ -2,11 +2,9 @@ package com.seamwhole.weberpadmin.client;
 
 import com.seamwhole.weberpadmin.client.hystrix.SerialNumberClientHystrix;
 import com.seamwhole.weberpadmin.config.FeignConfig;
+import com.seamwhole.weberpadmin.domain.SerialNumberInfo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,10 +16,8 @@ public interface SerialNumberClient {
     /**
      *  检查序列号是否存在
      */
-    @PostMapping("/serialNumber/checkIsExist/{id}/{materialName}/{serialNumber}")
-    Object checkIsExist(@PathVariable("id") Long id,
-                        @PathVariable("materialName") String materialName,
-                        @PathVariable("serialNumber") String serialNumber);
+    @PostMapping("/serialNumber/checkIsExist")
+    Object checkIsExist(@RequestBody SerialNumberInfo serialNumber);
 
 
     /**

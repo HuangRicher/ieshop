@@ -157,11 +157,18 @@ public class LogServiceImpl implements LogService {
      * @return
      */
     public Long getUserId(HttpServletRequest request) throws Exception{
-        Object userInfo = request.getSession().getAttribute("user");
+        /*Object userInfo = request.getSession().getAttribute("user");
         if(userInfo!=null) {
             User user = (User) userInfo;
             return user.getId();
         } else {
+            return null;
+        }*/
+        String userJson=request.getHeader("user");
+        User user=JSONObject.parseObject(userJson, User.class);
+        if(user.getId()!=null){
+            return user.getId();
+        }else {
             return null;
         }
     }

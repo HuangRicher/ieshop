@@ -152,18 +152,18 @@
     <profiles>
         <profile>
             <id>dev</id>
-            <activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
             <properties>
                 <activatedProperties>dev</activatedProperties>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
-            <!--<activation>
+            <activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>-->
+            </activation>
             <properties>
                 <activatedProperties>prod</activatedProperties>
             </properties>

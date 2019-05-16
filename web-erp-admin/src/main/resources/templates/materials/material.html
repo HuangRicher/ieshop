@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>商品信息</title>
     <meta charset="utf-8">
@@ -271,7 +271,7 @@
 <div id="forSelectMaterialCategoryDlg" class="easyui-dialog" style="width:380px;padding:10px 20px"
      closed="true" modal="true" cache="false" collapsible="false" closable="true">
 </div>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="none">
         var materialCategoryList = null;
         var types = "";
         var setCategoryId = "1";
@@ -663,7 +663,7 @@
                     {
                         title: '单据编号', field: 'Number', width: 150,
                         formatter: function (value, row) {
-                            return "<a class='n-link' onclick=\"newTab('" + row.Number + "','../materials/bill_detail.html?n=" + row.Number + "&type=" + row.Type + "','')\">"
+                            return "<a class='n-link' onclick=\"newTab('" + row.Number + "','../materials/bill_detail?n=" + row.Number + "&type=" + row.Type + "','')\">"
                                 + row.Number + "</a>";
                         }
                     },
@@ -1539,7 +1539,7 @@
                 height: webH/2,
                 closed: false,
                 cache: false,
-                href: '/pages/materials/materialcategory_forselect.html',
+                href: '/materials/materialcategory_forselect',
                 modal: true,
                 resizable:true
             });

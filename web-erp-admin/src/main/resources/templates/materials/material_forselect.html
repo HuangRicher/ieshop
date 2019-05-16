@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>商品信息选择</title>
     <meta charset="utf-8">
@@ -51,7 +51,7 @@
     <table id="materialTableData" style="top:50px;border-bottom-color:#FFFFFF"></table>
 </div>
 
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="none">
         var setCategoryId = "1";
         var cid = 1;
         //初始化界面

@@ -1,6 +1,7 @@
 package com.seamwhole.weberpadmin.controller;
 
 import com.seamwhole.weberpadmin.client.SerialNumberClient;
+import com.seamwhole.weberpadmin.domain.SerialNumberInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,9 @@ public class SerialNumberController {
      * 检查序列号是否存在
      */
     @PostMapping("/serialNumber/checkIsExist")
-    @ResponseBody
-    public Object checkIsExist(@RequestParam("id") Long id,
-                               @RequestParam("materialName") String materialName,
-                               @RequestParam("serialNumber") String serialNumber) throws Exception{
+    public Object checkIsExist(SerialNumberInfo serialNumber) throws Exception{
 
-
-        return serialNumberClient.checkIsExist(id,materialName,serialNumber);
+        return serialNumberClient.checkIsExist(serialNumber);
     }
 
 

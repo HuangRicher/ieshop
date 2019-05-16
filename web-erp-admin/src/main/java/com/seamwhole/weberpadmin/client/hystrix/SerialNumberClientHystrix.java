@@ -1,14 +1,16 @@
 package com.seamwhole.weberpadmin.client.hystrix;
 
 import com.seamwhole.weberpadmin.client.SerialNumberClient;
+import com.seamwhole.weberpadmin.domain.SerialNumberInfo;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class SerialNumberClientHystrix implements SerialNumberClient{
+
     @Override
-    public Object checkIsExist(Long id, String materialName, String serialNumber) {
+    public Object checkIsExist(SerialNumberInfo serialNumber) {
         return null;
     }
 

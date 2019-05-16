@@ -3,6 +3,7 @@ package com.seamwhole.weberpadmin.client.hystrix;
 import com.alibaba.fastjson.JSONArray;
 import com.seamwhole.weberpadmin.client.MaterialClient;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.MaterialInfo;
 import com.seamwhole.weberpadmin.domain.MaterialVo4Unit;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +15,7 @@ import java.util.List;
 @Component
 public class MaterialClientHystrix implements MaterialClient{
     @Override
-    public String checkIsExist(Long id, String name, String model, String color, String standard, String mfrs, String otherField1, String otherField2, String otherField3, String unit, Long unitId) {
+    public String checkIsExist(MaterialInfo materialInfo) {
         return null;
     }
 

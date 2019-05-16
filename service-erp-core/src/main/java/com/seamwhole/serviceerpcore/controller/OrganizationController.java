@@ -79,7 +79,7 @@ public class OrganizationController {
      * 获取机构树数据
      */
     @GetMapping(value = "/getOrganizationTree")
-    public JSONArray getOrganizationTree(@RequestParam("id") Long id) throws Exception{
+    public JSONArray getOrganizationTree(@RequestParam(value = "id" ,required = false) Long id) throws Exception{
        JSONArray arr=new JSONArray();
        List<TreeNode> organizationTree= organizationService.getOrganizationTree(id);
        if(organizationTree!=null&&organizationTree.size()>0){

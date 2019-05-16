@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>用户对应客户</title>
     <meta charset="utf-8">
@@ -23,8 +23,8 @@
     <ul id="tt"></ul>
 </div>
 
-<script type="text/javascript">
-    var url_id = getUrlParam('id');  //获取传值id（用户id）
+<script th:inline="javascript">
+    var url_id = [[${id}]];  //获取传值id（用户id）
     var type = "UserCustomer";
     var url;//定义链接地址
     function GetNode(ctype) {

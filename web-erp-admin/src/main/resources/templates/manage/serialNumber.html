@@ -201,10 +201,6 @@
                     title: '操作', field: 'op', align: "center", width: 60, formatter: function (value, rec,index) {
                         var str = '';
                         /**
-                         * create by: qiankunpingtai
-                         * create time: 2019/3/21 11:23
-                         * website：https://qiankunpingtai.cn
-                         * description:
                          *  对于每次拼接字符串作为参数传递
                          *  再对字符串分解获取数据的方式，个人感觉效率不是很高，实现也不优雅
                          *  在此使用传递index，然后根据index获取数据的方式替代
@@ -221,7 +217,7 @@
                     formatter: function (value, row) {
                         if(row.depotHeadNumber){
 
-                            return "<a class='n-link' onclick=\"newTab('" + row.depotHeadNumber + "','../materials/bill_detail.html?n=" + row.depotHeadNumber + "&type=" + row.depotHeadType + "','')\">"
+                            return "<a class='n-link' onclick=\"newTab('" + row.depotHeadNumber + "','/materials/bill_detail?n=" + row.depotHeadNumber + "&type=" + row.depotHeadType + "','')\">"
                                 + row.depotHeadNumber + "</a>";
                         }
                         return '';
@@ -471,7 +467,7 @@
     function editSerialNumber(index) {
         //获取当前行
         var rowsdata = $("#tableData").datagrid("getRows")[index];
-        $("#serialNumberId").val(rowsdata.serialNumberId);
+        $("#serialNumberId").val(rowsdata.id);
         $("#materialId").val(rowsdata.materialId);
         $("#materialName").focus().val(rowsdata.materialName);
         $("#serialNumber").val(rowsdata.serialNumber);
@@ -643,7 +639,7 @@
             height: webH/2,
             closed: false,
             cache: false,
-            href: '/pages/materials/material_forselect.html',
+            href: '/materials/material_forselect',
             modal: true,
             resizable:true
         });
@@ -657,7 +653,7 @@
             height: webH/2,
             closed: false,
             cache: false,
-            href: '/pages/materials/material_forselect.html',
+            href: '/materials/material_forselect',
             modal: true,
             resizable:true
         });

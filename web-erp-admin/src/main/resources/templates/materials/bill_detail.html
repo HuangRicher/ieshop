@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>单据明细</title>
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <script src="/js/easyui-1.3.5/jquery.easyui.min.js"></script>
     <script src="/js/easyui-1.3.5/locale/easyui-lang-zh_CN.js"></script>
     <script src="/js/common/common.js"></script>
-    <script src="/js/pages/materials/bill_detail.js"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/pages/materials/bill_detail.js}"></script>
 </head>
 <body>
 <div id="bill" class="easyui-panel" style="padding:10px;height:500px;" title="单据明细" iconCls="icon-list"

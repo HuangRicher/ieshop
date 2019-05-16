@@ -5,6 +5,7 @@ import com.seamwhole.weberpadmin.client.MaterialClient;
 import com.seamwhole.weberpadmin.constants.BusinessConstants;
 import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.MaterialInfo;
 import com.seamwhole.weberpadmin.domain.MaterialVo4Unit;
 import com.seamwhole.weberpadmin.utils.ExcelUtils;
 import com.seamwhole.weberpadmin.utils.ExportExecUtil;
@@ -33,19 +34,9 @@ public class MaterialController {
 
 
     @GetMapping(value = "/checkIsExist")
-    public String checkIsExist(@RequestParam("id") Long id,
-                               @RequestParam("name") String name,
-                               @RequestParam("model") String model,
-                               @RequestParam("color") String color,
-                               @RequestParam("standard") String standard,
-                               @RequestParam("mfrs") String mfrs,
-                               @RequestParam("otherField1") String otherField1,
-                               @RequestParam("otherField2") String otherField2,
-                               @RequestParam("otherField3") String otherField3,
-                               @RequestParam("unit") String unit,
-                               @RequestParam("unitId") Long unitId)throws Exception {
+    public String checkIsExist(MaterialInfo materialInfo)throws Exception {
 
-        return materialClient.checkIsExist(id,name,model,color,standard,mfrs,otherField1,otherField2,otherField3,unit,unitId);
+        return materialClient.checkIsExist(materialInfo);
     }
 
     /**

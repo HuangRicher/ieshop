@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.BusinessConstants;
 import com.seamwhole.serviceerpcore.service.CommonQueryManager;
 import com.seamwhole.serviceerpcore.utils.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,42 @@ public class ResourceController {
         if(currentPage!=null){
             parameterMap.put(Constants.CURRENT_PAGE,currentPage+"");
         }
-        parameterMap.put(Constants.SEARCH, search);
+        if(StringUtils.isNoneBlank(search)){
+            parameterMap.put(Constants.SEARCH, search);
+        }
+        PageQueryInfo queryInfo = new PageQueryInfo();
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        if (pageSize != null && pageSize <= 0) {
+            pageSize = 10;
+        }
+        String offset = ParamUtils.getPageOffset(currentPage, pageSize);
+        if (StringUtil.isNotEmpty(offset)) {
+            parameterMap.put(Constants.OFFSET, offset);
+        }
+        List<?> list = configResourceManager.select(apiName, parameterMap);
+        objectMap.put("page", queryInfo);
+        if (list == null) {
+            queryInfo.setRows(new ArrayList<Object>());
+            queryInfo.setTotal(BusinessConstants.DEFAULT_LIST_NULL_NUMBER);
+            return returnJson(objectMap, "查找不到数据", ErpInfo.OK.code);
+        }
+        queryInfo.setRows(list);
+        queryInfo.setTotal(configResourceManager.counts(apiName, parameterMap));
+        return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
+    }
+
+
+    @GetMapping(value = "/{apiName}/list/{pageSize}/{currentPage}")
+    public String getListData(@PathVariable("apiName") String apiName,
+                          @PathVariable(value = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                          @PathVariable(value = Constants.CURRENT_PAGE, required = false) Integer currentPage)throws Exception {
+        Map<String, String> parameterMap = new HashMap<>();//ParamUtils.requestToMap(request);
+        if(pageSize!=null){
+            parameterMap.put(Constants.PAGE_SIZE,pageSize+"");
+        }
+        if(currentPage!=null){
+            parameterMap.put(Constants.CURRENT_PAGE,currentPage+"");
+        }
         PageQueryInfo queryInfo = new PageQueryInfo();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         if (pageSize != null && pageSize <= 0) {
@@ -66,10 +102,10 @@ public class ResourceController {
 
     @PostMapping(value = "/{apiName}/add")
     public String addResource(@PathVariable("apiName") String apiName,
-                              @RequestParam("info") String beanJson)throws Exception {
+                              @RequestParam("info") String beanJson,
+                              HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        //int insert = configResourceManager.insert(apiName, beanJson, request);
-        int insert=1;
+        int insert = configResourceManager.insert(apiName, beanJson, request);
         if(insert > 0) {
             return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
         } else {
@@ -80,10 +116,10 @@ public class ResourceController {
     @PostMapping(value = "/{apiName}/update")
     public String updateResource(@PathVariable("apiName") String apiName,
                                  @RequestParam("info") String beanJson,
-                                 @RequestParam("id") Long id)throws Exception {
+                                 @RequestParam("id") Long id,
+                                 HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        //int update = configResourceManager.update(apiName, beanJson, id, request);
-        int update=1;
+        int update = configResourceManager.update(apiName, beanJson, id, request);
         if(update > 0) {
             return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
         } else {
@@ -93,10 +129,10 @@ public class ResourceController {
 
     @PostMapping(value = "/{apiName}/{id}/delete")
     public String deleteResource(@PathVariable("apiName") String apiName,
-                                 @PathVariable("id") Long id)throws Exception {
+                                 @PathVariable("id") Long id,
+                                 HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        //int delete = configResourceManager.delete(apiName, id, request);
-        int delete=1;
+        int delete = configResourceManager.delete(apiName, id, request);
         if(delete > 0) {
             return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
         } else {
@@ -106,10 +142,10 @@ public class ResourceController {
 
     @PostMapping(value = "/{apiName}/batchDelete")
     public String batchDeleteResource(@PathVariable("apiName") String apiName,
-                                      @RequestParam("ids") String ids)throws Exception {
+                                      @RequestParam("ids") String ids,
+                                      HttpServletRequest request)throws Exception {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        //int delete = configResourceManager.batchDelete(apiName, ids, request);
-        int delete=1;
+        int delete = configResourceManager.batchDelete(apiName, ids, request);
         if(delete > 0) {
             return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
         } else {

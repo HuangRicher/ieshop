@@ -6,6 +6,7 @@ import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.constants.BusinessConstants;
 import com.seamwhole.weberpadmin.constants.Constants;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.MaterialInfo;
 import com.seamwhole.weberpadmin.domain.MaterialVo4Unit;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +20,8 @@ import java.util.List;
 @FeignClient(serviceId = "erp-core-service" ,configuration = FeignConfig.class,fallback = MaterialClientHystrix.class)
 public interface MaterialClient {
 
-    @GetMapping(value = "/material/checkIsExist/{id}/{name}/{model}/{color}/{standard}/{mfrs}/{otherField1}/{otherField2}/{otherField3}/{unit}/{unitId}")
-    String checkIsExist(@PathVariable("id") Long id,
-                        @PathVariable("name") String name,
-                        @PathVariable("model") String model,
-                        @PathVariable("color") String color,
-                        @PathVariable("standard") String standard,
-                        @PathVariable("mfrs") String mfrs,
-                        @PathVariable("otherField1") String otherField1,
-                        @PathVariable("otherField2") String otherField2,
-                        @PathVariable("otherField3") String otherField3,
-                        @PathVariable("unit") String unit,
-                        @PathVariable("unitId") Long unitId);
+    @PostMapping(value = "/material/checkIsExist")
+    String checkIsExist(@RequestBody MaterialInfo materialInfo);
 
     /**
      * 批量设置状态-启用或者禁用

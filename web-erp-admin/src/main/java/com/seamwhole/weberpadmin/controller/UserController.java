@@ -31,7 +31,7 @@ public class UserController {
     private static String message = "成功";
     private static final String HTTP = "http://";
     private static final String CODE_OK = "200";
-    private String mybatisPlusStatus="open";
+    private String mybatisPlusStatus="close";
     private String manageIp="127.0.0.1";
     private Integer managePort=10005;
 
@@ -102,7 +102,7 @@ public class UserController {
                                 }
                             }
                         }
-                        request.getSession().setAttribute("mybatisPlusStatus","open"); //开启状态
+                        request.getSession().setAttribute("mybatisPlusStatus",mybatisPlusStatus); //开启状态
                     } catch (Exception e) {
                         logger.error(">>>>>>>>>>>>>>>查询用户名为:" + username + " ，用户信息异常", e);
                     }

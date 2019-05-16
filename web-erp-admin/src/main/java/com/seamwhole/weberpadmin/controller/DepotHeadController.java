@@ -112,8 +112,8 @@ public class DepotHeadController {
      */
     @GetMapping(value = "/findTotalPay")
     public BaseResponseInfo findTotalPay(@RequestParam("supplierId") Integer supplierId,
-                                                 @RequestParam("endTime") String endTime,
-                                                 @RequestParam("supType") String supType)throws Exception {
+                                         @RequestParam("endTime") String endTime,
+                                         @RequestParam("supType") String supType)throws Exception {
         BaseResponseInfo res = depotHeadClient.findTotalPay(supplierId,endTime,supType);
         return res;
     }

@@ -85,7 +85,7 @@ public class MaterialCategoryController {
      * @return com.alibaba.fastjson.JSONArray
      */
     @GetMapping(value = "/getMaterialCategoryTree")
-    public JSONArray getMaterialCategoryTree(@RequestParam("id") Long id) throws Exception{
+    public JSONArray getMaterialCategoryTree(@RequestParam(value = "id",required = false) Long id) throws Exception{
        JSONArray arr=new JSONArray();
        List<TreeNode> materialCategoryTree = materialCategoryService.getMaterialCategoryTree(id);
        if(materialCategoryTree!=null&&materialCategoryTree.size()>0){

@@ -3,6 +3,7 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.domain.SerialNumberInfo;
 import com.seamwhole.serviceerpcore.mapper.vo.SerialNumberEx;
 import com.seamwhole.serviceerpcore.exception.BusinessParamCheckingException;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
@@ -31,16 +32,14 @@ public class SerialNumberController {
      * @Param: request
      * @return java.lang.Object
      */
-    @PostMapping("/serialNumber/checkIsExist/{id}/{materialName}/{serialNumber}")
-    public Object checkIsExist(@PathVariable("id") Long id,
-                               @PathVariable("materialName") String materialName,
-                               @PathVariable("serialNumber") String serialNumber) throws Exception{
+    @PostMapping("/serialNumber/checkIsExist")
+    public Object checkIsExist(@RequestBody SerialNumberInfo serialNumber) throws Exception{
         JSONObject result = ExceptionConstants.standardSuccess();
-        if(StringUtil.isEmpty(serialNumber)){
+        if(StringUtil.isEmpty(serialNumber.getSerialNumber())){
             throw new BusinessParamCheckingException(ExceptionConstants.SERIAL_NUMBERE_NOT_BE_EMPTY_CODE,
                     ExceptionConstants.SERIAL_NUMBERE_NOT_BE_EMPTY_MSG);
         }
-        serialNumberService.checkIsExist(id, materialName, serialNumber);
+        serialNumberService.checkIsExist(serialNumber.getId(), serialNumber.getMaterialName(), serialNumber.getSerialNumber());
         return result;
     }
 

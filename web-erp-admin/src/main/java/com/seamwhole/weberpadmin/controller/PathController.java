@@ -40,17 +40,20 @@ public class PathController {
     }
 
     @RequestMapping("/user/userCustomer")
-    public String toUserCustomer(){
+    public String toUserCustomer(Integer id,Model model){
+        model.addAttribute("id",id);
         return "/user/userCustomer";
     }
 
     @RequestMapping("/user/userDepot")
-    public String toUserDepot(){
+    public String toUserDepot(Integer id,Model model){
+        model.addAttribute("id",id);
         return "/user/userDepot";
     }
 
     @RequestMapping("/user/userRole")
-    public String toUserRole(){
+    public String toUserRole(Integer id,Model model){
+        model.addAttribute("id",id);
         return "/user/userRole";
     }
 
@@ -104,6 +107,16 @@ public class PathController {
         return "/materials/materialcategory";
     }
 
+    @RequestMapping("/materials/materialcategory_forselect")
+    public String toMaterialCategoryForSelect(){
+        return "/materials/materialcategory_forselect";
+    }
+
+    @RequestMapping("/materials/material_forselect")
+    public String toMaterialForSelect(){
+        return "/materials/material_forselect";
+    }
+
     @RequestMapping("/materials/material")
     public String toMaterial(){
         return "/materials/material";
@@ -139,9 +152,26 @@ public class PathController {
         return "/manage/inOutItem";
     }
 
+    @RequestMapping("/manage/roleFunctions")
+    public String toRoleFunctions(Integer id,Model model){
+        model.addAttribute("id",id);
+        return "/manage/roleFunctions";
+    }
+
+    @RequestMapping("/manage/rolePushBtn")
+    public String toRolePushBtn(Integer id,Model model){
+        model.addAttribute("id",id);
+        return "/manage/rolePushBtn";
+    }
+
     @RequestMapping("/manage/account")
     public String toAccount(){
         return "/manage/account";
+    }
+
+    @RequestMapping("/manage/organization_forselect")
+    public String toOrganizationForSelect(){
+        return "/manage/organization_forselect";
     }
 
     @RequestMapping("/manage/customer")
