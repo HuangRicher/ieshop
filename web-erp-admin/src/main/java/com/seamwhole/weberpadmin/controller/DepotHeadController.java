@@ -128,14 +128,9 @@ public class DepotHeadController {
      * 更新单据主表及单据子表信息
      */
     @RequestMapping(value = "/updateDepotHeadAndDetail")
-    public Object updateDepotHeadAndDetail(@RequestParam("id") Long id,
-                                           @RequestParam("info") String beanJson,
-                                           @RequestParam("inserted") String inserted,
-                                           @RequestParam("deleted") String deleted,
-                                           @RequestParam("updated") String updated,
-                                           @RequestParam("preTotalPrice") BigDecimal preTotalPrice) throws  Exception{
+    public Object updateDepotHeadAndDetail(DepotHeadInfo info) throws  Exception{
 
-        return depotHeadClient.updateDepotHeadAndDetail(id,beanJson,inserted,deleted,updated,preTotalPrice);
+        return depotHeadClient.updateDepotHeadAndDetail(info);
     }
 
 

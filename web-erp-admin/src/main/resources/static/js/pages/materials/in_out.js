@@ -1,7 +1,7 @@
 	//初始化界面
 	var defDepotId = null;
 	var kid = sessionStorage.getItem("userId");
-    var pageType = getUrlParam('t');  //获取页面类型传值
+    var pageType = $("#mode-data-t").val();  //获取页面类型传值
 	var depotList = null;
 	var depotID = null;
 	var supplierList = null;
@@ -1344,9 +1344,9 @@
         } else {
             sessionStorage.setItem("rowInfo", rowInfo); //将单据信息存入缓存中
             if(listTitle == "采购订单列表") {
-                parent.addTab("订单转采购", "../materials/purchase_in_list.html?t=skip", "");
+                parent.addTab("订单转采购", "/materials/purchase_in_list?t=skip", "");
             } else if(listTitle == "销售订单列表") {
-                parent.addTab("订单转销售", "../materials/sale_out_list.html?t=skip", "");
+                parent.addTab("订单转销售", "/materials/sale_out_list?t=skip", "");
             }
 		}
     }
@@ -1898,6 +1898,8 @@
 		$("#searchResetBtn").unbind().bind({
 			click:function(){
 				//$("#searchProjectId").val("");
+				$("#searchNumber").val("");
+				$("#searchMaterial").val("");
 				$("#searchState").val("");
 				$("#searchBeginTime").val("");
 				$("#searchEndTime").val("");

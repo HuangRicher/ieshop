@@ -3,6 +3,7 @@ package com.seamwhole.serviceerpcore.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.domain.AccountItemInfo;
 import com.seamwhole.serviceerpcore.mapper.vo.AccountItemVo4List;
 import com.seamwhole.serviceerpcore.exception.BusinessRunTimeException;
 import com.seamwhole.serviceerpcore.service.AccountItemService;
@@ -43,16 +44,11 @@ public class AccountItemController {
      * @return java.lang.String
      */
     @PostMapping(value = "/saveDetails")
-    public String saveDetails(@RequestParam("inserted") String inserted,
-                              @RequestParam("deleted") String deleted,
-                              @RequestParam("updated") String updated,
-                              @RequestParam("headerId") Long headerId,
-                              @RequestParam("listType") String listType,
-                              HttpServletRequest request) throws Exception{
+    public String saveDetails(@RequestBody AccountItemInfo info) throws Exception{
 
         Map<String, Object> objectMap = new HashMap<String, Object>();
         try {
-            accountItemService.saveDetials(inserted,deleted,updated,headerId,listType);
+            accountItemService.saveDetials(info.getInserted(),info.getDeleted(),info.getUpdated(),info.getHeaderId(),info.getListType());
             return returnJson(objectMap, ErpInfo.OK.name, ErpInfo.OK.code);
         } catch (DataAccessException e) {
             e.printStackTrace();

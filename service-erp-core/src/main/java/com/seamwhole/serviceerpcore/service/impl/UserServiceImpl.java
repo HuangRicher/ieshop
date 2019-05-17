@@ -325,7 +325,7 @@ public class UserServiceImpl implements UserService{
      */
     public User getCurrentUser()throws Exception{
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String userJson=request.getHeader("user");
+        String userJson=new String(request.getHeader("user").getBytes("ISO-8859-1"),"UTF-8");
         User user=JSONObject.parseObject(userJson, User.class);
         return user;
     }

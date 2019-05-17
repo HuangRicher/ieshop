@@ -85,13 +85,8 @@ public interface DepotHeadClient {
     /**
      * 更新单据主表及单据子表信息
      */
-    @PostMapping(value = "/depotHead/updateDepotHeadAndDetail/{id}/{info}/{inserted}/{deleted}/{updated}/{preTotalPrice}")
-    Object updateDepotHeadAndDetail(@PathVariable("id") Long id,
-                                    @PathVariable("info") String beanJson,
-                                    @PathVariable("inserted") String inserted,
-                                    @PathVariable("deleted") String deleted,
-                                    @PathVariable("updated") String updated,
-                                    @PathVariable("preTotalPrice") BigDecimal preTotalPrice) ;
+    @PostMapping(value = "/depotHead/updateDepotHeadAndDetail")
+    Object updateDepotHeadAndDetail(@RequestBody DepotHeadInfo info);
 
     /**
      *  删除单据主表及子表信息

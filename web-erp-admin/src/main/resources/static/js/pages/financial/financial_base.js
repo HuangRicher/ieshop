@@ -1103,7 +1103,7 @@
             var updated = $("#accountData").datagrid('getChanges', "updated");
             $.ajax({
                 type: "post",
-                url: "/accountItem/saveDetials",
+                url: "/accountItem/saveDetails",
                 data: {
                     inserted: JSON.stringify(inserted),
                     deleted: JSON.stringify(deleted),

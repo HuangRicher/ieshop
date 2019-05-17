@@ -61,7 +61,7 @@ public class DepotHeadClientHystrix implements DepotHeadClient{
     }
 
     @Override
-    public Object updateDepotHeadAndDetail(Long id, String beanJson, String inserted, String deleted, String updated, BigDecimal preTotalPrice) {
+    public Object updateDepotHeadAndDetail(DepotHeadInfo info) {
         return null;
     }
 

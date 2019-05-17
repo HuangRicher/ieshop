@@ -92,7 +92,6 @@ public class AccountHeadController {
     /**
      * 根据编号查询单据信息
      * @param billNo
-     * @param request
      * @return
      */
     @GetMapping(value = "/getDetailByNumber")

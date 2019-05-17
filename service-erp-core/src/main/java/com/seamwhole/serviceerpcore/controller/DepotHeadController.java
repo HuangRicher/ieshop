@@ -406,16 +406,12 @@ public class DepotHeadController {
      * @Param: preTotalPrice
      * @return java.lang.Object
      */
-    @PostMapping(value = "/updateDepotHeadAndDetail/{id}/{info}/{inserted}/{deleted}/{updated}/{preTotalPrice}")
-    public Object updateDepotHeadAndDetail(@PathVariable("id") Long id,
-                                           @PathVariable("info") String beanJson,
-                                           @PathVariable("inserted") String inserted,
-                                           @PathVariable("deleted") String deleted,
-                                           @PathVariable("updated") String updated,
-                                           @PathVariable("preTotalPrice") BigDecimal preTotalPrice) throws  Exception{
+    @PostMapping(value = "/updateDepotHeadAndDetail")
+    public Object updateDepotHeadAndDetail(@RequestBody DepotHeadInfo info) throws  Exception{
 
         JSONObject result = ExceptionConstants.standardSuccess();
-        depotHeadService.updateDepotHeadAndDetail(id,beanJson,inserted,deleted,updated,preTotalPrice);
+        depotHeadService.updateDepotHeadAndDetail(info.getId(),info.getInfo(),info.getInserted(),
+                info.getDeleted(),info.getUpdated(),info.getPreTotalPrice());
         return result;
     }
 

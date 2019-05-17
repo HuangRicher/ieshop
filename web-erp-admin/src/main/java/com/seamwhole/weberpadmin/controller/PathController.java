@@ -1,6 +1,5 @@
 package com.seamwhole.weberpadmin.controller;
 
-import com.sun.tools.corba.se.idl.StringGen;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -263,7 +262,8 @@ public class PathController {
     }
 
     @RequestMapping("/materials/purchase_in_list")
-    public String toPurchaseInList(){
+    public String toPurchaseInList(String t,Model model){
+        model.addAttribute("t",t);
         return "/materials/purchase_in_list";
     }
 
@@ -278,7 +278,8 @@ public class PathController {
     }
 
     @RequestMapping("/materials/sale_out_list")
-    public String toSaleOutList(){
+    public String toSaleOutList(String t,Model model){
+        model.addAttribute("t",t);
         return "/materials/sale_out_list";
     }
 

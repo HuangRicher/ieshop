@@ -1,5 +1,7 @@
 package com.seamwhole.weberpadmin.domain;
 
+import java.math.BigDecimal;
+
 public class DepotHeadInfo {
 
     private Integer currentPage;
@@ -11,7 +13,13 @@ public class DepotHeadInfo {
     private String endTime;
     private String type;
     private String supType;
-
+    private Long id;
+    private String beanJson;
+    private String info;
+    private String inserted;
+    private String deleted;
+    private String updated;
+    private BigDecimal preTotalPrice;
     public Integer getCurrentPage() {
         return currentPage;
     }
@@ -82,5 +90,61 @@ public class DepotHeadInfo {
 
     public void setSupType(String supType) {
         this.supType = supType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBeanJson() {
+        return beanJson;
+    }
+
+    public void setBeanJson(String beanJson) {
+        this.beanJson = beanJson;
+    }
+
+    public String getInserted() {
+        return inserted;
+    }
+
+    public void setInserted(String inserted) {
+        this.inserted = inserted;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
+    }
+
+    public BigDecimal getPreTotalPrice() {
+        return preTotalPrice;
+    }
+
+    public void setPreTotalPrice(BigDecimal preTotalPrice) {
+        this.preTotalPrice = preTotalPrice;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

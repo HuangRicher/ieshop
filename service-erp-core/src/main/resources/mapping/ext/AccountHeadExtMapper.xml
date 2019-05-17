@@ -8,7 +8,7 @@
         <result column="AccountName" jdbcType="VARCHAR" property="accountname" />
     </resultMap>
 
-    <select id="selectByConditionAccountHead" parameterType="com.seamwhole.serviceerpcore.model.AccountHeadExample" resultMap="ResultMapEx">
+    <select id="selectByConditionAccountHead" parameterType="map" resultMap="ResultMapEx">
         select ah.*, s.supplier OrganName, p.Name HandsPersonName, a.Name AccountName
         from erp_accounthead ah
         left join erp_supplier s on ah.OrganId=s.id and ifnull(s.delete_Flag,'0') !='1'
@@ -16,16 +16,16 @@
         left join erp_account a on ah.AccountId=a.id and ifnull(a.delete_Flag,'0') !='1'
         where 1=1
         <if test="billNo != null">
-            and ah.BillNo like '%${billNo}%'
+            and ah.BillNo like  CONCAT('%',#{billNo},'%')
         </if>
         <if test="type != null">
-            and ah.Type='${type}'
+            and ah.Type=#{type}
         </if>
         <if test="beginTime != null">
-            and ah.BillTime &gt;= '%${beginTime}%'
+            and ah.BillTime &gt;= #{beginTime}
         </if>
         <if test="endTime != null">
-            and ah.BillTime &lt;= '%${endTime}%'
+            and ah.BillTime &lt;= #{endTime}
         </if>
         and ifnull(ah.delete_Flag,'0') !='1'
         order by ah.Id desc

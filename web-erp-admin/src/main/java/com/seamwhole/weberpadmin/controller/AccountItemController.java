@@ -1,6 +1,7 @@
 package com.seamwhole.weberpadmin.controller;
 
 import com.seamwhole.weberpadmin.client.AccountItemClient;
+import com.seamwhole.weberpadmin.domain.AccountItemInfo;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +18,9 @@ public class AccountItemController {
     private AccountItemClient accountItemClient;
 
     @PostMapping(value = "/saveDetails")
-    public String saveDetails(@RequestParam("inserted") String inserted,
-                              @RequestParam("deleted") String deleted,
-                              @RequestParam("updated") String updated,
-                              @RequestParam("headerId") Long headerId,
-                              @RequestParam("listType") String listType) throws Exception{
+    public String saveDetails(AccountItemInfo info) throws Exception{
 
-        return accountItemClient.saveDetails(inserted,deleted,updated,headerId,listType);
+        return accountItemClient.saveDetails(info);
     }
 
 
