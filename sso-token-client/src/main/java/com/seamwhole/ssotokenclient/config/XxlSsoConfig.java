@@ -20,8 +20,11 @@ public class XxlSsoConfig implements DisposableBean {
     @Value("${xxl.sso.logout.path}")
     private String xxlSsoLogoutPath;
 
-    @Value("${xxl.sso.redis.address}")
+    @Value("${sso.redis.address}")
     private String xxlSsoRedisAddress;
+
+    @Value("${sso.redis.password}")
+    private String password;
 
     @Value("${xxl-sso.excluded.paths}")
     private String xxlSsoExcludedPaths;
@@ -31,7 +34,7 @@ public class XxlSsoConfig implements DisposableBean {
     public FilterRegistrationBean xxlSsoFilterRegistration() {
 
         // xxl-sso, redis init
-        JedisUtil.init(xxlSsoRedisAddress);
+        JedisUtil.init(xxlSsoRedisAddress,password);
 
         // xxl-sso, filter init
         FilterRegistrationBean registration = new FilterRegistrationBean();
