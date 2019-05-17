@@ -2,6 +2,7 @@ package com.seamwhole.weberpadmin.client.hystrix;
 
 import com.seamwhole.weberpadmin.client.DepotHeadClient;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.DepotHeadInfo;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +31,17 @@ public class DepotHeadClientHystrix implements DepotHeadClient{
     }
 
     @Override
-    public BaseResponseInfo findInDetail(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type) {
+    public BaseResponseInfo findInDetail(DepotHeadInfo depotHeadInfo) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findInOutMaterialCount(Integer currentPage, Integer pageSize, Integer oId, Integer pid, String dids, String beginTime, String endTime, String type) {
+    public BaseResponseInfo findInOutMaterialCount(DepotHeadInfo depotHeadInfo) {
         return null;
     }
 
     @Override
-    public BaseResponseInfo findStatementAccount(Integer currentPage, Integer pageSize, String beginTime, String endTime, Integer organId, String supType) {
+    public BaseResponseInfo findStatementAccount(DepotHeadInfo info) {
         return null;
     }
 

@@ -107,7 +107,7 @@
                 {
                     title: '单据编号', field: 'number', width: 140,
                     formatter: function (value, row) {
-                        return "<a class='n-link' onclick=\"newTab('" + row.number + "','../materials/bill_detail.html?n=" + row.number + "&type=" + row.type + "','')\">"
+                        return "<a class='n-link' onclick=\"newTab('" + row.number + "','/materials/bill_detail?n=" + row.number + "&type=" + row.type + "','')\">"
                             + row.number + "</a>";
                     }
                 },

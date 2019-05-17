@@ -86,9 +86,9 @@
     function initialize() {
     	var url = location.href; //获取浏览器地址
     	//var params = url.substring(url.indexOf("?")+1);
-    	var number = [[${n}]];//params.substring(params.indexOf("n=")+2, params.indexOf("&"));
+    	var number =$("#data-number").val();//params.substring(params.indexOf("n=")+2, params.indexOf("&"));
     	var billType = "";
-        var listSubType = [[${type}]];//params.substring(params.indexOf("&type=")+6);
+        var listSubType =$("#data-listSubType").val();//params.substring(params.indexOf("&type=")+6);
         if(listSubType) {
             listSubType = decodeURI(listSubType);
         }

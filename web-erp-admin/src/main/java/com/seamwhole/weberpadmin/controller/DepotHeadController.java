@@ -2,6 +2,7 @@ package com.seamwhole.weberpadmin.controller;
 
 import com.seamwhole.weberpadmin.client.DepotHeadClient;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.DepotHeadInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,15 +64,8 @@ public class DepotHeadController {
      * 入库出库明细接口
      */
     @GetMapping(value = "/findInDetail")
-    public BaseResponseInfo findInDetail(@RequestParam("currentPage") Integer currentPage,
-                                        @RequestParam("pageSize") Integer pageSize,
-                                        @RequestParam("organId") Integer oId,
-                                        @RequestParam("projectId") Integer pid,
-                                        @RequestParam("depotIds") String dids,
-                                        @RequestParam("beginTime") String beginTime,
-                                        @RequestParam("endTime") String endTime,
-                                        @RequestParam("type") String type)throws Exception {
-        BaseResponseInfo res = depotHeadClient.findInDetail(currentPage,pageSize,oId,pid,dids,beginTime,endTime,type);
+    public BaseResponseInfo findInDetail(DepotHeadInfo depotHeadInfo)throws Exception {
+        BaseResponseInfo res = depotHeadClient.findInDetail(depotHeadInfo);
         return res;
     }
 
@@ -79,15 +73,8 @@ public class DepotHeadController {
      * 入库出库统计接口
      */
     @GetMapping(value = "/findInOutMaterialCount")
-    public BaseResponseInfo findInOutMaterialCount(@RequestParam("currentPage") Integer currentPage,
-                                                   @RequestParam("pageSize") Integer pageSize,
-                                                   @RequestParam("organId") Integer oId,
-                                                   @RequestParam("projectId") Integer pid,
-                                                   @RequestParam("depotIds") String dids,
-                                                   @RequestParam("beginTime") String beginTime,
-                                                   @RequestParam("endTime") String endTime,
-                                                   @RequestParam("type") String type)throws Exception {
-        BaseResponseInfo res = depotHeadClient.findInOutMaterialCount(currentPage,pageSize,oId,pid,dids,beginTime,endTime,type);
+    public BaseResponseInfo findInOutMaterialCount(DepotHeadInfo depotHeadInfo)throws Exception {
+        BaseResponseInfo res = depotHeadClient.findInOutMaterialCount(depotHeadInfo);
         return res;
     }
 
@@ -96,14 +83,9 @@ public class DepotHeadController {
      * 对账单接口
      */
     @GetMapping(value = "/findStatementAccount")
-    public BaseResponseInfo findStatementAccount(@RequestParam("currentPage") Integer currentPage,
-                                                   @RequestParam("pageSize") Integer pageSize,
-                                                   @RequestParam("beginTime") String beginTime,
-                                                   @RequestParam("endTime") String endTime,
-                                                   @RequestParam("organId") Integer organId,
-                                                   @RequestParam("supType") String supType) throws Exception{
+    public BaseResponseInfo findStatementAccount(DepotHeadInfo info) throws Exception{
 
-        BaseResponseInfo res = depotHeadClient.findStatementAccount(currentPage,pageSize,beginTime,endTime,organId,supType);
+        BaseResponseInfo res = depotHeadClient.findStatementAccount(info);
         return res;
     }
 

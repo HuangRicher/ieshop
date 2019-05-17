@@ -1,5 +1,6 @@
 package com.seamwhole.weberpadmin.controller;
 
+import com.sun.tools.corba.se.idl.StringGen;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +81,11 @@ public class PathController {
     @RequestMapping("/manage/functions")
     public String toFunctions(){
         return "/manage/functions";
+    }
+
+    @RequestMapping("/manage/user_forselect")
+    public String toUserForSelect(){
+        return "/manage/user_forselect";
     }
 
     @RequestMapping("/asset/asset")
@@ -187,6 +193,13 @@ public class PathController {
     @RequestMapping("/reports/in_out_stock_report")
     public String toInOutStockReport(){
         return "reports/in_out_stock_report";
+    }
+
+    @RequestMapping("/materials/bill_detail")
+    public String toBillDetail(String n, String type,Model model){
+        model.addAttribute("n",n);
+        model.addAttribute("type",type);
+        return "/materials/bill_detail";
     }
 
     @RequestMapping("/reports/account_report")

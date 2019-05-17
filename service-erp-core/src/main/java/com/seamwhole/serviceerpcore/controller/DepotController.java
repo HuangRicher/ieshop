@@ -194,7 +194,7 @@ public class DepotController {
         return result;
     }
     @PostMapping(value = "/updateDepotIsDefault")
-    public String updateDepotIsDefault(@RequestParam("isDefault") Boolean isDefault,
+    public String updateDepotIsDefault(@RequestParam(value = "isDefault",required = false,defaultValue = "false") Boolean isDefault,
                                         @RequestParam("depotID") Long depotID) throws Exception{
         Map<String, Object> objectMap = new HashMap<String, Object>();
         int res = depotService.updateDepotIsDefault(isDefault, depotID);

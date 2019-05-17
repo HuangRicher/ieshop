@@ -44,7 +44,7 @@ public interface DepotClient {
 
 
 
-    @PostMapping(value = "/updateDepotIsDefault")
+    @PostMapping(value = "/depot/updateDepotIsDefault")
     String updateDepotIsDefault(@RequestParam("isDefault") Boolean isDefault,
                                         @RequestParam("depotID") Long depotID);
 }

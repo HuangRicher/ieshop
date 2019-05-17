@@ -3,6 +3,7 @@ package com.seamwhole.weberpadmin.client;
 import com.seamwhole.weberpadmin.client.hystrix.DepotHeadClientHystrix;
 import com.seamwhole.weberpadmin.config.FeignConfig;
 import com.seamwhole.weberpadmin.domain.BaseResponseInfo;
+import com.seamwhole.weberpadmin.domain.DepotHeadInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,39 +42,20 @@ public interface DepotHeadClient {
     /**
      * 入库出库明细接口
      */
-    @GetMapping(value = "/depotHead/findInDetail/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
-    BaseResponseInfo findInDetail(@PathVariable("currentPage") Integer currentPage,
-                                  @PathVariable("pageSize") Integer pageSize,
-                                  @PathVariable("organId") Integer oId,
-                                  @PathVariable("projectId") Integer pid,
-                                  @PathVariable("depotIds") String dids,
-                                  @PathVariable("beginTime") String beginTime,
-                                  @PathVariable("endTime") String endTime,
-                                  @PathVariable("type") String type);
+    @PostMapping(value = "/depotHead/findInDetail")
+    BaseResponseInfo findInDetail(@RequestBody DepotHeadInfo depotHeadInfo);
 
     /**
      * 入库出库统计接口
      */
-    @GetMapping(value = "/depotHead/findInOutMaterialCount/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
-    BaseResponseInfo findInOutMaterialCount(@PathVariable("currentPage") Integer currentPage,
-                                            @PathVariable("pageSize") Integer pageSize,
-                                            @PathVariable("organId") Integer oId,
-                                            @PathVariable("projectId") Integer pid,
-                                            @PathVariable("depotIds") String dids,
-                                            @PathVariable("beginTime") String beginTime,
-                                            @PathVariable("endTime") String endTime,
-                                            @PathVariable("type") String type);
+    @PostMapping(value = "/depotHead/findInOutMaterialCount")
+    BaseResponseInfo findInOutMaterialCount(@RequestBody DepotHeadInfo depotHeadInfo);
 
     /**
      * 对账单接口
      */
-    @GetMapping(value = "/depotHead/findStatementAccount/{currentPage}/{pageSize}/{beginTime}/{endTime}/{organId}/{supType}")
-    BaseResponseInfo findStatementAccount(@PathVariable("currentPage") Integer currentPage,
-                                          @PathVariable("pageSize") Integer pageSize,
-                                          @PathVariable("beginTime") String beginTime,
-                                          @PathVariable("endTime") String endTime,
-                                          @PathVariable("organId") Integer organId,
-                                          @PathVariable("supType") String supType);
+    @GetMapping(value = "/depotHead/findStatementAccount")
+    BaseResponseInfo findStatementAccount(@RequestBody DepotHeadInfo info);
 
     /**
      * 查询单位的累计应收和累计应付，零售不能计入

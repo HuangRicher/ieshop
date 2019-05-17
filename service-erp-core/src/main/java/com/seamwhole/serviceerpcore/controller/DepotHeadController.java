@@ -2,6 +2,7 @@ package com.seamwhole.serviceerpcore.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.serviceerpcore.constants.ExceptionConstants;
+import com.seamwhole.serviceerpcore.domain.DepotHeadInfo;
 import com.seamwhole.serviceerpcore.model.DepotHead;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InDetail;
 import com.seamwhole.serviceerpcore.mapper.vo.DepotHeadVo4InOutMCount;
@@ -132,31 +133,18 @@ public class DepotHeadController {
 
     /**
      * 入库出库明细接口
-     * @param currentPage
-     * @param pageSize
-     * @param oId
-     * @param pid
-     * @param dids
-     * @param beginTime
-     * @param endTime
-     * @param type
-     * @return
      */
-    @GetMapping(value = "/findInDetail/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
-    public BaseResponseInfo findInDetail(@PathVariable("currentPage") Integer currentPage,
-                                         @PathVariable("pageSize") Integer pageSize,
-                                         @PathVariable("organId") Integer oId,
-                                         @PathVariable("projectId") Integer pid,
-                                         @PathVariable("depotIds") String dids,
-                                         @PathVariable("beginTime") String beginTime,
-                                         @PathVariable("endTime") String endTime,
-                                         @PathVariable("type") String type)throws Exception {
+    @PostMapping(value = "/findInDetail")
+    public BaseResponseInfo findInDetail(@RequestBody DepotHeadInfo depotHeadInfo)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<DepotHeadVo4InDetail> resList = new ArrayList<DepotHeadVo4InDetail>();
-            List<DepotHeadVo4InDetail> list = depotHeadService.findByAll(beginTime, endTime, type, pid, dids, oId, (currentPage-1)*pageSize, pageSize);
-            int total = depotHeadService.findByAllCount(beginTime, endTime, type, pid, dids, oId);
+            List<DepotHeadVo4InDetail> list = depotHeadService.findByAll(depotHeadInfo.getBeginTime(), depotHeadInfo.getEndTime(), depotHeadInfo.getType(),
+                    depotHeadInfo.getProjectId(), depotHeadInfo.getDepotIds(), depotHeadInfo.getOrganId(),
+                    (depotHeadInfo.getCurrentPage()-1)*depotHeadInfo.getPageSize(), depotHeadInfo.getPageSize());
+            int total = depotHeadService.findByAllCount(depotHeadInfo.getBeginTime(), depotHeadInfo.getEndTime(), depotHeadInfo.getType(),
+                    depotHeadInfo.getProjectId(), depotHeadInfo.getDepotIds(), depotHeadInfo.getOrganId());
             map.put("total", total);
             //存放数据json数组
             if (null != list) {
@@ -177,31 +165,19 @@ public class DepotHeadController {
 
     /**
      * 入库出库统计接口
-     * @param currentPage
-     * @param pageSize
-     * @param oId
-     * @param pid
-     * @param dids
-     * @param beginTime
-     * @param endTime
-     * @param type
      * @return
      */
-    @GetMapping(value = "/findInOutMaterialCount/{currentPage}/{pageSize}/{organId}/{projectId}/{depotIds}/{beginTime}/{endTime}/{type}")
-    public BaseResponseInfo findInOutMaterialCount(@PathVariable("currentPage") Integer currentPage,
-                                                   @PathVariable("pageSize") Integer pageSize,
-                                                   @PathVariable("organId") Integer oId,
-                                                   @PathVariable("projectId") Integer pid,
-                                                   @PathVariable("depotIds") String dids,
-                                                   @PathVariable("beginTime") String beginTime,
-                                                   @PathVariable("endTime") String endTime,
-                                                   @PathVariable("type") String type)throws Exception {
+    @PostMapping(value = "/findInOutMaterialCount")
+    public BaseResponseInfo findInOutMaterialCount(@RequestBody DepotHeadInfo depotHeadInfo)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<DepotHeadVo4InOutMCount> resList = new ArrayList<DepotHeadVo4InOutMCount>();
-            List<DepotHeadVo4InOutMCount> list = depotHeadService.findInOutMaterialCount(beginTime, endTime, type, pid, dids, oId, (currentPage-1)*pageSize, pageSize);
-            int total = depotHeadService.findInOutMaterialCountTotal(beginTime, endTime, type, pid, dids, oId);
+            List<DepotHeadVo4InOutMCount> list = depotHeadService.findInOutMaterialCount(depotHeadInfo.getBeginTime(), depotHeadInfo.getEndTime(), depotHeadInfo.getType(),
+                    depotHeadInfo.getProjectId(), depotHeadInfo.getDepotIds(), depotHeadInfo.getOrganId(),
+                    (depotHeadInfo.getCurrentPage()-1)*depotHeadInfo.getPageSize(), depotHeadInfo.getPageSize());
+            int total = depotHeadService.findInOutMaterialCountTotal(depotHeadInfo.getBeginTime(), depotHeadInfo.getEndTime(), depotHeadInfo.getType(),
+                    depotHeadInfo.getProjectId(), depotHeadInfo.getDepotIds(), depotHeadInfo.getOrganId());
             map.put("total", total);
             //存放数据json数组
             if (null != list) {
@@ -222,33 +198,24 @@ public class DepotHeadController {
 
     /**
      * 对账单接口
-     * @param currentPage
-     * @param pageSize
-     * @param beginTime
-     * @param endTime
-     * @param organId
-     * @param supType
      * @return
      */
-    @GetMapping(value = "/findStatementAccount/{currentPage}/{pageSize}/{beginTime}/{endTime}/{organId}/{supType}")
-    public BaseResponseInfo findStatementAccount(@PathVariable("currentPage") Integer currentPage,
-                                                 @PathVariable("pageSize") Integer pageSize,
-                                                 @PathVariable("beginTime") String beginTime,
-                                                 @PathVariable("endTime") String endTime,
-                                                 @PathVariable("organId") Integer organId,
-                                                 @PathVariable("supType") String supType) throws Exception{
+    @PostMapping(value = "/findStatementAccount")
+    public BaseResponseInfo findStatementAccount(@RequestBody DepotHeadInfo info) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             int j = 1;
-            if (supType.equals("客户")) { //客户
+            if (info.getSupType().equals("客户")) { //客户
                 j = 1;
-            } else if (supType.equals("供应商")) { //供应商
+            } else if (info.getSupType().equals("供应商")) { //供应商
                 j = -1;
             }
             List<DepotHeadVo4StatementAccount> resList = new ArrayList<DepotHeadVo4StatementAccount>();
-            List<DepotHeadVo4StatementAccount> list = depotHeadService.findStatementAccount(beginTime, endTime, organId, supType, (currentPage-1)*pageSize, pageSize);
-            int total = depotHeadService.findStatementAccountCount(beginTime, endTime, organId, supType);
+            List<DepotHeadVo4StatementAccount> list = depotHeadService.findStatementAccount(info.getBeginTime(), info.getEndTime(),
+                    info.getOrganId(), info.getSupType(), (info.getCurrentPage()-1)*info.getPageSize(), info.getPageSize());
+            int total = depotHeadService.findStatementAccountCount(info.getBeginTime(), info.getEndTime(),
+                    info.getOrganId(), info.getSupType());
             map.put("total", total);
             //存放数据json数组
             if (null != list) {

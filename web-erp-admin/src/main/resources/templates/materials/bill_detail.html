@@ -17,6 +17,8 @@
     <script type="text/javascript" th:inline="javascript" th:src="@{/js/pages/materials/bill_detail.js}"></script>
 </head>
 <body>
+<input id="data-number" type="hidden" th:value="${n}" />
+<input id="data-listSubType" type="hidden" th:value="${type}" />
 <div id="bill" class="easyui-panel" style="padding:10px;height:500px;" title="单据明细" iconCls="icon-list"
      collapsible="true" closable="false">
     <!--零售出库-->
