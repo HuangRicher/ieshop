@@ -65,9 +65,10 @@ public class XxlSsoWebFilter extends HttpServlet implements Filter {
 
             // remove cookie
             SsoWebLoginHelper.removeSessionIdByCookie(req, res);
-
+            String path=req.getServletPath();
+            String link=req.getRequestURL().toString().replace(path,"");
             // redirect logout
-            String logoutPageUrl = ssoServer.concat(Conf.SSO_LOGOUT);
+            String logoutPageUrl = ssoServer.concat(Conf.SSO_LOGOUT)+ "?" + Conf.REDIRECT_URL + "=" + link;
             res.sendRedirect(logoutPageUrl);
 
             return;

@@ -1,5 +1,7 @@
 package com.seamwhole.ssoserver.store;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.ssoserver.conf.Conf;
 import com.seamwhole.ssoserver.user.XxlSsoUser;
 import com.seamwhole.ssoserver.util.JedisUtil;
@@ -27,9 +29,9 @@ public class SsoLoginStore {
      */
     public static XxlSsoUser get(String storeKey) {
         String redisKey = redisKey(storeKey);
-        Object objectValue = JedisUtil.getObjectValue(redisKey);
-        if (objectValue != null) {
-            XxlSsoUser xxlUser = (XxlSsoUser) objectValue;
+        String objectValue = JedisUtil.getStringValue(redisKey);
+        if (objectValue != null && objectValue!="") {
+            XxlSsoUser xxlUser = JSONObject.parseObject(objectValue,XxlSsoUser.class);
             return xxlUser;
         }
         return null;
@@ -51,7 +53,7 @@ public class SsoLoginStore {
      */
     public static void put(String storeKey, XxlSsoUser xxlUser) {
         String redisKey = redisKey(storeKey);
-        JedisUtil.setObjectValue(redisKey, xxlUser, redisExpireMinite * 60);  // minite to second
+        JedisUtil.setStringValue(redisKey, JSON.toJSONString(xxlUser), redisExpireMinite * 60);  // minite to second
     }
 
     private static String redisKey(String sessionId){

@@ -12,16 +12,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class XxlSsoConfig implements InitializingBean, DisposableBean {
 
-    @Value("${xxl.sso.redis.address}")
+    @Value("${sso.redis.address}")
     private String redisAddress;
 
-    @Value("${xxl.sso.redis.expire.minite}")
+    @Value("${sso.redis.password}")
+    private String password;
+
+    @Value("${sso.redis.expire.minite}")
     private int redisExpireMinite;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         SsoLoginStore.setRedisExpireMinite(redisExpireMinite);
-        JedisUtil.init(redisAddress);
+        JedisUtil.init(redisAddress,password);
     }
 
     @Override

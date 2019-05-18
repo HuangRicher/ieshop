@@ -1,5 +1,6 @@
 package com.seamwhole.ssotokenclient.store;
 
+import com.alibaba.fastjson.JSONObject;
 import com.seamwhole.ssotokenclient.conf.Conf;
 import com.seamwhole.ssotokenclient.user.XxlSsoUser;
 import com.seamwhole.ssotokenclient.util.JedisUtil;
@@ -27,9 +28,9 @@ public class SsoLoginStore {
      */
     public static XxlSsoUser get(String storeKey) {
         String redisKey = redisKey(storeKey);
-        Object objectValue = JedisUtil.getObjectValue(redisKey);
+        String objectValue = JedisUtil.getStringValue(redisKey);
         if (objectValue != null) {
-            XxlSsoUser xxlUser = (XxlSsoUser) objectValue;
+            XxlSsoUser xxlUser = JSONObject.parseObject(objectValue,XxlSsoUser.class);
             return xxlUser;
         }
         return null;

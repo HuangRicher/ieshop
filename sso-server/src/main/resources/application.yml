@@ -1,0 +1,42 @@
+### web
+server:
+  port: 20001
+  servlet:
+    context-path: /sso-server
+
+### resources
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+  ##数据库连接信息
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/dbeprrm?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: root
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        maxLifetime: 1800000
+        idleTimeout: 600000
+### freemarker
+  freemarker:
+    templateLoaderPath: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+
+### xxl-sso
+sso:
+  redis:
+    address: redis://120.78.170.118:6379
+    password: 123456
+    expire:
+      minite: 1440
